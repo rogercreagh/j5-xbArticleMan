@@ -1,0 +1,40 @@
+local/
+j5-xbArticleManPrivate/
+
+# Created by https://www.toptal.com/developers/gitignore/api/eclipse
+# Edit at https://www.toptal.com/developers/gitignore?templates=eclipse
+
+### Eclipse ###
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# PDT-specific (PHP Development Tools)
+.buildpath
+
+# Code Recommenders
+.recommenders/
+
+# Annotation Processing
+.apt_generated/
+.apt_generated_test/
+
+# Uncomment this line if you wish to ignore the project description file.
+# Typically, this file would be tracked if it contains build/dependency configurations:
+.project
+
+# End of https://www.toptal.com/developers/gitignore/api/eclipse
