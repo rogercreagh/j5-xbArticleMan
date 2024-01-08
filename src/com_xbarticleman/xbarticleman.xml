@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="component" method="upgrade">
+	<name>com_xbarticleman</name>
+	<creationDate>8th January 2025</creationDate>
+	<version>0.0.1.0</version>
+	<author>RogerCO</author>
+	<authorEmail>roger@crosborne.co.uk</authorEmail>
+	<authorUrl>www.crosborne.uk</authorUrl>
+	<copyright>Copyright (C) Roger Creagh-Osborne, 2024, All rights reserved.</copyright>
+	<license>GNU/GPL Version 3</license>
+	<description>XBARTMAN_XML_DESCRIPTION</description>
+	
+	<namespace path="src/">Crosborne\Component\Xbarticleman</namespace>
+
+	<!-- 
+	<scriptfile>script.xbarticleman.php</scriptfile>	
+
+	<install> 
+		<sql>
+			<file driver="mysql" charset="utf8">sql/install.mysql.sql</file>
+		</sql>
+	</install>
+	<uninstall>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/uninstall.mysql.sql</file>
+		</sql>
+	</uninstall>
+
+	<files folder="site">
+		<folder>forms</folder>
+		<folder>language</folder>
+		<folder>src</folder>
+		<folder>tmpl</folder>
+	</files>
+	 -->
+
+	<media destination="com_xbarticleman" folder="media">
+		<file>joomla.asset.json</file>
+		<folder>css</folder>
+	</media>
+		
+	<administration>
+		<files folder="admin">
+			<file>access.xml</file>
+			<file>config.xml</file>
+<!-- 
+ 			<folder>forms</folder>
+			<folder>sql</folder>
+ -->
+			<folder>language</folder>
+			<folder>services</folder>
+			<folder>src</folder>
+			<folder>tmpl</folder>
+		</files>
+		
+		<menu img="class:default" link="option=com_xbarticleman">com_xbarticleman</menu>
+		<submenu>
+			<menu link="option=com_xbarticleman&amp;view=dashboard" >
+				xbartman_iconmenu_dashboard
+			</menu>
+			<menu link="option=com_xbarticleman&amp;view=artimgs" >
+				xbartman_iconmenu_artimgs
+			</menu>
+			<menu link="option=com_xbarticleman&amp;view=artlinks" >
+				xbartman_iconmenu_artlinks
+			</menu>
+			<menu link="option=com_xbarticleman&amp;view=artscodes" >
+				xbartman_iconmenu_artscodes
+			</menu>
+			<menu link="option=com_xbarticleman&amp;view=arttags" >
+				xbartman_iconmenu_arttags
+			</menu>
+			<menu link="option=com_config&amp;view=component&amp;component=com_xbarticleman" >
+				xbartman_iconmenu_options				
+			</menu>
+		</submenu>
+		
+	</administration>
+
+	<updateservers>
+		<server type="extension" priority="1" name="xbArticleMan Updates">
+			http://www.crosborne.uk/jupdates/update_xbarticleman.xml
+		</server>
+	</updateservers>
+
+	
+</extension>

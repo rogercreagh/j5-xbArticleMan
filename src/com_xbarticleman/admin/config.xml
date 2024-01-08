@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- xbArticleMan j5 config file v0.0.1.0 7th January 2024 -->
+<config>
+<!-- GENERAL TAB -->				
+	<fieldset name="general"
+		label="XB_GENERAL"
+		description="XB_GENERAL_DESC"
+	>
+		<field name="extlinkhint" type="radio"
+			label="XB_EXTLINKS_LABEL"
+			description="XB_EXTLINKS_DESC"
+ 			class="btn-group btn-group-yesno"
+ 			default="0"
+			>
+			<option value="0" >XB_DISABLE</option>
+			<option value="1">XBARTMAN_SITE_ADMIN</option>
+			<option value="2">XBARTMAN_SITE_ONLY</option>
+			<option value="3">XBARTMAN_ADMIN_ONLY</option>
+		</field>	
+	
+   		<field name="beernote" type="note"
+			label="XB_BUY_A_BEER_LABEL"
+			description="XB_BUY_A_BEER_DESC"
+			class="info"
+		/>	
+        
+	</fieldset>
+<!-- BEER TAB -->
+	<fieldset name="reg"
+			label="XB_REGCRED_LABEL"
+			description="XB_REGCRED_DESC"
+	>
+  		<field name="beernote" type="note"
+			label="XB_BEER_NOTE"
+			description="XB_BEER_LINK"
+			class="info"
+		/>	
+		<field name="roger_beer" type="password"
+			label="XB_BEER_FIELD" description="XB_BEER_FIELD_DESC"
+			default=""
+		/>	
+		<field name="beernote2" type="note"
+			label="XB_BEER_PAY_AT_THE_BAR"
+			description="XB_BEER_FORM"			
+		/>
+		<field name="penpont" type="hidden"
+			default="$2y$10$DeCwB16giLjgL7HgM1RDSeHROFs7QQef2dBQ9jEKehiTGj05jbonK" 
+			/>		
+		<field name="othercreditsnote" type="note"
+			label="XB_CREDITS_NOTE"
+		/>
+		<field name="devtoolsnote" type="note"
+			label="XB_DEV_TOOLS"
+			description="XB_DEV_TOOLS_DESC"
+		/>
+	</fieldset>		
+
+<!-- PERMISSIONS TAB -->
+
+	<fieldset name="permissions" label="JCONFIG_PERMISSIONS_LABEL" description="JCONFIG_PERMISSIONS_DESC" >
+		<field name="rules" type="rules" label="JCONFIG_PERMISSIONS_LABEL" 
+			component="com_xbarticleman" filter="rules" validate="rules" section="component" />
+	</fieldset>
+	
+</config>

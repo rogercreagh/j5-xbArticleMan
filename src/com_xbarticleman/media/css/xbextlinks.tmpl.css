@@ -1,0 +1,60 @@
+/*******
+ * @package xbAOY Component
+ * @filesource media/css/xbaoy.css
+ * @version 0.5.1.0 10th October 2023
+ * @author Roger C-O
+ * @copyright Copyright (c) Roger Creagh-Osborne, 2023
+ * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
+ ******/
+
+/* CSS for hinting link destinations. NB domain is hard coded here */
+
+/* special for allouryesterdays */
+a[href^="https://allouryesterdays.info"] {
+  color:#d36383;
+}
+
+/* internal no target or target self -> no after */
+
+/* internal target not _self -> arrow-in-box */
+a[href]:not([href^="http"]):not([class="noafter"])[target]:not([target="_self"]):after,
+a[href^="https://{DOMAIN}"]:not([class="noafter"])[target]:not([target="_self"]):after,
+a[href^="https://www.{DOMAIN}"]:not([class="noafter"])[target]:not([target="_self"]):after,
+a[href^="http://{DOMAIN}"]:not([class="noafter"])[target]:not([target="_self"]):after,
+a[href^="http://www.{DOMAIN}"]:not([class="noafter"])[target]:not([target="_self"]):after
+{
+	font-family: "IcoMoon"; 
+	content: " \e251";
+}
+/* external no target or target _self -> plain arrow */
+a[href^="https"]:not([href^="https://www.{DOMAIN}"]):not([href^="https://{DOMAIN}"]):not([class="noafter"])[target][target="_self"]:after,
+a[href^="https"]:not([href^="https://www.{DOMAIN}"]):not([href^="https://{DOMAIN}"]):not([class="noafter"]):not([target]):after,
+a[href^="http://"]:not([href^="http://www.{DOMAIN}"]):not([href^="http://{DOMAIN}"]):not([class="noafter"])[target][target="_self"]:after,
+a[href^="http://"]:not([href^="http://www.{DOMAIN}"]):not([href^="http://{DOMAIN}"]):not([class="noafter"]):not([target]):after
+{
+  content:" \2197";
+}
+/* external target not _self ->arrow-out-box */
+a[href^="https"]:not([href^="https://www.{DOMAIN}"]):not([href^="https://{DOMAIN}"]):not([class="noafter"])[target]:not([target="_self"]):after,
+a[href^="http://"]:not([href^="http://www.{DOMAIN}"]):not([href^="http://{DOMAIN}"]):not([class="noafter"])[target]:not([target="_self"]):after
+{
+	font-family: "IcoMoon"; 
+	content: " \e024";
+}
+
+/*** test 
+	<p><a href="https://crosborne.uk">https://crosborne.uk</a>
+  <br /><a href="https://crosborne.uk" target="_self">https://crosborne.uk _self</a>
+  <br /><a href="https://crosborne.uk" target="_blank">https://crosborne.uk _blank</a>
+  <br /><a href="https://crosborne.uk" target="mytab">https://crosborne.uk mytab</a>
+  <br /><a href="index.php">index.php</a>
+  <br /><a href="index.php" target="_self">index.php _self</a>
+  <br /><a href="index.php" target="_blank">index.php _blank</a>
+  <br /><a href="index.php" target="mytab">index.php mytab</a>
+  <br /><a href="http://{DOMAIN}">http://{DOMAIN} </a>
+  <br /><a href="http://{DOMAIN}" target="_self">http://{DOMAIN} _self</a>
+  <br /><a href="http://{DOMAIN}" target="_blank">http://{DOMAIN} _blank</a>
+  <br /><a href="http://{DOMAIN}" target="mytab">http://{DOMAIN} mytab</a>
+  </p>
+
+***/

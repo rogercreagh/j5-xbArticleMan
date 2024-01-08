@@ -1,0 +1,275 @@
+/*******
+ * @package xbCommon Files
+ * @filesource media/css/xbcommon.css
+ * @version 1.0.0.0 8th January 2024
+ * @author Roger C-O
+ * @copyright Copyright (c) Roger Creagh-Osborne, 2024
+ * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
+ ******/
+
+/* restore Joomla j5 template changes */
+.pull-right {
+	float: right;
+}
+.pull-left {
+	float: left;
+}
+.hide {
+	display: none;
+}
+.show {
+	display: block;
+}
+
+/* Joomla system overrides/improvements */ 
+
+/* set width to 100% for controls in subform) */
+.subform-repeatable-group .controls .chzn-container.chzn-container-single {
+  width: 100% !important;
+}
+
+/*adjust default margins round labels for tags and cats */
+.label { margin:2px;}
+.tags ul.inline > li {
+	margin:0;
+}
+
+/*adjust spacing between tag labels in tag layout */
+#content .well .module-title.nav-header {
+    padding-left: 4px;
+}
+
+/*give visual hint to presence of tooltips*/
+.hasTooltip {
+  	text-decoration-line: underline; 
+	text-decoration-color: #a0a0a0;
+	text-decoration-style: dotted; 
+    text-underline-position: under;
+}
+.hasPopover {
+  	text-decoration-line: underline; 
+	text-decoration-color: #a0a0a0;
+	text-decoration-style: dashed; 
+    text-underline-position: under;
+}
+.xbhover, .xbhover:hover {text-decoration: underline dotted;} 
+.xbfocus, .xbfocus:hover {text-decoration: underline dashed;}
+.xbclick, .xbclick:hover {text-decoration: underline solid;}
+
+/* override the annoying default transparency on bootstrap tooltips */
+.tooltip.in {
+  opacity: 1 !important;
+  filter: alpha(opacity=100) !important;
+}
+/* Popover styles - these override the defaults*/
+/* border around popover */
+ .xbcultpop + .popover {
+    border: 2px solid;
+}
+/* Popover Title */
+.xbcultpop + .popover > .popover-title {
+    padding: 4px 5px 3px 5px;
+    border-bottom: 1px solid;
+    font-size: 1.0em;
+    text-align:center;
+}
+/* Popover Body */
+.xbcultpop  + .popover > .popover-content {
+    font-size: 0.95em;
+    padding: 4px 8px 4px 8px;
+}
+.xbcultpop  + .popover > .popover-content > a {
+  font-weight:bold;
+}
+/* for popover colours see XbGeneral::popstylecolours() Arrows */
+
+/* use an empty custom button as a toolbar spacer (22px is minimum width*/
+#toolbar- .btn {
+	visibility:hidden; width:22px;
+}
+/* add spacing in toolbar to group buttons */
+#toolbar-publish,  #toolbar-batch {
+	margin-left:25px;
+}
+ 
+/* make tab titles a bit more prominent */
+ul.nav-tabs { 
+	font-weight:bold;
+	font-size:1.1em;
+}
+	
+/*shade background of subform headings */
+.subform-repeatable thead { 
+	background-color:aliceblue;
+}
+.subform-repeatable .table th {
+  font-weight:normal;
+  font-style:italic;
+}
+
+/* style accordions */
+.xbaccordion .accordion-heading {
+	background-color:#eee;	
+}
+.xbaccordion .accordion-body {
+	background-color:aliceblue;
+}
+
+/* end of joomla system overrides */
+
+/* badges and labels 
+.xbbadge and xblabel are provided for j5 consistency with j3 isis and prostar templates */
+
+.xblabel,
+.xbbadge {
+	display: inline-block;
+	padding: 2px 4px;
+	font-size: 10.998px;
+	font-weight: bold;
+	line-height: 14px;
+	color: #fff;
+	vertical-align: baseline;
+	white-space: nowrap;
+	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+	background-color: #999;
+}
+.xblabel {
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+.xbbadge {
+	padding-left: 9px;
+	padding-right: 9px;
+	-webkit-border-radius: 9px;
+	-moz-border-radius: 9px;
+	border-radius: 9px;
+}
+.xblabel:empty,
+.xbbadge:empty {
+	display: none;
+}
+a.xblabel:hover,
+a.xblabel:focus,
+a.xbbadge:hover,
+a.xbbadge:focus {
+	color: #fff;
+	text-decoration: none;
+	cursor: pointer;
+}
+.xbbadge-large, .xblabel-large {
+   line-height:1.5em !important; 
+   padding:0 12px !important; 
+   font-size:1.2em !important;
+}
+.xbbadge, .xblabel {
+	text-shadow: none;
+}
+
+.label-important,
+.badge-important {
+	background-color: #a94442;
+}
+.label-important[href],
+.badge-important[href] {
+	background-color: #843534;
+}
+.label-warning,
+.badge-warning {
+	background-color: #f89406;
+}
+.label-warning[href],
+.badge-warning[href] {
+	background-color: #c67605;
+}
+.label-success,
+.badge-success {
+	background-color: #3c763d;
+}
+.label-success[href],
+.badge-success[href] {
+	background-color: #2b542c;
+}
+.label-info,
+.badge-info {
+	background-color: #31708f;
+}
+.label-info[href],
+.badge-info[href] {
+	background-color: #245269;
+}
+.label-inverse,
+.badge-inverse {
+	background-color: #333;
+}
+.label-inverse[href],
+.badge-inverse[href] {
+	background-color: #1a1a1a;
+}
+.badge-pink, .label-pink {
+	background-color: #ffafaf!important;
+}
+.badge-red, .label-red {
+	background-color: #e70000 !important;
+}
+.badge-yellow, .label-yellow {
+	background-color: #f7f78f !important; 
+}
+.badge-orange, .label-orange {
+	background-color: #e66100 !important;
+}
+.badge-ltgreen, .label-ltgreen {
+	background-color: #ccffcc !important;
+}
+.badge-green, .label-green, .badge-cat, .label-cat {
+	background-color: #009900 !important;
+}
+.badge-cyan, .label-cyan {
+	background-color: #5fffff !important;
+}
+.badge-drkcyan, .label-drkcyan {
+	background-color: #00a0a0 !important;
+}
+.badge-ltblue, .label-ltblue {
+	background-color: #c0c0ff !important;
+}
+.badge-blue, .label-blue{
+	background-color: #0000cf !important;
+}
+.badge-tag, .label-tag {
+	background-color: #3f61db !important;
+}
+.badge-aoy, .label-aoy {
+	background-color: #d36383 !important;
+}
+.badge-ltmag, .label-ltmag {
+	background-color: #ffbbff !important;
+}
+.badge-mag, .label-mag {
+	background-color: #7f007f !important;
+}
+.badge-white, .label-white {
+	background-color: #ffffff !important;
+}
+.badge-ltgrey, .label-ltgrey {
+	background-color: #ccc !important;
+}
+.badge-grey, .label-grey {
+	background-color: #777777 !important;
+}
+.badge-black, .label-black {
+	background-color: #000 !important;
+}
+.extlinklabel {
+	border: solid 1px #d36383;
+}
+
+.badge-yellow, .label-yellow, .badge-ltgreen, .label-ltgreen,
+.badge-cyan, .label-cyan, .badge-ltblue, .label-ltblue,
+.badge-ltmag, .label-ltmag, .badge-ltgrey, .label-ltgrey,
+.badge-pink, .label-pink, .badge-white, .label-white {
+	color: #555 !important;
+    border: solid 1px #777;
+}
+
+

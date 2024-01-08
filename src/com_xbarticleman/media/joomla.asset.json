@@ -1,0 +1,21 @@
+{
+    "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "com_xbarticleman",
+    "version": "4.0.0",
+    "description": "assets used by xbarticleman",
+    "license": "GPL-3.0-or-later",
+    "assets": [
+      {
+        "name": "xbarticleman.styles",
+        "description": "xbArticleManager custom css",
+        "type": "style",
+        "uri": "com_xbarticleman/xbarticleman.css"
+      },
+      {
+        "name": "xbcommon.styles",
+        "description": "xb common component css",
+        "type": "style",
+        "uri": "com_xbarticleman/xbcommon.css"
+      }      
+    ]
+}
