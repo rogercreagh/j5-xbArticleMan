@@ -17,5 +17,11 @@
         "type": "style",
         "uri": "com_xbarticleman/xbcommon.css"
       }      
+      {
+        "name": "xbextlink.styles",
+        "description": "xb external link hinting css",
+        "type": "style",
+        "uri": "com_xbarticleman/xbextlinks.css"
+      }      
     ]
 }

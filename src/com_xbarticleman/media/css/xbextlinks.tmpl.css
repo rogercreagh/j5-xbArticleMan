@@ -9,52 +9,70 @@
 
 /* CSS for hinting link destinations. NB domain is hard coded here */
 
-/* special for allouryesterdays */
-a[href^="https://allouryesterdays.info"] {
-  color:#d36383;
-}
-
 /* internal no target or target self -> no after */
 
-/* internal target not _self -> arrow-in-box */
+/* internal target not _self -> arrow-out */
 a[href]:not([href^="http"]):not([class="noafter"])[target]:not([target="_self"]):after,
 a[href^="https://{DOMAIN}"]:not([class="noafter"])[target]:not([target="_self"]):after,
 a[href^="https://www.{DOMAIN}"]:not([class="noafter"])[target]:not([target="_self"]):after,
 a[href^="http://{DOMAIN}"]:not([class="noafter"])[target]:not([target="_self"]):after,
 a[href^="http://www.{DOMAIN}"]:not([class="noafter"])[target]:not([target="_self"]):after
 {
-	font-family: "IcoMoon"; 
-	content: " \e251";
+font-family:serif;
+	content: "\2197"; /*"\21B8";*/
+    font-size: 14px;
+    font-weight: 900;
+    padding-inline-start:5px;
 }
-/* external no target or target _self -> plain arrow */
+/* external no target or target _self -> arrow-in */
 a[href^="https"]:not([href^="https://www.{DOMAIN}"]):not([href^="https://{DOMAIN}"]):not([class="noafter"])[target][target="_self"]:after,
 a[href^="https"]:not([href^="https://www.{DOMAIN}"]):not([href^="https://{DOMAIN}"]):not([class="noafter"]):not([target]):after,
 a[href^="http://"]:not([href^="http://www.{DOMAIN}"]):not([href^="http://{DOMAIN}"]):not([class="noafter"])[target][target="_self"]:after,
 a[href^="http://"]:not([href^="http://www.{DOMAIN}"]):not([href^="http://{DOMAIN}"]):not([class="noafter"]):not([target]):after
 {
-  content:" \2197";
+	font-family: sans-serif;  
+	content:"\2798";
+    font-size: 14px;
+    font-weight: 900;
+    padding-inline-start:5px;
 }
 /* external target not _self ->arrow-out-box */
 a[href^="https"]:not([href^="https://www.{DOMAIN}"]):not([href^="https://{DOMAIN}"]):not([class="noafter"])[target]:not([target="_self"]):after,
 a[href^="http://"]:not([href^="http://www.{DOMAIN}"]):not([href^="http://{DOMAIN}"]):not([class="noafter"])[target]:not([target="_self"]):after
 {
-	font-family: "IcoMoon"; 
-	content: " \e024";
+	font-family: "Font Awesome 6 Free"; 
+	content: "";
+    font-size: 14px;
+    font-weight: 900;
+    padding-inline-start:5px;
 }
 
 /*** test 
-	<p><a href="https://crosborne.uk">https://crosborne.uk</a>
-  <br /><a href="https://crosborne.uk" target="_self">https://crosborne.uk _self</a>
-  <br /><a href="https://crosborne.uk" target="_blank">https://crosborne.uk _blank</a>
-  <br /><a href="https://crosborne.uk" target="mytab">https://crosborne.uk mytab</a>
-  <br /><a href="index.php">index.php</a>
-  <br /><a href="index.php" target="_self">index.php _self</a>
-  <br /><a href="index.php" target="_blank">index.php _blank</a>
-  <br /><a href="index.php" target="mytab">index.php mytab</a>
-  <br /><a href="http://{DOMAIN}">http://{DOMAIN} </a>
-  <br /><a href="http://{DOMAIN}" target="_self">http://{DOMAIN} _self</a>
-  <br /><a href="http://{DOMAIN}" target="_blank">http://{DOMAIN} _blank</a>
-  <br /><a href="http://{DOMAIN}" target="mytab">http://{DOMAIN} mytab</a>
+  <p>https://
+  <br />ext no targ <a href="https://crosborne.uk">https://crosborne.uk</a>
+  <br />ext self <a href="https://crosborne.uk" target="_self">https://crosborne.uk _self</a>
+  <br />ext blank <a href="https://crosborne.uk" target="_blank">https://crosborne.uk _blank</a>
+  <br />ext mtab <a href="https://crosborne.uk" target="mytab">https://crosborne.uk mytab</a>
+  <br />int no targ <a href="https://{DOMAIN}">http://{DOMAIN} </a>
+  <br />int self <a href="https://{DOMAIN}" target="_self">http://{DOMAIN} _self</a>
+  <br />int blank <a href="https://{DOMAIN}" target="_blank">http://{DOMAIN} _blank</a>
+  <br />int mytab <a href="https://{DOMAIN}" target="mytab">http://{DOMAIN} mytab</a>
+  </p>
+  <p>no http
+  <br />int no targ <a href="index.php">index.php</a>
+  <br />int self <a href="index.php" target="_self">index.php _self</a>
+  <br />int blank <a href="index.php" target="_blank">index.php _blank</a>
+  <br />int mytab <a href="index.php" target="mytab">index.php mytab</a>
+  </p>
+  <p>http://
+  <br />ext no targ <a href="http://crosborne.uk">https://crosborne.uk</a>
+  <br />ext self <a href="http://crosborne.uk" target="_self">https://crosborne.uk _self</a>
+  <br />ext blank <a href="http://crosborne.uk" target="_blank">https://crosborne.uk _blank</a>
+  <br />ext mtab <a href="http://crosborne.uk" target="mytab">https://crosborne.uk mytab</a>
+  <br />int http no targ <a href="http://{DOMAIN}">http://{DOMAIN} </a>
+  <br />int http self <a href="http://{DOMAIN}" target="_self">http://{DOMAIN} _self</a>
+  <br />int http blank <a href="http://{DOMAIN}" target="_blank">http://{DOMAIN} _blank</a>
+  <br />int http mytab <a href="http://{DOMAIN}" target="mytab">http://{DOMAIN} mytab</a>
   </p>
 
 ***/
