@@ -1,7 +1,7 @@
 <?php 
 /*******
  * @package xbArticleManager j5
- * file admin/tmpl/dashboard/default.php
+ * @filesource admin/tmpl/dashboard/default.php
  * @version 0.0.1.0 7th January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
@@ -23,7 +23,7 @@ HTMLHelper::_('formbehavior.chosen', 'select');
 ?>
 <form action="<?php echo Route::_('index.php?option=com_xbarticlemans&view=dashboard'); ?>" method="post" name="adminForm" id="adminForm">
 
-	<div id="j-main-container" >
+	<div id="xbcomponent" >
 		<h3><?php echo Text::_('XB_STATUS_SUM'); ?></h3>
 		<div class="xbwp100">
         	<div class="xbwp60 pull-left xbpr20">

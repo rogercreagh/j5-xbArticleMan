@@ -1,7 +1,7 @@
 <?php 
 /*******
  * @package xbArticleManager j5
- * file admin/src/View/Dashboard/HtmlView.php
+ * @filesource admin/src/View/Dashboard/HtmlView.php
  * @version 0.0.1.0 7th January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
@@ -12,13 +12,15 @@ namespace Crosborne\Component\Xbarticleman\Administrator\View\Dashboard;
 
 defined('_JEXEC') or die;
 
+//use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-use Joomla\CMS\Toolbar\Toolbar;
+//use Joomla\CMS\Toolbar\Toolbar;
+//use Joomla\CMS\Toolbar\ToolbarFactoryInterface;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
 class HtmlView extends BaseHtmlView {
@@ -68,18 +70,17 @@ class HtmlView extends BaseHtmlView {
     protected function addToolbar()
     {
         // Get the toolbar object instance
-        $toolbar = Toolbar::getInstance('toolbar');        
+       // $toolbar = Toolbar::getInstance('toolbar');        
+        //$toolbar = Factory::getContainer()->get(ToolbarFactoryInterface::class)->createToolbar($name);
         
         ToolbarHelper::title(Text::_('XBARTMAN_ADMIN_DASHBOARD_TITLE'), 'fas fa-info-circle');
         
-        $canDo = ContentHelper::getActions('com_xbarticleman');
-        
-                
-        if ($canDo->get('core.admin'))
-        {
-            $toolbar->preferences('com_xbarticleman');
+        $canDo = ContentHelper::getActions('com_xbarticleman');           
+        if ($canDo->get('core.admin')) {
+            //$toolbar->preferences('com_xbarticleman');
+            ToolbarHelper::preferences('com_xbarticleman');
         }
-        ToolbarHelper::help( '', false,'https://crosborne.uk/xbarticleman/doc?tmpl=component#admin-dashboard' );
+        ToolbarHelper::help( '', false,'https://crosborne.uk/xbarticleman/doc?tmpl=component#admin-artimgs' );
         
     }
         

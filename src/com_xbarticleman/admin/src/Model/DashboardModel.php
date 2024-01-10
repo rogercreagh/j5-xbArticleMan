@@ -1,7 +1,7 @@
 <?php
 /*******
  * @package xbArticleManager
- * @filesource admin/src/Model/DashboardController.php
+ * @filesource admin/src/Model/DashboardModel.php
  * @version 0.0.1.0 7th January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2023

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <extension type="component" method="upgrade">
 	<name>com_xbarticleman</name>
-	<creationDate>9th January 2025</creationDate>
-	<version>0.0.2.1</version>
+	<creationDate>10th January 2025</creationDate>
+	<version>0.0.3.0</version>
 	<author>RogerCO</author>
 	<authorEmail>roger@crosborne.co.uk</authorEmail>
 	<authorUrl>www.crosborne.uk</authorUrl>
@@ -37,17 +37,19 @@
 	<media destination="com_xbarticleman" folder="media">
 		<file>joomla.asset.json</file>
 		<folder>css</folder>
+		<folder>js</folder>
 	</media>
 		
 	<administration>
 		<files folder="admin">
 			<file>access.xml</file>
 			<file>config.xml</file>
-<!-- 
  			<folder>forms</folder>
+<!-- 
 			<folder>sql</folder>
  -->
 			<folder>language</folder>
+			<folder>layouts</folder>
 			<folder>services</folder>
 			<folder>src</folder>
 			<folder>tmpl</folder>
