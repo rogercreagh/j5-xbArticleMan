@@ -22,6 +22,7 @@ use Joomla\CMS\Session\Session;
 use Crosborne\Component\Xbarticleman\Administrator\Helper\XbarticlemanHelper;
 
 HTMLHelper::_('bootstrap.tooltip');
+HTMLHelper::_('bootstrap.popover', '.xbpop', ['trigger'=>'hover']);
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('table.columns');
 $wa->useScript('multiselect');
@@ -250,8 +251,11 @@ if ($saveOrder && !empty($this->items)) {
 									<span title="<?php echo Text::sprintf('JFIELD_ALIAS_LABEL', $this->escape($item->alias)); ?>"><?php echo $this->escape($item->title); ?></span>
 								<?php endif; ?>
 								<?php $pvuri = "'".(Uri::root().'index.php?option=com_content&view=article&id='.$item->id)."'"; ?>
-                                <a class="hasTooltip"  data-toggle="modal" title="<?php echo Text::_('XBARTMAN_MODAL_PREVIEW'); ?>" href="#pvModal"
-                                onClick="window.pvuri=<?php echo $pvuri; ?>;">
+          <?php $pvtit = "'".$item->title."'"; ?>
+                                <span  data-bs-toggle="modal" data-bs-target="#pvModal" data-bs-source="<?php echo $pvuri; ?>" data-bs-itemtitle="<?php echo $item->title; ?>" 
+                                title="<?php echo Text::_('XBARTMAN_MODAL_PREVIEW'); ?>" 
+          onclick="var pv=document.getElementById('pvModal');pv.querySelector('.modal-body .iframe').setAttribute('src',<?php echo $pvuri; ?>);pv.querySelector('.modal-title').textContent=<?php echo $pvtit; ?>;"
+                                >
 									<span class="icon-eye xbpl10"></span></a>
 								</p>
 								<span class="xbpl20 xb09"><i>Alias</i>: <?php echo $this->escape($item->alias); ?>
@@ -292,10 +296,11 @@ if ($saveOrder && !empty($this->items)) {
         									<span style="color:red;"><?php echo $a['filename']; ?></span>
     									<?php else : ?>
     										<?php echo $a['filename']; ?> 
-        									<a href="<?php echo $a['uri']; ?>" class="modal"> <span class="icon-eye"></span> </a>
+        									<span class="xbpop" data-bs-original-title="<?php echo $a['alttext'];?>" 
+                                      data-bs-content="<img src='<?php echo $a['uri'];  ?>' class='popimg' />" ><span class="icon-eye"></span> </span>
     									<?php endif; ?>
     								</summary>
-									<ul>
+									<ul class="xb09">
 										<li><i>Host:</i>
 											<?php echo ($a['host']=='') ? 'local' : $a['host']; ?>
 										</li>
@@ -317,7 +322,7 @@ if ($saveOrder && !empty($this->items)) {
 										<?php endif; ?>				
 										<?php if ($a['title'] != '') : ?>
     										<li><i>Title</i>
-    											<?php echo $a['alttext'];?>
+    											<?php echo $a['title'];?>
     										</li>   						
 										<?php endif; ?>				
 										<?php if ($a['class'] != '') : ?>
@@ -436,10 +441,10 @@ if ($saveOrder && !empty($this->items)) {
 				array(
 					'title'  => Text::_('XBARTMAN_ARTICLE_PREVIEW'),
 					'footer' => '',
-				    'height' => '900vh',
+				    'height' => '800vh',
 				    'bodyHeight' => '90',
 				    'modalWidth' => '80',
-				    'url' => Uri::root().'index.php?option=com_content&view=article&id='.'x'
+				    'url' => Uri::root().'index.php?option=com_content&view=articles'
 				),
 			); ?>
 

@@ -62,6 +62,9 @@
   filter: alpha(opacity=100) !important;
 }
 /* Popover styles - these override the defaults*/
+  .popover {max-width:50% !important;}
+  .popimg {max-width:40vw;}
+
 /* border around popover */
  .xbcultpop + .popover {
     border: 2px solid;
@@ -116,6 +119,39 @@ ul.nav-tabs {
 }
 
 /* end of joomla system overrides */
+
+/* boxes with rounded corner border and gradient shading */
+.xbbox {
+	padding: 8px 7px 7px 15px;
+	margin: 0 0 8px;
+	list-style: none;
+	border: solid 1px #777777;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+.xbboxshadow {
+	-webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.5);
+	-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.5);
+	box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.5);
+}
+.xbboxwht, .xbbgwht {
+	background-color: #f7f7f7; /* to lift from pure white bckgrnd */
+}
+
+/* box gradientbackgrounds */
+.gradpink { background-image: linear-gradient(#ffffff, #ffc0c0); }
+.gradyellow { background-image: linear-gradient(#ffffff, #ffffaf); }
+.gradgreen, .gradcat { background-image: linear-gradient(#ffffff,#ccffcc); }
+.gradcyan { background-image: linear-gradient(#ffffff,#8fffff); }
+.gradblue, .gradtag { background-image: linear-gradient(#ffffff,#7a7aff); }
+.gradmag { background-image: linear-gradient(#ffffff,#ffc0ff); }
+.gradgrey { background-image: linear-gradient(#ffffff,#dddddd); }
+
+/* vertical scrolling for boxes - use with max-height (.xbmhxxx) */
+.xbyscroll {
+	overflow-y:scroll;
+}
 
 /* badges and labels 
 .xbbadge and xblabel are provided for j5 consistency with j3 isis and prostar templates */
@@ -271,5 +307,102 @@ a.xbbadge:focus {
 	color: #555 !important;
     border: solid 1px #777;
 }
+
+/* xb classes for simple styles 
+some common combinations are also defined (eg xbnit - normal weight,italic, 5px left pad)
+*/
+
+/* centre div or table cell */
+.xbcentre { margin-left:auto; margin-right:auto;}
+
+/* text alignment */
+.xbtc, .xbcredit {text-align:center;}
+.xbtr {text-align:right;}
+
+/* font sizes in em */
+.xb15 { font-size:1.5em; }
+.xb12, .xbtitle { font-size:1.2em; }
+.xb11, .xbsubtitle { font-size:1.1em; }
+.xb10 { font-size:1.0em; }
+.xb095 { font-size:0.95em; }
+.xb09, .xbnote { font-size:0.9em; }
+.xb085 { font-size:0.85em; }
+.xb08, .xbcredit { font-size:0.8em; }
+
+/* font weights and styles */
+.xbnorm, .xbnit { font-weight: normal; }
+.xbbold, .xbtitle { font-weight: bold; }
+.xbit, .xbnit, .xbcredit { font-style:italic; }
+.xbfw300, .xbsubtitle {font-weight:300;}
+
+/* margins */
+.xbm0 { margin:0 !important; } /*flagged important as used to override any template margins*/
+.xbml10, .xbsubtitle { margin-left:10px; }
+.xbml15 { margin-left:15px; }
+.xbml20 { margin-left:20px; }
+.xbml100 { margin-left:100px; }
+
+.xbmr10 { margin-right:10px; }
+.xbmr20 { margin-right:20px; }
+
+.xbmt2 { margin-top:2px; }
+.xbmt10 { margin-top:10px; }
+.xbmt20 { margin-top:20px; }
+
+.xbmb0 { margin-bottom:0; }
+.xbmb8, .xbtitle { margin-bottom:8px; }
+.xbmb12 { margin-bottom:12px; }
+.xbmb20 { margin-bottom:20px; }
+
+/* padding */
+.xbpl10 {padding-left:10px;}
+.xbpl20 {padding-left:20px;}
+.xbpr5, .xbnit { padding-right:5px; }
+.xbpr10 { padding-right:10px;}
+.xbpr20 { padding-right:20px;}
+.xbpt17 { padding-top:17px;}
+
+/* heights */
+.xbht200 {height:200px;};
+
+/* maxheights */
+.xbmh200 {max-height:200px; }
+.xbmh300 {max-height:300px; }
+.xbmh400 {max-height:400px; }
+
+/* widths */
+.xbw18 {width: 18px; }
+.xbw100 {width:100px; }
+
+.xbwp100 {width:100%; }
+.xbwp60 {width:60%; }
+.xbwp50 {width:50%; }
+.xbwp40 {width:40%; }
+
+/* maxwidth eg for divs */
+.xbmw1000 { max-width:1000px; }
+.xbmw1100 { max-width:1100px; }
+.xbmw1200 { max-width:1200px; }
+.xbmw1400 { max-width:1400px; }
+
+/* borders */
+.xbbb1 { border-bottom:solid 1px gray;}
+
+/* some colour things */
+.xbhlt {
+	background-color: #f7f78f;
+	color: #444;
+}
+.xbdim {
+	background-color: #ccc;
+	color: #888;
+}
+.xbgold { color:#edc500; }
+.xbred { color:#c00000; }
+.xbblue, .xbinfo, .xbhelp { color: #22d;}
+.xbbook, .xbgreen { color: #008040;}
+.xbdarkgrey { color: #555;}
+.xbgrey, .xbnote {color:#888;}
+.xbaoycol {color: #e56b8e !important;}
 
 
