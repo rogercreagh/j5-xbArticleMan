@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/src/View/Dashboard/HtmlView.php
- * @version 0.0.3.0 10th January 2024
+ * @version 0.0.4.0 11th January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -20,8 +20,10 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Toolbar\Button\DropdownButton;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Crosborne\Component\Xbarticleman\Administrator\Helper\XbarticlemanHelper;
 //use Joomla\CMS\Toolbar\ToolbarFactoryInterface;
 
@@ -82,15 +84,66 @@ class HtmlView extends BaseHtmlView {
         //$user  = Factory::getUser();
         
         // Get the toolbar object instance
-        $bar = Toolbar::getInstance('toolbar');
+        $toolbar = Toolbar::getInstance('toolbar');
         //$toolbar = Factory::getContainer()->get(ToolbarFactoryInterface::class)->createToolbar('toolbar');
         
         ToolbarHelper::title(Text::_('XBARTMAN_ADMIN_ARTIMGS_TITLE'), 'picture');
+        
+        
         
         if ($canDo->get('core.create') || count($user->getAuthorisedCategories('com_xbarticleman', 'core.create')) > 0)
         {
             ToolbarHelper::addNew('artimgs.newArticle');
         }
+        
+        if ($canDo->get('core.edit.state') ) {
+            /** @var  DropdownButton $dropdown */
+            $dropdown = $toolbar->dropdownButton('status-group')
+            ->text('JTOOLBAR_CHANGE_STATUS')
+            ->toggleSplit(false)
+            ->icon('icon-ellipsis-h')
+            ->buttonClass('btn btn-action')
+            ->listCheck(true);
+            
+            $childBar = $dropdown->getChildToolbar();
+                        
+            if ($canDo->get('core.edit.state')) {
+                $childBar->publish('articles.publish')->listCheck(true);
+                
+                $childBar->unpublish('articles.unpublish')->listCheck(true);
+                
+                $childBar->archive('articles.archive')->listCheck(true);
+                
+                $childBar->checkin('articles.checkin');
+                
+                if ($this->state->get('filter.published') != ContentComponent::CONDITION_TRASHED) {
+                    $childBar->trash('articles.trash')->listCheck(true);
+                }
+            }
+            // Add a batch button
+            if (
+                $user->authorise('core.create', 'com_content')
+                && $user->authorise('core.edit', 'com_content')
+                ) {
+                    $childBar->popupButton('batch', 'JTOOLBAR_BATCH')
+                    ->popupType('inline')
+                    ->textHeader(Text::_('COM_CONTENT_BATCH_OPTIONS'))
+                    ->url('#joomla-dialog-batch')
+                    ->modalWidth('800px')
+                    ->modalHeight('fit-content')
+                    ->listCheck(true);
+                }                       
+        }
+            
+        if ($this->state->get('filter.published') == ContentComponent::CONDITION_TRASHED && $canDo->get('core.delete')) {
+            $toolbar->delete('articles.delete', 'JTOOLBAR_EMPTY_TRASH')
+            ->message('JGLOBAL_CONFIRM_DELETE')
+            ->listCheck(true);
+        }
+        
+        
+        
+        
         
         if ($canDo->get('core.edit') || $canDo->get('core.edit.own'))
         {
@@ -98,11 +151,11 @@ class HtmlView extends BaseHtmlView {
             ToolbarHelper::editList('artimgs.fullEdit','Full Edit');
         }
         
-        if ($canDo->get('core.edit.state'))
-        {
-            ToolbarHelper::publish('artimgs.publish', 'JTOOLBAR_PUBLISH', true);
-            ToolbarHelper::unpublish('artimgs.unpublish', 'JTOOLBAR_UNPUBLISH', true);
-        }
+//         if ($canDo->get('core.edit.state'))
+//         {
+//             ToolbarHelper::publish('artimgs.publish', 'JTOOLBAR_PUBLISH', true);
+//             ToolbarHelper::unpublish('artimgs.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+//         }
         
         // Add a batch button
         if ($user->authorise('core.create', 'com_xbarticleman')
@@ -115,7 +168,7 @@ class HtmlView extends BaseHtmlView {
             $layout = new FileLayout('joomla.toolbar.batch');
             
             $dhtml = $layout->render(array('title' => $title));
-            $bar->appendButton('Custom', $dhtml, 'batch');
+            $toolbar->appendButton('Custom', $dhtml, 'batch');
             
         }
         

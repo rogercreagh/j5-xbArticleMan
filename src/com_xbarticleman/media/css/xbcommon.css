@@ -169,6 +169,7 @@ ul.nav-tabs {
 	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
 	background-color: #999;
 }
+a.xblabel {text-decoration: none; }
 .xblabel {
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;

@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/tmpl/artimgs/default.php
- * @version 0.0.3.0 10th January 2024
+ * @version 0.0.4.0 11th January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -11,13 +11,14 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Text;
+use Joomla\CMS\Button\PublishedButton;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Router\Route;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
-use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Helper\TagsHelper;
 use Joomla\Registry\Registry;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Session\Session;
 use Crosborne\Component\Xbarticleman\Administrator\Helper\XbarticlemanHelper;
 
@@ -219,7 +220,18 @@ if ($saveOrder && !empty($this->items)) {
               
 							<?php echo $item->ordering;?>
 						</td>
-						<td>
+						<td class="article-status text-center">
+                                <?php
+                                    $options = [
+                                        'task_prefix' => 'articles.',
+                                        'disabled' => $workflow_state || !$canChange,
+                                        'id' => 'state-' . $item->id,
+                                        'category_published' => $item->category_published
+                                    ];
+
+                                    echo (new PublishedButton())->render((int) $item->state, $i, $options, $item->publish_up, $item->publish_down);
+                                    ?>
+						<br />
 							<div class="btn-group">
 								<?php echo HTMLHelper::_('jgrid.published', $item->state, $i, 'artimgs.', $canChange, 'cb', $item->publish_up, $item->publish_down); ?>
 								<?php //echo HTMLHelper::_('contentadministrator.featured', $item->featured, $i, $canChange); ?>
@@ -251,12 +263,12 @@ if ($saveOrder && !empty($this->items)) {
 									<span title="<?php echo Text::sprintf('JFIELD_ALIAS_LABEL', $this->escape($item->alias)); ?>"><?php echo $this->escape($item->title); ?></span>
 								<?php endif; ?>
 								<?php $pvuri = "'".(Uri::root().'index.php?option=com_content&view=article&id='.$item->id)."'"; ?>
-          <?php $pvtit = "'".$item->title."'"; ?>
+          						<?php $pvtit = "'".$item->title."'"; ?>
                                 <span  data-bs-toggle="modal" data-bs-target="#pvModal" data-bs-source="<?php echo $pvuri; ?>" data-bs-itemtitle="<?php echo $item->title; ?>" 
                                 title="<?php echo Text::_('XBARTMAN_MODAL_PREVIEW'); ?>" 
-          onclick="var pv=document.getElementById('pvModal');pv.querySelector('.modal-body .iframe').setAttribute('src',<?php echo $pvuri; ?>);pv.querySelector('.modal-title').textContent=<?php echo $pvtit; ?>;"
+          							onclick="var pv=document.getElementById('pvModal');pv.querySelector('.modal-body .iframe').setAttribute('src',<?php echo $pvuri; ?>);pv.querySelector('.modal-title').textContent=<?php echo $pvtit; ?>;"
                                 >
-									<span class="icon-eye xbpl10"></span></a>
+								<span class="icon-eye xbpl10"></span></a>
 								</p>
 								<span class="xbpl20 xb09"><i>Alias</i>: <?php echo $this->escape($item->alias); ?>
 								</span>
@@ -309,7 +321,7 @@ if ($saveOrder && !empty($this->items)) {
 										</li>
 										<li><i>Dimensions - native:</i>
 											<?php echo $a['nativesize'];
-											echo ($a['specsize'] != '') ? ' <i>img spec:</i> '.$a['specsize'] : ''; 
+											echo ($a['specsize'] != '') ? '<br /> <i>img spec:</i> '.$a['specsize'] : ''; 
 											?>
 										</li>
 										<li><i>Mime type:</i>

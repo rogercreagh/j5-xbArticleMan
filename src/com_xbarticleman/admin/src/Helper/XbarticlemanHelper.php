@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * file admin/src/Helper/XbarticlemanHelper.php
- * @version 0.0.1.0 7th January 2024
+ * @version 0.0.4.0 11th January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -45,50 +45,6 @@ class XbarticlemanHelper extends ComponentHelper
 	    return $result;
 	}
 	
-	public static function addSubmenu($vName) {
-	    JHtmlSidebar::addEntry(
-	        Text::_('XBARTMAN_ICONMENU_DASHBOARD'),
-	        'index.php?option=com_xbarticleman&view=dashboard',
-	        $vName == 'dashboard'
-	        );
-	    JHtmlSidebar::addEntry(
-	        Text::_('XBARTMAN_ICONMENU_ARTTAGS'),
-	        'index.php?option=com_xbarticleman&view=arttags',
-	        $vName == 'arttags'
-	        );
-	    JHtmlSidebar::addEntry(
-		    Text::_('XBARTMAN_ICONMENU_ARTIMGS'),
-		    'index.php?option=com_xbarticleman&view=artimgs',
-		    $vName == 'artimgs'
-		    );
-		JHtmlSidebar::addEntry(
-		    Text::_('XBARTMAN_ICONMENU_ARTLINKS'),
-		    'index.php?option=com_xbarticleman&view=artlinks',
-		    $vName == 'artlinks'
-		    );
-		JHtmlSidebar::addEntry(
-		    Text::_('XBARTMAN_ICONMENU_ARTSCODES'),
-		    'index.php?option=com_xbarticleman&view=artscodes',
-		    $vName == 'artscodes'
-		    );
-		JHtmlSidebar::addEntry(Text::_('XBARTMAN_SUBMENU_OTHERVIEWS'));
-		JHtmlSidebar::addEntry(
-		    Text::_('XBARTMAN_ICONMENU_CONTENT_ARTS'),
-		    'index.php?option=com_content&view=articles',
-		    $vName == 'contentarticles'
-		    );
-		JHtmlSidebar::addEntry(
-		    Text::_('XBARTMAN_ICONMENU_TAGS_TAGS'),
-		    'index.php?option=com_tags&view=tags',
-		    $vName == 'tagstags'
-		    );
-		JHtmlSidebar::addEntry(
-		    Text::_('XBARTMAN_ICONMENU_OPTIONS'),
-		    'index.php?option=com_config&view=component&component=com_xbarticleman',
-		    $vName == 'options'
-		    );
-	}
-
     /**
      * getDocAnchors
      * @param string $html - html doc text to parse and find anchors 

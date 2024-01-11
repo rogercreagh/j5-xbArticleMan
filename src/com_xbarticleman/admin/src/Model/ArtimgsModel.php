@@ -307,6 +307,7 @@ class ArtimgsModel extends ListModel {
         $items  = parent::getItems();
         if ($items) {
             foreach ($items as $item) {
+                //first do the img tags in the text
                 $imgtags = XbarticlemanHelper::getDocImgs($item->arttext);
                 $item->imgtags = array();
                 foreach ($imgtags as $img) {
@@ -356,64 +357,52 @@ class ArtimgsModel extends ListModel {
                     $thisimg['title'] = $img->getAttribute('title');
                     $item->imgtags[] = $thisimg;
                 }
-                
+                //now the article intro image
                 $intfull = json_decode($item->images);
                 $item->introimg = array();
                 if ($intfull->image_intro != '') {
                     $imguri = $intfull->image_intro;
-                    $uri_info = parse_url($imguri);
-                    if (key_exists('hostname', $uri_info)) {
-                        $item->introimg['host'] = $uri_info['hostname'];
-                    } else {
-                        $uri = Uri::root().$imguri;
-                        $item->introimg['host'] = '';
-                    }
-                    $item->introimg['uri']= $uri;
-                    $pathinfo = pathinfo($uri);
-                    $item->introimg['filename']= $pathinfo['basename'];
-                    $item->introimg['path']= $pathinfo['dirname'];
-                    $item->introimg['alttext']= $intfull->image_intro_alt;
-                    $item->introimg['caption']= $intfull->image_intro_caption;
-                    $thisimg['nativesize'] ='??';
-                    $thisimg['mime'] ='??';
-                    if (XbarticlemanHelper::check_url($uri)) {
-                        $attr = getimagesize($uri);
-                        if ($attr !== false) {
-                            $thisimg['nativesize'] = $attr[0].' x '.$attr[1].'px';
-                            $thisimg['mime'] = $attr['mime'];
-                        }
-                    }
+                    $item->introimg = $this->parseFieldImg($imguri);
                 }
                 $item->fullimg = array();
                 if ($intfull->image_fulltext != '') {
                     $imguri = $intfull->image_intro;
-                    $uri_info = parse_url($imguri);
-                    if (key_exists('hostname', $uri_info)) {
-                        $item->fullimg['host'] = $uri_info['hostname'];
-                    } else {
-                        $uri = Uri::root().$imguri;
-                        $item->fullimg['host'] = '';
-                    }
-                    $item->fullimg['uri']= $uri;
-                    $pathinfo = pathinfo($uri);
-                    $item->fullimg['filename']= $pathinfo['basename'];
-                    $item->fullimg['path']= $pathinfo['dirname'];
-                    $item->fullimg['alttext']= $intfull->image_fulltext_alt;
-                    $item->fullimg['caption']= $intfull->image_fulltext_caption;
-                    $thisimg['nativesize'] ='??';
-                    $thisimg['mime'] ='??';
-                    if (XbarticlemanHelper::check_url($uri)) {
-                        $attr = getimagesize($uri);
-                        if ($attr !== false) {
-                            $thisimg['nativesize'] = $attr[0].' x '.$attr[1].'px';
-                            $thisimg['mime'] = $attr['mime'];
-                        }
-                    }
+                    $item->fullimg = $this->parseFieldImg($imguri);
                 }
             }
         }
         return $items;
         
+    }
+    
+    private function parseFieldImg($imguri) {
+        $details=array('host'=>'', 'uri'=>'', 'filename'=>'', 'path'=>'', 'alttext'=>'', 
+            'caption'=>'', 'nativesize'=>'', 'ht'=>0, 'wd'=>0, 'mime'=>'');
+        $uri_info = parse_url($imguri);
+        if (!key_exists('hostname', $uri_info)) {
+            $uri_info = parse_url(Uri::root().$imguri);
+            //                       $item->introimg['host'] = '';
+        }
+        $details['host'] = $uri_info['hostname'];
+        $uri = $uri_info['scheme'].'://'.$uri_info['hostname'].$uri_info['path'];
+        $details['uri'] = $uri;
+        $pathinfo = pathinfo($uri);
+        $details['filename']= $pathinfo['basename'];
+        $details['path']= $pathinfo['dirname'];
+        $details['alttext']= $intfull->image_intro_alt;
+        $details['caption']= $intfull->image_intro_caption;
+        $details['nativesize'] ='??';
+        $details['mime'] ='??';
+        if (XbarticlemanHelper::check_url($uri)) {
+            $attr = getimagesize($uri);
+            if ($attr !== false) {
+                $details['ht'] = $attr[1];
+                $details['wd'] = $attr[0];
+                $details['nativesize'] = $attr[0].' x '.$attr[1].'px';
+                $details['mime'] = $attr['mime'];
+            }
+        }        
+        return $details;
     }
     
     public function getAuthors()
