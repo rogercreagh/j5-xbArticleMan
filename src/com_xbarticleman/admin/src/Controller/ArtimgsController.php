@@ -12,7 +12,10 @@ namespace Crosborne\Component\Xbarticleman\Administrator\Controller;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\AdminController;
+use Joomla\CMS\Router\Route;
+use Joomla\Utilities\ArrayHelper;
 
 class ArtimgsController extends AdminController {
    
@@ -20,4 +23,21 @@ class ArtimgsController extends AdminController {
         return parent::getModel($name, $prefix, $config);
     }
     
+    /**
+     * disallow new article here and redirect to com-content new article form
+     */
+    public function newArticle() {
+        $this->setRedirect(Route::_('index.php?option=com_content&view=article&layout=edit', false));
+    }
+ 
+    public function fullEdit() {
+        // Get the input and the first selected id
+        $input = Factory::getApplication()->getInput();
+        $pks = $input->post->get('cid', array(), 'array');
+        ArrayHelper::toInteger($pks);
+        $fid = $pks[0];
+        $this->setRedirect(Route::_('index.php?option=com_content&task=article.edit&id='.$fid, false));
+    }
+    
+
 }

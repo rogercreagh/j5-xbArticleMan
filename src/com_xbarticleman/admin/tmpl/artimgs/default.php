@@ -223,27 +223,14 @@ if ($saveOrder && !empty($this->items)) {
 						<td class="article-status text-center">
                                 <?php
                                     $options = [
-                                        'task_prefix' => 'articles.',
-                                        'disabled' => $workflow_state || !$canChange,
+                                        'task_prefix' => 'artimgs.',
+                                        'disabled' => !$canChange,
                                         'id' => 'state-' . $item->id,
                                         'category_published' => $item->category_published
                                     ];
 
                                     echo (new PublishedButton())->render((int) $item->state, $i, $options, $item->publish_up, $item->publish_down);
                                     ?>
-						<br />
-							<div class="btn-group">
-								<?php echo HTMLHelper::_('jgrid.published', $item->state, $i, 'artimgs.', $canChange, 'cb', $item->publish_up, $item->publish_down); ?>
-								<?php //echo HTMLHelper::_('contentadministrator.featured', $item->featured, $i, $canChange); ?>
-								<?php // Create dropdown items and render the dropdown list.
-								if ($canChange)
-								{
-									HTMLHelper::_('actionsdropdown.' . ((int) $item->state === 2 ? 'un' : '') . 'archive', 'cb' . $i, 'artimgs');
-									HTMLHelper::_('actionsdropdown.' . ((int) $item->state === -2 ? 'un' : '') . 'trash', 'cb' . $i, 'artimgs');
-									echo HTMLHelper::_('actionsdropdown.render', $this->escape($item->title));
-								}
-								?>
-							</div>
 						</td>
 						<td class="has-context">
 							<div class="pull-left"><p class="xbm0">
@@ -446,6 +433,7 @@ if ($saveOrder && !empty($this->items)) {
 					$this->loadTemplate('batch_body')
 				); ?>
 			<?php endif; ?>
+			
 			<?php // Load the article preview modal ?>
 			<?php echo HTMLHelper::_(
 				'bootstrap.renderModal',

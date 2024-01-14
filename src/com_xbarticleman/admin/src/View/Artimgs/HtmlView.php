@@ -114,25 +114,13 @@ class HtmlView extends BaseHtmlView {
                 
                 $childBar->archive('articles.archive')->listCheck(true);
                 
-                $childBar->checkin('articles.checkin');
-                
                 if ($this->state->get('filter.published') != ContentComponent::CONDITION_TRASHED) {
                     $childBar->trash('articles.trash')->listCheck(true);
                 }
+                $childBar->checkin('articles.checkin');
+                
             }
             // Add a batch button
-            if (
-                $user->authorise('core.create', 'com_content')
-                && $user->authorise('core.edit', 'com_content')
-                ) {
-                    $childBar->popupButton('batch', 'JTOOLBAR_BATCH')
-                    ->popupType('inline')
-                    ->textHeader(Text::_('COM_CONTENT_BATCH_OPTIONS'))
-                    ->url('#joomla-dialog-batch')
-                    ->modalWidth('800px')
-                    ->modalHeight('fit-content')
-                    ->listCheck(true);
-                }                       
         }
             
         if ($this->state->get('filter.published') == ContentComponent::CONDITION_TRASHED && $canDo->get('core.delete')) {
@@ -159,7 +147,7 @@ class HtmlView extends BaseHtmlView {
         
         // Add a batch button
         if ($user->authorise('core.create', 'com_xbarticleman')
-            && $user->authorise('cxbarticleman', 'com_xbarticleman')
+            && $user->authorise('xbarticleman', 'com_xbarticleman')
             && $user->authorise('core.edit.state', 'com_xbarticleman'))
         {
             $title = Text::_('JTOOLBAR_BATCH');
@@ -168,7 +156,7 @@ class HtmlView extends BaseHtmlView {
             $layout = new FileLayout('joomla.toolbar.batch');
             
             $dhtml = $layout->render(array('title' => $title));
-            $toolbar->appendButton('Custom', $dhtml, 'batch');
+            $toolbar->customButton('batch', $dhtml);
             
         }
         

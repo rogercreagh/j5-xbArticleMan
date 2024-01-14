@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
+	<config>
+		<inlinehelp button="show"/>
+	</config>
 	<fieldset>
 		<field 
 			name="id" 
@@ -80,7 +83,6 @@
 			type="tag"
 			label="Add or Remove Tags"
 			description="JTAG_DESC"
-			class="span12"
 			multiple="true"
 			mode="ajax"
 			custom="deny"
@@ -90,7 +92,7 @@
 			name="modified" 
 			type="calendar" 
 			label="JGLOBAL_FIELD_MODIFIED_LABEL" 
-			description="COM_CONTENT_FIELD_MODIFIED_DESC"
+			description="XBARTMAN_FIELD_MODIFIED_DESC"
 			class="readonly"
 			translateformat="true"
 			showtime="true"
@@ -143,182 +145,175 @@
 
 	</fieldset>
 
-	<fields name="images" label="COM_CONTENT_FIELD_IMAGE_OPTIONS">
-		<field
-			name="image_intro"
-			type="media"
-			label="Article Intro Image"
-			description="Typcally make this smaller than the full image. Will only show with the article intor text, not the full article" 
-			class="input-xxlarge"
-		/>
-		
-		<field
-			name="float_intro"
-			type="list"
-			label="Image Float"
-			description="COM_CONTENT_FLOAT_DESC"
-			useglobal="true"
-			>
-			<option value="right">COM_CONTENT_RIGHT</option>
-			<option value="left">COM_CONTENT_LEFT</option>
-			<option value="none">COM_CONTENT_NONE</option>
-		</field>
-		
-		<field 
-			name="image_intro_alt"
-			type="text"
-			label="Image Alt Text"
-			description="COM_CONTENT_FIELD_IMAGE_ALT_DESC"
-			size="20"
-		/>
+	<fields name="images" label="XBARTMAN_FIELD_IMAGE_OPTIONS">
+		<fieldset name="image-intro" label="XBARTMAN_FIELD_INTRO_LABEL">
+			<field
+				name="image_intro"
+				type="media"
+				label="XBARTMAN_FIELD_INTRO_LABEL"
+			/>
 
-		<field 
-			name="image_intro_caption"
-			type="text"
-			label="Image Caption"
-			description="COM_CONTENT_FIELD_IMAGE_CAPTION_DESC"
-			class="input-xxlarge"
-		/>
+			<field
+				name="image_intro_alt"
+				type="text"
+				label="XBARTMAN_FIELD_IMAGE_ALT_LABEL"
+			/>
 
-		<field
-			name="image_fulltext"
-			type="media"
-			label="Full Article Image"
-			description="COM_CONTENT_FIELD_FULL_DESC"
-			class="input-xxlarge"
-		/>
+			<field
+				name="image_intro_alt_empty"
+				type="checkbox"
+				label="XBARTMAN_FIELD_IMAGE_ALT_EMPTY_LABEL"
+				description="XBARTMAN_FIELD_IMAGE_ALT_EMPTY_DESC"
+			/>
 
-		<field
-			name="float_fulltext"
-			type="list"
-			label="Image Float"
-			description="COM_CONTENT_FLOAT_DESC"
-			useglobal="true"
-			>
-			<option value="right">COM_CONTENT_RIGHT</option>
-			<option value="left">COM_CONTENT_LEFT</option>
-			<option value="none">COM_CONTENT_NONE</option>
-		</field>
+			<field
+				name="float_intro"
+				type="text"
+				label="XBARTMAN_FIELD_IMAGE_CLASS_LABEL"
+				description="XBARTMAN_FIELD_IMAGE_CLASS_DESC"
+				useglobal="true"
+				validate="CssIdentifier"
+			/>
 
-		<field 
-			name="image_fulltext_alt"
-			type="text"
-			label="Image Alt Text"
-			description="COM_CONTENT_FIELD_IMAGE_ALT_DESC"
-			size="20"
-		/>
-			
-		<field 
-			name="image_fulltext_caption"
-			type="text"
-			label="Image Caption"
-			description="COM_CONTENT_FIELD_IMAGE_CAPTION_DESC"
-			class="input-xxlarge"
-		/>
+			<field
+				name="image_intro_caption"
+				type="text"
+				label="XBARTMAN_FIELD_IMAGE_CAPTION_LABEL"
+			/>
+		</fieldset>
+
+		<fieldset name="image-full" label="XBARTMAN_FIELD_FULL_LABEL">
+			<field
+				name="image_fulltext"
+				type="media"
+				label="XBARTMAN_FIELD_FULL_LABEL"
+			/>
+
+			<field
+				name="image_fulltext_alt"
+				type="text"
+				label="XBARTMAN_FIELD_IMAGE_ALT_LABEL"
+			/>
+
+			<field
+				name="image_fulltext_alt_empty"
+				type="checkbox"
+				label="XBARTMAN_FIELD_IMAGE_ALT_EMPTY_LABEL"
+				description="XBARTMAN_FIELD_IMAGE_ALT_EMPTY_DESC"
+			/>
+
+			<field
+				name="float_fulltext"
+				type="text"
+				label="XBARTMAN_FIELD_IMAGE_CLASS_LABEL"
+				description="XBARTMAN_FIELD_IMAGE_CLASS_DESC"
+				useglobal="true"
+				validate="CssIdentifier"
+			/>
+
+			<field
+				name="image_fulltext_caption"
+				type="text"
+				label="XBARTMAN_FIELD_IMAGE_CAPTION_LABEL"
+			/>
+		</fieldset>
 	</fields>
-	<fields name="urls" label="COM_CONTENT_FIELD_URLS_OPTIONS">
-		<field
-			name="urla"
-			type="url"
-			label="XBARTMAN_FIELD_URLA_LABEL"
-			description="XBARTMAN_FIELD_URL_DESC"
-			validate="url"
-			filter="url"
-			relative="true"
-			class="input-xxlarge"
-		/>
+	<fields name="urls" label="XBARTMAN_FIELD_URLS_OPTIONS">
+		<fieldset name="linka" label="XBARTMAN_FIELD_URLA_LABEL">
+			<field
+				name="urla"
+				type="url"
+				label="XBARTMAN_FIELD_URLA_LABEL"
+				validate="url"
+				filter="url"
+				relative="true"
+			/>
 
-		<field 
-			name="urlatext"
-			type="text"
-			label="XBARTMAN_FIELD_URLA_LINK_TEXT_LABEL"
-			description="XBARTMAN_FIELD_URL_LINK_TEXT_DESC"
-			class="input-xxlarge"
-		/>
+			<field
+				name="urlatext"
+				type="text"
+				label="XBARTMAN_FIELD_URLA_LINK_TEXT_LABEL"
+			/>
 
-		<field
-			name="targeta"
-			type="list"
-			label="XBARTMAN_URL_FIELD_BROWSERNAV_LABEL"
-			description="XBARTMAN_URL_FIELD_BROWSERNAV_DESC"
-			default=""
-			filter="options"
-			useglobal="true"
-			>
-			<option value="0">JBROWSERTARGET_PARENT</option>
-			<option value="1">JBROWSERTARGET_NEW</option>
-			<option value="2">JBROWSERTARGET_POPUP</option>
-			<option value="3">JBROWSERTARGET_MODAL</option>
-		</field>
+			<field
+				name="targeta"
+				type="list"
+				label="XBARTMAN_URL_FIELD_BROWSERNAV_LABEL"
+				default=""
+				filter="options"
+				useglobal="true"
+				validate="options"
+				>
+				<option value="0">JBROWSERTARGET_PARENT</option>
+				<option value="1">JBROWSERTARGET_NEW</option>
+				<option value="2">JBROWSERTARGET_POPUP</option>
+				<option value="3">JBROWSERTARGET_MODAL</option>
+			</field>
+		</fieldset>
 
-		<field
-			name="urlb"
-			type="url"
-			label="XBARTMAN_FIELD_URLB_LABEL"
-			description="XBARTMAN_FIELD_URL_DESC"
-			validate="url"
-			filter="url"
-			relative="true"
-			class="input-xxlarge"
-		/>
+		<fieldset name="linkb" label="XBARTMAN_FIELD_URLB_LABEL">
+			<field
+				name="urlb"
+				type="url"
+				label="XBARTMAN_FIELD_URLB_LABEL"
+				validate="url"
+				filter="url"
+				relative="true"
+			/>
 
-		<field 
-			name="urlbtext"
-			type="text"
-			label="XBARTMAN_FIELD_URLB_LINK_TEXT_LABEL"
-			description="XBARTMAN_FIELD_URL_LINK_TEXT_DESC"
-			class="input-xxlarge"
-		/>
+			<field
+				name="urlbtext"
+				type="text"
+				label="XBARTMAN_FIELD_URLB_LINK_TEXT_LABEL"
+			/>
 
-		<field
-			name="targetb"
-			type="list"
-			label="XBARTMAN_URL_FIELD_BROWSERNAV_LABEL"
-			description="XBARTMAN_URL_FIELD_BROWSERNAV_DESC"
-			default=""
-			filter="options"
-			useglobal="true"
-			>
-			<option value="0">JBROWSERTARGET_PARENT</option>
-			<option value="1">JBROWSERTARGET_NEW</option>
-			<option value="2">JBROWSERTARGET_POPUP</option>
-			<option value="3">JBROWSERTARGET_MODAL</option>
-		</field>
+			<field
+				name="targetb"
+				type="list"
+				label="XBARTMAN_URL_FIELD_BROWSERNAV_LABEL"
+				default=""
+				filter="options"
+				useglobal="true"
+				validate="options"
+				>
+				<option value="0">JBROWSERTARGET_PARENT</option>
+				<option value="1">JBROWSERTARGET_NEW</option>
+				<option value="2">JBROWSERTARGET_POPUP</option>
+				<option value="3">JBROWSERTARGET_MODAL</option>
+			</field>
+		</fieldset>
 
-		<field
-			name="urlc"
-			type="url"
-			label="XBARTMAN_FIELD_URLC_LABEL"
-			description="XBARTMAN_FIELD_URL_DESC"
-			validate="url"
-			filter="url"
-			relative="true"
-			class="input-xxlarge"
-		/>
+		<fieldset name="linkc" label="XBARTMAN_FIELD_URLC_LABEL">
+			<field
+				name="urlc"
+				type="url"
+				label="XBARTMAN_FIELD_URLC_LABEL"
+				validate="url"
+				filter="url"
+				relative="true"
+			/>
 
-		<field
-			name="urlctext"
-			type="text"
-			label="XBARTMAN_FIELD_URLC_LINK_TEXT_LABEL"
-			description="XBARTMAN_FIELD_URL_LINK_TEXT_DESC"
-			class="input-xxlarge"
-		/>
+			<field
+				name="urlctext"
+				type="text"
+				label="XBARTMAN_FIELD_URLC_LINK_TEXT_LABEL"
+			/>
 
-		<field
-			name="targetc"
-			type="list"
-			label="XBARTMAN_URL_FIELD_BROWSERNAV_LABEL"
-			description="XBARTMAN_URL_FIELD_BROWSERNAV_DESC"
-			default=""
-			filter="options"
-			useglobal="true"
-			>
-			<option value="0">JBROWSERTARGET_PARENT</option>
-			<option value="1">JBROWSERTARGET_NEW</option>
-			<option value="2">JBROWSERTARGET_POPUP</option>
-			<option value="3">JBROWSERTARGET_MODAL</option>
-		</field>
-
+			<field
+				name="targetc"
+				type="list"
+				label="XBARTMAN_URL_FIELD_BROWSERNAV_LABEL"
+				default=""
+				filter="options"
+				useglobal="true"
+				validate="options"
+				>
+				<option value="0">JBROWSERTARGET_PARENT</option>
+				<option value="1">JBROWSERTARGET_NEW</option>
+				<option value="2">JBROWSERTARGET_POPUP</option>
+				<option value="3">JBROWSERTARGET_MODAL</option>
+			</field>
+		</fieldset>
 	</fields>
 
 

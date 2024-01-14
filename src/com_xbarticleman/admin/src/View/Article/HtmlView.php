@@ -69,6 +69,7 @@ class HtmlView extends BaseHtmlView {
         
         $toolbar->cancel('article.cancel', 'JTOOLBAR_CLOSE');
         $toolbar->divider();
+        $toolbar->inlinehelp();
         $toolbar->help('Article:Quick Edit',false,'https://crosborne.uk/xbarticleman-j5/doc#artedit');
         
     }

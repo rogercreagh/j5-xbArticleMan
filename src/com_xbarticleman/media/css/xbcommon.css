@@ -333,7 +333,7 @@ some common combinations are also defined (eg xbnit - normal weight,italic, 5px 
 /* font weights and styles */
 .xbnorm, .xbnit { font-weight: normal; }
 .xbbold, .xbtitle { font-weight: bold; }
-.xbit, .xbnit, .xbcredit { font-style:italic; }
+.xbit, .xbnit, .xbcredit, .xbnote { font-style:italic; }
 .xbfw300, .xbsubtitle {font-weight:300;}
 
 /* margins */
@@ -406,4 +406,19 @@ some common combinations are also defined (eg xbnit - normal weight,italic, 5px 
 .xbgrey, .xbnote {color:#888;}
 .xbaoycol {color: #e56b8e !important;}
 
-
+/* buttons */
+.xbabtn {
+	padding: 4px 10px;
+	margin-bottom: 0;
+	vertical-align:middle;
+	cursor:pointer;
+	background-color: #f3f3f3;
+	color: #333;
+	border: 1px solid #b3b3b3;
+	moz-border-radius: 3px;
+    border-radius: 3px;
+}
+.xbabtn:hover {
+	background-color: #457D54;
+	color: #fff;
+}
