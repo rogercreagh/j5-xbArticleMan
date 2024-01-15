@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/src/View/Dashboard/HtmlView.php
- * @version 0.0.4.0 11th January 2024
+ * @version 0.0.4.0 15th January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -137,7 +137,7 @@ class HtmlView extends BaseHtmlView {
         
         if ($canDo->get('core.edit') || $canDo->get('core.edit.own'))
         {
-            ToolbarHelper::editList('article.edit','Edit Tags Links');
+            ToolbarHelper::editList('article.edit','Quick Edit');
             ToolbarHelper::editList('artimgs.fullEdit','Full Edit');
         }
         

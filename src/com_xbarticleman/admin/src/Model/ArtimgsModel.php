@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager
  * @filesource admin/src/Model/ArtimgsModel.php
- * @version 0.0.3.0 10th January 2024
+ * @version 0.0.4.0 15th January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2023
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -329,16 +329,8 @@ class ArtimgsModel extends ListModel {
                     $w = ($img->getAttribute('width')) ? $img->getAttribute('width') : '';
                     $h = ($img->getAttribute('height')) ? $img->getAttribute('height') : '';
                     $specsize = '';
-                    if ($w != '') {
-                        $specsize .= $w;
-                        if ($h != '') {
-                            $specsize .= ' x '.$h.'px';
-                        } else {
-                            $specsize .= 'px wide';
-                        }
-                    } elseif ($h != '') {
-                        $specsize .= $h.'px high';
-                    }
+                    $specsize .= ($w != '') ? 'width:'.$w.'px;' : '';
+                    $specsize .= ($h != '') ? 'height:'.$h.'px;' : '';
                     $thisimg['specsize'] = $specsize;
                     
                     $thisimg['nativesize'] ='??';
@@ -346,7 +338,8 @@ class ArtimgsModel extends ListModel {
                     if (XbarticlemanHelper::check_url($uri)) {
                         $attr = getimagesize($uri);
                         if ($attr !== false) {
-                            $thisimg['nativesize'] = $attr[0].' x '.$attr[1].'px';
+                            $thisimg['nativesize'] = $attr[3];
+                            $thisimg['type'] = $attr['type'];
                             $thisimg['mime'] = $attr['mime'];
                         }
                     }
@@ -362,7 +355,7 @@ class ArtimgsModel extends ListModel {
                 $item->introimg = array();
                 if ($intfull->image_intro != '') {
                     $imguri = $intfull->image_intro;
-                    $item->introimg = $this->parseFieldImg($imguri.'intro');
+                    $item->introimg = $this->parseFieldImg($imguri,'intro');
                 }
                 $item->fullimg = array();
                 if ($intfull->image_fulltext != '') {
@@ -380,15 +373,15 @@ class ArtimgsModel extends ListModel {
             'caption'=>'', 'nativesize'=>'', 'ht'=>0, 'wd'=>0, 'mime'=>'');
  
         $uri_info = parse_url($imguri);
-        if (!key_exists('hostname', $uri_info)) {
-            $uri = Uri::root().$uri_info['path'];
+        if (!key_exists('host', $uri_info)) {
+            $uri = Uri::root().'/'.$uri_info['path'];
             //                       $item->introimg['host'] = '';
         } else {
-            $uri = $uri_info['scheme'].'://'.$uri_info['hostname'].$uri_info['path'];
+            $uri = $uri_info['scheme'].'://'.$uri_info['host'].$uri_info['path'];
             
         }
         $details['imguri'] = $imguri;
-        $details['host'] = $uri_info['hostname'];
+        $details['host'] = $uri_info['host'];
         $uirpath = $uri_info['path'];
         $details['uri'] = $uri;
         $pathinfo = pathinfo($uirpath);
@@ -409,40 +402,41 @@ class ArtimgsModel extends ListModel {
                 $details['ht'] = $attr[1];
                 $details['wd'] = $attr[0];
                 $details['nativesize'] = $attr[3];
+                $details['type'] = $attr[2];
                 $details['mime'] = $attr['mime'];
             }
         }
         
         
-        $uri_info = parse_url($imguri);
-        if (!key_exists('hostname', $uri_info)) {
-            $uri_info = parse_url(Uri::root().$imguri);
-            //                       $item->introimg['host'] = '';
-        }
-        $details['host'] = $uri_info['hostname'];
-        $uri = $uri_info['scheme'].'://'.$uri_info['hostname'].$uri_info['path'];
-        $details['uri'] = $uri;
-        $pathinfo = pathinfo($uri);
-        $details['filename']= $pathinfo['basename'];
-        $details['path']= $pathinfo['dirname'];
-        if ($introfull=='intro') {
-            $details['alttext']= $intfull->image_intro_alt;
-            $details['caption']= $intfull->image_intro_caption;
-        } else {
-            $details['alttext']= $intfull->image_fulltext_alt;
-            $details['caption']= $intfull->image_fulltext_caption;
-        }
-        $details['nativesize'] ='??';
-        $details['mime'] ='??';
-        if (XbarticlemanHelper::check_url($uri)) {
-            $attr = getimagesize($uri);
-            if ($attr !== false) {
-                $details['ht'] = $attr[1];
-                $details['wd'] = $attr[0];
-                $details['nativesize'] = $attr[0].' x '.$attr[1].'px';
-                $details['mime'] = $attr['mime'];
-            }
-        }        
+//         $uri_info = parse_url($imguri);
+//         if (!key_exists('hostname', $uri_info)) {
+//             $uri_info = parse_url(Uri::root().$imguri);
+//             //                       $item->introimg['host'] = '';
+//         }
+//         $details['host'] = $uri_info['hostname'];
+//         $uri = $uri_info['scheme'].'://'.$uri_info['hostname'].$uri_info['path'];
+//         $details['uri'] = $uri;
+//         $pathinfo = pathinfo($uri);
+//         $details['filename']= $pathinfo['basename'];
+//         $details['path']= $pathinfo['dirname'];
+//         if ($introfull=='intro') {
+//             $details['alttext']= $intfull->image_intro_alt;
+//             $details['caption']= $intfull->image_intro_caption;
+//         } else {
+//             $details['alttext']= $intfull->image_fulltext_alt;
+//             $details['caption']= $intfull->image_fulltext_caption;
+//         }
+//         $details['nativesize'] ='??';
+//         $details['mime'] ='??';
+//         if (XbarticlemanHelper::check_url($uri)) {
+//             $attr = getimagesize($uri);
+//             if ($attr !== false) {
+//                 $details['ht'] = $attr[1];
+//                 $details['wd'] = $attr[0];
+//                 $details['nativesize'] = $attr[0].' x '.$attr[1].'px';
+//                 $details['mime'] = $attr['mime'];
+//             }
+//         }        
         return $details;
     }
     

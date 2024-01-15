@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/tmpl/artimgs/default.php
- * @version 0.0.4.0 11th January 2024
+ * @version 0.0.4.0 15th January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -202,23 +202,24 @@ if ($saveOrder && !empty($this->items)) {
 							<?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
 						</td>
 						<td class="order">
-                                    <?php
-                                    $iconClass = '';
-                                    if (!$canChange) {
-                                        $iconClass = ' inactive';
-                                    } elseif (!$saveOrder) {
-                                        $iconClass = ' inactive" title="' . Text::_('JORDERINGDISABLED');
-                                    }
-                                    ?>
-                                    <span class="sortable-handler<?php echo $iconClass ?>">
-                                        <span class="icon-ellipsis-v" aria-hidden="true"></span>
-                                    </span>
-                                    <?php if ($canChange && $saveOrder) : ?>
-                                        <input type="text" name="order[]" size="5" value="<?php echo $item->ordering; ?>" class="width-20 text-area-order hidden">
-                                    <?php endif; ?>
-
-              
-							<?php echo $item->ordering;?>
+                            <?php
+                            $iconClass = '';
+                            $numclass = '';
+                            if (!$canChange) {
+                                $iconClass = ' inactive';
+                                $numclass = 'xbgrey';
+                            } elseif (!$saveOrder) {
+                                $iconClass = ' inactive" title="' . Text::_('JORDERINGDISABLED');
+                                $numclass = 'xbgrey';
+                            }
+                            ?>
+                            <span class="sortable-handler<?php echo $iconClass ?>">
+                                <span class="icon-ellipsis-v" aria-hidden="true"></span>
+                            </span>
+                            <?php if ($canChange && $saveOrder) : ?>
+                                <input type="text" name="order[]" size="5" value="<?php echo $item->ordering; ?>" class="width-20 text-area-order hidden">
+                            <?php endif; ?>             
+							<span class="<?php echo $numclass; ?>"><?php echo $item->ordering;?></span>
 						</td>
 						<td class="article-status text-center">
                                 <?php
@@ -342,20 +343,27 @@ if ($saveOrder && !empty($this->items)) {
 							<?php $a = $item->introimg;
 							if (key_exists('uri',$a) ) : ?>
 								<details>
-									<summary><i>Intro</i> <?php echo $a['filename']; ?>
-    									<a href="<?php echo $a['uri']; ?>" class="modal"> <span class="icon-eye"></span> </a>
+									<summary><i>Intro</i> 
+										<?php if ($a['nativesize']=='??') : ?>
+        									<span style="color:red;"><?php echo $a['filename']; ?></span>
+    									<?php else : ?>
+											<?php echo $a['filename']; ?>
+        									<span class="xbpop" data-bs-original-title="<?php echo $a['alttext'];?>" 
+                                      		data-bs-content="<img src='<?php echo $a['uri'];  ?>' class='popimg' />" ><span class="icon-eye"></span> </span>
+    									<?php endif; ?>
 									</summary>
 									<ul>
 										<li><i>Host:</i>
+											<?php echo ($a['scheme']=='') ? '' : $a['scheme']; ?>
 											<?php echo ($a['host']=='') ? 'local' : $a['host']; ?>
 										</li>
 										<li><i>Path:</i>
 											<?php echo $a['path'];?>
 										</li>
-										<li><i>Dimensions - native:</i>
+										<li><i>Dimensions</i>
 											<?php echo $a['nativesize']; ?>
 										</li>
-										<li><i>Mime type:</i>
+										<li><i>Type:</i> <?php echo $a['type'];?><br />
 											<?php echo $a['mime'];?>
 										</li>
 										<?php if ($a['alttext'] != '') : ?>
@@ -374,8 +382,14 @@ if ($saveOrder && !empty($this->items)) {
 							<?php $a = $item->fullimg;
 							if (key_exists('uri',$a) ) : ?>
 								<details>
-									<summary><i>Full</i> <?php echo $a['filename']; ?>
-    									<a href="<?php echo $a['uri']; ?>" class="modal"> <span class="icon-eye"></span> </a>
+									<summary><i>Full</i>
+										<?php if ($a['nativesize']=='??') : ?>
+        									<span style="color:red;"><?php echo $a['filename']; ?></span>
+    									<?php else : ?>
+											<?php echo $a['filename']; ?>
+        									<span class="xbpop" data-bs-original-title="<?php echo $a['alttext'];?>" 
+                                      		data-bs-content="<img src='<?php echo $a['uri'];  ?>' class='popimg' />" ><span class="icon-eye"></span> </span>
+    									<?php endif; ?>
 									</summary>
 									<ul>
 										<li><i>Host:</i>
@@ -384,10 +398,10 @@ if ($saveOrder && !empty($this->items)) {
 										<li><i>Path:</i>
 											<?php echo $a['path'];?>
 										</li>
-										<li><i>Dimensions - native:</i>
+										<li><i>Dimensions:</i>
 											<?php echo $a['nativesize']; ?>
 										</li>
-										<li><i>Mime type:</i>
+										<li><i>Type:</i> <?php echo $a['type'];?><br />
 											<?php echo $a['mime'];?>
 										</li>
 										<?php if ($a['alttext'] != '') : ?>
