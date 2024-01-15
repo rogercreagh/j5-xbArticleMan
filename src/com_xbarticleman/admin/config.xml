@@ -12,9 +12,7 @@
  			class="btn-group btn-group-yesno"
  			default="0"
 			>
-			<option value="0" >XB_DISABLE</option>
-			<option value="1">XBARTMAN_SITE_ADMIN</option>
-			<option value="2">XBARTMAN_SITE_ONLY</option>
+			<option value="0">XB_DISABLE</option>
 			<option value="3">XBARTMAN_ADMIN_ONLY</option>
 		</field>	
 	
@@ -23,6 +21,59 @@
 			description="XB_BUY_A_BEER_DESC"
 			class="info"
 		/>	
+        
+        <field name="taggrpsnote" type="note"
+			label="XBARTMAN_CONFIG_TAGGROUPNOTE_LABEL"
+			description="XBARTMAN_CONFIG_TAGGROUPNOTE_DESC"
+		/>	
+		
+ 		<field name="enable_taggroups" type="radio"
+			label="XBARTMAN_CONFIG_TAGGROUP_ENABLE_LABEL"
+			description="XBARTMAN_CONFIG_TAGGROUP_ENABLE_DESC"
+			class="btn-group btn-group-yesno"
+			showon="show_tags:1"
+			default="0"
+			>
+			<option value="0" >JNO</option>
+			<option value="1">JYES</option>
+		</field>	
+		<field name="taggroup1_parent" type="tag"
+			mode="nested" published="1"
+			label="XBARTMAN_CONFIG_TAGGROUP1_PARENT" description="XBARTMAN_CONFIG_TAGGROUP_DESC"
+			multiple="false"
+			showon="enable_taggroups:1" 
+			default=""
+		>
+			<option value="">XBARTMAN_OPT_NOT_USED</option>
+		</field>
+		<field name="taggroup2_parent" type="tag"
+			mode="nested" published="1"
+			label="XBARTMAN_CONFIG_TAGGROUP2_PARENT" description="XBARTMAN_CONFIG_TAGGROUP_DESC"
+			multiple="false"
+			showon="enable_taggroups:1"
+			default=""
+		>
+			<option value="">XBARTMAN_OPT_NOT_USED</option>
+		</field>
+		<field name="taggroup3_parent" type="tag"
+			mode="nested" published="1"
+			label="XBARTMAN_CONFIG_TAGGROUP3_PARENT" description="XBARTMAN_CONFIG_TAGGROUP_DESC"
+			multiple="false"
+			showon="enable_taggroups:1"
+			default=""
+		>
+			<option value="">XBARTMAN_OPT_NOT_USED</option>
+		</field>
+		<field name="taggroup4_parent" type="tag"
+			mode="nested" published="1"
+			label="XBARTMAN_CONFIG_TAGGROUP4_PARENT" description="XBARTMAN_CONFIG_TAGGROUP_DESC"
+			multiple="false"
+			showon="enable_taggroups:1"
+			default=""
+		>
+			<option value="">XBARTMAN_OPT_NOT_USED</option>
+		</field>
+		
         
 	</fieldset>
 <!-- BEER TAB -->

@@ -318,6 +318,22 @@ class XbarticlemanHelper extends ComponentHelper
 	    return false;
 	}
 	
+	/**
+	 * @name getTag()
+	 * @desc gets a tag's details given its id
+	 * @param (int) $tagid
+	 * @return unknown|mixed
+	 */
+	public static function getTag($tagid) {
+	    $db = Factory::getDBO();
+	    $query = $db->getQuery(true);
+	    $query->select('*')
+	    ->from('#__tags AS a ')
+	    ->where('a.id = '.$tagid);
+	    $db->setQuery($query);
+	    return $db->loadObject();
+	}
+	
 	public static function tagFilterQuery($query, $tagfilt, $taglogic) {
 	    
 	    if (!empty($tagfilt)) {

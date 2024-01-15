@@ -61,34 +61,76 @@ $input = Factory::getApplication()->getInput();
         <?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'general', 'recall' => true, 'breakpoint' => 768]); ?>
 
         <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'general', Text::_('Status, Category, Tags')); ?>
-            <div class="col-lg-9">
-                <p>If tag groups are defined they will appear here
-    			<div class="control-label">
-    				<?php echo $this->form->getLabel('tags'); ?>
-    			</div>
-    			<div class="controls">
-    				<?php echo $this->form->getInput('tags'); ?>
-    			</div>
-            </div>
-            <div class="col-lg-3">
-				<div class="control-label">
-					<?php echo $this->form->getLabel('catid'); ?>
-				</div>
-				<div class="controls" style="margin-bottom:20px;">
-					<?php echo $this->form->getInput('catid'); ?>
-				</div>
-				<div class="control-label">
-					<?php echo $this->form->getLabel('state'); ?>
-				</div>
-				<div class="controls" style="margin-bottom:20px;">
-					<?php echo $this->form->getInput('state'); ?>
-				</div>
-				<div class="control-label">
-					<?php echo $this->form->getLabel('note'); ?>
-				</div>
-				<div class="controls" style="margin-bottom:20px;">
-					<?php echo $this->form->getInput('note'); ?>
-				</div>
+			<div class="row">
+            	<div class="col-lg-9">				
+           			<?php if ($this->taggroups) : ?>
+ 						<?php  $this->form->setFieldAttribute('tags','label',Text::_('XBARTMAN_ALLTAGS'));
+ 						    $this->form->setFieldAttribute('tags','description',Text::_('XBARTMAN_ALLTAGS_DESC'));	?>	    
+           				<h4><?php echo Text::_('Tag Groups'); ?></h4>
+           				<?php if (count($this->taggroupinfo) < 4 ) : ?>
+           					<p class="xbnote">Additional TagGroups can be defined in the component Options</p>
+           				<?php endif; ?>
+           				<div class="row">
+           					<div class="col-lg-3">
+         						<?php if ($this->taggroup1_parent) {
+         						    $this->form->setFieldAttribute('taggroup1','label',$this->taggroupinfo[$this->taggroup1_parent]['title']);
+         						    $this->form->setFieldAttribute('taggroup1','description',$this->taggroupinfo[$this->taggroup1_parent]['description']);
+              						echo $this->form->renderField('taggroup1'); 
+        						} ?>
+           					</div>
+           					<div class="col-lg-3">
+         						<?php if ($this->taggroup2_parent) {
+         						    $this->form->setFieldAttribute('taggroup2','label',$this->taggroupinfo[$this->taggroup2_parent]['title']);
+         						    $this->form->setFieldAttribute('taggroup2','description',$this->taggroupinfo[$this->taggroup2_parent]['description']);
+              						echo $this->form->renderField('taggroup2'); 
+        						} ?>
+           					</div>
+           					<div class="col-lg-3">
+         						<?php if ($this->taggroup3_parent) {
+         						    $this->form->setFieldAttribute('taggroup3','label',$this->taggroupinfo[$this->taggroup3_parent]['title']);
+         						    $this->form->setFieldAttribute('taggroup3','description',$this->taggroupinfo[$this->taggroup3_parent]['description']);
+              						echo $this->form->renderField('taggroup3'); 
+        						} ?>
+           					</div>
+           					<div class="col-lg-3">
+          						<?php if ($this->taggroup4_parent) {
+         						    $this->form->setFieldAttribute('taggroup4','label',$this->taggroupinfo[$this->taggroup4_parent]['title']);
+         						    $this->form->setFieldAttribute('taggroup4','description',$this->taggroupinfo[$this->taggroup4_parent]['description']);
+              						echo $this->form->renderField('taggroup4'); 
+        						} ?>
+          					</div>          					
+           				</div>
+					<?php else : ?>
+						<p class="xbnote">TagGroups can be defined in the component Options and will appear here</p>
+ 					<?php endif; ?>
+ 				</div>
+                <div class="col-lg-3">
+ 				 				
+        			<div class="control-label">
+        				<?php echo $this->form->getLabel('tags'); ?>
+        			</div>
+        			<div class="controls">
+        				<?php echo $this->form->getInput('tags'); ?>
+        			</div>
+    				<div class="control-label">
+    					<?php echo $this->form->getLabel('catid'); ?>
+    				</div>
+    				<div class="controls" style="margin-bottom:20px;">
+    					<?php echo $this->form->getInput('catid'); ?>
+    				</div>
+    				<div class="control-label">
+    					<?php echo $this->form->getLabel('state'); ?>
+    				</div>
+    				<div class="controls" style="margin-bottom:20px;">
+    					<?php echo $this->form->getInput('state'); ?>
+    				</div>
+    				<div class="control-label">
+    					<?php echo $this->form->getLabel('note'); ?>
+    				</div>
+    				<div class="controls" style="margin-bottom:20px;">
+    					<?php echo $this->form->getInput('note'); ?>
+    				</div>
+                </div>
             </div>
         <?php echo HTMLHelper::_('uitab.endTab'); ?>
 
