@@ -13,7 +13,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 
-$catfilt = $this->state->get('filter.published');
+$catfilt = $this->state->get('filter.category_id');
 ?>
 
 <div class="container-fluid">
@@ -29,7 +29,7 @@ $catfilt = $this->state->get('filter.published');
 			
 			</div>
         <?php else: ?>
-          <div ><?php Text::_('XBARTMAN_CHANGE_CAT_FILTER'); ?></div>
+          <div ><?php echo Text::_('XBARTMAN_CHANGE_CAT_FILTER').' '.$catfilt; ?></div>
 		<?php endif; ?>
 	</div>
 </div>

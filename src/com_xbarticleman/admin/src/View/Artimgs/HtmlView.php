@@ -20,11 +20,13 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Toolbar\Button\CustomButton;
 use Joomla\CMS\Toolbar\Button\DropdownButton;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Crosborne\Component\Xbarticleman\Administrator\Helper\XbarticlemanHelper;
+use Joomla\CMS\Toolbar\ToolbarButton;
 //use Joomla\CMS\Toolbar\ToolbarFactoryInterface;
 
 class HtmlView extends BaseHtmlView {
@@ -118,7 +120,7 @@ class HtmlView extends BaseHtmlView {
                     $childBar->trash('articles.trash')->listCheck(true);
                 }
                 $childBar->checkin('articles.checkin');
-                
+               
             }
             // Add a batch button
         }
@@ -147,16 +149,22 @@ class HtmlView extends BaseHtmlView {
         
         // Add a batch button
         if ($user->authorise('core.create', 'com_xbarticleman')
-            && $user->authorise('xbarticleman', 'com_xbarticleman')
             && $user->authorise('core.edit.state', 'com_xbarticleman'))
         {
-            $title = Text::_('JTOOLBAR_BATCH');
+ 
+            $toolbar->popupButton('batch', 'JTOOLBAR_BATCH')
+            ->selector('collapseModal')
+            ->listCheck(true);
             
-            // Instantiate a new JLayoutFile instance and render the batch button
-            $layout = new FileLayout('joomla.toolbar.batch');
             
-            $dhtml = $layout->render(array('title' => $title));
-            $toolbar->customButton('batch', $dhtml);
+            
+//             $title = Text::_('JTOOLBAR_BATCH');
+            
+//             // Instantiate a new JLayoutFile instance and render the batch button
+//             $layout = new FileLayout('joomla.toolbar.batch');
+            
+//             $dhtml = $layout->render(array('title' => $title));
+//             $toolbar->appendButton('Custom', $dhtml);
             
         }
         

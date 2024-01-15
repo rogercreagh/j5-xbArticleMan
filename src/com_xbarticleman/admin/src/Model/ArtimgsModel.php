@@ -362,11 +362,11 @@ class ArtimgsModel extends ListModel {
                 $item->introimg = array();
                 if ($intfull->image_intro != '') {
                     $imguri = $intfull->image_intro;
-                    $item->introimg = $this->parseFieldImg($imguri);
+                    $item->introimg = $this->parseFieldImg($imguri.'intro');
                 }
                 $item->fullimg = array();
                 if ($intfull->image_fulltext != '') {
-                    $imguri = $intfull->image_intro;
+                    $imguri = $intfull->image_fulltext;
                     $item->fullimg = $this->parseFieldImg($imguri);
                 }
             }
@@ -375,9 +375,45 @@ class ArtimgsModel extends ListModel {
         
     }
     
-    private function parseFieldImg($imguri) {
+    private function parseFieldImg($imguri, $introfull = 'full') {
         $details=array('host'=>'', 'uri'=>'', 'filename'=>'', 'path'=>'', 'alttext'=>'', 
             'caption'=>'', 'nativesize'=>'', 'ht'=>0, 'wd'=>0, 'mime'=>'');
+ 
+        $uri_info = parse_url($imguri);
+        if (!key_exists('hostname', $uri_info)) {
+            $uri = Uri::root().$uri_info['path'];
+            //                       $item->introimg['host'] = '';
+        } else {
+            $uri = $uri_info['scheme'].'://'.$uri_info['hostname'].$uri_info['path'];
+            
+        }
+        $details['imguri'] = $imguri;
+        $details['host'] = $uri_info['hostname'];
+        $uirpath = $uri_info['path'];
+        $details['uri'] = $uri;
+        $pathinfo = pathinfo($uirpath);
+        $details['filename']= $pathinfo['basename'];
+        $details['path']= $pathinfo['dirname'];
+        if ($introfull=='intro') {
+            $details['alttext']= $intfull->image_intro_alt;
+            $details['caption']= $intfull->image_intro_caption;
+        } else {
+            $details['alttext']= $intfull->image_fulltext_alt;
+            $details['caption']= $intfull->image_fulltext_caption;
+        }
+        $details['nativesize'] ='??';
+        $details['mime'] ='??';
+        if (XbarticlemanHelper::check_url($uri)) {
+            $attr = getimagesize($uri);
+            if ($attr !== false) {
+                $details['ht'] = $attr[1];
+                $details['wd'] = $attr[0];
+                $details['nativesize'] = $attr[3];
+                $details['mime'] = $attr['mime'];
+            }
+        }
+        
+        
         $uri_info = parse_url($imguri);
         if (!key_exists('hostname', $uri_info)) {
             $uri_info = parse_url(Uri::root().$imguri);
@@ -389,8 +425,13 @@ class ArtimgsModel extends ListModel {
         $pathinfo = pathinfo($uri);
         $details['filename']= $pathinfo['basename'];
         $details['path']= $pathinfo['dirname'];
-        $details['alttext']= $intfull->image_intro_alt;
-        $details['caption']= $intfull->image_intro_caption;
+        if ($introfull=='intro') {
+            $details['alttext']= $intfull->image_intro_alt;
+            $details['caption']= $intfull->image_intro_caption;
+        } else {
+            $details['alttext']= $intfull->image_fulltext_alt;
+            $details['caption']= $intfull->image_fulltext_caption;
+        }
         $details['nativesize'] ='??';
         $details['mime'] ='??';
         if (XbarticlemanHelper::check_url($uri)) {
