@@ -1,8 +1,8 @@
 <?php
 /*******
  * @package xbArticleManager
- * @filesource admin/src/Field/Xbtags.php
- * @version 0.0.4.0 15th January 2024
+ * @filesource admin/src/Field/XbtagsField.php
+ * @version 0.0.4.1 15th January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2023
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -23,7 +23,7 @@ class XbtagsField extends TagField
     /**
      * An extension to the built in TagField to allow limiting selection to children of a specified parent and only a specified number of levels
      */
-    protected $type = 'Xbtags';
+    public $type = 'Xbtags';
     
     /**
      * {@inheritDoc}
@@ -36,7 +36,7 @@ class XbtagsField extends TagField
     /**
      *
      */
-    protected function getOptions()
+    public function getOptions()
     {
         $published = (string) $this->element['published'] ?: array(0, 1);
         

@@ -2,6 +2,12 @@
 
 ##### Conversion to J5 Progress this will be cleared at first RC5.0.0
 
+**v0.0.4.1** 16th Jan 2024
+
+- Article edit view working
+  - Tag groups working
+  - Bugfixes in ArtImgs
+
 **v0.0.3.1** 11th Jan 2024
 
 - Artimgs view working

@@ -159,7 +159,6 @@ ul.nav-tabs {
 .xblabel,
 .xbbadge {
 	display: inline-block;
-	padding: 2px 4px;
 	font-size: 10.998px;
 	font-weight: bold;
 	line-height: 14px;
@@ -169,15 +168,14 @@ ul.nav-tabs {
 	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
 	background-color: #999;
 }
-a.xblabel {text-decoration: none; }
 .xblabel {
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
+	padding: 4px 6px 5px 6px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
 }
 .xbbadge {
-	padding-left: 9px;
-	padding-right: 9px;
+	padding: 4px 9px;
 	-webkit-border-radius: 9px;
 	-moz-border-radius: 9px;
 	border-radius: 9px;
@@ -186,6 +184,7 @@ a.xblabel {text-decoration: none; }
 .xbbadge:empty {
 	display: none;
 }
+a.xblabel {text-decoration: none !important; }
 a.xblabel:hover,
 a.xblabel:focus,
 a.xbbadge:hover,
@@ -258,8 +257,11 @@ a.xbbadge:focus {
 .badge-ltgreen, .label-ltgreen {
 	background-color: #ccffcc !important;
 }
-.badge-green, .label-green, .badge-cat, .label-cat {
+.badge-green, .label-green {
 	background-color: #009900 !important;
+}
+.badge-cat, .label-cat {
+	background-color: #007700 !important;
 }
 .badge-cyan, .label-cyan {
 	background-color: #5fffff !important;

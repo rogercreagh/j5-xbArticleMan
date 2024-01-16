@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager J5
  * @filesource admin/src/tmpl/article/edit.php
- * @version 0.0.4.0 14th January 2024
+ * @version 0.0.4.1 15th January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2023
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -109,25 +109,25 @@ $input = Factory::getApplication()->getInput();
         			<div class="control-label">
         				<?php echo $this->form->getLabel('tags'); ?>
         			</div>
-        			<div class="controls">
+        			<div class="controls xbmb20">
         				<?php echo $this->form->getInput('tags'); ?>
         			</div>
     				<div class="control-label">
     					<?php echo $this->form->getLabel('catid'); ?>
     				</div>
-    				<div class="controls" style="margin-bottom:20px;">
+    				<div class="controls xbmb20">
     					<?php echo $this->form->getInput('catid'); ?>
     				</div>
     				<div class="control-label">
     					<?php echo $this->form->getLabel('state'); ?>
     				</div>
-    				<div class="controls" style="margin-bottom:20px;">
+    				<div class="controls xbmb20">
     					<?php echo $this->form->getInput('state'); ?>
     				</div>
     				<div class="control-label">
     					<?php echo $this->form->getLabel('note'); ?>
     				</div>
-    				<div class="controls" style="margin-bottom:20px;">
+    				<div class="controls xbmb20">
     					<?php echo $this->form->getInput('note'); ?>
     				</div>
                 </div>

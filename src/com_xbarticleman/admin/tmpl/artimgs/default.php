@@ -266,24 +266,20 @@ if ($saveOrder && !empty($this->items)) {
 									$CurrentCatUrl = Route::_('index.php?option=com_categories&task=category.edit&id=' . $item->catid . '&extension=com_content');
 									$EditCatTxt = Text::_('JACTION_EDIT') . ' ' . Text::_('JCATEGORY');
 
-										if ($item->category_level != '1') :
-											     $bits = explode('/', $item->category_path);
-											     for ($i=0; $i<$item->category_level-1; $i++) {
-    											     echo $bits[$i].' &#187; ';
-											     }
-										endif;
-										echo '<span style="padding-left:15px;">';
-										if ($canEditCat || $canEditOwnCat) :
-											echo '<a class="hasTooltip xblabel label-success" href="' . $CurrentCatUrl . '" title="' . $EditCatTxt . '">';
-										endif;
-										echo $this->escape($item->category_title);
-										if ($canEditCat || $canEditOwnCat) :
-											echo '</a>';
-										endif;
-										if ($item->category_level != '1') :
-										  echo '</span>';
-										endif;
-									?>
+									if ($item->category_level != '1') :
+										     $bits = explode('/', $item->category_path);
+										     for ($i=0; $i<$item->category_level-1; $i++) {
+											     echo $bits[$i].' &#187; ';
+										     }
+									endif; ?>
+									<span style="padding-left:15px;">
+									<?php if ($canEditCat || $canEditOwnCat) : ?>
+										<a class="hasTooltip xblabel label-cat xb085" href="<?php echo $CurrentCatUrl; ?> " title="<?php echo $EditCatTxt; ?>">
+											<?php echo $this->escape($item->category_title); ?></a>
+									<?php else : ?>
+										<span class="xblabel label-cat xb085"><?php echo $this->escape($item->category_title); ?></span>
+									<?php endif; ?>
+									</span>
 								</div>
 							</div>
 						</td>

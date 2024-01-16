@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager J5
  * @filesource admin/src/Model/ArticleModel.php
- * @version 0.0.4.0 12th January 2024
+ * @version 0.0.4.1 15th January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2023
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -12,6 +12,7 @@ namespace Crosborne\Component\Xbarticleman\Administrator\Model;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Form\Form;
@@ -476,6 +477,33 @@ class ArticleModel extends AdminModel {
             $data->params = $data->params->toArray();
         }
         
+        //need to extract any genre tags and poke them into $data->genre
+        //ie filter tag list (comma sep string) by parent
+        // get genre_parent and if set
+        //
+        $tagsHelper = new TagsHelper;
+        $params = ComponentHelper::getParams('com_xbarticleman');
+        $taggroup1_parent = $params->get('taggroup1_parent','');
+        if ($taggroup1_parent && !(empty($data->tags))) {
+            $taggroup1_tags = $tagsHelper->getTagTreeArray($taggroup1_parent);
+            $data->taggroup1 = array_intersect($taggroup1_tags, explode(',', $data->tags->tags));
+        }
+        $taggroup2_parent = $params->get('taggroup2_parent','');
+        if ($taggroup2_parent && !(empty($data->tags))) {
+            $taggroup2_tags = $tagsHelper->getTagTreeArray($taggroup2_parent);
+            $data->taggroup2 = array_intersect($taggroup2_tags, explode(',', $data->tags->tags));
+        }
+        $taggroup3_parent = $params->get('taggroup3_parent','');
+        if ($taggroup3_parent && !(empty($data->tags))) {
+            $taggroup3_tags = $tagsHelper->getTagTreeArray($taggroup3_parent);
+            $data->taggroup3 = array_intersect($taggroup3_tags, explode(',', $data->tags->tags));
+        }
+        $taggroup4_parent = $params->get('taggroup4_parent','');
+        if ($taggroup4_parent && !(empty($data->tags))) {
+            $taggroup4_tags = $tagsHelper->getTagTreeArray($taggroup4_parent);
+            $data->taggroup4 = array_intersect($taggroup4_tags, explode(',', $data->tags->tags));
+        }
+        
         $this->preprocessData('com_xbarticleman.article', $data);
         
         return $data;
@@ -629,6 +657,20 @@ class ArticleModel extends AdminModel {
                     $app->enqueueMessage($msg, 'warning');
                 }
             }
+        }
+        
+        //merge groups back into tags
+        if ($data['taggroup1']) {
+            $data['tags'] = ($data['tags']) ? array_unique(array_merge($data['tags'],$data['taggroup1'])) : $data['taggroup1'];
+        }
+        if ($data['taggroup2']) {
+            $data['tags'] = ($data['tags']) ? array_unique(array_merge($data['tags'],$data['taggroup2'])) : $data['taggroup2'];
+        }
+        if ($data['taggroup3']) {
+            $data['tags'] = ($data['tags']) ? array_unique(array_merge($data['tags'],$data['taggroup3'])) : $data['taggroup3'];
+        }
+        if ($data['taggroup4']) {
+            $data['tags'] = ($data['tags']) ? array_unique(array_merge($data['tags'],$data['taggroup4'])) : $data['taggroup4'];
         }
         
         if (parent::save($data)) {

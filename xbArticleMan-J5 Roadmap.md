@@ -5,7 +5,7 @@
 - **DONE** v0.0.1 - Dashboard Working
 - **DONE** v0.0.2 - Install script working
 - **DONE** v0.0.3 - ArtImgs view working
-- v0.0.4 - Article view working
+- **DONE** v0.0.4 - Article view working
 - v0.0.5 - ArtLinks view working
 
 - v0.0.6 - ArtScodes view working

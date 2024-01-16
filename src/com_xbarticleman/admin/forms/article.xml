@@ -3,7 +3,7 @@
 	<config>
 		<inlinehelp button="show"/>
 	</config>
-	<fieldset addfieldprefix ="rosborne\Component\Xbarticleman\Administrator\Field" type="xbtags" >
+	<fieldset addfieldprefix="Crosborne\Component\Xbarticleman\Administrator\Field" type="xbtags" >
 		<field 
 			name="id" 
 			type="number" 
@@ -89,22 +89,22 @@
 		/>
 		<field name="taggroup1" type="xbtags"
 			label="Taggroup1" description="Description to be taken from parent tag"
-			parent="com_xbartman.taggroup1_parent"
+			parent="com_xbarticleman.taggroup1_parent"
 			multiple="true" mode="nested" custom="deny"  published="1"
 		/>
 		<field name="taggroup2" type="xbtags"
 			label="Taggroup2" description="Description to be taken from parent tag"
-			parent="com_xbartman.taggroup2_parent"
+			parent="com_xbarticleman.taggroup2_parent"
 			multiple="true" mode="nested" custom="deny"  published="1"
 		/>
 		<field name="taggroup3" type="xbtags"
 			label="Taggroup3" description="Description to be taken from parent tag"
-			parent="com_xbartman.taggroup3_parent"
+			parent="com_xbarticleman.taggroup3_parent"
 			multiple="true" mode="nested" custom="deny"  published="1"
 		/>
 		<field name="taggroup4" type="xbtags"
 			label="Taggroup4" description="Description to be taken from parent tag"
-			parent="com_xbartman.taggroup4_parent"
+			parent="com_xbarticleman.taggroup4_parent"
 			multiple="true" mode="nested" custom="deny"  published="1"
 		/>
 
