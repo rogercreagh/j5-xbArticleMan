@@ -1,14 +1,14 @@
 <?php 
 /*******
  * @package xbArticleManager j5
- * @filesource admin/src/View/Artimgs/HtmlView.php
- * @version 0.0.4.0 15th January 2024
+ * @filesource admin/src/View/Artlinks/HtmlView.php
+ * @version 0.0.5.0 16th January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
  ******/
 
-namespace Crosborne\Component\Xbarticleman\Administrator\View\Artimgs;
+namespace Crosborne\Component\Xbarticleman\Administrator\View\Artlinks;
 
 defined('_JEXEC') or die;
 
@@ -27,10 +27,9 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Crosborne\Component\Xbarticleman\Administrator\Helper\XbarticlemanHelper;
 use Joomla\CMS\Toolbar\ToolbarButton;
-//use Joomla\CMS\Toolbar\ToolbarFactoryInterface;
 
 class HtmlView extends BaseHtmlView {
-  
+    
     protected $items;
     protected $pagination;
     protected $state;
@@ -48,6 +47,9 @@ class HtmlView extends BaseHtmlView {
         $this->state         = $this->get('State');
         $this->filterForm    = $this->get('FilterForm');
         $this->activeFilters = $this->get('ActiveFilters');
+        $this->checkint    = $this->state->get('checkint');
+        $this->checkext      = $this->state->get('checkext');
+        $this->extlinkcnt = $this->get('Extlinkcnt');
         
         // Check for errors.
         if (count($errors = $this->get('Errors')))
@@ -81,21 +83,17 @@ class HtmlView extends BaseHtmlView {
     protected function addToolbar() {
         
         $canDo = ContentHelper::getActions('com_xbarticleman');
-        //$canDo = XbarticlemanHelper::getActions();
         $user  = Factory::getApplication()->getIdentity();
-        //$user  = Factory::getUser();
         
         // Get the toolbar object instance
         $toolbar = Toolbar::getInstance('toolbar');
         //$toolbar = Factory::getContainer()->get(ToolbarFactoryInterface::class)->createToolbar('toolbar');
         
-        ToolbarHelper::title(Text::_('XBARTMAN_ADMIN_ARTIMGS_TITLE'), 'picture');
-        
-        
+        ToolbarHelper::title(Text::_('XBARTMAN_ADMIN_ARTLINKS_TITLE'), 'link');        
         
         if ($canDo->get('core.create') || count($user->getAuthorisedCategories('com_xbarticleman', 'core.create')) > 0)
         {
-            ToolbarHelper::addNew('artimgs.newArticle');
+            ToolbarHelper::addNew('artlinks.newArticle');
         }
         
         if ($canDo->get('core.edit.state') ) {
@@ -108,7 +106,7 @@ class HtmlView extends BaseHtmlView {
             ->listCheck(true);
             
             $childBar = $dropdown->getChildToolbar();
-                        
+            
             if ($canDo->get('core.edit.state')) {
                 $childBar->publish('articles.publish')->listCheck(true);
                 
@@ -120,70 +118,45 @@ class HtmlView extends BaseHtmlView {
                     $childBar->trash('articles.trash')->listCheck(true);
                 }
                 $childBar->checkin('articles.checkin');
-               
+                
             }
             // Add a batch button
         }
-            
+        
         if ($this->state->get('filter.published') == ContentComponent::CONDITION_TRASHED && $canDo->get('core.delete')) {
             $toolbar->delete('articles.delete', 'JTOOLBAR_EMPTY_TRASH')
             ->message('JGLOBAL_CONFIRM_DELETE')
             ->listCheck(true);
         }
-        
-        
-        
-        
-        
-        if ($canDo->get('core.edit') || $canDo->get('core.edit.own'))
-        {
+                
+        if ($canDo->get('core.edit') || $canDo->get('core.edit.own')){
             ToolbarHelper::editList('article.edit','XBARTMAN_QUICK_EDIT');
-            ToolbarHelper::editList('artimgs.fullEdit','XBARTMAN_FULL_EDIT');
+            ToolbarHelper::editList('artlinks.fullEdit','XBARTMAN_FULL_EDIT');
         }
         
-//         if ($canDo->get('core.edit.state'))
-//         {
-//             ToolbarHelper::publish('artimgs.publish', 'JTOOLBAR_PUBLISH', true);
-//             ToolbarHelper::unpublish('artimgs.unpublish', 'JTOOLBAR_UNPUBLISH', true);
-//         }
-        
-        // Add a batch button
-        if ($user->authorise('core.create', 'com_xbarticleman')
-            && $user->authorise('core.edit.state', 'com_xbarticleman'))
-        {
- 
-            $toolbar->popupButton('batch', 'JTOOLBAR_BATCH')
-            ->selector('collapseModal')
-            ->listCheck(true);
+        if ($canDo->get('core.edit.state')) {           
+            // Add a batch button
+            if ($user->authorise('core.create', 'com_xbarticleman')
+                && $user->authorise('core.edit.state', 'com_xbarticleman'))
+            {               
+                $toolbar->popupButton('batch', 'JTOOLBAR_BATCH')
+                ->selector('collapseModal')
+                ->listCheck(true);              
+            }
             
+            if ($this->state->get('filter.published') == -2 && $canDo->get('core.delete')){
+                ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'artlinks.delete', 'JTOOLBAR_EMPTY_TRASH');
+            } elseif ($canDo->get('core.edit.state')) {
+                ToolbarHelper::trash('artlinks.trash');
+            }
             
+            //if ($user->authorise('core.admin', 'com_xbarticleman') || $user->authorise('core.options', 'com_xbarticleman'))
+            if ($canDo->get('core.admin')) {
+                ToolbarHelper::preferences('com_xbarticleman');
+            }
             
-//             $title = Text::_('JTOOLBAR_BATCH');
-            
-//             // Instantiate a new JLayoutFile instance and render the batch button
-//             $layout = new FileLayout('joomla.toolbar.batch');
-            
-//             $dhtml = $layout->render(array('title' => $title));
-//             $toolbar->appendButton('Custom', $dhtml);
-            
+            ToolbarHelper::help('JHELP_CONTENT_ARTICLE_MANAGER');
         }
-        
-        if ($this->state->get('filter.published') == -2 && $canDo->get('core.delete'))
-        {
-            ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'artimgs.delete', 'JTOOLBAR_EMPTY_TRASH');
-        }
-        elseif ($canDo->get('core.edit.state'))
-        {
-            ToolbarHelper::trash('artimgs.trash');
-        }
-        
-        //if ($user->authorise('core.admin', 'com_xbarticleman') || $user->authorise('core.options', 'com_xbarticleman'))
-        if ($canDo->get('core.admin')) {
-            ToolbarHelper::preferences('com_xbarticleman');
-        }
-        
-        ToolbarHelper::help('JHELP_CONTENT_ARTICLE_MANAGER');
-        
     }
-        
+    
 }

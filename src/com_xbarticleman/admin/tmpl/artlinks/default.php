@@ -1,8 +1,8 @@
 <?php
 /*******
  * @package xbArticleManager j5
- * @filesource admin/tmpl/artimgs/default.php
- * @version 0.0.4.0 15th January 2024
+ * @filesource admin/tmpl/artlinks/default.php
+ * @version 0.0.5.0 16th January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -27,31 +27,33 @@ HTMLHelper::_('bootstrap.popover', '.xbpop', ['trigger'=>'hover']);
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('table.columns');
 $wa->useScript('multiselect');
+$wa->addInlineScript('function pleaseWait(targ) {
+		document.getElementById(targ).style.display = "block";
+	}');
 
-
-$app       = Factory::getApplication();
-$user  = Factory::getApplication()->getIdentity();
-$userId    = $user->get('id');
+$app = Factory::getApplication();
+$user = Factory::getApplication()->getIdentity();
+$userId = $user->get('id');
 $listOrder = $this->escape($this->state->get('list.ordering'));
-$listDirn  = $this->escape($this->state->get('list.direction'));
+$listDirn = $this->escape($this->state->get('list.direction'));
 $saveOrder = $listOrder == 'a.ordering';
 $rowcnt = count($this->items);
 
 if (strpos($listOrder, 'publish_up') !== false)
 {
-	$orderingColumn = 'publish_up';
+    $orderingColumn = 'publish_up';
 }
 elseif (strpos($listOrder, 'publish_down') !== false)
 {
-	$orderingColumn = 'publish_down';
+    $orderingColumn = 'publish_down';
 }
 elseif (strpos($listOrder, 'modified') !== false)
 {
-	$orderingColumn = 'modified';
+    $orderingColumn = 'modified';
 }
 else
 {
-	$orderingColumn = 'created';
+    $orderingColumn = 'created';
 }
 
 if ($saveOrder && !empty($this->items)) {
@@ -63,16 +65,23 @@ if ($saveOrder && !empty($this->items)) {
 <style>
     thead th, tfoot th {background-color:#d7d7d7 !important;}
 </style>
-<form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=artimgs'); ?>" method="post" name="adminForm" id="adminForm">
-
+<form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=artlinks'); ?>" method="post" name="adminForm" id="adminForm">
 	<div id="xbcomponent">
-		<h3><?php echo Text::_('XBARTMAN_ARTICLE_IMAGES')?></h3>
+    	<div id="waiter" class="xbbox alert-info" style="display:none;">
+          <table style="width:100%">
+              <tr>
+                  <td style="width:200px;"><img src="/media/com_xbarticleman/images/waiting.gif" style="height:100px" /> </td>
+                  <td style="vertical-align:middle;"><b><?php echo Text::_('XB_WAITING_REPLY'); ?></b> </td>
+              </tr>
+          </table>
+    	</div>
+		<h3><?php echo Text::_('XBARTMAN_ARTICLE_LINKS')?></h3>
 		<h4><?php echo Text::_('XBARTMAN_TOTAL_ARTICLES').' '.$this->totalarticles.'. '.Text::_('XB_LISTING').' '.$this->statearticles.' '.lcfirst(Text::_('XB_ARTICLES')).' '.$this->statefilt; ?></h4>
 		<p> 
     	<?php if (array_key_exists('artlist', $this->activeFilters)) {
     	    echo Text::_('XBARTMAN_FILTERED_TO_SHOW').' '.$this->pagination->total.' ';
-    	    $prompts = array('articles','articles with &lt;img&gt; tags.','articles with Intro or Fulltext images.','articles with &lt;img&gt; tags or Intro or Fulltext images.'
-    	        ,'articles with no &lt;img&gt; tags.','articles with no Intro or Fulltext images.','articles with no images (Intro, Fulltext, or &lt;img&gt; tags).');
+    	    $prompts = array('articles','articles with embedded links.','articles with related links (ABC).','articles with Embedded or Related links.'
+    	        ,'articles with no Embedded links.','articles with no Related links.','articles with no links (embedded or related).');
     	    if ($this->activeFilters['artlist'] > 0) {
     	        echo Text::_($prompts[$this->activeFilters['artlist']]);
     	    } else {
@@ -102,18 +111,40 @@ if ($saveOrder && !empty($this->items)) {
 			</div>
 		<?php else : ?>
 			<?php $rowcnt = count($this->items); ?>	
+			<?php $checklimit = 20;
+			$extenabled = true;
+			if ($this->extlinkcnt > $checklimit) $extenabled = false;
+			if (!$extenabled) : ?>
+				<div class="alert"><p>
+    				<?php echo Text::_('NB. External Link checking disabled while more than '.$checklimit.' external links shown'); ?>
+				</p></div> 
+			<?php else : ?>
+			<?php endif; ?>
+			<div>
+				<p><b><?php echo Text::_('XBARTMAN_LINKS_TO_CHECK'); ?>:</b><span class="xbpl10"><?php echo Text::_('XB_INTERNAL'); ?></span> 
+		        <input type="checkbox" name="checkint" value="1" checked="checked" style="margin:0 5px;" />
+				<span class="xbpl10<?php echo (!$extenabled)? ' xbdim' : ''?>"><?php echo Text::_('XB_EXTERNAL'); ?></span>
+		        <input type="checkbox" name="checkext" value="1" <?php echo ($extenabled)? 'checked="checked"' : 'disabled'; ?> style="margin:0 5px;" /> 
+		        <span style="padding-left:20px;"> </span>
+    			<input type="button" class="btn" value="Check Now" onClick="pleaseWait('waiter');this.form.submit();" /> 
+                <span class="alert-info xbpl20"><i><?php echo Text::_('XBARTMAN_LINK_CHECK_NOTE'); ?></i></span>
+				</p>
+			</div>		
+			
 			<div class="pull-left" style="width:60%">
           		<p class="xbtr">Auto close details dropdowns <input  type="checkbox" id="autoclose" name="autoclose" value="yes" checked="true" style="margin:0 5px;" />
           		</p>
           	</div>
+
 			<table class="table" id="xbarticleList">
 			<colgroup>
-				<col class="center hidden-phone" style="width:25px;"><!-- checkbox -->
 				<col class="nowrap center hidden-phone" style="width:25px;"><!-- ordering -->
+				<col class="center hidden-phone" style="width:25px;"><!-- checkbox -->
 				<col class="nowrap center" style="width:55px;"><!-- status -->
 				<col ><!-- title, -->
-				<col style="width:450px;"><!-- imgs -->
-				<col style="width:450px;"><!-- intro/full -->
+				<col style="width:400px;"><!-- related -->
+				<col style="width:400px;"><!-- embedded -->
+				<col ><!-- anchors -->
 				<col class="nowrap hidden-phone" style="width:110px;" ><!-- date -->
 				<col class="nowrap hidden-phone" style="width:45px;"><!-- id -->
 			</colgroup>	
@@ -128,56 +159,80 @@ if ($saveOrder && !empty($this->items)) {
 						<th>
 							<?php echo HTMLHelper::_('searchtools.sort', 'JSTATUS', 'a.state', $listDirn, $listOrder); ?>
 						</th>
-						<th>
+						<th >
 							<?php echo HTMLHelper::_('searchtools.sort', 'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
-							<span class="xbnorm xb09">(edit) (pv) | </span> 
+							<span class="xbnorm xbo9">(edit) (pv) |</span>  alias <span class="xbnorm xb09"> | </span>
 							<?php echo HTMLHelper::_('searchtools.sort', 'XB_CATEGORY', 'category_title', $listDirn, $listOrder); ?>							
 						</th>
 						<th>
-							<?php echo Text::_('XBARTMAN_INART_IMAGES'); ?>
+							<span class="hasPopover" title="<?php echo Text::_('XBARTMAN_COL_RELLNK_TITLE'); ?> " 
+							data-content="<?php echo Text::_('XBARTMAN_COL_RELLNK_DESC').Text::_('XBARTMAN_COL_LINKS_GENERIC'); ?>">
+								<?php echo Text::_('XBARTMAN_COL_RELLNK_TITLE'); ?>
+							</span>
 						</th>
 						<th>
-							<?php echo Text::_('XBARTMAN_ARTICLE_INTRO_FULL_IMAGES'); ?>
+							<span class="hasPopover" title="<?php echo Text::_('XBARTMAN_COL_LINKS_TITLE'); ?>" 
+							data-content="<?php echo Text::_('XBARTMAN_COL_LINKS_DESC').Text::_('XBARTMAN_COL_LINKS_GENERIC'); ?>">
+								<?php echo Text::_('XBARTMAN_COL_LINKS_TITLE'); ?>
+							</span>
+						</th>
+						<th width="10%" class="hidden-phone">
+							<span class="hasPopover" title="<?php echo Text::_('XBARTMAN_COL_TARGS_TITLE'); ?>"
+							data-content=" <?php echo Text::_('XBARTMAN_COL_TARGS_DESC'); ?>">
+								<?php echo Text::_('XBARTMAN_COL_TARGS_TITLE'); ?>
+							</span>
 						</th>
 						<th>
 							<?php echo HTMLHelper::_('searchtools.sort', 'XBARTMAN_HEADING_DATE_' . strtoupper($orderingColumn), 'a.' . $orderingColumn, $listDirn, $listOrder); ?>
 						</th>
-						<th>
+						<th >
 							<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
 						</th>
 					</tr>
 				</thead>
 				<?php if ($rowcnt > 9) : ?>
-				<tfoot>
-					<tr>
-						<th>
-							<?php echo HTMLHelper::_('grid.checkall'); ?>
-						</th>
-						<th>
-							<?php echo HTMLHelper::_('searchtools.sort', '', 'a.ordering', $listDirn, $listOrder, null, 'asc', 'JGRID_HEADING_ORDERING', 'icon-menu-2'); ?>
-						</th>
-						<th>
-							<?php echo HTMLHelper::_('searchtools.sort', 'JSTATUS', 'a.state', $listDirn, $listOrder); ?>
-						</th>
-						<th>
-							<?php echo HTMLHelper::_('searchtools.sort', 'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
-							<span class="xbnorm xb09">(edit) (pv) | </span> 
-							<?php echo HTMLHelper::_('searchtools.sort', 'XB_CATEGORY', 'category_title', $listDirn, $listOrder); ?>							
-						</th>
-						<th>
-							<?php echo Text::_('XBARTMAN_INART_IMAGES'); ?>
-						</th>
-						<th>
-							<?php echo Text::_('XBARTMAN_INTRO_FULL_IMAGES'); ?>
-						</th>
-						<th>
-							<?php echo HTMLHelper::_('searchtools.sort', 'XBARTMAN_HEADING_DATE_' . strtoupper($orderingColumn), 'a.' . $orderingColumn, $listDirn, $listOrder); ?>
-						</th>
-						<th>
-							<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
-						</th>
-					</tr>
-				</tfoot>
+    				<tfoot>
+    					<tr>
+    						<th>
+    							<?php echo HTMLHelper::_('grid.checkall'); ?>
+    						</th>
+    						<th>
+    							<?php echo HTMLHelper::_('searchtools.sort', '', 'a.ordering', $listDirn, $listOrder, null, 'asc', 'JGRID_HEADING_ORDERING', 'icon-sort'); ?>
+    						</th>
+    						<th>
+    							<?php echo HTMLHelper::_('searchtools.sort', 'JSTATUS', 'a.state', $listDirn, $listOrder); ?>
+    						</th>
+    						<th >
+    							<?php echo HTMLHelper::_('searchtools.sort', 'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
+    							<span class="xbnorm xbo9">(edit) (pv) |</span>  alias <span class="xbnorm xb09"> | </span>
+    							<?php echo HTMLHelper::_('searchtools.sort', 'XB_CATEGORY', 'category_title', $listDirn, $listOrder); ?>							
+    						</th>
+    						<th>
+    							<span class="hasPopover" title="<?php echo Text::_('XBARTMAN_COL_RELLNK_TITLE'); ?> " 
+    							data-content="<?php echo Text::_('XBARTMAN_COL_RELLNK_DESC').Text::_('XBARTMAN_COL_LINKS_GENERIC'); ?>">
+    								<?php echo Text::_('XBARTMAN_COL_RELLNK_TITLE'); ?>
+    							</span>
+    						</th>
+    						<th>
+    							<span class="hasPopover" title="<?php echo Text::_('XBARTMAN_COL_LINKS_TITLE'); ?>" 
+    							data-content="<?php echo Text::_('XBARTMAN_COL_LINKS_DESC').Text::_('XBARTMAN_COL_LINKS_GENERIC'); ?>">
+    								<?php echo Text::_('XBARTMAN_COL_LINKS_TITLE'); ?>
+    							</span>
+    						</th>
+    						<th width="10%" class="hidden-phone">
+    							<span class="hasPopover" title="<?php echo Text::_('XBARTMAN_COL_TARGS_TITLE'); ?>"
+    							data-content=" <?php echo Text::_('XBARTMAN_COL_TARGS_DESC'); ?>">
+    								<?php echo Text::_('XBARTMAN_COL_TARGS_TITLE'); ?>
+    							</span>
+    						</th>
+    						<th>
+    							<?php echo HTMLHelper::_('searchtools.sort', 'XBARTMAN_HEADING_DATE_' . strtoupper($orderingColumn), 'a.' . $orderingColumn, $listDirn, $listOrder); ?>
+    						</th>
+    						<th >
+    							<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
+    						</th>
+    					</tr>
+    				</tfoot>
 				<?php endif; ?>
 				<tbody>
 				<?php foreach ($this->items as $i => $item) :
@@ -192,12 +247,10 @@ if ($saveOrder && !empty($this->items)) {
 					$canEditOwnCat = $user->authorise('core.edit.own',   'com_xbarticleman.category.' . $item->catid) && $item->category_uid == $userId;
 					$canEditParCat    = $user->authorise('core.edit',       'com_xbarticleman.category.' . $item->parent_category_id);
 					$canEditOwnParCat = $user->authorise('core.edit.own',   'com_xbarticleman.category.' . $item->parent_category_id) && $item->parent_category_uid == $userId;
-
-					$imgs = XbarticlemanHelper::getDocImgs($item->arttext);
-					$intfull = json_decode($item->images);
-					//$tags = $helper->getItemTags('com_content.article',$item->id);
+					
+					$links = $item->links;
 					?>
-					<tr class="row<?php echo $i % 2; ?>" sortable-group-id="<?php echo $item->catid; ?>">
+										<tr class="row<?php echo $i % 2; ?>" sortable-group-id="<?php echo $item->catid; ?>">
 						<td>
 							<?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
 						</td>
@@ -224,7 +277,7 @@ if ($saveOrder && !empty($this->items)) {
 						<td class="article-status text-center">
                                 <?php
                                     $options = [
-                                        'task_prefix' => 'artimgs.',
+                                        'task_prefix' => 'artlinks.',
                                         'disabled' => !$canChange,
                                         'id' => 'state-' . $item->id,
                                         'category_published' => $item->category_published
@@ -234,18 +287,18 @@ if ($saveOrder && !empty($this->items)) {
                                     ?>
 						</td>
 						<td class="has-context">
-							<div class="pull-left"><p class="xbm0">
+							<div class="pull-left"><p>
 								<?php if ($item->checked_out) : ?>
-									<?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'artimgs.', $canCheckin); ?>
+									<?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'articles.', $canCheckin); ?>
 								<?php endif; ?>
 								<?php if ($canEdit || $canEditOwn) : ?>
 									<a class="hasTooltip" href="
-									<?php echo Route::_('index.php?option=com_xbarticleman&task=article.edit&id=' . $item->id).'&retview=artimgs';?>
+									<?php echo Route::_('index.php?option=com_xbarticleman&task=article.edit&id=' . $item->id).'&retview=artlinks';?>
 									" title="<?php echo Text::_('XBARTMAN_QUICK_EDIT'); ?>">
-										<?php echo $this->escape($item->title); ?></a> 
+										<?php echo $this->escape($item->title); ?></a>
 									<a class="hasTooltip" href="
 									<?php echo Route::_('index.php?option=com_content&task=article.edit&id=' . $item->id);?>
-									" title="<?php echo Text::_('XBARTMAN_FULL_EDIT'); ?>" >										
+									" title="<?php echo Text::_('XBARTMAN_FULL_EDIT'); ?>">										
 										<span class="icon-edit xbpl10"></span></a>
 								<?php else : ?>
 									<span title="<?php echo Text::sprintf('JFIELD_ALIAS_LABEL', $this->escape($item->alias)); ?>"><?php echo $this->escape($item->title); ?></span>
@@ -283,137 +336,76 @@ if ($saveOrder && !empty($this->items)) {
 								</div>
 							</div>
 						</td>
-						<td>
-							<b><?php echo count($item->imgtags); ?></b> images found<br />
-							<?php foreach ($item->imgtags as $a) : ?>
-    							<details>
-    								<summary>
-    									<?php if ($a['nativesize']=='??') : ?>
-        									<span style="color:red;"><?php echo $a['filename']; ?></span>
-    									<?php else : ?>
-    										<?php echo $a['filename']; ?> 
-        									<span class="xbpop" data-bs-original-title="<?php echo $a['alttext'];?>" 
-                                      data-bs-content="<img src='<?php echo $a['uri'];  ?>' class='popimg' />" ><span class="icon-eye"></span> </span>
-    									<?php endif; ?>
-    								</summary>
-									<ul class="xb09">
-										<li><i>Host:</i>
-											<?php echo ($a['host']=='') ? 'local' : $a['host']; ?>
-										</li>
-										<li><i>Path:</i>
-											<?php echo $a['path'];?>
-										</li>
-										<li><i>Dimensions - native:</i>
-											<?php echo $a['nativesize'];
-											echo ($a['specsize'] != '') ? '<br /> <i>img spec:</i> '.$a['specsize'] : ''; 
-											?>
-										</li>
-										<li><i>Mime type:</i>
-											<?php echo $a['mime'];?>
-										</li>
-										<?php if ($a['alttext'] != '') : ?>
-    										<li><i>Alt.text:</i>
-    											<?php echo $a['alttext'];?>
-    										</li>   						
-										<?php endif; ?>				
-										<?php if ($a['title'] != '') : ?>
-    										<li><i>Title</i>
-    											<?php echo $a['title'];?>
-    										</li>   						
-										<?php endif; ?>				
-										<?php if ($a['class'] != '') : ?>
-    										<li><i>Class:</i>
-    											<?php echo $a['class'];?>
-    										</li>
-										<?php endif; ?>
-										<?php if ($a['style'] != '') : ?>
-    										<li><i>Style:</i>
-    											<?php echo $a['style'];?>
-    										</li>   						
-										<?php endif; ?>				
-									</ul>
-    							</details>
-    						<?php endforeach; ?>
+						<td><?php $urls = json_decode($item->urls); 
+							$this->rellink = new stdClass();
+							if ($urls->urla) {
+							    $this->rellink->url = $urls->urla;
+							    $this->rellink->text = $urls->urlatext;
+							    $this->rellink->target = $urls->targeta;
+							    $this->rellink->label = 'Link A';
+							    echo $this->loadTemplate('rel_link');
+							} 
+							if ($urls->urlb) {
+							    $this->rellink->url = $urls->urlb;
+							    $this->rellink->text = $urls->urlbtext;
+							    $this->rellink->target = $urls->targetb;
+							    $this->rellink->label = 'Link B';
+							    echo $this->loadTemplate('rel_link');
+							} 
+							if ($urls->urlc) {
+							    $this->rellink->url = $urls->urlc;
+							    $this->rellink->text = $urls->urlctext;
+							    $this->rellink->target = $urls->targetc;
+							    $this->rellink->label = 'Link C';
+							    echo $this->loadTemplate('rel_link');
+							} ?>
 						</td>
 						<td>
-							<?php $a = $item->introimg;
-							if (key_exists('uri',$a) ) : ?>
-								<details>
-									<summary><i>Intro</i> 
-										<?php if ($a['nativesize']=='??') : ?>
-        									<span style="color:red;"><?php echo $a['filename']; ?></span>
-    									<?php else : ?>
-											<?php echo $a['filename']; ?>
-        									<span class="xbpop" data-bs-original-title="<?php echo $a['alttext'];?>" 
-                                      		data-bs-content="<img src='<?php echo $a['uri'];  ?>' class='popimg' />" ><span class="icon-eye"></span> </span>
-    									<?php endif; ?>
-									</summary>
-									<ul>
-										<li><i>Host:</i>
-											<?php echo ($a['scheme']=='') ? '' : $a['scheme']; ?>
-											<?php echo ($a['host']=='') ? 'local' : $a['host']; ?>
-										</li>
-										<li><i>Path:</i>
-											<?php echo $a['path'];?>
-										</li>
-										<li><i>Dimensions</i>
-											<?php echo $a['nativesize']; ?>
-										</li>
-										<li><i>Type:</i> <?php echo $a['type'];?><br />
-											<?php echo $a['mime'];?>
-										</li>
-										<?php if ($a['alttext'] != '') : ?>
-    										<li><i>Alt.text:</i>
-    											<?php echo $a['alttext'];?>
-    										</li>   						
-										<?php endif; ?>				
-										<?php if ($a['caption'] != '') : ?>
-    										<li><i>Caption:</i>
-    											<?php echo $a['caption'];?>
-    										</li>   						
-										<?php endif; ?>				
-									</ul>
-								</details>
+							<?php $this->emblinks = new stdClass(); ?>							
+							<?php if (count($links["pageLinks"]) >0) : ?>
+								<b>Internal Page Links: <?php count($links["pageLinks"]); ?></b>
+								<?php $this->emblinks = $links["pageLinks"]; 
+								echo $this->loadTemplate('emb_links');
+								?>
+							   	<br />
 							<?php endif; ?>
-							<?php $a = $item->fullimg;
-							if (key_exists('uri',$a) ) : ?>
-								<details>
-									<summary><i>Full</i>
-										<?php if ($a['nativesize']=='??') : ?>
-        									<span style="color:red;"><?php echo $a['filename']; ?></span>
-    									<?php else : ?>
-											<?php echo $a['filename']; ?>
-        									<span class="xbpop" data-bs-original-title="<?php echo $a['alttext'];?>" 
-                                      		data-bs-content="<img src='<?php echo $a['uri'];  ?>' class='popimg' />" ><span class="icon-eye"></span> </span>
-    									<?php endif; ?>
-									</summary>
-									<ul>
-										<li><i>Host:</i>
-											<?php echo ($a['host']=='') ? 'local' : $a['host']; ?>
-										</li>
-										<li><i>Path:</i>
-											<?php echo $a['path'];?>
-										</li>
-										<li><i>Dimensions:</i>
-											<?php echo $a['nativesize']; ?>
-										</li>
-										<li><i>Type:</i> <?php echo $a['type'];?><br />
-											<?php echo $a['mime'];?>
-										</li>
-										<?php if ($a['alttext'] != '') : ?>
-    										<li><i>Alt.text:</i>
-    											<?php echo $a['alttext'];?>
-    										</li>   						
-										<?php endif; ?>				
-										<?php if ($a['caption'] != '') : ?>
-    										<li><i>Caption:</i>
-    											<?php echo $a['caption'];?>
-    										</li>   						
-										<?php endif; ?>				
-									</ul>
-								</details>
+							<?php if (count($links["localLinks"]) >0) : ?>
+								<b>Local Links: <?php count($links["localLinks"]); ?></b>
+								<?php $this->emblinks = $links["localLinks"]; 
+								echo $this->loadTemplate('emb_links');
+								?>
+							   	<br />
 							<?php endif; ?>
-							
+							<?php
+							if (count($links["extLinks"]) >0) : ?>
+								<b>External Links: <?php count($links["extLinks"]); ?></b>
+								<?php $this->emblinks = $links["extLinks"]; 
+								echo $this->loadTemplate('emb_links');
+								?>
+							   	<br />
+							<?php endif; ?>
+							<?php
+							if (count($links["others"]) >0) : ?>
+								<b>Other Links: <?php count($links["others"]); ?></b>
+								<?php $this->emblinks = $links["others"]; 
+								echo $this->loadTemplate('emb_links');
+								?>
+
+							<?php endif; ?>
+						</td>
+						<td>
+							<?php 
+							echo count($links["pageTargs"]).' '.Text::_('XBARTMAN_TARGETS_FOUND').'<br />';
+							if (count($links["pageTargs"]) >0) : ?>
+							    <?php foreach ($links["pageTargs"] as $a) : ?>
+							    	<?php $url = Uri::root().'index.php?option=com_content&view=article&id='.$item->id; ?>
+							        <i>id</i>:
+									<a class="hasTooltip"  data-toggle="modal" title="<?php echo Text::_('XBARTMAN_MODAL_PREVIEW'); ?>" href="#pvModal"
+    									onClick="window.pvuri=<?php echo "'".$url."#".$a->getAttribute('id')."'"; ?>" >							        
+							        	<b><?php echo $a->getAttribute('id'); ?></b> <span class="icon-eye"></span></a>
+							        <br />
+							    <?php endforeach; ?>
+							<?php endif; ?>							
 						</td>
 						<td class="nowrap small hidden-phone">
 							<?php
@@ -425,7 +417,7 @@ if ($saveOrder && !empty($this->items)) {
 							<?php echo (int) $item->id; ?>
 						</td>
 					</tr>
-				<?php endforeach; ?>
+				<?php endforeach; ?>					
 				</tbody>
 			</table>
 			<?php // Load the batch processing form. ?>
@@ -458,10 +450,9 @@ if ($saveOrder && !empty($this->items)) {
 				),
 			); ?>
 
-		<?php echo $this->pagination->getListFooter(); ?>
+			<?php echo $this->pagination->getListFooter(); ?>
 
- 		<?php endif; ?>
-
+		<?php endif; ?>
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="boxchecked" value="0" />
 		<?php echo HTMLHelper::_('form.token'); ?>
