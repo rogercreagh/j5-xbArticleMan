@@ -14,13 +14,13 @@
 			description="What articles to include in list"
 			onchange="this.form.submit();"
 		>
-			<option value="0">All Articles</option>
-			<option value="1">Articles with &lt;img&gt; tags</option>
-			<option value="4">Articles without &lt;img&gt; tags</option>				
-			<option value="2">Articles with Intro/Full images</option>				
-			<option value="5">Articles without Intro/Full images</option>				
-			<option value="3">Articles with any image</option>				
-			<option value="6">Articles without images</option>				
+			<option value="0">XBARTMAN_ALL_ARTICLES</option>
+			<option value="1">XBARTMAN_ARTICLES_WITH_IMG_TAGS</option>
+			<option value="4">XBARTMAN_ARTICLES_WITHOUT_IMG_TAGS</option>				
+			<option value="2">XBARTMAN_ARTICLES_WITH_IN_OUT</option>				
+			<option value="5">XBARTMAN_ARTICLES_WITHOUT_IN_OUT</option>				
+			<option value="3">XBARTMAN_ARTICLES_WITH_ANY_IMAGES</option>				
+			<option value="6">XBARTMAN_ARTICLES_WITHOUT_IMAGES</option>				
 		</field>
 		<field
 			name="published"
@@ -41,7 +41,10 @@
 			extension="com_content"
 			onchange="this.form.submit();"
 			published="0,1,2"
-		/>
+            default=""
+		>
+			<option value="">XBARMAN_SELECT_CATEGORY</option>
+		</field>
 
 		<field
 			name="level"
@@ -54,7 +57,7 @@
 			languages="*"
 			onchange="this.form.submit();"
 			>
-			<option value="">Select Category Levels</option>
+			<option value="">XBARMAN_SELECT_CAT_LEVELS</option>
 		</field>
 				
 

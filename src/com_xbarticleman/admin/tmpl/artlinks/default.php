@@ -294,7 +294,7 @@ if ($saveOrder && !empty($this->items)) {
 								<?php if ($canEdit || $canEditOwn) : ?>
 									<a class="hasTooltip" href="
 									<?php echo Route::_('index.php?option=com_xbarticleman&task=article.edit&id=' . $item->id).'&retview=artlinks';?>
-									" title="<?php echo Text::_('XBARTMAN_QUICK_EDIT'); ?>">
+									" title="<?php echo Text::_('XBARTMAN_QUICK_EDIT_TIP'); ?>">
 										<?php echo $this->escape($item->title); ?></a>
 									<a class="hasTooltip" href="
 									<?php echo Route::_('index.php?option=com_content&task=article.edit&id=' . $item->id);?>

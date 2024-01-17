@@ -132,7 +132,7 @@ HTMLHelper::_('formbehavior.chosen', 'select');
 						<tr>
 							<th colspan="2" style="text-align:left;">
             					<h4>
-            						<?php echo Text::_('XB_IMAGES'); ?><span class="xbpl20 xbnit"></span>
+            						<?php echo Text::_('XBARTMAN_ARTICLES_WITH_IMAGES'); ?><span class="xbpl20 xbnit"></span>
             					</h4>
 							</th>
 							<th colspan="2" style="text-align:left;">

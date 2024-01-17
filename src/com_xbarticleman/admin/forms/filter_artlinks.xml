@@ -15,13 +15,13 @@
 			default="0"
 			onchange="this.form.submit();"
 		>
-			<option value="0">All Articles</option>
-			<option value="1">Articles with embedded links</option>
-			<option value="4">Articles without embedded tags</option>				
-			<option value="2">Articles with related images</option>				
-			<option value="5">Articles without related images</option>				
-			<option value="3">Articles any links</option>				
-			<option value="6">Articles without any links</option>				
+			<option value="0">XBARTMAN_ALL_ARTICLES</option>
+			<option value="1">XBARTMAN_ARTICLES_WITH_A_TAGS</option>
+			<option value="4">XBARTMAN_ARTICLES_WITHOUT_A_TAGS</option>				
+			<option value="2">XBARTMAN_ARTICLES_WITH_REL_LINKS</option>				
+			<option value="5">XBARTMAN_ARTICLES_WITHOUT_REL_LINKS</option>				
+			<option value="3">XBARTMAN_ARTICLES_WITH_ANY_LINKS</option>				
+			<option value="6">XBARTMAN_ARTICLES_WITHOUT_ANY_LINKS</option>				
 		</field>
 
 		<field
@@ -43,7 +43,10 @@
 			extension="com_content"
 			onchange="this.form.submit();"
 			published="0,1,2"
-		/>
+            default=""
+		>
+			<option value="">XBARMAN_SELECT_CATEGORY</option>
+		</field>
 
 		<field
 			name="level"
@@ -56,7 +59,7 @@
 			languages="*"
 			onchange="this.form.submit();"
 			>
-			<option value="">Select Category Levels</option>
+			<option value="">XBARMAN_SELECT_CAT_LEVELS</option>
 		</field>
 				
 
