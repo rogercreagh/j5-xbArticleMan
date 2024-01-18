@@ -20,7 +20,7 @@
 			<option value="2">XBARTMAN_ARTICLES_WITH_IN_OUT</option>				
 			<option value="5">XBARTMAN_ARTICLES_WITHOUT_IN_OUT</option>				
 			<option value="3">XBARTMAN_ARTICLES_WITH_ANY_IMAGES</option>				
-			<option value="6">XBARTMAN_ARTICLES_WITHOUT_IMAGES</option>				
+			<option value="6">XBARTMAN_ARTICLES_WITHOUT_ANY_IMAGES</option>				
 		</field>
 		<field
 			name="published"

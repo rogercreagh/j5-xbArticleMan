@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager
  * @filesource admin/src/Model/ArtimgsModel.php
- * @version 0.0.4.0 15th January 2024
+ * @version 0.0.5.0 18th January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -120,7 +120,7 @@ class ArtimgsModel extends ListModel {
                 'list.select',
                 'DISTINCT a.id, a.title, a.alias, a.checked_out, a.checked_out_time, a.catid, a.images' .
                 ', a.state, a.access, a.created, a.created_by, a.created_by_alias, a.modified, a.ordering, a.featured, a.language, a.hits' .
-                ', a.publish_up, a.publish_down, a.note, a.urls, CONCAT(a.introtext," ",a.fulltext) AS arttext'
+                ', a.publish_up, a.publish_down, a.note, CONCAT(a.introtext," ",a.fulltext) AS arttext'
                 )
             );
         $query->from('#__content AS a');

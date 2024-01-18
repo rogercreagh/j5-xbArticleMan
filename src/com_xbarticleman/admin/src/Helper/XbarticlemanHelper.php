@@ -77,7 +77,6 @@ class XbarticlemanHelper extends ComponentHelper
 	            if (substr($href,0,1)=='#') { //the href starts with # so target is on same page
 	                array_push($atags["pageLinks"], $atag);
 	            } else {
-	                $arrHref = parse_url($href);
 	                if ((isset($arrHref["scheme"])) && (!stristr($arrHref["scheme"],'http'))) {
 	                    // scheme is not http or https so it is some other type of link
 	                    array_push($atags["others"], $atag);

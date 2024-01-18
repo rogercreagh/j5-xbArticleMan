@@ -50,7 +50,14 @@ foreach ($links as $a) : ?>
     		<?php endif; ?>
     	</summary>    							    	
 		<i>Host</i>: <?php echo ($local) ? '(local)' : $url_info['scheme'].$url_info['host']; ?><br />
-		<?php if ($url_info['path'] != '') : ?><i>Path</i>:  <?php echo $url_info['path'].'<br/>'; endif; ?>
+		<?php if ($url_info['path'] != '') : ?>
+			<?php 	$pathinfo = pathinfo($url_info['path']);
+	                $fname = $pathinfo['basename'];
+	                $path = $pathinfo['dirname'];
+			?>
+			<?php if ($path != '') : ?><i>Path</i>:  <?php echo $path.'<br/>'; endif;?>
+			<?php if ($fname != '') : ?><i>Filename</i>:  <?php echo $fname.'<br/>'; endif;?>
+		<?php endif; ?>
 		<?php if (key_exists('fragment',$url_info)) : ?> <i>hash</i>: #<?php echo $url_info['fragment'].'<br/>'; endif; ?>
 		<?php if (key_exists('query',$url_info)) : ?> <i>Query</i>: ?<?php echo $url_info['query'].'<br/>'; endif; ?>
 		<?php if ($a->getAttribute('target') != '') : ?><i>Target</i>: <?php echo $a->getAttribute('target').'<br/>'; endif; ?>
