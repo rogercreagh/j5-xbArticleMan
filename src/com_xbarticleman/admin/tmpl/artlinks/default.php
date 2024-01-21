@@ -309,7 +309,7 @@ if ($saveOrder && !empty($this->items)) {
                                 title="<?php echo Text::_('XBARTMAN_MODAL_PREVIEW'); ?>" 
           							onclick="var pv=document.getElementById('pvModal');pv.querySelector('.modal-body .iframe').setAttribute('src',<?php echo $pvuri; ?>);pv.querySelector('.modal-title').textContent=<?php echo $pvtit; ?>;"
                                 >
-								<span class="icon-eye xbpl10"></span></a>
+									<span class="icon-eye xbpl10"></span></span>
 								</p>
 								<span class="xbpl20 xb09"><i>XB_ALIAS</i>: <?php echo $this->escape($item->alias); ?>
 								</span>
