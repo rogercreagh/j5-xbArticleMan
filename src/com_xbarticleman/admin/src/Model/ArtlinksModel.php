@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager
  * @filesource admin/src/Model/ArtlinksModel.php
- * @version 0.0.5.0 18th January 2024
+ * @version 0.0.5.0 21st January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -320,10 +320,61 @@ class ArtlinksModel extends ListModel {
             foreach ($items as $item) {
                 $item->links = XbarticlemanHelper::getDocAnchors($item->arttext);
                 $this->extlinkcnt += count($item->links['extLinks']);
+                $item->rellinks = array();
+                $urls = json_decode($item->urls);
+                if ($urls->urla) {
+                    $item->rellinks[] = $this->parseRelLink('A', $urls->urla, $urls->urlatext, $urls->targeta);
+                }
+                if ($urls->urlb) {
+                    $item->rellinks[] = $this->parseRelLink('B', $urls->urlb, $urls->urlbtext, $urls->targeta);
+                }
+                if ($urls->urlc) {
+                    $item->rellinks[] = $this->parseRelLink('C', $urls->urlc, $urls->urlctext, $urls->targeta);
+                }
+                
             }
         }
         return $items;
         
+    }
+    
+    private function parseRelLink($idx, $url, $text='', $target='') {
+        $targets = array('current window/tab', 'new window/tab', 'popup window', 'modal window');
+        $linkdata = new \stdClass();
+        $linkdata->label = 'Link '.$idx;
+        $linkdata->url = $url;
+        $linkdata->text = $text;
+        $linkdata->target = ($target !='') ? $targets[$target] : '(use global)';
+        $urlinfo = parse_url($url);
+        if (!key_exists('host',$urlinfo)) {
+            $urlinfo['host'] = '';
+            unset($urlinfo['scheme']);
+        }
+        if (key_exists('scheme', $urlinfo)) {
+            if ($urlinfo['scheme'] == 'mailto') {
+                $linkdata->text .= '&nbsp;<span class="icon-mail"></span>';
+            } else {
+                if (key_exists('host', $urlinfo)) $urlinfo['scheme'] .= '://';
+            }
+        }
+        $linkdata->islocal = XbarticlemanHelper::isLocalLink($url);
+        if ($linkdata->islocal) {
+            if ($urlinfo['host'] == '') $url = Uri::root().$url; //use router here
+            $linkdata->colour = (XbarticlemanHelper::check_url($url)) ? 'green' : 'red';
+        } else {
+            $linkdata->colour = '';
+        }
+        $linkdata->scheme_host = (key_exists('scheme',$urlinfo)) ? $urlinfo['scheme'] : '';
+        $linkdata->scheme_host .= (key_exists('host',$urlinfo)) ? $urlinfo['host'] : '';
+        $pathinfo = pathinfo($urlinfo['path']);
+        if (key_exists('basename',$pathinfo)) $linkdata->fname = $pathinfo['basename'];
+        if (key_exists('dirname',$pathinfo)) $linkdata->dirname = $pathinfo['dirname'];
+        if (key_exists('fragment',$pathinfo)) $linkdata->hash =  '#'.$pathinfo['fragment'];
+        if (key_exists('query',$pathinfo)) $linkdata->query =  $pathinfo['query'];
+        if ($text == '') {
+            $linkdata->text = $url; //TODO relace this with abbreviated version poss using ellipsis function to show only N chars
+        }
+        return $linkdata;
     }
     
     public function getExtlinkcnt() {

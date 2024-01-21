@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/tmpl/artlinks/default.php
- * @version 0.0.5.0 16th January 2024
+ * @version 0.0.5.0 21st January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -336,29 +336,37 @@ if ($saveOrder && !empty($this->items)) {
 								</div>
 							</div>
 						</td>
-						<td><?php $urls = json_decode($item->urls); 
-							$this->rellink = new stdClass();
-							if ($urls->urla) {
-							    $this->rellink->url = $urls->urla;
-							    $this->rellink->text = $urls->urlatext;
-							    $this->rellink->target = $urls->targeta;
-							    $this->rellink->label = 'Link A';
-							    echo $this->loadTemplate('rel_link');
-							} 
-							if ($urls->urlb) {
-							    $this->rellink->url = $urls->urlb;
-							    $this->rellink->text = $urls->urlbtext;
-							    $this->rellink->target = $urls->targetb;
-							    $this->rellink->label = 'Link B';
-							    echo $this->loadTemplate('rel_link');
-							} 
-							if ($urls->urlc) {
-							    $this->rellink->url = $urls->urlc;
-							    $this->rellink->text = $urls->urlctext;
-							    $this->rellink->target = $urls->targetc;
-							    $this->rellink->label = 'Link C';
-							    echo $this->loadTemplate('rel_link');
-							} ?>
+						<td><?php foreach ($item->rellinks as $link) : ?>
+    						   <?php if (!$link->islocal) {
+    						       if ($this->checkext) {
+    						           $link->colour = (!XbarticlemanHelper::check_url($url)) ? 'red' : 'green';
+    						       }
+    						 
+    						   } ?>
+    						    <details>
+                                	<summary>
+                                		<i><?php echo $link->label; ?></i>: 
+                                		<span style="color:<?php echo $link->colour; ?>">
+                                			<?php $pvurl = "'".$url."'"; 
+                                                echo $link->text; ?>
+                                		</span>
+                                		<span  data-bs-toggle="modal" data-bs-target="#pvModal" data-bs-source="<?php echo $pvurl; ?>" 
+                                			data-bs-itemtitle="<?php echo $item->title; ?>" 
+                                            title="<?php echo $link->text; ?>" 
+                                          	onclick="var pv=document.getElementById('pvModal');pv.querySelector('.modal-body .iframe').setAttribute('src',<?php echo $pvurl; ?>);pv.querySelector('.modal-title').textContent=<?php echo $link->text; ?>;"
+                                         >
+                                			<span class="icon-eye xbpl10"></span>
+                                		</span>
+                                	</summary>
+                                		<i>Host</i>: <?php echo ($link->islocal) ? '(local)' : $link->scheme_host; ?><br />
+                                		<i>Path</i>: <?php echo $link->path; ?><br/>
+                                		<?php if ($link->hash != '') : ?> <i>hash</i>: <?php echo $link->hash.'<br/>'; endif; ?>
+                                		<?php if ($link->query != '') : ?> <i>Query</i>: ?<?php echo $link->query.'<br/>'; endif; ?>
+                                		<i>Target</i>: <?php echo $link->target; ?>
+                                		<br />
+                                </details>
+    						    
+							<?php endforeach; ?>
 						</td>
 						<td>
 							<?php $this->emblinks = new stdClass(); ?>							
