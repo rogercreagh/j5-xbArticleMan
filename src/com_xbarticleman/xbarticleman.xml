@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <extension type="component" method="upgrade">
 	<name>com_xbarticleman</name>
-	<creationDate>21st January 2025</creationDate>
+	<creationDate>22nd January 2025</creationDate>
 	<version>0.0.5.0</version>
 	<author>RogerCO</author>
 	<authorEmail>roger@crosborne.co.uk</authorEmail>
@@ -37,6 +37,7 @@
 	<media destination="com_xbarticleman" folder="media">
 		<file>joomla.asset.json</file>
 		<folder>css</folder>
+		<folder>images</folder>
 		<folder>js</folder>
 	</media>
 		

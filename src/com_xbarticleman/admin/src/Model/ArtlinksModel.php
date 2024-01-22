@@ -315,6 +315,8 @@ class ArtlinksModel extends ListModel {
     
     public function getItems() {
         $this->extlinkcnt = 0;
+        $input  = Factory::getApplication()->input;
+        $this->checkext = ($input->get('task') == 'checkext');
         $items  = parent::getItems();
         if ($items) {
             foreach ($items as $item) {
@@ -363,12 +365,12 @@ class ArtlinksModel extends ListModel {
             $linkdata->colour = (XbarticlemanHelper::check_url($url)) ? 'green' : 'red';
         } else {
             $linkdata->colour = '';
+            if ($this->checkext) $linkdata->colour = (XbarticlemanHelper::check_url($url)) ? 'green' : 'red';
         }
         $linkdata->scheme_host = (key_exists('scheme',$urlinfo)) ? $urlinfo['scheme'] : '';
         $linkdata->scheme_host .= (key_exists('host',$urlinfo)) ? $urlinfo['host'] : '';
-        $pathinfo = pathinfo($urlinfo['path']);
-        if (key_exists('basename',$pathinfo)) $linkdata->fname = $pathinfo['basename'];
-        if (key_exists('dirname',$pathinfo)) $linkdata->dirname = $pathinfo['dirname'];
+        $linkdata->path = (key_exists('path',$urlinfo)) ? $urlinfo['path'] : '';
+        $pathinfo = pathinfo($url);
         if (key_exists('fragment',$pathinfo)) $linkdata->hash =  '#'.$pathinfo['fragment'];
         if (key_exists('query',$pathinfo)) $linkdata->query =  $pathinfo['query'];
         if ($text == '') {

@@ -39,5 +39,8 @@ class ArtlinksController extends AdminController {
         $this->setRedirect(Route::_('index.php?option=com_content&task=article.edit&id='.$fid, false));
     }
     
-
+    public function checkExt() {
+        $this->setRedirect(Route::_('index.php?option=com_articleman&view=artlinks'.$fid, false));
+        
+    }
 }

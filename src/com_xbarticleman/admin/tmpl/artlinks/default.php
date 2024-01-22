@@ -25,10 +25,11 @@ use Crosborne\Component\Xbarticleman\Administrator\Helper\XbarticlemanHelper;
 HTMLHelper::_('bootstrap.tooltip');
 HTMLHelper::_('bootstrap.popover', '.xbpop', ['trigger'=>'hover']);
 $wa = $this->document->getWebAssetManager();
-$wa->useScript('table.columns');
+// $wa->useScript('table.columns');
 $wa->useScript('multiselect');
 $wa->addInlineScript('function pleaseWait(targ) {
 		document.getElementById(targ).style.display = "block";
+        document.getElementById("task").value="artlinks.checkext";
 	}');
 
 $app = Factory::getApplication();
@@ -126,7 +127,7 @@ if ($saveOrder && !empty($this->items)) {
 				<span class="xbpl10<?php echo (!$extenabled)? ' xbdim' : ''?>"><?php echo Text::_('XB_EXTERNAL'); ?></span>
 		        <input type="checkbox" name="checkext" value="1" <?php echo ($extenabled)? 'checked="checked"' : 'disabled'; ?> style="margin:0 5px;" /> 
 		        <span style="padding-left:20px;"> </span>
-    			<input type="button" class="btn" value="Check Now" onClick="pleaseWait('waiter');this.form.submit();" /> 
+    			<input type="button" class="btn xbabtn" value="Check Now" onClick="pleaseWait('waiter');this.form.submit();" /> 
                 <span class="alert-info xbpl20"><i><?php echo Text::_('XBARTMAN_LINK_CHECK_NOTE'); ?></i></span>
 				</p>
 			</div>		
@@ -311,7 +312,7 @@ if ($saveOrder && !empty($this->items)) {
                                 >
 									<span class="icon-eye xbpl10"></span></span>
 								</p>
-								<span class="xbpl20 xb09"><i>XB_ALIAS</i>: <?php echo $this->escape($item->alias); ?>
+								<span class="xbpl20 xb09"><i><?php echo Text::_('XB_ALIAS'); ?></i>: <?php echo $this->escape($item->alias); ?>
 								</span>
 								<div>
 									<?php
@@ -346,17 +347,20 @@ if ($saveOrder && !empty($this->items)) {
     						    <details>
                                 	<summary>
                                 		<i><?php echo $link->label; ?></i>: 
-                                		<span style="color:<?php echo $link->colour; ?>">
+                                		<span style="color:<?php echo $link->colour; ?>" title="<?php echo $link->url; ?>">
                                 			<?php $pvurl = "'".$url."'"; 
                                                 echo $link->text; ?>
                                 		</span>
-                                		<span  data-bs-toggle="modal" data-bs-target="#pvModal" data-bs-source="<?php echo $pvurl; ?>" 
-                                			data-bs-itemtitle="<?php echo $item->title; ?>" 
+                                		<span  data-bs-toggle="modal" data-bs-target="#pvModal" data-bs-source="/" 
+                                			data-bs-itemtitle="Preview Related Link" 
                                             title="<?php echo $link->text; ?>" 
-                                          	onclick="var pv=document.getElementById('pvModal');pv.querySelector('.modal-body .iframe').setAttribute('src',<?php echo $pvurl; ?>);pv.querySelector('.modal-title').textContent=<?php echo $link->text; ?>;"
+                                          	onclick="var pv=document.getElementById('pvModal');
+                                          		pv.querySelector('.modal-body .iframe').setAttribute('src',<?php echo $pvurl; ?>);
+                                          		pv.querySelector('.modal-title').textContent=<?php echo $item->title; ?>;"
                                          >
                                 			<span class="icon-eye xbpl10"></span>
                                 		</span>
+
                                 	</summary>
                                 		<i>Host</i>: <?php echo ($link->islocal) ? '(local)' : $link->scheme_host; ?><br />
                                 		<i>Path</i>: <?php echo $link->path; ?><br/>
@@ -461,7 +465,7 @@ if ($saveOrder && !empty($this->items)) {
 			<?php echo $this->pagination->getListFooter(); ?>
 
 		<?php endif; ?>
-		<input type="hidden" name="task" value="" />
+		<input type="hidden" name="task" id="task" value="" />
 		<input type="hidden" name="boxchecked" value="0" />
 		<?php echo HTMLHelper::_('form.token'); ?>
 	</div>
