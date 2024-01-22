@@ -70,13 +70,13 @@ class ArtlinksModel extends ListModel {
         if (!$checkint==1) {
             $checkint=0;
         }
-        $checkext = $app->input->get('checkext');
-        if (!$checkext==1) {
-            $checkext=0;
-        }
+//         $checkext = $app->input->get('checkext');
+//         if (!$checkext==1) {
+//             $checkext=0;
+//         }
         
-        $this->setState('checkint', $checkint);
-        $this->setState('checkext', $checkext);
+//         $this->setState('checkint', $checkint);
+//         $this->setState('checkext', $checkext);
         
         $formSubmited = $app->input->post->get('form_submited');
         
@@ -315,8 +315,8 @@ class ArtlinksModel extends ListModel {
     
     public function getItems() {
         $this->extlinkcnt = 0;
-        $input  = Factory::getApplication()->input;
-        $this->checkext = ($input->get('task') == 'checkext');
+//        $input  = Factory::getApplication()->input;
+//        $this->checkext = ($input->get('task') == 'checkext');
         $items  = parent::getItems();
         if ($items) {
             foreach ($items as $item) {
@@ -356,6 +356,7 @@ class ArtlinksModel extends ListModel {
             if ($urlinfo['scheme'] == 'mailto') {
                 $linkdata->text .= '&nbsp;<span class="icon-mail"></span>';
             } else {
+                $this->extlinkcnt +=1;
                 if (key_exists('host', $urlinfo)) $urlinfo['scheme'] .= '://';
             }
         }
@@ -365,7 +366,7 @@ class ArtlinksModel extends ListModel {
             $linkdata->colour = (XbarticlemanHelper::check_url($url)) ? 'green' : 'red';
         } else {
             $linkdata->colour = '';
-            if ($this->checkext) $linkdata->colour = (XbarticlemanHelper::check_url($url)) ? 'green' : 'red';
+            if ($this->state->get('checkext') == 1) $linkdata->colour = (XbarticlemanHelper::check_url($url)) ? 'green' : 'red';
         }
         $linkdata->scheme_host = (key_exists('scheme',$urlinfo)) ? $urlinfo['scheme'] : '';
         $linkdata->scheme_host .= (key_exists('host',$urlinfo)) ? $urlinfo['host'] : '';

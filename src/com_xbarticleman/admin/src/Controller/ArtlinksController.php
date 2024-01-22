@@ -40,7 +40,11 @@ class ArtlinksController extends AdminController {
     }
     
     public function checkExt() {
-        $this->setRedirect(Route::_('index.php?option=com_articleman&view=artlinks'.$fid, false));
+        $jip =  Factory::getApplication()->input;
+        $checkext = $jip->get('checkext');
+        $this->setState('checkext', $checkext);
+        
+        $this->setRedirect(Route::_('index.php?option=com_xbarticleman&view=artlinks', false));
         
     }
 }

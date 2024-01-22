@@ -122,10 +122,9 @@ if ($saveOrder && !empty($this->items)) {
 			<?php else : ?>
 			<?php endif; ?>
 			<div>
-				<p><b><?php echo Text::_('XBARTMAN_LINKS_TO_CHECK'); ?>:</b><span class="xbpl10"><?php echo Text::_('XB_INTERNAL'); ?></span> 
-		        <input type="checkbox" name="checkint" value="1" checked="checked" style="margin:0 5px;" />
+				<p><b><?php echo Text::_('XBARTMAN_LINKS_TO_CHECK'); ?>:</b>
 				<span class="xbpl10<?php echo (!$extenabled)? ' xbdim' : ''?>"><?php echo Text::_('XB_EXTERNAL'); ?></span>
-		        <input type="checkbox" name="checkext" value="1" <?php echo ($extenabled)? 'checked="checked"' : 'disabled'; ?> style="margin:0 5px;" /> 
+		        <input type="checkbox" name="checkext" value="0" <?php echo ($extenabled)? 'checked="false"' : 'disabled'; ?> style="margin:0 5px;" /> 
 		        <span style="padding-left:20px;"> </span>
     			<input type="button" class="btn xbabtn" value="Check Now" onClick="pleaseWait('waiter');this.form.submit();" /> 
                 <span class="alert-info xbpl20"><i><?php echo Text::_('XBARTMAN_LINK_CHECK_NOTE'); ?></i></span>
@@ -340,7 +339,7 @@ if ($saveOrder && !empty($this->items)) {
 						<td><?php foreach ($item->rellinks as $link) : ?>
     						   <?php if (!$link->islocal) {
     						       if ($this->checkext) {
-    						           $link->colour = (!XbarticlemanHelper::check_url($url)) ? 'red' : 'green';
+    						           //$link->colour = (!XbarticlemanHelper::check_url($url)) ? 'red' : 'green';
     						       }
     						 
     						   } ?>
@@ -348,7 +347,7 @@ if ($saveOrder && !empty($this->items)) {
                                 	<summary>
                                 		<i><?php echo $link->label; ?></i>: 
                                 		<span style="color:<?php echo $link->colour; ?>" title="<?php echo $link->url; ?>">
-                                			<?php $pvurl = "'".$url."'"; 
+                                			<?php $pvurl = "'".$link->url."'"; 
                                                 echo $link->text; ?>
                                 		</span>
                                 		<span  data-bs-toggle="modal" data-bs-target="#pvModal" data-bs-source="/" 
@@ -356,7 +355,7 @@ if ($saveOrder && !empty($this->items)) {
                                             title="<?php echo $link->text; ?>" 
                                           	onclick="var pv=document.getElementById('pvModal');
                                           		pv.querySelector('.modal-body .iframe').setAttribute('src',<?php echo $pvurl; ?>);
-                                          		pv.querySelector('.modal-title').textContent=<?php echo $item->title; ?>;"
+                                          		pv.querySelector('.modal-title').textContent=<?php echo "'".$linkk->text."'"; ?>;"
                                          >
                                 			<span class="icon-eye xbpl10"></span>
                                 		</span>
