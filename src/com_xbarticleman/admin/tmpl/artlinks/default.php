@@ -143,8 +143,8 @@ if ($saveOrder && !empty($this->items)) {
 				<col class="center hidden-phone" style="width:25px;"><!-- checkbox -->
 				<col class="nowrap center" style="width:55px;"><!-- status -->
 				<col ><!-- title, -->
-				<col style="width:400px;"><!-- related -->
-				<col style="width:400px;"><!-- embedded -->
+				<col style="width:300px;"><!-- related -->
+				<col style="width:300px;"><!-- embedded -->
 				<col ><!-- anchors -->
 				<col class="nowrap hidden-phone" style="width:110px;" ><!-- date -->
 				<col class="nowrap hidden-phone" style="width:45px;"><!-- id -->
@@ -177,7 +177,7 @@ if ($saveOrder && !empty($this->items)) {
 								<?php echo Text::_('XBARTMAN_COL_LINKS_TITLE'); ?>
 							</span>
 						</th>
-						<th width="10%" class="hidden-phone">
+						<th>
 							<span class="hasPopover" title="<?php echo Text::_('XBARTMAN_COL_TARGS_TITLE'); ?>"
 							data-content=" <?php echo Text::_('XBARTMAN_COL_TARGS_DESC'); ?>">
 								<?php echo Text::_('XBARTMAN_COL_TARGS_TITLE'); ?>
@@ -220,7 +220,7 @@ if ($saveOrder && !empty($this->items)) {
     								<?php echo Text::_('XBARTMAN_COL_LINKS_TITLE'); ?>
     							</span>
     						</th>
-    						<th width="10%" class="hidden-phone">
+    						<th>
     							<span class="hasPopover" title="<?php echo Text::_('XBARTMAN_COL_TARGS_TITLE'); ?>"
     							data-content=" <?php echo Text::_('XBARTMAN_COL_TARGS_DESC'); ?>">
     								<?php echo Text::_('XBARTMAN_COL_TARGS_TITLE'); ?>
