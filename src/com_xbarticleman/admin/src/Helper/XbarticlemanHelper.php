@@ -67,6 +67,7 @@ class XbarticlemanHelper extends ComponentHelper
 	    $dom = new DOMDocument;
 	    $dom->loadHTML($html,LIBXML_NOERROR);
 	    $as = $dom->getElementsByTagName('a');
+	    return $as;
 	    foreach ($as as $atag) {
 	        $text = $atag->textContent;
 	        $href = $atag->getAttribute('href');

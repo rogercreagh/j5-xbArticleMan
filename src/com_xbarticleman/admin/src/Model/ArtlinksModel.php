@@ -17,6 +17,7 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Utilities\ArrayHelper;
+use DOMDocument;
 use Crosborne\Component\Xbarticleman\Administrator\Helper\XbarticlemanHelper;
 
 class ArtlinksModel extends ListModel {
@@ -315,13 +316,30 @@ class ArtlinksModel extends ListModel {
     
     public function getItems() {
         $this->extlinkcnt = 0;
-//        $input  = Factory::getApplication()->input;
+        $this->targets = array('current window/tab', 'new window/tab', 'popup window', 'modal window');
+        //        $input  = Factory::getApplication()->input;
 //        $this->checkext = ($input->get('task') == 'checkext');
         $items  = parent::getItems();
         if ($items) {
+            
             foreach ($items as $item) {
-                $item->links = XbarticlemanHelper::getDocAnchors($item->arttext);
-                $this->extlinkcnt += count($item->links['extLinks']);
+                $item->emblinks = array(
+                    "inpage"=>array(),
+                    "anchor"=>array(),
+                    "local"=>array(),
+                    "external"=>array(),
+                    "other"=>array()
+                );
+                $dom = new DOMDocument;
+                $dom->loadHTML($item->arttext,LIBXML_NOERROR);
+                $atags = $dom->getElementsByTagName('a');
+//                $atags = XbarticlemanHelper::getDocAnchors($item->arttext);
+                foreach ($atags as $atag) {
+                    $item->emblinks = $this->parseEmbLink($atag, $item->emblinks);
+                }
+                
+                $this->extlinkcnt += count($item->emblinks['external']);
+                
                 $item->rellinks = array();
                 $urls = json_decode($item->urls);
                 if ($urls->urla) {
@@ -340,13 +358,76 @@ class ArtlinksModel extends ListModel {
         
     }
     
+    private function parseEmbLink($atag, $linksdata) {
+        $linkdata = new \stdClass();
+        //<a href="https://crosborne.uk/xbmaps" target="_blank" rel="alternate nofollow noopener" id="linkid" class="xbdim btn" style="padding:10px;" tabindex="34" title="A title for my link" rev="subsection">beautiful</a>
+        //$linkdata -> label, url, text, target, scheme, host, colour, path, class type=local|external|other|inpage|anchor
+        $linkdata->text = $atag->textContent;
+        $linkdata->colour = '#222'; 
+        $linkdata->label = 'Text';
+        $href = $atag->getAttribute('href');
+        $linkdata->url = $href;
+        $linkdata->id = $atag->getAttribute('id');
+        $linkdata->target = $atag->getAttribute('target');
+        $linkdata->rel = $atag->getAttribute('rel');
+        $linkdata->rev = $atag->getAttribute('rev');
+        $linkdata->class = $atag->getAttribute('class');
+        $linkdata->style = $atag->getAttribute('style');
+        $linkdata->title = $atag->getAttribute('title');
+        if (!$href) {
+        //no href specified so must be target
+            $linkdata->type = 'anchor';
+        } else {
+            $urlinfo = parse_url($href);
+            if (key_exists('scheme',$urlinfo)) $linkdata->scheme = $urlinfo['scheme'];
+            if (key_exists('host',$urlinfo)) $linkdata->host = $urlinfo['host'];
+            if (key_exists('path',$urlinfo)) $linkdata->path = $urlinfo['scheme'];
+            if (key_exists('query',$urlinfo)) $linkdata->query = $urlinfo['query'];
+            if (key_exists('fragment',$urlinfo)) $linkdata->fragment = $urlinfo['fragment'];
+            if (substr($href,0,1)=='#') {
+                $linkdata->type = 'inpage';
+            } elseif ((isset($linkdata->scheme)) && (!str_starts_with(strtolower($linkdata->scheme),'http'))) {
+                    // scheme is not http or https so it is some other type of link
+                $linkdata->type = 'other' ;
+            } else {
+                if (XbarticlemanHelper::isLocalLink($href)) {
+                    $linkdata->type = 'local' ;
+                } else {
+                    $linkdata->type = 'external' ;
+                }
+            }
+        }
+        switch ($linkdata->type) {
+            case 'local':
+                $linkdata->colour = (XbarticlemanHelper::check_url($href)) ? 'green' : 'red';                
+                $linksdata['local'][] = $linkdata;
+                break;
+            case 'external':
+                if ($this->getState('xbarticleman.checkext',0) == 1) $linkdata->colour = (XbarticlemanHelper::check_url($url)) ? 'green' : 'red';
+                $linksdata['external'][] = $linkdata;
+                break;
+            case 'other':
+                $linksdata['other'][] = $linkdata;
+                break;
+            case 'inpage':
+                $linksdata['inpage'][] = $linkdata;
+                break;
+            case 'anchor':
+                $linksdata['anchor'][] = $linkdata;
+                break;
+            break;
+        }
+        
+        return $linksdata;
+    }
+    
     private function parseRelLink($idx, $url, $text='', $target='') {
         $targets = array('current window/tab', 'new window/tab', 'popup window', 'modal window');
         $linkdata = new \stdClass();
         $linkdata->label = 'Link '.$idx;
         $linkdata->url = $url;
         $linkdata->text = $text;
-        $linkdata->target = ($target !='') ? $targets[$target] : '(use global)';
+        $linkdata->target = ($target !='') ? $this->targets[$target] : '(use global)';
         $urlinfo = parse_url($url);
         if (!key_exists('host',$urlinfo)) {
             $urlinfo['host'] = '';
@@ -405,3 +486,4 @@ class ArtlinksModel extends ListModel {
     }
        
 }
+ 

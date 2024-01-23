@@ -249,7 +249,7 @@ if ($saveOrder && !empty($this->items)) {
 					$canEditParCat    = $user->authorise('core.edit',       'com_xbarticleman.category.' . $item->parent_category_id);
 					$canEditOwnParCat = $user->authorise('core.edit.own',   'com_xbarticleman.category.' . $item->parent_category_id) && $item->parent_category_uid == $userId;
 					
-					$links = $item->links;
+//					$links = $item->links;
 					?>
 										<tr class="row<?php echo $i % 2; ?>" sortable-group-id="<?php echo $item->catid; ?>">
 						<td>
@@ -367,51 +367,84 @@ if ($saveOrder && !empty($this->items)) {
 							<?php endforeach; ?>
 						</td>
 						<td>
-							<?php $this->emblinks = new stdClass(); ?>							
-							<?php if (count($links["pageLinks"]) >0) : ?>
-								<b>Internal Page Links: <?php count($links["pageLinks"]); ?></b>
-								<?php $this->emblinks = $links["pageLinks"]; 
-								echo $this->loadTemplate('emb_links');
-								?>
+							<?php if (count($item->emblinks['local']) >0) : ?>
+								<b><?php echo count($item->emblinks['local']); ?> <?php echo Text::_('This Site Links'); ?>: </b>
+								<?php foreach ($item->emblinks['local'] as $link) : ?>
+									<?php $this->emblink = $link; 
+                                        echo $this->loadTemplate('emb_links'); ?>
+                                    <details>
+                                    	<summary><i><?php echo $link->label; ?></i>: 
+                                    		<span style="color:<?php echo $link->colour; ?>" title="<?php echo $link->url; ?>">
+                                				<?php $pvurl = "'".$link->url."'"; 
+                                                echo $link->text; ?>
+                                			</span>
+                                    		<span  data-bs-toggle="modal" data-bs-target="#pvModal" data-bs-source="/" 
+                                    			data-bs-itemtitle="Preview Embeded Link" 
+                                                title="<?php echo $link->text; ?>" 
+                                              	onclick="var pv=document.getElementById('pvModal');
+                                              		pv.querySelector('.modal-body .iframe').setAttribute('src',<?php echo "'".$link->url."'"; ?>);
+                                              		pv.querySelector('.modal-title').textContent=<?php echo "'".$link->text."'"; ?>;"
+                                             >
+                                    			<span class="icon-eye xbpl10"></span>
+                                    		</span>
+                                    	</summary>    							    	
+                                		<i>Host</i>: <?php echo $link->scheme.$link->host; ?><br />
+                                		<i>Host</i>: <?php echo ($link->islocal) ? '(local)' : $link->scheme_host; ?><br />
+                                		<i>Path</i>: <?php echo $link->path; ?><br/>
+                                		<?php if ($link->hash != '') : ?> <i>hash</i>: <?php echo $link->hash.'<br/>'; endif; ?>
+                                		<?php if ($link->query != '') : ?> <i>Query</i>: ?<?php echo $link->query.'<br/>'; endif; ?>
+                                		<i>Target</i>: <?php echo $link->target; ?><br />
+                                		<?php if ($link->class != '') : ?> <i>Class</i>: <?php echo $link->class.'<br/>'; endif; ?>
+                                		<?php if ($link->style != '') : ?> <i>Style</i>: <?php echo $link->style.'<br/>'; endif; ?>
+                                		<?php if ($link->rev != '') : ?> <i>rev</i>: <?php echo $link->hash.'<br/>'; endif; ?>
+                                		<?php if ($link->rel != '') : ?> <i>rel</i>: <?php echo $link->hash.'<br/>'; endif; ?>
+                                		<?php if ($link->id != '') : ?> <i>id</i>: <?php echo $link->hash.'<br/>'; endif; ?>
+                                		<?php if ($link->title != '') : ?> <i>title</i>: <?php echo $link->hash.'<br/>'; endif; ?>
+                                		
+                                    </details>
+								<?php endforeach; ?>
 							   	<br />
 							<?php endif; ?>
-							<?php if (count($links["localLinks"]) >0) : ?>
-								<b>Local Links: <?php count($links["localLinks"]); ?></b>
-								<?php $this->emblinks = $links["localLinks"]; 
-								echo $this->loadTemplate('emb_links');
-								?>
+							
+							<?php if (count($item->emblinks['external']) >0) : ?>
+								<b><?php echo count($item->emblinks['external']); ?> <?php echo Text::_('External Links'); ?>: </b>
+								<?php foreach ($item->emblinks['external'] as $link) : ?>
+                                    <details>
+                                    	<summary><i><?php echo $link->label; ?></i>: 
+                                    		<span style="color:<?php echo $link->colour; ?>" title="<?php echo $link->url; ?>">
+                                				<?php $pvurl = "'".$link->url."'"; 
+                                                echo $link->text; ?>
+                                			</span>
+                                    		<span  data-bs-toggle="modal" data-bs-target="#pvModal" data-bs-source="/" 
+                                    			data-bs-itemtitle="Preview Embeded Link" 
+                                                title="<?php echo $link->text; ?>" 
+                                              	onclick="var pv=document.getElementById('pvModal');
+                                              		pv.querySelector('.modal-body .iframe').setAttribute('src',<?php echo "'".$link->url."'"; ?>);
+                                              		pv.querySelector('.modal-title').textContent=<?php echo "'".$link->text."'"; ?>;"
+                                             >
+                                    			<span class="icon-eye xbpl10"></span>
+                                    		</span>
+                                    	</summary>    							    	
+                                		<i>Host</i>: <?php echo $link->scheme.$link->host; ?><br />
+                                		<i>Host</i>: <?php echo ($link->islocal) ? '(local)' : $link->scheme_host; ?><br />
+                                		<i>Path</i>: <?php echo $link->path; ?><br/>
+                                		<?php if ($link->hash != '') : ?> <i>hash</i>: <?php echo $link->hash.'<br/>'; endif; ?>
+                                		<?php if ($link->query != '') : ?> <i>Query</i>: ?<?php echo $link->query.'<br/>'; endif; ?>
+                                		<i>Target</i>: <?php echo $link->target; ?><br />
+                                		<?php if ($link->class != '') : ?> <i>Class</i>: <?php echo $link->class.'<br/>'; endif; ?>
+                                		<?php if ($link->style != '') : ?> <i>Style</i>: <?php echo $link->style.'<br/>'; endif; ?>
+                                		<?php if ($link->rev != '') : ?> <i>rev</i>: <?php echo $link->hash.'<br/>'; endif; ?>
+                                		<?php if ($link->rel != '') : ?> <i>rel</i>: <?php echo $link->hash.'<br/>'; endif; ?>
+                                		<?php if ($link->id != '') : ?> <i>id</i>: <?php echo $link->hash.'<br/>'; endif; ?>
+                                		<?php if ($link->title != '') : ?> <i>title</i>: <?php echo $link->hash.'<br/>'; endif; ?>
+                                		
+                                    </details>
+								<?php endforeach; ?>
 							   	<br />
 							<?php endif; ?>
-							<?php
-							if (count($links["extLinks"]) >0) : ?>
-								<b>External Links: <?php count($links["extLinks"]); ?></b>
-								<?php $this->emblinks = $links["extLinks"]; 
-								echo $this->loadTemplate('emb_links');
-								?>
-							   	<br />
-							<?php endif; ?>
-							<?php
-							if (count($links["others"]) >0) : ?>
-								<b>Other Links: <?php count($links["others"]); ?></b>
-								<?php $this->emblinks = $links["others"]; 
-								echo $this->loadTemplate('emb_links');
-								?>
-
-							<?php endif; ?>
+							
 						</td>
 						<td>
-							<?php 
-							echo count($links["pageTargs"]).' '.Text::_('XBARTMAN_TARGETS_FOUND').'<br />';
-							if (count($links["pageTargs"]) >0) : ?>
-							    <?php foreach ($links["pageTargs"] as $a) : ?>
-							    	<?php $url = Uri::root().'index.php?option=com_content&view=article&id='.$item->id; ?>
-							        <i>id</i>:
-									<a class="hasTooltip"  data-toggle="modal" title="<?php echo Text::_('XBARTMAN_MODAL_PREVIEW'); ?>" href="#pvModal"
-    									onClick="window.pvuri=<?php echo "'".$url."#".$a->getAttribute('id')."'"; ?>" >							        
-							        	<b><?php echo $a->getAttribute('id'); ?></b> <span class="icon-eye"></span></a>
-							        <br />
-							    <?php endforeach; ?>
-							<?php endif; ?>							
 						</td>
 						<td class="nowrap small hidden-phone">
 							<?php
