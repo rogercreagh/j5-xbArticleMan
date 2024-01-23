@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager
  * @filesource admin/src/Model/ArtlinksModel.php
- * @version 0.0.5.0 21st January 2024
+ * @version 0.0.5.0 23rd January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -66,17 +66,17 @@ class ArtlinksModel extends ListModel {
         $level = $this->getUserStateFromRequest($this->context . '.filter.level', 'filter_level');
         $this->setState('filter.level', $level);
         
-        $checkint = $app->input->get('checkint');
-        if (!$checkint==1) {
-            $checkint=0;
-        }
-//         $checkext = $app->input->get('checkext');
-//         if (!$checkext==1) {
-//             $checkext=0;
+//         $checkint = $app->input->get('checkint');
+//         if (!$checkint==1) {
+//             $checkint=0;
 //         }
+        $checkext = $app->input->get('checkext');
+        if (!$checkext==1) {
+            $checkext=0;
+        }
         
-//         $this->setState('checkint', $checkint);
-//         $this->setState('checkext', $checkext);
+//        $this->setState('checkint', $checkint);
+        $this->setState('xbarticleman.checkext', $checkext);
         
         $formSubmited = $app->input->post->get('form_submited');
         
@@ -142,18 +142,18 @@ class ArtlinksModel extends ListModel {
                 $query->where('CONCAT(a.introtext," ",a.fulltext)'.' REGEXP '.$db->q('<a '));
                 break;
             case 2: //with Intro/Full
-                $query->where('a.urls REGEXP '.$db->q('/\"url[a-c]\":[^,]+?\"'));
+                $query->where('a.urls REGEXP '.$db->q('\"url[a-c]\":\"\w|\/'));
                 break;
             case 3: //with either
                 $query->where('CONCAT(a.introtext," ",a.fulltext)'.' REGEXP '.$db->q('<a ').' OR '
-                    .'a.urls REGEXP '.$db->q('/\"url[a-c]\":[^,]+?\"'));
+                    .'a.urls REGEXP '.$db->q('\"url[a-c]\":\"\w|\/'));
                 // {"image_intro":"images\/xbbooks\/samples\/books\/ashes-of-london.jpg","float_intro":"","image_intro_alt":"","image_intro_caption":"","image_fulltext":"images\/xbfilms\/samples\/films\/faces-places.jpg","float_fulltext":"","image_fulltext_alt":"","image_fulltext_caption":""}
                 break;
             case 4: //no <img
                 $query->where('NOT CONCAT(a.introtext," ",a.fulltext)'.' REGEXP '.$db->q('<a '));
                 break;
             case 5: //no Intro/Full
-                $query->where('NOT a.urls REGEXP '.$db->q('/\"url[a-c]\":[^,]+?\"'));
+                $query->where('NOT a.urls REGEXP '.$db->q('\"url[a-c]\":\"\w|\/'));
                 break;
             case 6: //no images
                 $query->where('NOT CONCAT(a.introtext," ",a.fulltext)'.' REGEXP '.$db->q('<a ').' AND NOT '
@@ -356,7 +356,6 @@ class ArtlinksModel extends ListModel {
             if ($urlinfo['scheme'] == 'mailto') {
                 $linkdata->text .= '&nbsp;<span class="icon-mail"></span>';
             } else {
-                $this->extlinkcnt +=1;
                 if (key_exists('host', $urlinfo)) $urlinfo['scheme'] .= '://';
             }
         }
@@ -365,8 +364,9 @@ class ArtlinksModel extends ListModel {
             if ($urlinfo['host'] == '') $url = Uri::root().$url; //use router here
             $linkdata->colour = (XbarticlemanHelper::check_url($url)) ? 'green' : 'red';
         } else {
+            $this->extlinkcnt +=1;
             $linkdata->colour = '';
-            if ($this->state->get('checkext') == 1) $linkdata->colour = (XbarticlemanHelper::check_url($url)) ? 'green' : 'red';
+            if ($this->getState('xbarticleman.checkext',0) == 1) $linkdata->colour = (XbarticlemanHelper::check_url($url)) ? 'green' : 'red';
         }
         $linkdata->scheme_host = (key_exists('scheme',$urlinfo)) ? $urlinfo['scheme'] : '';
         $linkdata->scheme_host .= (key_exists('host',$urlinfo)) ? $urlinfo['host'] : '';

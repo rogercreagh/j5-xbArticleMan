@@ -2,7 +2,7 @@
  /*******
  * @package xbArticleManager
  * @filesource admin/src/Controller/ArtlinksController.php
- * @version 0.0.5.0 16th January 2024
+ * @version 0.0.5.0 23rd January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -39,12 +39,12 @@ class ArtlinksController extends AdminController {
         $this->setRedirect(Route::_('index.php?option=com_content&task=article.edit&id='.$fid, false));
     }
     
-    public function checkExt() {
-        $jip =  Factory::getApplication()->input;
-        $checkext = $jip->get('checkext');
-        $this->setState('checkext', $checkext);
+//     public function checkExt() {
+//         $jip =  Factory::getApplication()->input;
+//         $checkext = $jip->get('checkext');
+//         $this->setState('checkext', $checkext);
         
-        $this->setRedirect(Route::_('index.php?option=com_xbarticleman&view=artlinks', false));
+//         $this->setRedirect(Route::_('index.php?option=com_xbarticleman&view=artlinks', false));
         
-    }
+//     }
 }

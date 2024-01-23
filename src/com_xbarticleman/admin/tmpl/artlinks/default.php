@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/tmpl/artlinks/default.php
- * @version 0.0.5.0 21st January 2024
+ * @version 0.0.5.0 23rd January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -28,8 +28,11 @@ $wa = $this->document->getWebAssetManager();
 // $wa->useScript('table.columns');
 $wa->useScript('multiselect');
 $wa->addInlineScript('function pleaseWait(targ) {
+    var msg = "'.$this->extlinkcnt.' links might take a long time to check";
+    if ('.$this->extlinkcnt.' > 10) { if (!confirm(msg)) return false;}
+		document.getElementById("checkext").value = "1";
 		document.getElementById(targ).style.display = "block";
-        document.getElementById("task").value="artlinks.checkext";
+        return true;
 	}');
 
 $app = Factory::getApplication();
@@ -38,7 +41,10 @@ $userId = $user->get('id');
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn = $this->escape($this->state->get('list.direction'));
 $saveOrder = $listOrder == 'a.ordering';
+
 $rowcnt = count($this->items);
+$checklimit = 20;
+
 
 if (strpos($listOrder, 'publish_up') !== false)
 {
@@ -111,22 +117,17 @@ if ($saveOrder && !empty($this->items)) {
 				<?php echo Text::_('JGLOBAL_NO_MATCHING_RESULTS'); ?>
 			</div>
 		<?php else : ?>
-			<?php $rowcnt = count($this->items); ?>	
-			<?php $checklimit = 20;
-			$extenabled = true;
-			if ($this->extlinkcnt > $checklimit) $extenabled = false;
-			if (!$extenabled) : ?>
-				<div class="alert"><p>
-    				<?php echo Text::_('NB. External Link checking disabled while more than '.$checklimit.' external links shown'); ?>
-				</p></div> 
-			<?php else : ?>
-			<?php endif; ?>
 			<div>
-				<p><b><?php echo Text::_('XBARTMAN_LINKS_TO_CHECK'); ?>:</b>
-				<span class="xbpl10<?php echo (!$extenabled)? ' xbdim' : ''?>"><?php echo Text::_('XB_EXTERNAL'); ?></span>
-		        <input type="checkbox" name="checkext" value="0" <?php echo ($extenabled)? 'checked="false"' : 'disabled'; ?> style="margin:0 5px;" /> 
+				<p><b><?php echo Text::_('Check External Links'); ?>:</b>
+				<?php echo $this->extlinkcnt; ?> 
+				<?php if ($this->extchkdone == 1) {
+				    echo Text::_('external links checked');
+				} else {
+				    echo Text::_('eternal links to be checked.'); 
+				} ?>
+		        <input type="hidden" name="checkext" id="checkext" value="0" /> 
 		        <span style="padding-left:20px;"> </span>
-    			<input type="button" class="btn xbabtn" value="Check Now" onClick="pleaseWait('waiter');this.form.submit();" /> 
+    			<input type="button" class="xbabtn" value="Check Now" onClick="if (pleaseWait('waiter')){ this.form.submit()};" /> 
                 <span class="alert-info xbpl20"><i><?php echo Text::_('XBARTMAN_LINK_CHECK_NOTE'); ?></i></span>
 				</p>
 			</div>		
@@ -337,12 +338,6 @@ if ($saveOrder && !empty($this->items)) {
 							</div>
 						</td>
 						<td><?php foreach ($item->rellinks as $link) : ?>
-    						   <?php if (!$link->islocal) {
-    						       if ($this->checkext) {
-    						           //$link->colour = (!XbarticlemanHelper::check_url($url)) ? 'red' : 'green';
-    						       }
-    						 
-    						   } ?>
     						    <details>
                                 	<summary>
                                 		<i><?php echo $link->label; ?></i>: 
@@ -355,7 +350,7 @@ if ($saveOrder && !empty($this->items)) {
                                             title="<?php echo $link->text; ?>" 
                                           	onclick="var pv=document.getElementById('pvModal');
                                           		pv.querySelector('.modal-body .iframe').setAttribute('src',<?php echo $pvurl; ?>);
-                                          		pv.querySelector('.modal-title').textContent=<?php echo "'".$linkk->text."'"; ?>;"
+                                          		pv.querySelector('.modal-title').textContent=<?php echo "'".$link->text."'"; ?>;"
                                          >
                                 			<span class="icon-eye xbpl10"></span>
                                 		</span>

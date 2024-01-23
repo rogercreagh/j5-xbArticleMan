@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/src/View/Artlinks/HtmlView.php
- * @version 0.0.5.0 16th January 2024
+ * @version 0.0.5.0 23rd January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -47,8 +47,8 @@ class HtmlView extends BaseHtmlView {
         $this->state         = $this->get('State');
         $this->filterForm    = $this->get('FilterForm');
         $this->activeFilters = $this->get('ActiveFilters');
-        $this->checkint    = $this->state->get('checkint');
-        $this->checkext      = $this->state->get('checkext');
+//        $this->checkint    = $this->state->get('checkint');
+        $this->extchkdone      = $this->state->get('xbarticleman.checkext','x');
         $this->extlinkcnt = $this->get('Extlinkcnt');
         
         // Check for errors.
