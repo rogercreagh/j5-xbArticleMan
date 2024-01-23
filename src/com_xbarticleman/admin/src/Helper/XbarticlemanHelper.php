@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * file admin/src/Helper/XbarticlemanHelper.php
- * @version 0.0.4.0 11th January 2024
+ * @version 0.0.5.1 23rd January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -176,6 +176,19 @@ class XbarticlemanHelper extends ComponentHelper
 	    return $cnt;
 	}
 	
+	public static function abridgeText(string $source, int $maxstart = 6, int $maxend = 4, $wordbrk = true) {
+	    $source = trim($source);
+	    if (strlen($source) < ($maxstart + $maxend + 5)) return $source;
+	    $start = substr($source, 0, $maxstart);
+	    $end = substr($source, strlen($source)-$maxend);
+	    if ($wordbrk) {
+    	    $firstspace = strrpos($start, ' ');
+    	    if ($firstspace !== false) $start = substr($start,0,$firstspace);
+    	    $lastspace = strrpos($end,' ');
+    	    if ($lastspace !== false) $end = substr($end, strlen($end)-$lastspace);	        
+	    }
+	    return $start.' ... '.$end;	    
+	}
 	public static function truncateToText(string $source, int $maxlen=250, string $split = 'word', $ellipsis = true) { //null=exact|false=word|true=sentence
 	    if ($maxlen < 5) return $source; //silly the elipsis '...' is 3 chars
 	    $action = strpos(' firstsent lastsent word abridge exact',$split);

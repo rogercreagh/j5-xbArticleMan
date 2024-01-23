@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager
  * @filesource admin/src/Model/ArtlinksModel.php
- * @version 0.0.5.0 23rd January 2024
+ * @version 0.0.5.1 23rd January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -13,6 +13,7 @@ namespace Crosborne\Component\Xbarticleman\Administrator\Model;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
@@ -381,7 +382,7 @@ class ArtlinksModel extends ListModel {
             $urlinfo = parse_url($href);
             if (key_exists('scheme',$urlinfo)) $linkdata->scheme = $urlinfo['scheme'];
             if (key_exists('host',$urlinfo)) $linkdata->host = $urlinfo['host'];
-            if (key_exists('path',$urlinfo)) $linkdata->path = $urlinfo['scheme'];
+            if (key_exists('path',$urlinfo)) $linkdata->path = $urlinfo['path'];
             if (key_exists('query',$urlinfo)) $linkdata->query = $urlinfo['query'];
             if (key_exists('fragment',$urlinfo)) $linkdata->fragment = $urlinfo['fragment'];
             if (substr($href,0,1)=='#') {
@@ -390,6 +391,7 @@ class ArtlinksModel extends ListModel {
                     // scheme is not http or https so it is some other type of link
                 $linkdata->type = 'other' ;
             } else {
+                if (isset($linkdata->scheme)) $linkdata->scheme .= '://';
                 if (XbarticlemanHelper::isLocalLink($href)) {
                     $linkdata->type = 'local' ;
                 } else {
@@ -426,7 +428,7 @@ class ArtlinksModel extends ListModel {
         $linkdata = new \stdClass();
         $linkdata->label = 'Link '.$idx;
         $linkdata->url = $url;
-        $linkdata->text = $text;
+        $linkdata->text = ($text != '') ? $text : Text::_('No text, url will display');
         $linkdata->target = ($target !='') ? $this->targets[$target] : '(use global)';
         $urlinfo = parse_url($url);
         if (!key_exists('host',$urlinfo)) {
@@ -452,12 +454,12 @@ class ArtlinksModel extends ListModel {
         $linkdata->scheme_host = (key_exists('scheme',$urlinfo)) ? $urlinfo['scheme'] : '';
         $linkdata->scheme_host .= (key_exists('host',$urlinfo)) ? $urlinfo['host'] : '';
         $linkdata->path = (key_exists('path',$urlinfo)) ? $urlinfo['path'] : '';
-        $pathinfo = pathinfo($url);
-        if (key_exists('fragment',$pathinfo)) $linkdata->hash =  '#'.$pathinfo['fragment'];
-        if (key_exists('query',$pathinfo)) $linkdata->query =  $pathinfo['query'];
-        if ($text == '') {
-            $linkdata->text = $url; //TODO relace this with abbreviated version poss using ellipsis function to show only N chars
-        }
+        //$pathinfo = pathinfo($url);
+        if (key_exists('fragment',$urlinfo)) $linkdata->hash =  '#'.$pathinfo['fragment'];
+        if (key_exists('query',$urlinfo)) $linkdata->query =  $pathinfo['query'];
+//        if ($text == '') {
+//            $linkdata->text = $url; //TODO relace this with abbreviated version poss using ellipsis function to show only N chars
+//        }
         return $linkdata;
     }
     

@@ -16,11 +16,10 @@ use Joomla\CMS\Uri\Uri;
 use Crosborne\Component\Xbarticleman\Administrator\Helper\XbarticlemanHelper;
 
 $link = $this->emblink; ?>
-    <details>
+    <details style="overflow-wrap: anywhere;">
     	<summary><i><?php echo $link->label; ?></i>: 
     		<span style="color:<?php echo $link->colour; ?>" title="<?php echo $link->url; ?>">
-				<?php $pvurl = "'".$link->url."'"; 
-                echo $link->text; ?>
+				<?php echo $link->text; ?>
 			</span>
     		<span  data-bs-toggle="modal" data-bs-target="#pvModal" data-bs-source="/" 
     			data-bs-itemtitle="Preview Embeded Link" 
@@ -32,8 +31,8 @@ $link = $this->emblink; ?>
     			<span class="icon-eye xbpl10"></span>
     		</span>
     	</summary>    							    	
-		<i>Host</i>: <?php echo $link->scheme.$link->host; ?><br />
-		<i>Host</i>: <?php echo ($link->islocal) ? '(local)' : $link->scheme_host; ?><br />
+		<i>Host</i>: <?php // echo $link->scheme.$link->host; ?>
+			<?php echo ($link->type == 'local') ? '(local)' : $link->scheme.$link->host; ?><br />
 		<i>Path</i>: <?php echo $link->path; ?><br/>
 		<?php if ($link->hash != '') : ?> <i>hash</i>: <?php echo $link->hash.'<br/>'; endif; ?>
 		<?php if ($link->query != '') : ?> <i>Query</i>: ?<?php echo $link->query.'<br/>'; endif; ?>

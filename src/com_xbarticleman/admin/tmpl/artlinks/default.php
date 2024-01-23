@@ -338,7 +338,7 @@ if ($saveOrder && !empty($this->items)) {
 							</div>
 						</td>
 						<td><?php foreach ($item->rellinks as $link) : ?>
-    						    <details>
+    						    <details style="overflow-wrap: anywhere;">
                                 	<summary>
                                 		<i><?php echo $link->label; ?></i>: 
                                 		<span style="color:<?php echo $link->colour; ?>" title="<?php echo $link->url; ?>">
@@ -368,83 +368,47 @@ if ($saveOrder && !empty($this->items)) {
 						</td>
 						<td>
 							<?php if (count($item->emblinks['local']) >0) : ?>
-								<b><?php echo count($item->emblinks['local']); ?> <?php echo Text::_('This Site Links'); ?>: </b>
+								<b><?php echo Text::_('This Site Links'); ?> (<?php echo count($item->emblinks['local']); ?> ): </b>
 								<?php foreach ($item->emblinks['local'] as $link) : ?>
 									<?php $this->emblink = $link; 
                                         echo $this->loadTemplate('emb_links'); ?>
-                                    <details>
-                                    	<summary><i><?php echo $link->label; ?></i>: 
-                                    		<span style="color:<?php echo $link->colour; ?>" title="<?php echo $link->url; ?>">
-                                				<?php $pvurl = "'".$link->url."'"; 
-                                                echo $link->text; ?>
-                                			</span>
-                                    		<span  data-bs-toggle="modal" data-bs-target="#pvModal" data-bs-source="/" 
-                                    			data-bs-itemtitle="Preview Embeded Link" 
-                                                title="<?php echo $link->text; ?>" 
-                                              	onclick="var pv=document.getElementById('pvModal');
-                                              		pv.querySelector('.modal-body .iframe').setAttribute('src',<?php echo "'".$link->url."'"; ?>);
-                                              		pv.querySelector('.modal-title').textContent=<?php echo "'".$link->text."'"; ?>;"
-                                             >
-                                    			<span class="icon-eye xbpl10"></span>
-                                    		</span>
-                                    	</summary>    							    	
-                                		<i>Host</i>: <?php echo $link->scheme.$link->host; ?><br />
-                                		<i>Host</i>: <?php echo ($link->islocal) ? '(local)' : $link->scheme_host; ?><br />
-                                		<i>Path</i>: <?php echo $link->path; ?><br/>
-                                		<?php if ($link->hash != '') : ?> <i>hash</i>: <?php echo $link->hash.'<br/>'; endif; ?>
-                                		<?php if ($link->query != '') : ?> <i>Query</i>: ?<?php echo $link->query.'<br/>'; endif; ?>
-                                		<i>Target</i>: <?php echo $link->target; ?><br />
-                                		<?php if ($link->class != '') : ?> <i>Class</i>: <?php echo $link->class.'<br/>'; endif; ?>
-                                		<?php if ($link->style != '') : ?> <i>Style</i>: <?php echo $link->style.'<br/>'; endif; ?>
-                                		<?php if ($link->rev != '') : ?> <i>rev</i>: <?php echo $link->hash.'<br/>'; endif; ?>
-                                		<?php if ($link->rel != '') : ?> <i>rel</i>: <?php echo $link->hash.'<br/>'; endif; ?>
-                                		<?php if ($link->id != '') : ?> <i>id</i>: <?php echo $link->hash.'<br/>'; endif; ?>
-                                		<?php if ($link->title != '') : ?> <i>title</i>: <?php echo $link->hash.'<br/>'; endif; ?>
-                                		
-                                    </details>
 								<?php endforeach; ?>
 							   	<br />
 							<?php endif; ?>
 							
 							<?php if (count($item->emblinks['external']) >0) : ?>
-								<b><?php echo count($item->emblinks['external']); ?> <?php echo Text::_('External Links'); ?>: </b>
+								<b><?php echo Text::_('External Links'); ?> (<?php echo count($item->emblinks['external']); ?>): </b>
 								<?php foreach ($item->emblinks['external'] as $link) : ?>
-                                    <details>
-                                    	<summary><i><?php echo $link->label; ?></i>: 
-                                    		<span style="color:<?php echo $link->colour; ?>" title="<?php echo $link->url; ?>">
-                                				<?php $pvurl = "'".$link->url."'"; 
-                                                echo $link->text; ?>
-                                			</span>
-                                    		<span  data-bs-toggle="modal" data-bs-target="#pvModal" data-bs-source="/" 
-                                    			data-bs-itemtitle="Preview Embeded Link" 
-                                                title="<?php echo $link->text; ?>" 
-                                              	onclick="var pv=document.getElementById('pvModal');
-                                              		pv.querySelector('.modal-body .iframe').setAttribute('src',<?php echo "'".$link->url."'"; ?>);
-                                              		pv.querySelector('.modal-title').textContent=<?php echo "'".$link->text."'"; ?>;"
-                                             >
-                                    			<span class="icon-eye xbpl10"></span>
-                                    		</span>
-                                    	</summary>    							    	
-                                		<i>Host</i>: <?php echo $link->scheme.$link->host; ?><br />
-                                		<i>Host</i>: <?php echo ($link->islocal) ? '(local)' : $link->scheme_host; ?><br />
-                                		<i>Path</i>: <?php echo $link->path; ?><br/>
-                                		<?php if ($link->hash != '') : ?> <i>hash</i>: <?php echo $link->hash.'<br/>'; endif; ?>
-                                		<?php if ($link->query != '') : ?> <i>Query</i>: ?<?php echo $link->query.'<br/>'; endif; ?>
-                                		<i>Target</i>: <?php echo $link->target; ?><br />
-                                		<?php if ($link->class != '') : ?> <i>Class</i>: <?php echo $link->class.'<br/>'; endif; ?>
-                                		<?php if ($link->style != '') : ?> <i>Style</i>: <?php echo $link->style.'<br/>'; endif; ?>
-                                		<?php if ($link->rev != '') : ?> <i>rev</i>: <?php echo $link->hash.'<br/>'; endif; ?>
-                                		<?php if ($link->rel != '') : ?> <i>rel</i>: <?php echo $link->hash.'<br/>'; endif; ?>
-                                		<?php if ($link->id != '') : ?> <i>id</i>: <?php echo $link->hash.'<br/>'; endif; ?>
-                                		<?php if ($link->title != '') : ?> <i>title</i>: <?php echo $link->hash.'<br/>'; endif; ?>
-                                		
-                                    </details>
+									<?php $this->emblink = $link; 
+                                        echo $this->loadTemplate('emb_links'); ?>
 								<?php endforeach; ?>
 							   	<br />
-							<?php endif; ?>
-							
+							<?php endif; ?>							
 						</td>
 						<td>
+							<?php if (count($item->emblinks['other']) >0) : ?>
+								<b><?php echo Text::_('non http links'); ?> (<?php echo count($item->emblinks['other']); ?>): </b>
+								<?php foreach ($item->emblinks['other'] as $link) : ?>
+									<?php $this->emblink = $link; 
+                                        echo $this->loadTemplate('emb_links'); ?>
+								<?php endforeach; ?>
+							   	<br />
+							<?php endif; ?>							
+							<?php if (count($item->emblinks['inpage']) >0) : ?>
+								<b><?php echo Text::_('In-page links'); ?> (<?php echo count($item->emblinks['inpage']); ?>): </b>
+								<?php foreach ($item->emblinks['inpage'] as $link) : ?>
+									<?php $this->emblink = $link; 
+                                        echo $this->loadTemplate('emb_links'); ?>
+								<?php endforeach; ?>
+							   	<br />
+							<?php endif; ?>							
+							<?php if (count($item->emblinks['anchor']) >0) : ?>
+								<b><?php echo Text::_('Anchors'); ?> (<?php echo count($item->emblinks['anchor']); ?>): </b>
+								<?php foreach ($item->emblinks['inpage'] as $link) : ?>
+									<p><i><?php echo Text::_('Anchor ID'); ?></i>: <?php echo $link->id; ?></p>
+								<?php endforeach; ?>
+							<?php endif; ?>							
+						
 						</td>
 						<td class="nowrap small hidden-phone">
 							<?php
