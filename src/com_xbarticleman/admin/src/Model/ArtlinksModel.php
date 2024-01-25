@@ -23,6 +23,11 @@ use Crosborne\Component\Xbarticleman\Administrator\Helper\XbarticlemanHelper;
 
 class ArtlinksModel extends ListModel {
  
+    protected $extlinkcnt = 0;
+    protected $intlinkcnt = 0;
+    protected $otherlinkcnt = 0;
+    protected $anchorcnt = 0;
+    
     public function __construct($config = array()) {
         
         if (empty($config['filter_fields'])) {
@@ -317,9 +322,9 @@ class ArtlinksModel extends ListModel {
     
     public function getItems() {
         $this->extlinkcnt = 0;
-        $this->targets = array('current', '_blank', 'popup', 'modal');
-        //        $input  = Factory::getApplication()->input;
-//        $this->checkext = ($input->get('task') == 'checkext');
+        $this->intlinkcnt = 0;
+        $this->otherlinkcnt = 0;
+        $this->anchorcnt = 0;
         $items  = parent::getItems();
         if ($items) {
             
@@ -338,9 +343,7 @@ class ArtlinksModel extends ListModel {
                 foreach ($atags as $atag) {
                     $item->emblinks = $this->parseEmbLink($atag, $item->emblinks);
                 }
-                
-                $this->extlinkcnt += count($item->emblinks['external']);
-                
+                                
                 $item->rellinks = array();
                 $urls = json_decode($item->urls);
                 if ($urls->urla) {
@@ -363,19 +366,19 @@ class ArtlinksModel extends ListModel {
         $linkdata = new \stdClass();
         //<a href="https://crosborne.uk/xbmaps" target="_blank" rel="alternate nofollow noopener" id="linkid" class="xbdim btn" style="padding:10px;" tabindex="34" title="A title for my link" rev="subsection">beautiful</a>
         //$linkdata -> label, url, text, target, scheme, host, colour, path, class type=local|external|other|inpage|anchor
-        $linkdata->text = $atag->textContent;
-        $linkdata->colour = '#222'; 
         $linkdata->label = 'Text';
         $href = $atag->getAttribute('href');
         $linkdata->url = $href;
+        $linkdata->colour = '#444'; 
+        $linkdata->text = $atag->textContent;
         $linkdata->id = $atag->getAttribute('id');
         $linkdata->target = $atag->getAttribute('target');
         if ($linkdata->target == '') $linkdata->target = Text::_('current');
         $linkdata->rel = $atag->getAttribute('rel');
-        $linkdata->rev = $atag->getAttribute('rev');
         $linkdata->class = $atag->getAttribute('class');
         $linkdata->style = $atag->getAttribute('style');
         $linkdata->title = $atag->getAttribute('title');
+        
         if (!$href) {
         //no href specified so must be target
             $linkdata->type = 'anchor';
@@ -384,29 +387,70 @@ class ArtlinksModel extends ListModel {
             if (key_exists('scheme',$urlinfo)) $linkdata->scheme = $urlinfo['scheme'];
             if (key_exists('host',$urlinfo)) $linkdata->host = $urlinfo['host'];
             if (key_exists('path',$urlinfo)) $linkdata->path = $urlinfo['path'];
-            if (key_exists('query',$urlinfo)) $linkdata->query = $urlinfo['query'];
-            if (key_exists('hash',$urlinfo)) $linkdata->fragment = $urlinfo['fragment'];
-            if (substr($href,0,1)=='#') {
-                $linkdata->type = 'inpage';
-            } elseif ((isset($linkdata->scheme)) && (!str_starts_with(strtolower($linkdata->scheme),'http'))) {
-                    // scheme is not http or https so it is some other type of link
-                $linkdata->type = 'other' ;
-            } else {
-                if (isset($linkdata->scheme)) $linkdata->scheme .= '://';
-                if (XbarticlemanHelper::isLocalLink($href)) {
-                    $linkdata->type = 'local' ;
-                } else {
-                    $linkdata->type = 'external' ;
+            if (key_exists('query',$urlinfo)) $linkdata->query = str_replace('&', '<br />&', $urlinfo['query']);
+            if (key_exists('fragment',$urlinfo)) $linkdata->hash = '#'.$urlinfo['fragment'];
+            
+            if (isset($linkdata->scheme)) {   // scheme set 
+                if (str_starts_with(strtolower($linkdata->scheme),'http') ) { //it is http(s)
+                    $linkdata->pvurl = $href;
+                } else { // scheme set but not http
+                    $linkdata->type = 'other';
+                    $this->otherlinkcnt +=1;
+                    if ($urlinfo['scheme'] == 'mailto') {
+                        //we'll add a mail icon to text and only be showing path (the address) and query (any cc subject content etc) and no preview or check
+                        $linkdata->text .= '&nbsp;<span class="icon-mail"></span>';
+                    } //something strange - we'll show all the parts if set but no preview or check
+                    
+                }
+            } else { // no scheme set could be just crosborne.uk/something
+                if (isset($linkdata->host)) { // a host with no scheme (mydomain.com/pathway)
+                    $linkdata->pvurl = $href;
+                } else { // no scheme or host, could be an internal page or an link to inpage anchor
+                    if (isset($linkdata->path)) { //must be a page
+                        $linkdata->pvurl = Uri::root().ltrim($href,'/');
+                    } else {
+                        if (isset($linkdata->hash)) { // its an inpage link, we can't set pvurl here as we don't know the item->id
+                            $linkdata->type = 'inpage';
+                            $this->intlinkcnt +=1;
+                        } else { // else very odd - no scheme host path or hash - just a query!!! do nothing
+                            $linkdata->type = 'other';
+                            $this->otherlinkcnt +=1;
+                        }
+                    }
                 }
             }
+            if (!isset($linkdata->type)) { //is it local or external?
+                $linkdata->type = (XbarticlemanHelper::isLocalLink($href)) ? 'local' : 'external';
+            }
+            
+            
+            
+            
+            
+//             if (substr($href,0,1)=='#') {
+//                 $linkdata->type = 'inpage';
+//             } elseif ((isset($linkdata->scheme)) && (!str_starts_with(strtolower($linkdata->scheme),'http'))) {
+//                     // scheme is not http or https so it is some other type of link
+//                 $linkdata->type = 'other' ;
+//             } else {
+//                 if (isset($linkdata->scheme)) $linkdata->scheme .= '://';
+//                 if (XbarticlemanHelper::isLocalLink($href)) {
+//                     $linkdata->type = 'local' ;
+//                 } else {
+//                     $linkdata->type = 'external' ;
+//                 }
+//             }
+ 
         }
         switch ($linkdata->type) {
             case 'local':
-                $linkdata->colour = (XbarticlemanHelper::check_url($href)) ? 'green' : 'red';                
-                $linksdata['local'][] = $linkdata;
+                $linkdata->colour = (XbarticlemanHelper::check_url($linkdata->pvurl)) ? 'green' : 'red';
+                $this->intlinkcnt +=1;
+               $linksdata['local'][] = $linkdata;
                 break;
             case 'external':
-                if ($this->getState('xbarticleman.checkext',0) == 1) $linkdata->colour = (XbarticlemanHelper::check_url($url)) ? 'green' : 'red';
+                if ($this->getState('xbarticleman.checkext',0) == 1) $linkdata->colour = (XbarticlemanHelper::check_url($linkdata->pvurl)) ? 'green' : 'red';
+                $this->extlinkcnt +=1;
                 $linksdata['external'][] = $linkdata;
                 break;
             case 'other':
@@ -425,47 +469,111 @@ class ArtlinksModel extends ListModel {
     }
     
     private function parseRelLink($idx, $url, $text='', $target='') {
-        $targets = array('current window/tab', 'new window/tab', 'popup window', 'modal window');
+        $targets = array('current', '_blank', 'popup', 'modal');
         $linkdata = new \stdClass();
         $linkdata->label = 'Link '.$idx;
         $linkdata->url = $url;
+        $linkdata->colour = '#444';
         $linkdata->text = ($text != '') ? $text : Text::_('No text, url will display');
-        $linkdata->target = ($target !='') ? $this->targets[$target] : '(use global)';
+        $linkdata->target = ($target !='') ? $targets[$target] : '(use global)';
         $urlinfo = parse_url($url);
-        if (!key_exists('host',$urlinfo)) {
-            $urlinfo['host'] = '';
-            unset($urlinfo['scheme']);
-        }
-        if (key_exists('scheme', $urlinfo)) {
-            if ($urlinfo['scheme'] == 'mailto') {
-                $linkdata->text .= '&nbsp;<span class="icon-mail"></span>';
-            } else {
-                if (key_exists('host', $urlinfo)) $urlinfo['scheme'] .= '://';
+        if (key_exists('scheme',$urlinfo)) $linkdata->scheme = $urlinfo['scheme'];
+        if (key_exists('host',$urlinfo)) $linkdata->host = $urlinfo['host'];
+        if (key_exists('path',$urlinfo)) $linkdata->path = $urlinfo['path'];
+        if (key_exists('fragment',$urlinfo)) $linkdata->hash =  '#'.$urlinfo['fragment'];
+        if (key_exists('query',$urlinfo)) $linkdata->query =  str_replace('&', '<br />&', $urlinfo['query']); //break the query string into separate lines for display
+        if (isset($linkdata->scheme)) {   // scheme set could be just crosborne.uk/something    
+            if (str_starts_with(strtolower($linkdata->scheme),'http') ) { //it is http(s)
+                $linkdata->pvurl = $url;
+            } else { // scheme set but not http 
+                $linkdata->type = 'other';
+                $this->otherlinkcnt +=1; 
+                if ($urlinfo['scheme'] == 'mailto') {
+                    //we'll add a mail icon to text and only be showing path (the address) and query (any cc subject content etc) and no preview or check
+                    $linkdata->text .= '&nbsp;<span class="icon-mail"></span>';
+                } //something strange - we'll show all the parts if set but no preview or check
+                
+            }
+        } else { // no scheme set
+            if (isset($linkdata->host)) { // a host with no scheme (mydomain.com/pathway)
+                $linkdata->pvurl = $url;
+            } else { // no scheme or host, could be an internal page or an link to inpage anchor
+                if (isset($linkdata->path)) { //must be a page
+                    $linkdata->pvurl = Uri::root().ltrim($url,'/');
+                } else {
+                    if (isset($linkdata->hash)) { // its an inpage link, we can't set pvurl here as we don't know the item->id
+                        $linkdata->type = 'inpage';
+                        $this->intlinkcnt +=1; 
+                    } else { // else very odd - no scheme host path or hash - just a query!!! do nothing
+                        $linkdata->type = 'other';
+                        $this->otherlinkcnt +=1; 
+                    }
+                }
             }
         }
-        $linkdata->islocal = XbarticlemanHelper::isLocalLink($url);
-        if ($linkdata->islocal) {
-            if ($urlinfo['host'] == '') $url = Uri::root().$url; //use router here
-            $linkdata->colour = (XbarticlemanHelper::check_url($url)) ? 'green' : 'red';
-        } else {
-            $this->extlinkcnt +=1;
-            $linkdata->colour = '';
-            if ($this->getState('xbarticleman.checkext',0) == 1) $linkdata->colour = (XbarticlemanHelper::check_url($url)) ? 'green' : 'red';
+        if (!isset($linkdata->type)) { //is it local or external?
+            $linkdata->type = (XbarticlemanHelper::isLocalLink($url)) ? 'local' : 'external';
+            // now check valid - use pvurl as url may be missing just path for a local which will fail
+            if ($linkdata->type == 'external') {
+                if ($this->getState('xbarticleman.checkext',0) == 1) $linkdata->colour = (XbarticlemanHelper::check_url($linkdata->pvurl)) ? 'green' : 'red';
+                $this->extlinkcnt +=1;                
+            } else {
+                $linkdata->colour = (XbarticlemanHelper::check_url($linkdata->pvurl)) ? 'green' : 'red';
+                $this->intlinkcnt +=1;                
+            }
         }
-        $linkdata->scheme_host = (key_exists('scheme',$urlinfo)) ? $urlinfo['scheme'] : '';
-        $linkdata->scheme_host .= (key_exists('host',$urlinfo)) ? $urlinfo['host'] : '';
-        $linkdata->path = (key_exists('path',$urlinfo)) ? $urlinfo['path'] : '';
+        
+            
+//             if (!key_exists('host',$urlinfo)) { // we've no host so we need to make a valid complete url with local server 
+//                 if (!key_exists('path',$urlinfo)) { //it must be an inpage link to #something
+//                     $linkdata->type = 'inpage';
+//                 } else {
+//                     $linkdata->pvurl = Uri::root().ltrim($url,'/');
+//                     $linkdata->type = 'local';                    
+//                 }
+//             } else { //weve got both scheme and host
+//                 if ((isset($linkdata->scheme)) && (str_starts_with(strtolower($linkdata->scheme),'http'))) {
+//                     // its an http or https scheme so valid link to test
+//                     $linkdata->scheme .= '://'; //make http scheme ok to concat with host for url
+//                     $linkdata->pvurl = $url;
+//                     $linkdata->type = 'external';
+//                 } else { // scheme is not http or https so it is some other type of link link mailto
+//                     $linkdata->type = 'other' ;
+//                 }
+//                 $linkdata->pvurl = $url;
+//             }
+//         } else { //scheme is set
+//             if (key_exists('host', $urlinfo)) { //need to check if it is local
+//                 $linkdata->type = (XbarticlemanHelper::isLocalLink($url)) ? 'local' : 'external';
+//                 $linkdata->pvurl = $url;
+//             }
+            
+//             if ($urlinfo['scheme'] == 'mailto') {
+//                 $linkdata->text .= '&nbsp;<span class="icon-mail"></span>';
+//             } else {
+//                 if (key_exists('host', $urlinfo)) $urlinfo['scheme'] .= '://';
+//             }
+//         }
+//         $linkdata->islocal = XbarticlemanHelper::isLocalLink($url);
+//         if ($linkdata->islocal) {
+//             if ($urlinfo['host'] == '')  //use router here
+//             $linkdata->colour = (XbarticlemanHelper::check_url($url)) ? 'green' : 'red';
+//         } else {
+//             $this->extlinkcnt +=1;
+//             $linkdata->colour = '';
+//             if ($this->getState('xbarticleman.checkext',0) == 1) $linkdata->colour = (XbarticlemanHelper::check_url($url)) ? 'green' : 'red';
+//         }
+//         $linkdata->scheme_host = (key_exists('scheme',$urlinfo)) ? $urlinfo['scheme'] : '';
+//         $linkdata->scheme_host .= (key_exists('host',$urlinfo)) ? $urlinfo['host'] : '';
         //$pathinfo = pathinfo($url);
-        if (key_exists('fragment',$urlinfo)) $linkdata->hash =  '#'.$pathinfo['fragment'];
-        if (key_exists('query',$urlinfo)) $linkdata->query =  $pathinfo['query'];
 //        if ($text == '') {
 //            $linkdata->text = $url; //TODO relace this with abbreviated version poss using ellipsis function to show only N chars
 //        }
         return $linkdata;
     }
     
-    public function getExtlinkcnt() {
-        return $this->extlinkcnt;
+    public function getLinkcnts() {
+        return array('extlinkcnt' => $this->extlinkcnt, 'intlinkcnt' => $this->intlinkcnt, 'otherlinkcnt' => $this->otherlinkcnt, 'extlinkcnt' => $this->anchorcnt);
     }
     
     public function getAuthors()

@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/tmpl/artlinks/default.php
- * @version 0.0.5.1 24th January 2024
+ * @version 0.0.5.2 25th January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -69,9 +69,6 @@ if ($saveOrder && !empty($this->items)) {
 }
 
 ?>
-<style>
-    thead th, tfoot th {background-color:#d7d7e7 !important;}
-</style>
 <form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=artlinks'); ?>" method="post" name="adminForm" id="adminForm">
 	<div id="xbcomponent">
     	<div id="waiter" class="xbbox alert-info" style="display:none;">
@@ -118,17 +115,23 @@ if ($saveOrder && !empty($this->items)) {
 			</div>
 		<?php else : ?>
 			<div>
-				<p><b><?php echo Text::_('Check External Links'); ?>:</b>
-				<?php echo $this->extlinkcnt; ?> 
-				<?php if ($this->extchkdone == 1) {
-				    echo Text::_('external links checked');
-				} else {
-				    echo Text::_('eternal links to be checked.'); 
-				} ?>
-		        <input type="hidden" name="checkext" id="checkext" value="0" /> 
-		        <span style="padding-left:20px;"> </span>
-    			<input type="button" class="xbabtn" value="Check Now" onClick="if (pleaseWait('waiter')){ this.form.submit()};" /> 
-                <span class="alert-info xbpl20"><i><?php echo Text::_('XBARTMAN_LINK_CHECK_NOTE'); ?></i></span>
+				<p>
+				<?php echo $this->linkcnts['extlinkcnt'].' '.lcfirst(Text::_('external links found')); ?> 
+				<?php if ($this->linkcnts['extlinkcnt'] > 0 ) : ?>
+    				<?php if ($this->extchkdone == 1) {
+    				    echo Text::_('external links checked');
+    				} else {
+    				    echo Text::_('eternal links to be checked.'); 
+    				} ?>
+    		        <input type="hidden" name="checkext" id="checkext" value="0" /> 
+    		        <span style="padding-left:20px;"> </span>
+        			<input type="button" class="xbabtn" value="Check Now" onClick="if (pleaseWait('waiter')){ this.form.submit()};" /> 
+                    <span class="alert-info xbpl20"><i><?php echo Text::_('XBARTMAN_LINK_CHECK_NOTE'); ?></i></span>
+				<?php endif; ?>
+				<br />
+				<?php echo $this->linkcnts['intlinkcnt'].' '.lcfirst(Text::_('local links found')); ?>.  
+				<?php echo $this->linkcnts['otherlinkcnt'].' '.lcfirst(Text::_('other links found')); ?>.  
+				<?php echo $this->linkcnts['anchorcnt'].' '.lcfirst(Text::_('page anchors found')); ?>.  
 				</p>
 			</div>		
 			
@@ -137,7 +140,7 @@ if ($saveOrder && !empty($this->items)) {
           		</p>
           	</div>
 
-			<table class="table table-striped table-hover" id="xbarticleList">
+			<table class="table table-striped table-hover xbtablelist" id="xbarticleList">
 			<colgroup>
 				<col class="nowrap center hidden-phone" style="width:25px;"><!-- ordering -->
 				<col class="center hidden-phone" style="width:25px;"><!-- checkbox -->
@@ -146,7 +149,7 @@ if ($saveOrder && !empty($this->items)) {
 				<col style="width:350px;"><!-- related -->
 				<col style="width:350px;"><!-- embedded -->
 				<col style="max-width:350px;"><!-- anchors -->
-				<col class="nowrap hidden-phone" style="width:135px;" ><!-- date & id-->
+				<col class="nowrap hidden-phone" style="width:110px;" ><!-- date & id-->
 			</colgroup>	
 				<thead>
 					<tr>
@@ -174,7 +177,7 @@ if ($saveOrder && !empty($this->items)) {
 						</th>
 						<th><span class="xb09">
 							<?php echo HTMLHelper::_('searchtools.sort', 'XBARTMAN_HEADING_DATE_' . strtoupper($orderingColumn), 'a.' . $orderingColumn, $listDirn, $listOrder); ?>
-							<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
+							<br /><?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
 							</span>
 						</th>
 					</tr>
@@ -206,7 +209,7 @@ if ($saveOrder && !empty($this->items)) {
     						</th>
 							<th><span class="xb09">
 								<?php echo HTMLHelper::_('searchtools.sort', 'XBARTMAN_HEADING_DATE_' . strtoupper($orderingColumn), 'a.' . $orderingColumn, $listDirn, $listOrder); ?>
-								<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
+								<br /><?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
 							</span>
 						</th>
     					</tr>
@@ -335,12 +338,13 @@ if ($saveOrder && !empty($this->items)) {
                                 		</span>
 
                                 	</summary>
+									<div class="xb09">
                                 		<i>Host</i>: <?php echo ($link->islocal) ? '(local)' : $link->scheme_host; ?><br />
                                 		<i>Path</i>: <?php echo $link->path; ?><br/>
                                 		<?php if ($link->hash != '') : ?> <i>hash</i>: <?php echo $link->hash.'<br/>'; endif; ?>
                                 		<?php if ($link->query != '') : ?> <i>Query</i>: ?<?php echo $link->query.'<br/>'; endif; ?>
                                 		<i>Target</i>: <?php echo $link->target; ?>
-                                		<br />
+                                	</div>
                                 </details>
     						    
 							<?php endforeach; ?>
@@ -416,33 +420,7 @@ if ($saveOrder && !empty($this->items)) {
 								<?php endif; ?>
 								<?php foreach ($item->emblinks['inpage'] as $link) : ?>
 									<?php $this->emblink = $link; 
-									$pageurl = Uri::root().'index.php?option=com_content&view=article&id='.$item->id.'#'.$link->hash;
-                                        //echo $this->loadTemplate('emb_links'); ?>
-                                        <details>
-                                        	<summary>
-                                                <i><?php echo $link->label; ?></i>: 
-                                        		<span style="color:<?php echo $link->colour; ?>" title="<?php echo $link->url; ?>">
-                                    				<?php echo $link->text; ?>
-                                    			</span>
-                                        		<span  data-bs-toggle="modal" data-bs-target="#pvModal" data-bs-source="/" 
-                                        			data-bs-itemtitle="Preview Embeded Link" 
-                                                    title="<?php echo $link->text; ?>" 
-                                                  	onclick="var pv=document.getElementById('pvModal');
-                                                  		pv.querySelector('.modal-body .iframe').setAttribute('src',<?php echo "'".$pageurl."'"; ?>);
-                                                  		pv.querySelector('.modal-title').textContent=<?php echo "'".$link->text."'"; ?>;"
-                                                 >
-                                        			<span class="icon-eye xbpl10"></span>
-                                        		</span>
-                                        	</summary>
-                                        		<?php if ($link->hash != '') : ?> <i>hash</i>: <?php echo $link->hash.'<br/>'; endif; ?>
-                                        		<i>Target</i>: <?php echo $link->target; ?><br />
-                                        		<?php if ($link->class != '') : ?> <i>Class</i>: <?php echo $link->class.'<br/>'; endif; ?>
-                                        		<?php if ($link->style != '') : ?> <i>Style</i>: <?php echo $link->style.'<br/>'; endif; ?>
-                                        		<?php if ($link->rev != '') : ?> <i>rev</i>: <?php echo $link->hash.'<br/>'; endif; ?>
-                                        		<?php if ($link->rel != '') : ?> <i>rel</i>: <?php echo $link->hash.'<br/>'; endif; ?>
-                                        		<?php if ($link->id != '') : ?> <i>id</i>: <?php echo $link->hash.'<br/>'; endif; ?>
-                                        		<?php if ($link->title != '') : ?> <i>title</i>: <?php echo $link->hash.'<br/>'; endif; ?>                                        	
-                                        </details>
+									   echo $this->loadTemplate('emb_links'); ?>
 								<?php endforeach; ?>
 								<?php if (count($item->emblinks['inpage']) >1) : ?>
 									</details>
@@ -451,16 +429,16 @@ if ($saveOrder && !empty($this->items)) {
 												
 							<?php if (count($item->emblinks['anchor']) >0) : ?>
 								<?php if (count($item->emblinks['anchor']) >1) : ?>
-									<details>
+									<details style="overflow-wrap: anywhere;">
 										<summary>
 								<?php endif; ?>
-								<b><?php echo Text::_('Anchors'); ?> 
+								<b><?php echo Text::_('Anchors'); ?></b>
 								<?php if (count($item->emblinks['anchor']) >1) : ?>
-									(<?php echo count($item->emblinks['anchor']); ?>): </b>
+									(<?php echo count($item->emblinks['anchor']); ?>)
 									</summary>
 								<?php endif; ?>
 								<?php foreach ($item->emblinks['anchor'] as $link) : ?>
-									<p><i><?php echo Text::_('Anchor ID'); ?></i>: #<?php echo $link->id; ?></p>
+									<p class="xb09"><i><?php echo Text::_('Anchor ID'); ?></i>: <?php echo $link->id; ?></p>
 								<?php endforeach; ?>
 								<?php if (count($item->emblinks['anchor']) >1) : ?>
 									</details>

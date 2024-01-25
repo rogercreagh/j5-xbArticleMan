@@ -1,7 +1,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource media/css/xbarticleman.css
- * @version 0.0.5.1 24th January 2024
+ * @version 0.0.5.2 25th January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2023
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -9,6 +9,17 @@
 
 /* Joomla system overrides/improvements */ 
 
+table.xbtablelist thead {
+	border-top: solid 1px #446  !important;
+    border-left: solid 1px #446;
+    border-right: solid 1px #446;
+}
+table.xbtablelist thfoot {
+	border-bottom: solid 1px #446;
+    border-left: solid 1px #446;
+    border-right: solid 1px #446;
+}
+table.xbtablelist thead th, table.xbtablelist tfoot th {background-color:#d7d7e7 !important;}
 
 /* end of joomla system overrides */
 

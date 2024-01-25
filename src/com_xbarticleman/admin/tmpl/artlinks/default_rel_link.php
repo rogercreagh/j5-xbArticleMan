@@ -55,10 +55,12 @@ if ($local) {
 			<span class="icon-eye xbpl10"></span>
 		</span>
 	</summary>
+	<div class="xb09">
 		<i>Host</i>: <?php echo ($local) ? '(local)' : $url_info['scheme'].$url_info['host']; ?><br />
 		<i>Path</i>: <?php if (key_exists('path',$url_info)) { echo $url_info['path'].''; } ?><br/>
 		<?php if (key_exists('fragment',$url_info)) : ?> <i>hash</i>: #<?php echo $url_info['fragment'].'<br/>'; endif; ?>
 		<?php if (key_exists('query',$url_info)) : ?> <i>Query</i>: ?<?php echo $url_info['query'].'<br/>'; endif; ?>
 		<i>Target</i>: <?php echo ($this->rellink->target === '') ? '(use global)' : $targets[$this->rellink->target]; ?>
 		<br />
+	</div>
 </details>

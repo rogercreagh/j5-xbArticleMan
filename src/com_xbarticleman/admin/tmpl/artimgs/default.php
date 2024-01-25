@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/tmpl/artimgs/default.php
- * @version 0.0.5.1 24th January 2024
+ * @version 0.0.5.2 25th January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -60,11 +60,6 @@ if ($saveOrder && !empty($this->items)) {
 }
 
 ?>
-<style>
-    thead th, tfoot th {background-color:#d7d7d7 !important;}
-</style>
-<form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=artimgs'); ?>" method="post" name="adminForm" id="adminForm">
-
 	<div id="xbcomponent">
 		<h3><?php echo Text::_('XBARTMAN_ARTICLE_IMAGES')?></h3>
 		<h4><?php echo Text::_('XBARTMAN_TOTAL_ARTICLES').' '.$this->totalarticles.'. '.Text::_('XB_LISTING').' '.$this->statearticles.' '.lcfirst(Text::_('XB_ARTICLES')).' '.$this->statefilt; ?></h4>
@@ -106,7 +101,7 @@ if ($saveOrder && !empty($this->items)) {
           		<p class="xbtr">Auto close details dropdowns <input  type="checkbox" id="autoclose" name="autoclose" value="yes" checked="true" style="margin:0 5px;" />
           		</p>
           	</div>
-			<table class="table table-striped table-hover" id="xbarticleList">
+			<table class="table table-striped table-hover xbtablelist" id="xbarticleList">
 			<colgroup>
 				<col class="center hidden-phone" style="width:25px;"><!-- checkbox -->
 				<col class="nowrap center hidden-phone" style="width:25px;"><!-- ordering -->
