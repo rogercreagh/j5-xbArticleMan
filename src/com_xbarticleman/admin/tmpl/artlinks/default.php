@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/tmpl/artlinks/default.php
- * @version 0.0.5.0 23rd January 2024
+ * @version 0.0.5.1 24th January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -70,7 +70,7 @@ if ($saveOrder && !empty($this->items)) {
 
 ?>
 <style>
-    thead th, tfoot th {background-color:#d7d7d7 !important;}
+    thead th, tfoot th {background-color:#d7d7e7 !important;}
 </style>
 <form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=artlinks'); ?>" method="post" name="adminForm" id="adminForm">
 	<div id="xbcomponent">
@@ -133,21 +133,20 @@ if ($saveOrder && !empty($this->items)) {
 			</div>		
 			
 			<div class="pull-left" style="width:60%">
-          		<p class="xbtr">Auto close details dropdowns <input  type="checkbox" id="autoclose" name="autoclose" value="yes" checked="true" style="margin:0 5px;" />
+          		<p class="xbtr">Auto close details dropdowns <input  type="checkbox" id="autoclose" name="autoclose" value="yes" style="margin:0 5px;" />
           		</p>
           	</div>
 
-			<table class="table" id="xbarticleList">
+			<table class="table table-striped table-hover" id="xbarticleList">
 			<colgroup>
 				<col class="nowrap center hidden-phone" style="width:25px;"><!-- ordering -->
 				<col class="center hidden-phone" style="width:25px;"><!-- checkbox -->
 				<col class="nowrap center" style="width:55px;"><!-- status -->
 				<col ><!-- title, -->
-				<col style="width:300px;"><!-- related -->
-				<col style="width:300px;"><!-- embedded -->
-				<col ><!-- anchors -->
-				<col class="nowrap hidden-phone" style="width:110px;" ><!-- date -->
-				<col class="nowrap hidden-phone" style="width:45px;"><!-- id -->
+				<col style="width:350px;"><!-- related -->
+				<col style="width:350px;"><!-- embedded -->
+				<col style="max-width:350px;"><!-- anchors -->
+				<col class="nowrap hidden-phone" style="width:135px;" ><!-- date & id-->
 			</colgroup>	
 				<thead>
 					<tr>
@@ -162,32 +161,21 @@ if ($saveOrder && !empty($this->items)) {
 						</th>
 						<th >
 							<?php echo HTMLHelper::_('searchtools.sort', 'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
-							<span class="xbnorm xbo9">(edit) (pv) |</span>  alias <span class="xbnorm xb09"> | </span>
-							<?php echo HTMLHelper::_('searchtools.sort', 'XB_CATEGORY', 'category_title', $listDirn, $listOrder); ?>							
+							<span class="xbnorm xb09">(edit) (pv) | alias | category</span>
 						</th>
 						<th>
-							<span class="hasPopover" title="<?php echo Text::_('XBARTMAN_COL_RELLNK_TITLE'); ?> " 
-							data-content="<?php echo Text::_('XBARTMAN_COL_RELLNK_DESC').Text::_('XBARTMAN_COL_LINKS_GENERIC'); ?>">
-								<?php echo Text::_('XBARTMAN_COL_RELLNK_TITLE'); ?>
-							</span>
+							<?php echo Text::_('XBARTMAN_COL_RELLNK_TITLE'); ?>
 						</th>
 						<th>
-							<span class="hasPopover" title="<?php echo Text::_('XBARTMAN_COL_LINKS_TITLE'); ?>" 
-							data-content="<?php echo Text::_('XBARTMAN_COL_LINKS_DESC').Text::_('XBARTMAN_COL_LINKS_GENERIC'); ?>">
-								<?php echo Text::_('XBARTMAN_COL_LINKS_TITLE'); ?>
-							</span>
+							<?php echo Text::_('XBARTMAN_COL_LINKS_TITLE'); ?>
 						</th>
 						<th>
-							<span class="hasPopover" title="<?php echo Text::_('XBARTMAN_COL_TARGS_TITLE'); ?>"
-							data-content=" <?php echo Text::_('XBARTMAN_COL_TARGS_DESC'); ?>">
-								<?php echo Text::_('XBARTMAN_COL_TARGS_TITLE'); ?>
-							</span>
+							<?php echo Text::_('XBARTMAN_COL_TARGS_TITLE'); ?>
 						</th>
-						<th>
+						<th><span class="xb09">
 							<?php echo HTMLHelper::_('searchtools.sort', 'XBARTMAN_HEADING_DATE_' . strtoupper($orderingColumn), 'a.' . $orderingColumn, $listDirn, $listOrder); ?>
-						</th>
-						<th >
 							<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
+							</span>
 						</th>
 					</tr>
 				</thead>
@@ -204,34 +192,23 @@ if ($saveOrder && !empty($this->items)) {
     							<?php echo HTMLHelper::_('searchtools.sort', 'JSTATUS', 'a.state', $listDirn, $listOrder); ?>
     						</th>
     						<th >
-    							<?php echo HTMLHelper::_('searchtools.sort', 'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
-    							<span class="xbnorm xbo9">(edit) (pv) |</span>  alias <span class="xbnorm xb09"> | </span>
-    							<?php echo HTMLHelper::_('searchtools.sort', 'XB_CATEGORY', 'category_title', $listDirn, $listOrder); ?>							
+							<?php echo HTMLHelper::_('searchtools.sort', 'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
+							<span class="xbnorm xb09">(edit) (pv) | alias | category</span>
     						</th>
     						<th>
-    							<span class="hasPopover" title="<?php echo Text::_('XBARTMAN_COL_RELLNK_TITLE'); ?> " 
-    							data-content="<?php echo Text::_('XBARTMAN_COL_RELLNK_DESC').Text::_('XBARTMAN_COL_LINKS_GENERIC'); ?>">
-    								<?php echo Text::_('XBARTMAN_COL_RELLNK_TITLE'); ?>
-    							</span>
+   								<?php echo Text::_('XBARTMAN_COL_RELLNK_TITLE'); ?>
     						</th>
     						<th>
-    							<span class="hasPopover" title="<?php echo Text::_('XBARTMAN_COL_LINKS_TITLE'); ?>" 
-    							data-content="<?php echo Text::_('XBARTMAN_COL_LINKS_DESC').Text::_('XBARTMAN_COL_LINKS_GENERIC'); ?>">
-    								<?php echo Text::_('XBARTMAN_COL_LINKS_TITLE'); ?>
-    							</span>
+   								<?php echo Text::_('XBARTMAN_COL_LINKS_TITLE'); ?>
     						</th>
     						<th>
-    							<span class="hasPopover" title="<?php echo Text::_('XBARTMAN_COL_TARGS_TITLE'); ?>"
-    							data-content=" <?php echo Text::_('XBARTMAN_COL_TARGS_DESC'); ?>">
-    								<?php echo Text::_('XBARTMAN_COL_TARGS_TITLE'); ?>
-    							</span>
+   								<?php echo Text::_('XBARTMAN_COL_TARGS_TITLE'); ?>
     						</th>
-    						<th>
-    							<?php echo HTMLHelper::_('searchtools.sort', 'XBARTMAN_HEADING_DATE_' . strtoupper($orderingColumn), 'a.' . $orderingColumn, $listDirn, $listOrder); ?>
-    						</th>
-    						<th >
-    							<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
-    						</th>
+							<th><span class="xb09">
+								<?php echo HTMLHelper::_('searchtools.sort', 'XBARTMAN_HEADING_DATE_' . strtoupper($orderingColumn), 'a.' . $orderingColumn, $listDirn, $listOrder); ?>
+								<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
+							</span>
+						</th>
     					</tr>
     				</tfoot>
 				<?php endif; ?>
@@ -288,7 +265,7 @@ if ($saveOrder && !empty($this->items)) {
                                     ?>
 						</td>
 						<td class="has-context">
-							<div class="pull-left"><p>
+							<div class="pull-left"><p style="margin-bottom:4px;">
 								<?php if ($item->checked_out) : ?>
 									<?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'articles.', $canCheckin); ?>
 								<?php endif; ?>
@@ -308,7 +285,9 @@ if ($saveOrder && !empty($this->items)) {
           						<?php $pvtit = "'".$item->title."'"; ?>
                                 <span  data-bs-toggle="modal" data-bs-target="#pvModal" data-bs-source="<?php echo $pvuri; ?>" data-bs-itemtitle="<?php echo $item->title; ?>" 
                                 title="<?php echo Text::_('XBARTMAN_MODAL_PREVIEW'); ?>" 
-          							onclick="var pv=document.getElementById('pvModal');pv.querySelector('.modal-body .iframe').setAttribute('src',<?php echo $pvuri; ?>);pv.querySelector('.modal-title').textContent=<?php echo $pvtit; ?>;"
+          							onclick="var pv=document.getElementById('pvModal');
+          								pv.querySelector('.modal-body .iframe').setAttribute('src',<?php echo $pvuri; ?>);
+          								pv.querySelector('.modal-title').textContent=<?php echo $pvtit; ?>;"
                                 >
 									<span class="icon-eye xbpl10"></span></span>
 								</p>
@@ -368,45 +347,124 @@ if ($saveOrder && !empty($this->items)) {
 						</td>
 						<td>
 							<?php if (count($item->emblinks['local']) >0) : ?>
-								<b><?php echo Text::_('This Site Links'); ?> (<?php echo count($item->emblinks['local']); ?> ): </b>
+								<?php if (count($item->emblinks['local']) >1) : ?>
+									<details>
+										<summary>
+								<?php endif; ?>
+								<b><?php echo Text::_('This Site Links'); ?></b>
+								<?php if (count($item->emblinks['local']) >1) : ?>
+									 (<?php echo count($item->emblinks['local']); ?> )
+										</summary>
+								<?php endif; ?>
 								<?php foreach ($item->emblinks['local'] as $link) : ?>
 									<?php $this->emblink = $link; 
                                         echo $this->loadTemplate('emb_links'); ?>
 								<?php endforeach; ?>
-							   	<br />
+								<?php if (count($item->emblinks['local']) >1) : ?>
+									</details>
+								<?php endif; ?>
 							<?php endif; ?>
 							
 							<?php if (count($item->emblinks['external']) >0) : ?>
-								<b><?php echo Text::_('External Links'); ?> (<?php echo count($item->emblinks['external']); ?>): </b>
+								<?php if (count($item->emblinks['external']) >1) : ?>
+									<details>
+										<summary>
+								<?php endif; ?>
+								<b><?php echo Text::_('External Links'); ?></b>
+								<?php if (count($item->emblinks['external']) >1) : ?>
+									(<?php echo count($item->emblinks['external']); ?>)
+										</summary>
+								<?php endif; ?>
 								<?php foreach ($item->emblinks['external'] as $link) : ?>
 									<?php $this->emblink = $link; 
                                         echo $this->loadTemplate('emb_links'); ?>
 								<?php endforeach; ?>
-							   	<br />
+								<?php if (count($item->emblinks['external']) >1) : ?>
+									</details>
+								<?php endif; ?>
 							<?php endif; ?>							
 						</td>
 						<td>
 							<?php if (count($item->emblinks['other']) >0) : ?>
-								<b><?php echo Text::_('non http links'); ?> (<?php echo count($item->emblinks['other']); ?>): </b>
+								<?php if (count($item->emblinks['other']) >1) : ?>
+									<details>
+										<summary>
+								<?php endif; ?>
+								<b><?php echo Text::_('non http links'); ?></b>
+								<?php if (count($item->emblinks['other']) >1) : ?>
+									(<?php echo count($item->emblinks['other']); ?>)
+										</summary>
+								<?php endif; ?>
 								<?php foreach ($item->emblinks['other'] as $link) : ?>
 									<?php $this->emblink = $link; 
                                         echo $this->loadTemplate('emb_links'); ?>
 								<?php endforeach; ?>
-							   	<br />
-							<?php endif; ?>							
+								<?php if (count($item->emblinks['other']) >1) : ?>
+									</details>
+								<?php endif; ?>
+							<?php endif; ?>
+														
 							<?php if (count($item->emblinks['inpage']) >0) : ?>
-								<b><?php echo Text::_('In-page links'); ?> (<?php echo count($item->emblinks['inpage']); ?>): </b>
+								<?php if (count($item->emblinks['inpage']) >1) : ?>
+									<details>
+										<summary>
+								<?php endif; ?>
+								<b><?php echo Text::_('In-page links'); ?></b>
+								<?php if (count($item->emblinks['inpage']) >1) : ?>
+									(<?php echo count($item->emblinks['inpage']); ?>)
+									</summary>
+								<?php endif; ?>
 								<?php foreach ($item->emblinks['inpage'] as $link) : ?>
 									<?php $this->emblink = $link; 
-                                        echo $this->loadTemplate('emb_links'); ?>
+									$pageurl = Uri::root().'index.php?option=com_content&view=article&id='.$item->id.'#'.$link->hash;
+                                        //echo $this->loadTemplate('emb_links'); ?>
+                                        <details>
+                                        	<summary>
+                                                <i><?php echo $link->label; ?></i>: 
+                                        		<span style="color:<?php echo $link->colour; ?>" title="<?php echo $link->url; ?>">
+                                    				<?php echo $link->text; ?>
+                                    			</span>
+                                        		<span  data-bs-toggle="modal" data-bs-target="#pvModal" data-bs-source="/" 
+                                        			data-bs-itemtitle="Preview Embeded Link" 
+                                                    title="<?php echo $link->text; ?>" 
+                                                  	onclick="var pv=document.getElementById('pvModal');
+                                                  		pv.querySelector('.modal-body .iframe').setAttribute('src',<?php echo "'".$pageurl."'"; ?>);
+                                                  		pv.querySelector('.modal-title').textContent=<?php echo "'".$link->text."'"; ?>;"
+                                                 >
+                                        			<span class="icon-eye xbpl10"></span>
+                                        		</span>
+                                        	</summary>
+                                        		<?php if ($link->hash != '') : ?> <i>hash</i>: <?php echo $link->hash.'<br/>'; endif; ?>
+                                        		<i>Target</i>: <?php echo $link->target; ?><br />
+                                        		<?php if ($link->class != '') : ?> <i>Class</i>: <?php echo $link->class.'<br/>'; endif; ?>
+                                        		<?php if ($link->style != '') : ?> <i>Style</i>: <?php echo $link->style.'<br/>'; endif; ?>
+                                        		<?php if ($link->rev != '') : ?> <i>rev</i>: <?php echo $link->hash.'<br/>'; endif; ?>
+                                        		<?php if ($link->rel != '') : ?> <i>rel</i>: <?php echo $link->hash.'<br/>'; endif; ?>
+                                        		<?php if ($link->id != '') : ?> <i>id</i>: <?php echo $link->hash.'<br/>'; endif; ?>
+                                        		<?php if ($link->title != '') : ?> <i>title</i>: <?php echo $link->hash.'<br/>'; endif; ?>                                        	
+                                        </details>
 								<?php endforeach; ?>
-							   	<br />
-							<?php endif; ?>							
+								<?php if (count($item->emblinks['inpage']) >1) : ?>
+									</details>
+								<?php endif; ?>
+							<?php endif; ?>		
+												
 							<?php if (count($item->emblinks['anchor']) >0) : ?>
-								<b><?php echo Text::_('Anchors'); ?> (<?php echo count($item->emblinks['anchor']); ?>): </b>
-								<?php foreach ($item->emblinks['inpage'] as $link) : ?>
-									<p><i><?php echo Text::_('Anchor ID'); ?></i>: <?php echo $link->id; ?></p>
+								<?php if (count($item->emblinks['anchor']) >1) : ?>
+									<details>
+										<summary>
+								<?php endif; ?>
+								<b><?php echo Text::_('Anchors'); ?> 
+								<?php if (count($item->emblinks['anchor']) >1) : ?>
+									(<?php echo count($item->emblinks['anchor']); ?>): </b>
+									</summary>
+								<?php endif; ?>
+								<?php foreach ($item->emblinks['anchor'] as $link) : ?>
+									<p><i><?php echo Text::_('Anchor ID'); ?></i>: #<?php echo $link->id; ?></p>
 								<?php endforeach; ?>
+								<?php if (count($item->emblinks['anchor']) >1) : ?>
+									</details>
+								<?php endif; ?>
 							<?php endif; ?>							
 						
 						</td>
@@ -414,9 +472,7 @@ if ($saveOrder && !empty($this->items)) {
 							<?php
 							$date = $item->{$orderingColumn};
 							echo $date > 0 ? HTMLHelper::_('date', $date, Text::_('D d M \'y')) : '-';
-							?>
-						</td>
-						<td class="hidden-phone">
+							?><br />
 							<?php echo (int) $item->id; ?>
 						</td>
 					</tr>

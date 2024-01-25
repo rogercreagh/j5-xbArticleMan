@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/tmpl/artlinks/default_emb_links.php
- * @version 0.0.5.1 23rd January 2024
+ * @version 0.0.5.1 24th January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -21,15 +21,17 @@ $link = $this->emblink; ?>
     		<span style="color:<?php echo $link->colour; ?>" title="<?php echo $link->url; ?>">
 				<?php echo $link->text; ?>
 			</span>
-    		<span  data-bs-toggle="modal" data-bs-target="#pvModal" data-bs-source="/" 
-    			data-bs-itemtitle="Preview Embeded Link" 
-                title="<?php echo $link->text; ?>" 
-              	onclick="var pv=document.getElementById('pvModal');
-              		pv.querySelector('.modal-body .iframe').setAttribute('src',<?php echo "'".$link->url."'"; ?>);
-              		pv.querySelector('.modal-title').textContent=<?php echo "'".$link->text."'"; ?>;"
-             >
-    			<span class="icon-eye xbpl10"></span>
-    		</span>
+			<?php if (array_search($link->type,array('local','external','inpage')) !== false) : ?>
+        		<span  data-bs-toggle="modal" data-bs-target="#pvModal" data-bs-source="/" 
+        			data-bs-itemtitle="Preview Embeded Link" 
+                    title="<?php echo $link->text; ?>" 
+                  	onclick="var pv=document.getElementById('pvModal');
+                  		pv.querySelector('.modal-body .iframe').setAttribute('src',<?php echo "'".$link->url."'"; ?>);
+                  		pv.querySelector('.modal-title').textContent=<?php echo "'".$link->text."'"; ?>;"
+                 >
+        			<span class="icon-eye xbpl10"></span>
+        		</span>
+			<?php endif; ?>
     	</summary>    							    	
 		<i>Host</i>: <?php // echo $link->scheme.$link->host; ?>
 			<?php echo ($link->type == 'local') ? '(local)' : $link->scheme.$link->host; ?><br />

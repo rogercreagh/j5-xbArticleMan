@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/tmpl/artimgs/default.php
- * @version 0.0.4.0 15th January 2024
+ * @version 0.0.5.1 24th January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -106,7 +106,7 @@ if ($saveOrder && !empty($this->items)) {
           		<p class="xbtr">Auto close details dropdowns <input  type="checkbox" id="autoclose" name="autoclose" value="yes" checked="true" style="margin:0 5px;" />
           		</p>
           	</div>
-			<table class="table" id="xbarticleList">
+			<table class="table table-striped table-hover" id="xbarticleList">
 			<colgroup>
 				<col class="center hidden-phone" style="width:25px;"><!-- checkbox -->
 				<col class="nowrap center hidden-phone" style="width:25px;"><!-- ordering -->

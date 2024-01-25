@@ -353,6 +353,7 @@ some common combinations are also defined (eg xbnit - normal weight,italic, 5px 
 .xbmt20 { margin-top:20px; }
 
 .xbmb0 { margin-bottom:0; }
+.xbmb5 { margin-bottom:5px; }
 .xbmb8, .xbtitle { margin-bottom:8px; }
 .xbmb12 { margin-bottom:12px; }
 .xbmb20 { margin-bottom:20px; }

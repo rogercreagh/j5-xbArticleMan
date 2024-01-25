@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager
  * @filesource admin/src/Model/ArtlinksModel.php
- * @version 0.0.5.1 23rd January 2024
+ * @version 0.0.5.1 24th January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -317,7 +317,7 @@ class ArtlinksModel extends ListModel {
     
     public function getItems() {
         $this->extlinkcnt = 0;
-        $this->targets = array('current window/tab', 'new window/tab', 'popup window', 'modal window');
+        $this->targets = array('current', '_blank', 'popup', 'modal');
         //        $input  = Factory::getApplication()->input;
 //        $this->checkext = ($input->get('task') == 'checkext');
         $items  = parent::getItems();
@@ -370,6 +370,7 @@ class ArtlinksModel extends ListModel {
         $linkdata->url = $href;
         $linkdata->id = $atag->getAttribute('id');
         $linkdata->target = $atag->getAttribute('target');
+        if ($linkdata->target == '') $linkdata->target = Text::_('current');
         $linkdata->rel = $atag->getAttribute('rel');
         $linkdata->rev = $atag->getAttribute('rev');
         $linkdata->class = $atag->getAttribute('class');
@@ -384,7 +385,7 @@ class ArtlinksModel extends ListModel {
             if (key_exists('host',$urlinfo)) $linkdata->host = $urlinfo['host'];
             if (key_exists('path',$urlinfo)) $linkdata->path = $urlinfo['path'];
             if (key_exists('query',$urlinfo)) $linkdata->query = $urlinfo['query'];
-            if (key_exists('fragment',$urlinfo)) $linkdata->fragment = $urlinfo['fragment'];
+            if (key_exists('hash',$urlinfo)) $linkdata->fragment = $urlinfo['fragment'];
             if (substr($href,0,1)=='#') {
                 $linkdata->type = 'inpage';
             } elseif ((isset($linkdata->scheme)) && (!str_starts_with(strtolower($linkdata->scheme),'http'))) {
