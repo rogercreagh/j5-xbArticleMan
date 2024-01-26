@@ -16,10 +16,10 @@ use Joomla\CMS\Uri\Uri;
 use Crosborne\Component\Xbarticleman\Administrator\Helper\XbarticlemanHelper;
 
 $link = $this->emblink; 
-if ($link->type='inpage') {
+//if ($link->type='inpage') {
  //   $link->pvurl = Uri::root().'index.php?option=com_content&view=article&id='.$item->id.'#'.$link->hash;
  //   $link->colour = (XbarticlemanHelper::check_url($link->pvurl)) ? 'green' : 'red';
-}
+//}
 ?>
     <details style="overflow-wrap: anywhere;">
     	<summary><i><?php echo $link->label; ?></i>: 

@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/tmpl/artlinks/default.php
- * @version 0.0.5.2 25th January 2024
+ * @version 0.0.5.2 26th January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -148,7 +148,7 @@ if ($saveOrder && !empty($this->items)) {
 				<col ><!-- title, -->
 				<col style="width:350px;"><!-- related -->
 				<col style="width:350px;"><!-- embedded -->
-				<col style="max-width:350px;"><!-- anchors -->
+				<col style="width:350px;"><!-- anchors -->
 				<col class="nowrap hidden-phone" style="width:110px;" ><!-- date & id-->
 			</colgroup>	
 				<thead>
