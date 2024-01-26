@@ -382,23 +382,24 @@ class ArtlinksModel extends ListModel {
         if (!$href) {
         //no href specified so must be target
             $linkdata->type = 'anchor';
+            $this->anchorcnt ++;
         } else {
             $urlinfo = parse_url($href);
             if (key_exists('scheme',$urlinfo)) $linkdata->scheme = $urlinfo['scheme'];
             if (key_exists('host',$urlinfo)) $linkdata->host = $urlinfo['host'];
             if (key_exists('path',$urlinfo)) $linkdata->path = $urlinfo['path'];
             if (key_exists('query',$urlinfo)) $linkdata->query = str_replace('&', '<br />&', $urlinfo['query']);
-            if (key_exists('fragment',$urlinfo)) $linkdata->hash = '#'.$urlinfo['fragment'];
+            if (key_exists('fragment',$urlinfo)) $linkdata->hash = $urlinfo['fragment'];
             
             if (isset($linkdata->scheme)) {   // scheme set 
                 if (str_starts_with(strtolower($linkdata->scheme),'http') ) { //it is http(s)
                     $linkdata->pvurl = $href;
                 } else { // scheme set but not http
                     $linkdata->type = 'other';
-                    $this->otherlinkcnt +=1;
+                    $this->otherlinkcnt ++;
                     if ($urlinfo['scheme'] == 'mailto') {
                         //we'll add a mail icon to text and only be showing path (the address) and query (any cc subject content etc) and no preview or check
-                        $linkdata->text .= '&nbsp;<span class="icon-mail"></span>';
+                        $linkdata->text .= "&nbsp;<span class='icon-mail'></span>";
                     } //something strange - we'll show all the parts if set but no preview or check
                     
                 }
@@ -411,10 +412,10 @@ class ArtlinksModel extends ListModel {
                     } else {
                         if (isset($linkdata->hash)) { // its an inpage link, we can't set pvurl here as we don't know the item->id
                             $linkdata->type = 'inpage';
-                            $this->intlinkcnt +=1;
+                            $this->intlinkcnt ++;
                         } else { // else very odd - no scheme host path or hash - just a query!!! do nothing
                             $linkdata->type = 'other';
-                            $this->otherlinkcnt +=1;
+                            $this->otherlinkcnt ++;
                         }
                     }
                 }
@@ -445,12 +446,12 @@ class ArtlinksModel extends ListModel {
         switch ($linkdata->type) {
             case 'local':
                 $linkdata->colour = (XbarticlemanHelper::check_url($linkdata->pvurl)) ? 'green' : 'red';
-                $this->intlinkcnt +=1;
+                $this->intlinkcnt ++;
                $linksdata['local'][] = $linkdata;
                 break;
             case 'external':
                 if ($this->getState('xbarticleman.checkext',0) == 1) $linkdata->colour = (XbarticlemanHelper::check_url($linkdata->pvurl)) ? 'green' : 'red';
-                $this->extlinkcnt +=1;
+                $this->extlinkcnt ++;
                 $linksdata['external'][] = $linkdata;
                 break;
             case 'other':
@@ -490,7 +491,7 @@ class ArtlinksModel extends ListModel {
                 $this->otherlinkcnt +=1; 
                 if ($urlinfo['scheme'] == 'mailto') {
                     //we'll add a mail icon to text and only be showing path (the address) and query (any cc subject content etc) and no preview or check
-                    $linkdata->text .= '&nbsp;<span class="icon-mail"></span>';
+                    $linkdata->text .= "&nbsp;<span class='icon-mail'></span>";
                 } //something strange - we'll show all the parts if set but no preview or check
                 
             }
@@ -516,10 +517,10 @@ class ArtlinksModel extends ListModel {
             // now check valid - use pvurl as url may be missing just path for a local which will fail
             if ($linkdata->type == 'external') {
                 if ($this->getState('xbarticleman.checkext',0) == 1) $linkdata->colour = (XbarticlemanHelper::check_url($linkdata->pvurl)) ? 'green' : 'red';
-                $this->extlinkcnt +=1;                
+                $this->extlinkcnt ++;                
             } else {
                 $linkdata->colour = (XbarticlemanHelper::check_url($linkdata->pvurl)) ? 'green' : 'red';
-                $this->intlinkcnt +=1;                
+                $this->intlinkcnt ++;                
             }
         }
         
@@ -573,7 +574,7 @@ class ArtlinksModel extends ListModel {
     }
     
     public function getLinkcnts() {
-        return array('extlinkcnt' => $this->extlinkcnt, 'intlinkcnt' => $this->intlinkcnt, 'otherlinkcnt' => $this->otherlinkcnt, 'extlinkcnt' => $this->anchorcnt);
+        return array('extlinkcnt' => $this->extlinkcnt, 'intlinkcnt' => $this->intlinkcnt, 'otherlinkcnt' => $this->otherlinkcnt, 'anchorcnt' => $this->anchorcnt);
     }
     
     public function getAuthors()

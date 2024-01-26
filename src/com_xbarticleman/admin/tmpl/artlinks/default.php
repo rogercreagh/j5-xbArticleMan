@@ -28,8 +28,8 @@ $wa = $this->document->getWebAssetManager();
 // $wa->useScript('table.columns');
 $wa->useScript('multiselect');
 $wa->addInlineScript('function pleaseWait(targ) {
-    var msg = "'.$this->extlinkcnt.' links might take a long time to check";
-    if ('.$this->extlinkcnt.' > 10) { if (!confirm(msg)) return false;}
+    var msg = "'.$this->linkcnts['extlinkcnt'].' links might take a long time to check";
+    if ('.$this->linkcnts['extlinkcnt'].' > 10) { if (!confirm(msg)) return false;}
 		document.getElementById("checkext").value = "1";
 		document.getElementById(targ).style.display = "block";
         return true;
@@ -119,9 +119,9 @@ if ($saveOrder && !empty($this->items)) {
 				<?php echo $this->linkcnts['extlinkcnt'].' '.lcfirst(Text::_('external links found')); ?> 
 				<?php if ($this->linkcnts['extlinkcnt'] > 0 ) : ?>
     				<?php if ($this->extchkdone == 1) {
-    				    echo Text::_('external links checked');
+    				    echo Text::_('and checked');
     				} else {
-    				    echo Text::_('eternal links to be checked.'); 
+    				    echo Text::_('to be checked.'); 
     				} ?>
     		        <input type="hidden" name="checkext" id="checkext" value="0" /> 
     		        <span style="padding-left:20px;"> </span>
@@ -324,7 +324,7 @@ if ($saveOrder && !empty($this->items)) {
                                 	<summary>
                                 		<i><?php echo $link->label; ?></i>: 
                                 		<span style="color:<?php echo $link->colour; ?>" title="<?php echo $link->url; ?>">
-                                			<?php $pvurl = "'".$link->url."'"; 
+                                			<?php $pvurl = "'".$link->pvurl."'"; 
                                                 echo $link->text; ?>
                                 		</span>
                                 		<span  data-bs-toggle="modal" data-bs-target="#pvModal" data-bs-source="/" 
@@ -344,6 +344,7 @@ if ($saveOrder && !empty($this->items)) {
                                 		<?php if ($link->hash != '') : ?> <i>hash</i>: <?php echo $link->hash.'<br/>'; endif; ?>
                                 		<?php if ($link->query != '') : ?> <i>Query</i>: ?<?php echo $link->query.'<br/>'; endif; ?>
                                 		<i>Target</i>: <?php echo $link->target; ?>
+    		<?php if (isset($link->pvurl)) echo 'pv: '.$link->pvurl; ?>
                                 	</div>
                                 </details>
     						    
@@ -437,9 +438,11 @@ if ($saveOrder && !empty($this->items)) {
 									(<?php echo count($item->emblinks['anchor']); ?>)
 									</summary>
 								<?php endif; ?>
+								<p class="xb09 xbml10">
 								<?php foreach ($item->emblinks['anchor'] as $link) : ?>
-									<p class="xb09"><i><?php echo Text::_('Anchor ID'); ?></i>: <?php echo $link->id; ?></p>
+									<i><?php echo Text::_('ID'); ?></i>: <?php echo $link->id; ?><br />
 								<?php endforeach; ?>
+								</p>
 								<?php if (count($item->emblinks['anchor']) >1) : ?>
 									</details>
 								<?php endif; ?>
