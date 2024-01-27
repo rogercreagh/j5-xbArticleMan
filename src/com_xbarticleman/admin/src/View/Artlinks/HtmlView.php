@@ -120,7 +120,6 @@ class HtmlView extends BaseHtmlView {
                 $childBar->checkin('articles.checkin');
                 
             }
-            // Add a batch button
         }
         
         if ($this->state->get('filter.published') == ContentComponent::CONDITION_TRASHED && $canDo->get('core.delete')) {

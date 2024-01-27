@@ -1,14 +1,14 @@
 <?php 
 /*******
  * @package xbArticleManager j5
- * @filesource admin/src/View/Artimgs/HtmlView.php
+ * @filesource admin/src/View/Artscodes/HtmlView.php
  * @version 0.0.6.0 27th January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
  ******/
 
-namespace Crosborne\Component\Xbarticleman\Administrator\View\Artimgs;
+namespace Crosborne\Component\Xbarticleman\Administrator\View\Artscodes;
 
 defined('_JEXEC') or die;
 
@@ -40,8 +40,6 @@ class HtmlView extends BaseHtmlView {
     
     public $activeFilters;
     
-    protected $sidebar;
-    
     public function display($tpl = null) {
         $this->items         = $this->get('Items');
         $this->pagination    = $this->get('Pagination');
@@ -53,6 +51,20 @@ class HtmlView extends BaseHtmlView {
         if (count($errors = $this->get('Errors')))
         {
             throw new GenericDataException(implode("\n", $errors), 500);
+        }
+        
+        $this->shortcodearticles = 0;
+        $this->sccnts = array();
+        foreach ($this->items as $item) {
+            $item->thiscnts = array_count_values(array_column($item->artscodes,1));
+            if ($item->thiscnts) $this->shortcodearticles ++;
+            foreach($item->thiscnts as $key => $value) {
+                if (isset($this->sccnts[$key])) {
+                    $this->sccnts[$key] += $value;
+                } else {
+                    $this->sccnts[$key] = $value;
+                }
+            }
         }
         
         $where = 'state IN (1,0)';
@@ -89,7 +101,7 @@ class HtmlView extends BaseHtmlView {
         $toolbar = Toolbar::getInstance('toolbar');
         //$toolbar = Factory::getContainer()->get(ToolbarFactoryInterface::class)->createToolbar('toolbar');
         
-        ToolbarHelper::title(Text::_('XBARTMAN_ADMIN_ARTIMGS_TITLE'), 'picture');
+        ToolbarHelper::title(Text::_('XBARTMAN_ADMIN_SCODES_TITLE'), 'magic');
         
         
         
@@ -108,7 +120,7 @@ class HtmlView extends BaseHtmlView {
             ->listCheck(true);
             
             $childBar = $dropdown->getChildToolbar();
-                        
+            
             if ($canDo->get('core.edit.state')) {
                 $childBar->publish('articles.publish')->listCheck(true);
                 
@@ -120,10 +132,10 @@ class HtmlView extends BaseHtmlView {
                     $childBar->trash('articles.trash')->listCheck(true);
                 }
                 $childBar->checkin('articles.checkin');
-               
+                
             }
         }
-            
+        
         if ($this->state->get('filter.published') == ContentComponent::CONDITION_TRASHED && $canDo->get('core.delete')) {
             $toolbar->delete('articles.delete', 'JTOOLBAR_EMPTY_TRASH')
             ->message('JGLOBAL_CONFIRM_DELETE')
@@ -132,7 +144,7 @@ class HtmlView extends BaseHtmlView {
         
         if ($canDo->get('core.edit') || $canDo->get('core.edit.own')){
             ToolbarHelper::editList('article.edit','XBARTMAN_QUICK_EDIT');
-            ToolbarHelper::editList('artimgs.fullEdit','XBARTMAN_FULL_EDIT');
+            ToolbarHelper::editList('artscodes.fullEdit','XBARTMAN_FULL_EDIT');
         }
         
         if ($canDo->get('core.edit.state')) {
@@ -146,9 +158,9 @@ class HtmlView extends BaseHtmlView {
             }
             
             if ($this->state->get('filter.published') == -2 && $canDo->get('core.delete')){
-                ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'artimgs.delete', 'JTOOLBAR_EMPTY_TRASH');
+                ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'artscodes.delete', 'JTOOLBAR_EMPTY_TRASH');
             } elseif ($canDo->get('core.edit.state')) {
-                ToolbarHelper::trash('artimgs.trash');
+                ToolbarHelper::trash('artscodes.trash');
             }
             
             //if ($user->authorise('core.admin', 'com_xbarticleman') || $user->authorise('core.options', 'com_xbarticleman'))
@@ -159,13 +171,14 @@ class HtmlView extends BaseHtmlView {
             ToolbarHelper::help('JHELP_CONTENT_ARTICLE_MANAGER');
         }
         
-        //if ($user->authorise('core.admin', 'com_xbarticleman') || $user->authorise('core.options', 'com_xbarticleman'))
-        if ($canDo->get('core.admin')) {
-            ToolbarHelper::preferences('com_xbarticleman');
-        }
-        
-        ToolbarHelper::help('JHELP_CONTENT_ARTICLE_MANAGER');
-        
+            
+            //if ($user->authorise('core.admin', 'com_xbarticleman') || $user->authorise('core.options', 'com_xbarticleman'))
+            if ($canDo->get('core.admin')) {
+                ToolbarHelper::preferences('com_xbarticleman');
+            }
+            
+            ToolbarHelper::help('JHELP_CONTENT_ARTICLE_MANAGER');
+            
     }
-        
+    
 }

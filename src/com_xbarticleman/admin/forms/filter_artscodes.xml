@@ -12,16 +12,14 @@
 		<field name="artlist" type="list"
 			label="XBARTMAN_FILTER_ARTICLES_LABEL"
 			description="XBARTMAN_FILTER_ARTICLES_DESC"
+			default="0"
 			onchange="this.form.submit();"
 		>
-			<option value="0">XBARTMAN_ALL_ARTICLES</option>
-			<option value="1">XBARTMAN_ARTICLES_WITH_IMG_TAGS</option>
-			<option value="4">XBARTMAN_ARTICLES_WITHOUT_IMG_TAGS</option>				
-			<option value="2">XBARTMAN_ARTICLES_WITH_IN_OUT</option>				
-			<option value="5">XBARTMAN_ARTICLES_WITHOUT_IN_OUT</option>				
-			<option value="3">XBARTMAN_ARTICLES_WITH_ANY_IMAGES</option>				
-			<option value="6">XBARTMAN_ARTICLES_WITHOUT_ANY_IMAGES</option>				
+			<option value="0">XBARTMAN_ALL_ARTICLE</option>
+			<option value="1">XBARTMAN_ARTICLES_WITH_SCODES</option>
+			<option value="2">XBARTMAN_ARTICLES_WITHOUT_SCODES</option>				
 		</field>
+
 		<field
 			name="published"
 			type="status"
@@ -37,14 +35,12 @@
 			type="category"
 			label="JOPTION_FILTER_CATEGORY"
 			description="JOPTION_FILTER_CATEGORY_DESC"
-			multiple="false"
+			multiple="true"
+			class="multipleCategories"
 			extension="com_content"
 			onchange="this.form.submit();"
 			published="0,1,2"
-            default=""
-		>
-			<option value="">XBARMAN_SELECT_CATEGORY</option>
-		</field>
+		/>
 
 		<field
 			name="level"
@@ -60,6 +56,14 @@
 			<option value="">XBARTMAN_SELECT_CAT_LEVELS</option>
 		</field>
 				
+		<field
+			name="scfilt" type="text"
+			label="XBARTMAN_FILTER_SCODE_LABEL"
+			description="XBARTMAN_FILTER_SCODE_DESC"
+			hint="XBARTMAN_FILTER_SCODE_HINT"
+			filter="string"
+			>
+		</field>
 
 		<input type="hidden" name="form_submited" value="1"/>
 	</fields>

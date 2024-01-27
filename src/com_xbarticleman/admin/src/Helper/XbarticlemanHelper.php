@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * file admin/src/Helper/XbarticlemanHelper.php
- * @version 0.0.5.1 23rd January 2024
+ * @version 0.0.6.0 27th January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -46,53 +46,53 @@ class XbarticlemanHelper extends ComponentHelper
 	}
 	
     /**
-     * getDocAnchors
+     * getDocAnchors - NO LONGER USED. See Artlinks Model
      * @param string $html - html doc text to parse and find anchors 
      * @return array[] - array or arrays of DomNodes for <a ..> tags in doc
      */	
-    public static function getDocAnchors($html) {	    
-        //container for different types of links
-        //pageLinks are links to anchor tags within the doc
-        //pageTargs are the anchor target tags in the doc
-        //localLinks are links to pages on this site (may be sef or raw, complete or relative)
-        //extLinks are links to other websites
-        //others are 'mailto: and other services
-	    $atags = array("pageLinks"=>array(),
-	        "pageTargs"=>array(),
-	        "localLinks"=>array(),
-	        "extLinks"=>array(),
-	        "others"=>array()
-	    );
+//     public static function getDocAnchors($html) {	    
+//         //container for different types of links
+//         //pageLinks are links to anchor tags within the doc
+//         //pageTargs are the anchor target tags in the doc
+//         //localLinks are links to pages on this site (may be sef or raw, complete or relative)
+//         //extLinks are links to other websites
+//         //others are 'mailto: and other services
+// 	    $atags = array("pageLinks"=>array(),
+// 	        "pageTargs"=>array(),
+// 	        "localLinks"=>array(),
+// 	        "extLinks"=>array(),
+// 	        "others"=>array()
+// 	    );
 	    
-	    $dom = new DOMDocument;
-	    $dom->loadHTML($html,LIBXML_NOERROR);
-	    $as = $dom->getElementsByTagName('a');
-	    return $as;
-	    foreach ($as as $atag) {
-	        $text = $atag->textContent;
-	        $href = $atag->getAttribute('href');
-	        if (!$href) //no href specified so must be target
-	        {
-	            array_push($atags["pageTargs"], $atag);
-	        } else {
-	            if (substr($href,0,1)=='#') { //the href starts with # so target is on same page
-	                array_push($atags["pageLinks"], $atag);
-	            } else {
-	                if ((isset($arrHref["scheme"])) && (!stristr($arrHref["scheme"],'http'))) {
-	                    // scheme is not http or https so it is some other type of link
-	                    array_push($atags["others"], $atag);
-	                } else {
-	                    if (self::isLocalLink($href)) {
-	                        array_push($atags["localLinks"], $atag);
-	                    } else {
-	                        array_push($atags["extLinks"], $atag);
-	                    }
-	                }
-	            }
-	        }
-	    }
-	    return $atags;
-	}
+// 	    $dom = new DOMDocument;
+// 	    $dom->loadHTML($html,LIBXML_NOERROR);
+// 	    $as = $dom->getElementsByTagName('a');
+// 	    return $as;
+// 	    foreach ($as as $atag) {
+// 	        $text = $atag->textContent;
+// 	        $href = $atag->getAttribute('href');
+// 	        if (!$href) //no href specified so must be target
+// 	        {
+// 	            array_push($atags["pageTargs"], $atag);
+// 	        } else {
+// 	            if (substr($href,0,1)=='#') { //the href starts with # so target is on same page
+// 	                array_push($atags["pageLinks"], $atag);
+// 	            } else {
+// 	                if ((isset($arrHref["scheme"])) && (!stristr($arrHref["scheme"],'http'))) {
+// 	                    // scheme is not http or https so it is some other type of link
+// 	                    array_push($atags["others"], $atag);
+// 	                } else {
+// 	                    if (self::isLocalLink($href)) {
+// 	                        array_push($atags["localLinks"], $atag);
+// 	                    } else {
+// 	                        array_push($atags["extLinks"], $atag);
+// 	                    }
+// 	                }
+// 	            }
+// 	        }
+// 	    }
+// 	    return $atags;
+// 	}
 	
 	public static function check_url($url) {
 	    $headers = @get_headers( $url);
@@ -141,12 +141,11 @@ class XbarticlemanHelper extends ComponentHelper
 	     * {([[:alpha:]]+)(\s?.*?)}(?:(.*?){\/(?1))? makes the tail optional
 	     * 
 	     */
-//	    $res = preg_match_all('/{([[:alpha:]].+?)((\s.*?)*)}([^{]*)/',$articleText, $scodes, PREG_SET_ORDER);
-//	    $res = preg_match_all('/{([[:alpha:]].+?)(?:\s)(.*?)?}([^{]*)({\/\g1)?/',$articleText, $scodes, PREG_SET_ORDER);
 	    $res = preg_match_all('/{([[:alpha:]].+?)((?:\s)(.*?)?)?}([^{]*)({\/\g1)?/',$articleText, $scodes, PREG_SET_ORDER);
 	    //[0] is whole match, [1] is the shortcode, [2] is the params, [3] is the content which is valid if [4] exists
 	    
-//	    Factory::getApplication()->enqueueMessage('<pre>'.print_r($scodes,true).'</pre>');
+	    //we could parse this here
+	    
 	    return $scodes; 
 	}
 	
