@@ -2,6 +2,10 @@
 
 ##### Conversion to J5 Progress this will be cleared at first RC5.0.0
 
+**v0.0.5.2** 26th January 2024
+
+- ArtlLinks view working
+
 **v0.0.4.1** 16th Jan 2024
 
 - Article edit view working

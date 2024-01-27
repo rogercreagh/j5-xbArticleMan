@@ -60,6 +60,7 @@ if ($saveOrder && !empty($this->items)) {
 }
 
 ?>
+<form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=artimgs'); ?>" method="post" name="adminForm" id="adminForm">
 	<div id="xbcomponent">
 		<h3><?php echo Text::_('XBARTMAN_ARTICLE_IMAGES')?></h3>
 		<h4><?php echo Text::_('XBARTMAN_TOTAL_ARTICLES').' '.$this->totalarticles.'. '.Text::_('XB_LISTING').' '.$this->statearticles.' '.lcfirst(Text::_('XB_ARTICLES')).' '.$this->statefilt; ?></h4>

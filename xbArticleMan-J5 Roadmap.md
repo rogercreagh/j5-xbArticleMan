@@ -6,13 +6,13 @@
 - **DONE** v0.0.2 - Install script working
 - **DONE** v0.0.3 - ArtImgs view working
 - **DONE** v0.0.4 - Article view working
-- v0.0.5 - ArtLinks view working
+- **DONE** v0.0.5 - ArtLinks view working
 
 - v0.0.6 - ArtScodes view working
 
 - v0.0.7 - ArtTags view working
 
-- v0.1.0 - First release candidate
+- v0.1.0 - First release candidate - Language & Comments cleaned
 
 - v0.2.0 - Second release candidate
 
