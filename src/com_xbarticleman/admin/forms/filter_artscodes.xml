@@ -15,7 +15,7 @@
 			default="0"
 			onchange="this.form.submit();"
 		>
-			<option value="0">XBARTMAN_ALL_ARTICLE</option>
+			<option value="0">XBARTMAN_ALL_ARTICLES</option>
 			<option value="1">XBARTMAN_ARTICLES_WITH_SCODES</option>
 			<option value="2">XBARTMAN_ARTICLES_WITHOUT_SCODES</option>				
 		</field>
@@ -35,11 +35,11 @@
 			type="category"
 			label="JOPTION_FILTER_CATEGORY"
 			description="JOPTION_FILTER_CATEGORY_DESC"
-			multiple="true"
-			class="multipleCategories"
+			multiple="false"
 			extension="com_content"
 			onchange="this.form.submit();"
 			published="0,1,2"
+			default=""
 		/>
 
 		<field

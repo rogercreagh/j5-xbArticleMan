@@ -110,8 +110,7 @@ if ($saveOrder && !empty($this->items)) {
 				<col ><!-- title, -->
 				<col style="width:450px;"><!-- imgs -->
 				<col style="width:450px;"><!-- intro/full -->
-				<col class="nowrap hidden-phone" style="width:110px;" ><!-- date -->
-				<col class="nowrap hidden-phone" style="width:45px;"><!-- id -->
+				<col class="nowrap hidden-phone" style="width:110px;" ><!-- date & id -->
 			</colgroup>	
 				<thead>
 					<tr>
@@ -124,22 +123,17 @@ if ($saveOrder && !empty($this->items)) {
 						<th>
 							<?php echo HTMLHelper::_('searchtools.sort', 'JSTATUS', 'a.state', $listDirn, $listOrder); ?>
 						</th>
-						<th>
+						<th >
 							<?php echo HTMLHelper::_('searchtools.sort', 'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
-							<span class="xbnorm xb09">(edit) (pv) | </span> 
-							<?php echo HTMLHelper::_('searchtools.sort', 'XB_CATEGORY', 'category_title', $listDirn, $listOrder); ?>							
+							<span class="xbnorm xb09">(edit) (pv) | alias | category</span>
 						</th>
 						<th>
 							<?php echo Text::_('XBARTMAN_INART_IMAGES'); ?>
 						</th>
-						<th>
-							<?php echo Text::_('XBARTMAN_ARTICLE_INTRO_FULL_IMAGES'); ?>
-						</th>
-						<th>
+						<th><span class="xb09">
 							<?php echo HTMLHelper::_('searchtools.sort', 'XBARTMAN_HEADING_DATE_' . strtoupper($orderingColumn), 'a.' . $orderingColumn, $listDirn, $listOrder); ?>
-						</th>
-						<th>
-							<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
+							<br /><?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
+							</span>
 						</th>
 					</tr>
 				</thead>
@@ -155,10 +149,9 @@ if ($saveOrder && !empty($this->items)) {
 						<th>
 							<?php echo HTMLHelper::_('searchtools.sort', 'JSTATUS', 'a.state', $listDirn, $listOrder); ?>
 						</th>
-						<th>
+						<th >
 							<?php echo HTMLHelper::_('searchtools.sort', 'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
-							<span class="xbnorm xb09">(edit) (pv) | </span> 
-							<?php echo HTMLHelper::_('searchtools.sort', 'XB_CATEGORY', 'category_title', $listDirn, $listOrder); ?>							
+							<span class="xbnorm xb09">(edit) (pv) | alias | category</span>
 						</th>
 						<th>
 							<?php echo Text::_('XBARTMAN_INART_IMAGES'); ?>
@@ -166,11 +159,10 @@ if ($saveOrder && !empty($this->items)) {
 						<th>
 							<?php echo Text::_('XBARTMAN_INTRO_FULL_IMAGES'); ?>
 						</th>
-						<th>
+						<th><span class="xb09">
 							<?php echo HTMLHelper::_('searchtools.sort', 'XBARTMAN_HEADING_DATE_' . strtoupper($orderingColumn), 'a.' . $orderingColumn, $listDirn, $listOrder); ?>
-						</th>
-						<th>
-							<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
+							<br /><?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
+							</span>
 						</th>
 					</tr>
 				</tfoot>
@@ -415,9 +407,7 @@ if ($saveOrder && !empty($this->items)) {
 							<?php
 							$date = $item->{$orderingColumn};
 							echo $date > 0 ? HTMLHelper::_('date', $date, Text::_('D d M \'y')) : '-';
-							?>
-						</td>
-						<td class="hidden-phone">
+							?><br />
 							<?php echo (int) $item->id; ?>
 						</td>
 					</tr>

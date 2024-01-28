@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/tmpl/artscodes/default.php
- * @version 0.0.6.0 27th January 2024
+ * @version 0.0.6.1 28th January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -66,16 +66,16 @@ if ($saveOrder && !empty($this->items)) {
 	<div id="xbcomponent">
 		<h3><?php echo Text::_('XBARTMAN_ARTICLE_SHORTCODES')?></h3>
 		<h4> <?php echo Text::_('XB_LISTING'); ?> <?php echo count($this->sccnts).' '.Text::_('XBARTMAN_DISTINCT_SHORTCODES').' '.$this->shortcodearticles; ?> 
-			<?php echo Text::_('XBARTMAN_ARTICLES_USING_SHORTCODES').' '.$this->statearticles.' '.$this->statefilt.' '.lcfirst(Text::_('XB_ARTICLES')); ?></h4>
+			<?php echo Text::_('XBARTMAN_ARTICLES_USING_SHORTCODES').' '.$this->statearticles.' '.$this->statefilt.' '.Text::_('XB_ARTICLES'); ?></h4>
     	<ul class="inline">
     		<li><i><?php echo Text::_('XBARTMAN_COUNTS_SCODES'); ?>:</i></li>
     		<?php foreach ($this->sccnts as $key=>$cnt) : ?>
     		    <li><a href="index.php?option=com_xbarticleman&view=artscodes&sc=<?php echo $key; ?>&filter[scfilt]=<?php echo $key; ?>" 
-					 class="label label-yellow"><?php echo $key; ?> (<?php echo $cnt; ?>)</a></li>
+					 class="xblabel label-yellow"><?php echo $key; ?> (<?php echo $cnt; ?>)</a></li>
     	<?php endforeach; ?>
     	</ul>
        	<span class="xbnit xb09"><?php echo Text::_('XBARTMAN_CLICK_SCODE_ABOVE'); ?>.</span>
-		<h4><?php echo Text::_('XBARTMAN_TOTAL_ARTICLES').' '.$this->totalarticles.'. '.Text::_('XB_LISTING').' '.$this->statearticles.' '.lcfirst(Text::_('XB_ARTICLES')).' '.$this->statefilt; ?></h4>
+		<h4><?php echo Text::_('XBARTMAN_TOTAL_ARTICLES').' '.$this->totalarticles.'. '.Text::_('XB_LISTING').' '.$this->statearticles.' '.Text::_('XB_ARTICLES').' '.$this->statefilt; ?></h4>
 		<p> 
     	<?php if (array_key_exists('artlist', $this->activeFilters)) {
     	    echo Text::_('XBARTMAN_FILTERED_TO_SHOW').' '.$this->pagination->total.' ';
@@ -83,10 +83,10 @@ if ($saveOrder && !empty($this->items)) {
     	    if ($this->activeFilters['artlist'] > 0) {
     	        echo Text::_($prompts[$this->activeFilters['artlist']]);
     	    } else {
-    	        echo lcfirst(Text::_('XB_ARTICLES'));
+    	        echo Text::_('XB_ARTICLES');
     	    }
     	} else {
-    	    echo Text::_('XBARTMAN_SHOWING_ALL').' '.$this->statearticles.' '.lcfirst(Text::_('XB_ARTICLES'));
+    	    echo Text::_('XBARTMAN_SHOWING_ALL').' '.$this->statearticles.' '.Text::_('XB_ARTICLES');
     	}
         ?>
         </p>
@@ -122,7 +122,7 @@ if ($saveOrder && !empty($this->items)) {
     				<col class="center hidden-phone" style="width:25px;"><!-- checkbox -->
     				<col class="nowrap center" style="width:55px;"><!-- status -->
     				<col ><!-- title, -->
-    				<col style="width:250px;"><!-- summary -->
+    				<col ><!-- summary -->
     				<col ><!-- artscodes -->
     				<col class="nowrap hidden-phone" style="width:110px;" ><!-- date & id-->
     			</colgroup>	
@@ -142,7 +142,8 @@ if ($saveOrder && !empty($this->items)) {
 							<span class="xbnorm xb09">(edit) (pv) | alias | category</span>
 						</th>
 						<th>
-							<?php echo Text::_('XB_SUMMARY'); ?>
+							<?php echo Text::_('XBARTMAN_TEXT_CONTENT'); ?>
+								<span class="xbnorm">(<?php echo lcfirst(Text::_('XB_PREVIEW')); ?>)</span>
 						<th>
 							<?php echo Text::_('XBARTMAN_SCODES'); ?>
 						</th>												
@@ -170,7 +171,8 @@ if ($saveOrder && !empty($this->items)) {
 							<span class="xbnorm xb09">(edit) (pv) | alias | category</span>
 						</th>
 						<th>
-							<?php echo Text::_('XB_SUMMARY'); ?>
+							<?php echo Text::_('XBARTMAN_TEXT_CONTENT'); ?>
+								<span class="xbnorm">(<?php echo lcfirst(Text::_('XB_PREVIEW')); ?>)</span>
 						<th>
 							<?php echo Text::_('XBARTMAN_SCODES'); ?>
 						</th>												
@@ -292,17 +294,31 @@ if ($saveOrder && !empty($this->items)) {
     							<details style="overflow-wrap: anywhere;" >
     								<summary><b><?php echo count($item->artscodes); ?></b> artscodes in article. 
                                 		<?php foreach ($item->thiscnts as $key=>$cnt) {
-                                		    echo '<span style="display:inline-block;margin-right:10px;"><b>'.$key.'</b> : '.$cnt.'</span>';
+                                		    echo '<span style="display:inline-block;margin-right:10px;"><b>'.$key.'</b>  ('.$cnt.')</span>';
                                 		}?>
     								</summary>
-    							   	<ul>
-    								<?php foreach ($item->artscodes as $sc) : ?>
-    							       <li><b><?php echo $sc[1]; ?></b>
-    							       <?php if ((key_exists(3, $sc)) && ($sc[3] != '')) echo '&nbsp;&nbsp;<i>params:</i> '.$sc[3].'&nbsp;';
-    							       if ((key_exists(5, $sc)) && ($sc[4] !='')) echo '&nbsp;<i>content:</i> '.$sc[4]; ?>
-    							       </li>
-    								<?php endforeach; ?>
-    							   	</ul>
+    							   	<table class="table table-striped xb09">
+    							   		<thead>
+	    							   		<tr style="font-size:0.9em;">
+    								   			<th ><?php echo Text::_('XB_NAME'); ?></th>
+    								   			<th><?php echo Text::_('XB_PARAMS'); ?></th>
+    								   			<th><?php echo Text::_('XB_CONTENT'); ?></th>
+    								   		</tr>
+    							   		</thead>
+    							   		<tbody>
+            								<?php foreach ($item->artscodes as $sc) : ?>
+            									<tr>
+                							       	<td><b><?php echo $sc[1]; ?></b></td>
+                							       	<td>
+                							       		<?php if ((key_exists(3, $sc)) && ($sc[3] != '')) echo $sc[3]; ?>
+                							       </td>
+                							       <td>
+                							       		<?php if ((key_exists(5, $sc)) && ($sc[4] !='')) echo $sc[4]; ?>
+                							       </td>
+            							       </tr>
+    										<?php endforeach; ?>
+    									</tbody>
+    							   	</table>
     							</details>
 							<?php endif; ?>
 						</td>
