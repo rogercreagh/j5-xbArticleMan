@@ -10,14 +10,14 @@
 /* Joomla system overrides/improvements */ 
 
 table.xbtablelist thead {
-	border-top: solid 1px #446  !important;
-    border-left: solid 1px #446;
-    border-right: solid 1px #446;
+	border-top: solid 1px #88a  !important;
+    border-left: solid 1px #88a;
+    border-right: solid 1px #88a;
 }
 table.xbtablelist thfoot {
-	border-bottom: solid 1px #446;
-    border-left: solid 1px #446;
-    border-right: solid 1px #446;
+	border-bottom: solid 1px #88a;
+    border-left: solid 1px #88a;
+    border-right: solid 1px #88a;
 }
 table.xbtablelist.xbbrd0 thead, table.xbtablelist.xbbrd0 thfoot{
 	border:unset;

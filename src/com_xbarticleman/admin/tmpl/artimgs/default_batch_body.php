@@ -1,6 +1,6 @@
 <?php
 /*******
- * @package xbArticleManager j5
+ * @package xbArticleManager-j5
  * @filesource admin/tmpl/artimgs/tmpl/default_batch_body.php
  * @version 0.0.4.0 15th January 2024
  * @author Roger C-O
