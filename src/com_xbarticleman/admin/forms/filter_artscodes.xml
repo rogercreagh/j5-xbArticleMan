@@ -40,7 +40,9 @@
 			onchange="this.form.submit();"
 			published="0,1,2"
 			default=""
-		/>
+			>
+			<option value="">XBARMAN_SELECT_CATEGORY</option>
+		</field>
 
 		<field
 			name="level"

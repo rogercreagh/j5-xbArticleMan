@@ -19,6 +19,9 @@ table.xbtablelist thfoot {
     border-left: solid 1px #446;
     border-right: solid 1px #446;
 }
+table.xbtablelist.xbbrd0 thead, table.xbtablelist.xbbrd0 thfoot{
+	border:unset;
+}
 table.xbtablelist thead th, table.xbtablelist tfoot th {background-color:#d7d7e7 !important;}
 
 /* end of joomla system overrides */

@@ -1,6 +1,6 @@
 <?php 
  /*******
- * @package xbArticleManager
+ * @package xbArticleManager-j5
  * @filesource admin/src/Controller/ArtscodesController.php
  * @version 0.0.6.0 27rd January 2024
  * @author Roger C-O

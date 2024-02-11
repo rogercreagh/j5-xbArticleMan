@@ -1,6 +1,6 @@
 <?php
 /*******
- * @package xbArticleManager
+ * @package xbArticleManager-j5
  * @filesource admin/src/Model/ArtlinksModel.php
  * @version 0.0.5.1 24th January 2024
  * @author Roger C-O

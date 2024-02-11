@@ -8,7 +8,7 @@
 - **DONE** v0.0.4 - Article view working
 - **DONE** v0.0.5 - ArtLinks view working
 
-- v0.0.6 - ArtScodes view working
+- **DONE** v0.0.6 - ArtScodes view working
 
 - v0.0.7 - ArtTags view working
 

@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/tmpl/artscodes/default.php
- * @version 0.0.6.1 28th January 2024
+ * @version 0.0.6.3 11th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -122,7 +122,7 @@ if ($saveOrder && !empty($this->items)) {
     				<col class="center hidden-phone" style="width:25px;"><!-- checkbox -->
     				<col class="nowrap center" style="width:55px;"><!-- status -->
     				<col ><!-- title, -->
-    				<col ><!-- summary -->
+    				<col style="width:375px;"><!-- summary -->
     				<col ><!-- artscodes -->
     				<col class="nowrap hidden-phone" style="width:110px;" ><!-- date & id-->
     			</colgroup>	
@@ -287,7 +287,29 @@ if ($saveOrder && !empty($this->items)) {
 							</div>
 						</td>
 						<td>
-							<?php echo XbarticlemanHelper::truncateToText($item->arttext,100,'exact',true); ?>
+							<?php echo XbarticlemanHelper::truncateToText($item->arttext,100,'exact',true); 
+							$sctext = $item->arttext; 
+							$sch = array('<h1','<h2','<h3','<h4','<h5','<h6');
+							$repl = array('<p','<p','<p','<p','<p','<p'); //replace all headers with paras
+							$sctext = str_replace($sch, $repl, $sctext); 
+							$sctext = strip_tags($sctext,'<p><br>'); //get rid of all tags except para and line break
+							$sctext = preg_replace('/<p .+?>/i', '<p>', $sctext); //get rid of all para attributes
+							$sch = array('{','}');
+							$repl = array('<span style="background-color:#F7F78F;">{','}</span>');  
+							$sctext = str_replace($sch, $repl, $sctext); //highlight everything between curly braces (proba shortcodes)
+							$sctitle = '<b>'.$item->title.'</b> <i>'.Text::_('text content with {shortcodes} highlighted').'</i>';
+							$sctitle = str_replace($sch, $repl, $sctitle);
+// '<b><?php echo $item->title; </b> text content with shortcodes highlighted';
+                            ?>
+                            <span  data-bs-toggle="modal" data-bs-target="#txtModal" data-bs-source="hello text" data-bs-itemtitle="hello title" 
+                                title="<?php echo Text::_('Content with { shortcodes } highlighted'); ?>" 
+          						onclick="var pv=document.getElementById('txtModal');
+          							var modtitle = '<?php echo  htmlspecialchars(json_encode(utf8_encode($sctitle)));?>';
+									var modcontent = <?php echo htmlspecialchars(json_encode(utf8_encode($sctext)));?>;
+          							document.getElementById('txtcontent').innerHTML = modcontent;
+          							pv.querySelector('.modal-title').innerHTML = modtitle; "
+                                >
+									<span class="icon-eye xbpl10"></span></span>
 						</td>
 						<td>
 							<?php if (count($item->artscodes) > 0 ) : ?>
@@ -297,7 +319,7 @@ if ($saveOrder && !empty($this->items)) {
                                 		    echo '<span style="display:inline-block;margin-right:10px;"><b>'.$key.'</b>  ('.$cnt.')</span>';
                                 		}?>
     								</summary>
-    							   	<table class="table table-striped xb09">
+    							   	<table class="table table-striped xb09 xbbrd0">
     							   		<thead>
 	    							   		<tr style="font-size:0.9em;">
     								   			<th ><?php echo Text::_('XB_NAME'); ?></th>
@@ -361,6 +383,20 @@ if ($saveOrder && !empty($this->items)) {
 				    'modalWidth' => '80',
 				    'url' => Uri::root().'index.php?option=com_content&view=articles'
 				),
+			); ?>
+
+			<?php // Load the text preview modal ?>
+			<?php echo HTMLHelper::_(
+				'bootstrap.renderModal',
+				'txtModal',
+				array(
+					'title'  => Text::_('XBARTMAN_ARTICLE_PREVIEW'),
+					'footer' => '',
+				    'height' => '800vh',
+				    'bodyHeight' => '90',
+				    'modalWidth' => '80',				    
+				), 
+			    $this->loadtemplate('text_body')
 			); ?>
 
 			<?php echo $this->pagination->getListFooter(); ?>

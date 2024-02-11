@@ -1,6 +1,6 @@
 <?php 
 /*******
- * @package xbArticleManager j5
+ * @package xbArticleManager-j5
  * @filesource admin/src/View/Artimgs/HtmlView.php
  * @version 0.0.6.0 27th January 2024
  * @author Roger C-O
