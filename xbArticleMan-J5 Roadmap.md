@@ -10,9 +10,9 @@
 
 - **DONE** v0.0.6 - ArtScodes view working
 
-- v0.0.7 - ArtTags view working
+- **DONE** v0.0.7 - ArtTags view working
 
-- v0.0.8 - Rag view working
+- v0.0.8 - Tag view working
 
 - v0.1.0 - First release candidate - Language & Comments cleaned
 
