@@ -12,6 +12,8 @@
 
 - v0.0.7 - ArtTags view working
 
+- v0.0.8 - Rag view working
+
 - v0.1.0 - First release candidate - Language & Comments cleaned
 
 - v0.2.0 - Second release candidate

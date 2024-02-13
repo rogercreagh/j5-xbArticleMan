@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager-j5
  * @filesource admin/src/View/Arttags/HtmlView.php
- * @version 0.0.7.0 11th February 2024
+ * @version 0.0.7.1 12th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -102,7 +102,7 @@ class HtmlView extends BaseHtmlView {
         $toolbar = Toolbar::getInstance('toolbar');
         //$toolbar = Factory::getContainer()->get(ToolbarFactoryInterface::class)->createToolbar('toolbar');
         
-        ToolbarHelper::title(Text::_('XBARTMAN_ADMIN_ARTAGS_TITLE'), 'tags');
+        ToolbarHelper::title(Text::_('XBARTMAN_ADMIN_ARTTAGS_TITLE'), 'tags');
         
         
         

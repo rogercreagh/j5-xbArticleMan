@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager-j5
  * @filesource admin/tmpl/artimgs/default.php
- * @version 0.0.7.0 11th February 2024
+ * @version 0.0.7.1 12th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -143,7 +143,7 @@ if ($saveOrder && !empty($this->items)) {
 							<span class="xbnorm xbo9">(edit) (v) |</span>  alias <span class="xbnorm xb09"> | </span>
 						</th>
 						<th>
-							<?php echo Text::_('XB_TAGS'); ?>
+							<span class="xbnit xb09">(<?php echo Text::_('parents');?>)</span> - <?php echo Text::_('XB_TAGS'); ?>
 						</th>
 						<th >
 							<?php echo HTMLHelper::_('searchtools.sort', 'XB_CATEGORY', 'category_title', $listDirn, $listOrder); ?>							
@@ -174,7 +174,7 @@ if ($saveOrder && !empty($this->items)) {
 							<?php echo HTMLHelper::_('searchtools.sort', 'Category', 'category_title', $listDirn, $listOrder); ?>							
 						</th>
 						<th>
-							<?php echo Text::_('XB_TAGS'); ?>
+							<span class="xbnit xb09">(<?php echo Text::_('group');?>)</span> - <?php echo Text::_('XB_TAGS'); ?>
 						</th>
 						<th >
 							<?php echo HTMLHelper::_('searchtools.sort', 'XB_CATEGORY', 'category_title', $listDirn, $listOrder); ?>							
@@ -264,7 +264,7 @@ if ($saveOrder && !empty($this->items)) {
                                 >
 									<span class="icon-eye xbpl10"></span></span>
 								</p>
-								<span class="xbpl20 xb09"><i>XB_ALIAS</i>: <?php echo $this->escape($item->alias); ?>
+								<span class="xbpl20 xb09"><i><?php echo Text::_('XB_ALIAS'); ?></i>: <?php echo $this->escape($item->alias); ?>
 								</span>
 							</div>
 						</td>
@@ -280,19 +280,29 @@ if ($saveOrder && !empty($this->items)) {
                                     $founders[$founder]['children'][$tag->title] = $tag;
                                 endforeach; 
                                 ksort($founders);
-                                foreach ($founders as $f) { ?>
+                                if (count($founders) > 2) : ?>
+                                    <details>
+                                    	<summary>
+                                    		<?php echo count($itemtags).' '.Text::_('tags assigned in').' '.count($founders).' '.Text::_('groups'); ?>
+                                    	</summary>
+                                <?php endif; ?>    	
+                                
+                                <?php foreach ($founders as $f) : ?>
                         			<span>
-                        				<span class="tagline"><i><?php echo $f["founder"]; ?>:&nbsp; </i></span>
+                        				<span class="tagline"><i><?php echo $f["founder"]; ?>&nbsp;- </i></span>
                                 		<?php 
                                 		ksort($f["children"]);
                                         foreach ($f["children"] as $tg) : ?>                                         
-                                            <a href="index.php?option=com_tags&task=tag.edit&id=<?php echo $tg->id; ?>" class="xblabel label-tag">
+                                            <a href="index.php?option=com_xbarticleman&view=tag&id=<?php echo $tg->id; ?>" class="xblabel label-tag">
                                             	<?php echo $tg->title; ?></a>   		
                                         <?php endforeach; ?>
                         	    	</span><br />       
-                            	<?php } ?>
+                            	<?php endforeach; ?>
+                            	<?php if (count($founders) > 2) : ?>
+	                                </details>
+	                            <?php endif; ?>
 							</div>
-						</td>
+					</td>
 						<td>
 							<div>
 								<?php
