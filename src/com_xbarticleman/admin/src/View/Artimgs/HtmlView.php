@@ -151,12 +151,6 @@ class HtmlView extends BaseHtmlView {
                 ToolbarHelper::trash('artimgs.trash');
             }
             
-            //if ($user->authorise('core.admin', 'com_xbarticleman') || $user->authorise('core.options', 'com_xbarticleman'))
-            if ($canDo->get('core.admin')) {
-                ToolbarHelper::preferences('com_xbarticleman');
-            }
-            
-            ToolbarHelper::help('JHELP_CONTENT_ARTICLE_MANAGER');
         }
         
         //if ($user->authorise('core.admin', 'com_xbarticleman') || $user->authorise('core.options', 'com_xbarticleman'))

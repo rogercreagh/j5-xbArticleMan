@@ -25,13 +25,15 @@ use Crosborne\Component\Xbarticleman\Administrator\Helper\XbarticlemanHelper;
 
 class TagModel extends ListModel {
    
-    protected function populateState() {
-        $app = Factory::getApplication();
+    protected function populateState($ordering = 't.title', $direction = 'asc') {
         
-        // Load state from the request.
-        $id = $app->input->getInt('id');
-        $this->setState('tag.id', $id);
+         $app = Factory::getApplication();
         
+//         // Load state from the request.
+         $id = $app->input->getInt('id');
+         $this->setState('tag.id', $id);
+         parent::populateState($ordering, $direction);
+         
     }
     
     public function getItem($id = null) {
@@ -42,21 +44,21 @@ class TagModel extends ListModel {
             $id    = is_null($id) ? $this->getState('tag.id') : $id;
             $db = $this->getDbo();
             $query = $db->getQuery(true);
-            $query->select('t.id AS id, t.path AS path, t.title AS title, t.note AS note, t.description AS description,
-				t.alias, t.published AS published');
+            $query->select('t.id AS id, t.path AS path, t.title AS title, t.note AS note, t.description AS description,'.
+				't.alias AS alias, t.published AS published');
 //built-in tag types - article, articlecat, bannercat, cotavts, contactcat, newsfeed, newsfeedcat
             $tagtypes = array();
-            $tagtypes[] = array('com'=>'content', 'item'=>'article', 'table'=>'content','title'=>'title','pv'=>'introtext','cntname'=>'content_article','cnt'=>0);
-            $tagtypes[] = array('com'=>'content', 'item'=>'category', 'table'=>'categories', 'title'=>'title','pv'=>'description','cnt'=>0);
-            $tagtypes[] = array('com'=>'contacts', 'item'=>'contact', 'table'=>'contact_details', 'title'=>'name','pv'=>'con_position','cnt'=>0);
-            $tagtypes[] = array('com'=>'contacts', 'item'=>'category', 'table'=>'categories', 'title'=>'title','pv'=>'description','cnt'=>0);
-            $tagtypes[] = array('com'=>'banners', 'item'=>'category', 'table'=>'categories', 'title'=>'title','pv'=>'description','cnt'=>0);
-            $tagtypes[] = array('com'=>'newsfeeds', 'item'=>'newsfeed', 'table'=>'newsfeeds', 'title'=>'title','pv'=>'description','cnt'=>0);
-            $tagtypes[] = array('com'=>'newsfeeds', 'item'=>'category', 'table'=>'categories', 'title'=>'title','pv'=>'description','cnt'=>0);
+            $tagtypes[] = array('com'=>'content', 'item'=>'article', 'table'=>'content','title'=>'title','pv'=>'introtext','cntname'=>'contentarticle','cnt'=>0);
+            $tagtypes[] = array('com'=>'content', 'item'=>'category', 'table'=>'categories', 'title'=>'title','pv'=>'description','cntname'=>'contentcategory','cnt'=>0);
+            $tagtypes[] = array('com'=>'contacts', 'item'=>'contact', 'table'=>'contact_details', 'title'=>'name','pv'=>'con_position','cntname'=>'contactscontact','cnt'=>0);
+            $tagtypes[] = array('com'=>'contacts', 'item'=>'category', 'table'=>'categories', 'title'=>'title','pv'=>'description','cntname'=>'contactscategory','cnt'=>0);
+            $tagtypes[] = array('com'=>'banners', 'item'=>'category', 'table'=>'categories', 'title'=>'title','pv'=>'description','cntname'=>'bannerscategory','cnt'=>0);
+            $tagtypes[] = array('com'=>'newsfeeds', 'item'=>'newsfeed', 'table'=>'newsfeeds', 'title'=>'title','pv'=>'description','cntname'=>'newsfeedsnewsfeed','cnt'=>0);
+            $tagtypes[] = array('com'=>'newsfeeds', 'item'=>'category', 'table'=>'categories', 'title'=>'title','pv'=>'description','cntname'=>'newsfeedscategory','cnt'=>0);
             
             foreach ($tagtypes as $tagtype) {
                 $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mb WHERE mb.type_alias='
-                    .$db->quote('com_'.$tagtype['component'].'.'.$tagtype['item']).'AND mb.tag_id = t.id) AS .'.$tagtype['cntname']);
+                    .$db->quote('com_'.$tagtype['component'].'.'.$tagtype['item']).' AND mb.tag_id = t.id  AS '.$tagtype['cntname']);
             }
             
 //com_content

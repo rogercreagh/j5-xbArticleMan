@@ -8,7 +8,7 @@
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
  ******/
 
-namespace Crosborne\Component\Xbarticleman\Administrator\View\Article;
+namespace Crosborne\Component\Xbarticleman\Administrator\View\Tag;
 
 defined('_JEXEC') or die;
 
@@ -30,7 +30,7 @@ class HtmlView extends BaseHtmlView {
         
         $this->item  = $this->get('Item');
 
-        $this->canDo = ContentHelper::getActions('com_content', 'article', $this->item->id);
+        $this->canDo = ContentHelper::getActions('com_tags', 'tag', $this->item->id);
                 
         // Check for errors.
         if (\count($errors = $this->get('Errors'))) {
@@ -47,26 +47,23 @@ class HtmlView extends BaseHtmlView {
         $user       = $this->getCurrentUser();
         $userId     = $user->id;
         $toolbar    = Toolbar::getInstance();
- /***************************************************************/       
         // Built the actions for new and existing records.
         $canDo = $this->canDo;
         
-        ToolbarHelper::title(
-            Text::_('XBARTMAN_ADMIN_TAG_' . ($checkedOut ? 'VIEW_TITLE' : 'EDIT_TITLE')),
-            'pencil-alt article-add'
-            );
- 
-        $itemEditable = $canDo->get('core.edit') || ($canDo->get('core.edit.own') && $this->item->created_by == $userId);
+        ToolbarHelper::title(Text::_('XBARTMAN_ADMIN_TAG_TITLE'), 'tag');
         
-        if (!$checkedOut && $itemEditable) {
-            $toolbar->apply('article.apply');
-            $toolbar->save('article.save');
+        //back to arttags
+        
+        //on to tag edit
+        ToolbarHelper::editList('artimgs.tagEdit','Edit Tag');
+        
+        
+        //if ($user->authorise('core.admin', 'com_xbarticleman') || $user->authorise('core.options', 'com_xbarticleman'))
+        if ($canDo->get('core.admin')) {
+            ToolbarHelper::preferences('com_xbarticleman');
         }
         
-        $toolbar->cancel('article.cancel', 'JTOOLBAR_CLOSE');
-        $toolbar->divider();
-        $toolbar->inlinehelp();
-        $toolbar->help('Article:Quick Edit',false,'https://crosborne.uk/xbarticleman-j5/doc#artedit');
+        ToolbarHelper::help( '', false,'https://crosborne.uk/xbarticleman/doc?tmpl=component#admin-tag' );       
         
     }
 }
