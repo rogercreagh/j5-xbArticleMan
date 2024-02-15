@@ -29,8 +29,8 @@
 }
 
 /*adjust default margins round labels for tags and cats */
-.label { margin:2px;}
-.tags ul.inline > li {
+.xblabel, .xbbadge { margin:2px;}
+.xbtags ul.inline > li {
 	margin:0;
 }
 
@@ -184,7 +184,7 @@ ul.nav-tabs {
 .xbbadge:empty {
 	display: none;
 }
-a.xblabel {text-decoration: none !important; }
+a.xblabel, a.xbbadge {text-decoration: none !important; }
 a.xblabel:hover,
 a.xblabel:focus,
 a.xbbadge:hover,

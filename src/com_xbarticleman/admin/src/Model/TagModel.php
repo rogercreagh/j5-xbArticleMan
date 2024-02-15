@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager=j5
  * @filesource admin/src/Model/TagModel.php
- * @version 0.0.8.0 13th February 2024
+ * @version 0.0.8.0 15th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -24,7 +24,11 @@ use ReflectionClass;
 use Crosborne\Component\Xbarticleman\Administrator\Helper\XbarticlemanHelper;
 
 class TagModel extends ListModel {
-   
+
+    public function __construct($config = array()) {
+        parent::__construct($config);
+    }
+    
     protected function populateState($ordering = 't.title', $direction = 'asc') {
         
          $app = Factory::getApplication();
@@ -37,28 +41,33 @@ class TagModel extends ListModel {
     }
     
     public function getItem($id = null) {
+        if (is_null($id)) {
+            $id = $this->getState('tag.id',null);
+        }
         if (!isset($this->item) || !is_null($id)) {
-            $params = ComponentHelper::getParams('com_xbpeople');
-            $people_sort = $params->get('people_sort');
+//            $params = ComponentHelper::getParams('com_xbarticleman');
             
-            $id    = is_null($id) ? $this->getState('tag.id') : $id;
+//            $id    = is_null($id) ? $this->getState('tag.id') : $id;
+            
             $db = $this->getDbo();
             $query = $db->getQuery(true);
             $query->select('t.id AS id, t.path AS path, t.title AS title, t.note AS note, t.description AS description,'.
 				't.alias AS alias, t.published AS published');
 //built-in tag types - article, articlecat, bannercat, cotavts, contactcat, newsfeed, newsfeedcat
             $tagtypes = array();
-            $tagtypes[] = array('com'=>'content', 'item'=>'article', 'table'=>'content','title'=>'title','pv'=>'introtext','cntname'=>'contentarticle','cnt'=>0);
-            $tagtypes[] = array('com'=>'content', 'item'=>'category', 'table'=>'categories', 'title'=>'title','pv'=>'description','cntname'=>'contentcategory','cnt'=>0);
-            $tagtypes[] = array('com'=>'contacts', 'item'=>'contact', 'table'=>'contact_details', 'title'=>'name','pv'=>'con_position','cntname'=>'contactscontact','cnt'=>0);
-            $tagtypes[] = array('com'=>'contacts', 'item'=>'category', 'table'=>'categories', 'title'=>'title','pv'=>'description','cntname'=>'contactscategory','cnt'=>0);
-            $tagtypes[] = array('com'=>'banners', 'item'=>'category', 'table'=>'categories', 'title'=>'title','pv'=>'description','cntname'=>'bannerscategory','cnt'=>0);
-            $tagtypes[] = array('com'=>'newsfeeds', 'item'=>'newsfeed', 'table'=>'newsfeeds', 'title'=>'title','pv'=>'description','cntname'=>'newsfeedsnewsfeed','cnt'=>0);
-            $tagtypes[] = array('com'=>'newsfeeds', 'item'=>'category', 'table'=>'categories', 'title'=>'title','pv'=>'description','cntname'=>'newsfeedscategory','cnt'=>0);
+            $tagtypes[] = array('com'=>'content', 'item'=>'article', 'table'=>'content','title'=>'title','pv'=>'introtext','cntname'=>'contentarticlecnt','cnt'=>0);
+            $tagtypes[] = array('com'=>'content', 'item'=>'category', 'table'=>'categories', 'title'=>'title','pv'=>'description','cntname'=>'contentcategorycnt','cnt'=>0);
+            $tagtypes[] = array('com'=>'contacts', 'item'=>'contact', 'table'=>'contact_details', 'title'=>'name','pv'=>'con_position','cntname'=>'contactscontactcnt','cnt'=>0);
+            $tagtypes[] = array('com'=>'contacts', 'item'=>'category', 'table'=>'categories', 'title'=>'title','pv'=>'description','cntname'=>'contactscategorycnt','cnt'=>0);
+            $tagtypes[] = array('com'=>'banners', 'item'=>'category', 'table'=>'categories', 'title'=>'title','pv'=>'description','cntname'=>'bannerscategorycnt','cnt'=>0);
+            $tagtypes[] = array('com'=>'newsfeeds', 'item'=>'newsfeed', 'table'=>'newsfeeds', 'title'=>'name','pv'=>'link','cntname'=>'newsfeedsnewsfeedcnt','cnt'=>0);
+            $tagtypes[] = array('com'=>'newsfeeds', 'item'=>'category', 'table'=>'categories', 'title'=>'title','pv'=>'description','cntname'=>'newsfeedscategorycnt','cnt'=>0);
             
+            $mapname="ma";
             foreach ($tagtypes as $tagtype) {
+                $mapname ++;
                 $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mb WHERE mb.type_alias='
-                    .$db->quote('com_'.$tagtype['component'].'.'.$tagtype['item']).' AND mb.tag_id = t.id  AS '.$tagtype['cntname']);
+                    .$db->quote('com_'.$tagtype['com'].'.'.$tagtype['item']).' AND mb.tag_id = t.id ) AS '.$tagtype['cntname']);
             }
             
 //com_content
@@ -76,7 +85,7 @@ class TagModel extends ListModel {
 //            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_weblinks.weblink').' AND mr.tag_id = t.id) AS wcatcnt');
 //            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_weblinks.category').' AND mr.tag_id = t.id) AS wcatcnt');
    
-            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS ma WHERE ma.tag_id = t.id) AS allcnt ');
+ //           $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS ma WHERE ma.tag_id = t.id) AS allcnt ');
 //other components tags - xb xbr xbbooks, xf xfr xbfilms, xe xbevents, xp xbpeople, xm xmt xmm xbmaps 
 // (xbjournals not yet working, xbaoy not planned for j5) xbculture and xbmaps included pending j5
 //TODO only do these if installed
@@ -108,39 +117,41 @@ class TagModel extends ListModel {
 
 //            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xb.').' AND mr.tag_id = t.id) AS ncnt');
 ***/
-            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS ma WHERE ma.tag_id = t.id) AS allcnt ');
+//            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS ma WHERE ma.tag_id = t.id) AS allcnt ');
                        
             $query->from('#__tags AS t');
             $query->where('t.id = '.$id);
-            $query->join('LEFT','#__contentitem_tag_map AS m ON m.tag_id = t.id');
+//            $query->join('LEFT','#__contentitem_tag_map AS m ON m.tag_id = t.id');
             
             $db->setQuery($query);
             
             if ($this->item = $db->loadObject()) {
-                $item = &$this->item;
+ //               $item = &$this->item;
 //                //calculate how many non specified items the tag applies to to save doing it later
 //                $item->othercnt = $item->allcnt - array_sum($item->bcnt + $item->pcnt + $item->rcnt);
                 //get titles and ids of films, people and reviews with this tag
                 $db    = Factory::getDbo();
-                foreach ($tagtypes as $tagtype) {
-                    $tagtype['cnt'] = $item->$tagtype['cntname'];
+                foreach ($tagtypes as &$tagtype) {
+                    $tagtype['cnt'] = $this->item->{$tagtype['cntname']};
                     if ($tagtype['cnt'] > 0) {
                         $query = $db->getQuery(true);
                         $query->select('b.id AS bid, b.'.$tagtype['title'].' AS title, b.'.$tagtype['pv'].' AS preview')
                             ->from('#__tags AS t');
                         $query->join('LEFT','#__contentitem_tag_map AS m ON m.tag_id = t.id');
                         $query->join('LEFT','#__'.$tagtype['table'].' AS b ON b.id = m.content_item_id');
-                        $query->where('t.id='.$db->q($item->id).' AND m.type_alias='.$db->q('com_'.$tagtype['component'].'.'.$tagtype['item']));
+                        $query->where('t.id='.$db->q($this->item->id).' AND m.type_alias='.$db->q('com_'.$tagtype['com'].'.'.$tagtype['item']));
                         $query->order('b.'.$tagtype['title']);
                         $db->setQuery($query);
                         $tagtype['items'] = $db->loadObjectList();                      
                     }
                 }
-                $item->taggeditems = $tagtypes;
+                $this->item->taggeditems = $tagtypes;
                 
             }
             return $this->item;
-        } //endif item set
+        } elseif (is_null($id)) { //endif item set
+            Factory::getApplication()->enqueueMessage('You need to select a tag to display it\'s items');
+        }
     } //end getItem()
     
 }

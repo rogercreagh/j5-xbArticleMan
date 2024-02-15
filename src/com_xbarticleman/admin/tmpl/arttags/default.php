@@ -70,7 +70,7 @@ if ($saveOrder && !empty($this->items)) {
     		<li><i><?php echo Text::_('XBARTMAN_COUNTS_TAGS'); ?>:</i></li>
     		<?php foreach ($this->tagcnts as $key=>$tag) : ?>
     		    <li><a href="index.php?option=com_xbarticleman&view=arttags&tagid=<?php echo $tag['tagid']; ?>&filter[tagfilt]=<?php echo $tag['tagid']; ?>" 
-    		    	class="xblabel label-tag"><?php echo $tag['title'].' ('.$tag['cnt'].')'; ?></a></li>
+    		    	class="xbbadge badge-tag"><?php echo $tag['title'].' ('.$tag['cnt'].')'; ?></a></li>
     		<?php endforeach; ?>
     	</ul>
     	<span class="xbnit xb09"><?php echo Text::_('XBARTMAN_CLICK_TAG_ABOVE'); ?></span>
@@ -293,7 +293,7 @@ if ($saveOrder && !empty($this->items)) {
                                 		<?php 
                                 		ksort($f["children"]);
                                         foreach ($f["children"] as $tg) : ?>                                         
-                                            <a href="index.php?option=com_xbarticleman&view=tag&id=<?php echo $tg->id; ?>" class="xblabel label-tag">
+                                            <a href="index.php?option=com_xbarticleman&view=tag&id=<?php echo $tg->id; ?>" class="xbbadge badge-tag">
                                             	<?php echo $tg->title; ?></a>   		
                                         <?php endforeach; ?>
                         	    	</span><br />       
@@ -318,10 +318,10 @@ if ($saveOrder && !empty($this->items)) {
 								endif; ?>
 								<span style="padding-left:15px;">
 								<?php if ($canEditCat || $canEditOwnCat) : ?>
-									<a class="hasTooltip xblabel label-cat xb085" href="<?php echo $CurrentCatUrl; ?> " title="<?php echo $EditCatTxt; ?>">
+									<a class="hasTooltip xbbadge badge-cat xb085" href="<?php echo $CurrentCatUrl; ?> " title="<?php echo $EditCatTxt; ?>">
 										<?php echo $this->escape($item->category_title); ?></a>
 								<?php else : ?>
-									<span class="xblabel label-cat xb085"><?php echo $this->escape($item->category_title); ?></span>
+									<span class="xbbadge badge-cat xb085"><?php echo $this->escape($item->category_title); ?></span>
 								<?php endif; ?>
 								</span>
 							</div>

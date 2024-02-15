@@ -24,6 +24,10 @@ class TagController extends AdminController {
         
         //tag view can be called from articles, artlinks, or artimgs.
         //override default by calling with retview set to the desired view name
+        $id = $this->input->get('id');
+        if ($id == '') {
+            $this->setRedirect('index.php?option=com_articleman&view=arttags');
+        }
         $ret = $this->input->get('retview');
         if ($ret) {
             $this->view_list = $ret;

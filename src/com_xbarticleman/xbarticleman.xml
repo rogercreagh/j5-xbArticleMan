@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <extension type="component" method="upgrade">
 	<name>com_xbarticleman</name>
-	<creationDate>14th February 2024</creationDate>
+	<creationDate>15th February 2024</creationDate>
 	<version>0.0.8.0</version>
 	<author>RogerCO</author>
 	<authorEmail>roger@crosborne.co.uk</authorEmail>
@@ -72,6 +72,9 @@
 			</menu>
 			<menu link="option=com_xbarticleman&amp;view=arttags" >
 				xbartman_iconmenu_arttags
+			</menu>
+			<menu link="option=com_xbarticleman&amp;view=tag" >
+				xbartman_iconmenu_tagitems
 			</menu>
 			<menu link="option=com_config&amp;view=component&amp;component=com_xbarticleman" >
 				xbartman_iconmenu_options				

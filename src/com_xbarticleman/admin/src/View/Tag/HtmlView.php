@@ -55,7 +55,7 @@ class HtmlView extends BaseHtmlView {
         //back to arttags
         
         //on to tag edit
-        ToolbarHelper::editList('artimgs.tagEdit','Edit Tag');
+//        ToolbarHelper::editList('artimgs.tagEdit','Edit Tag');
         
         
         //if ($user->authorise('core.admin', 'com_xbarticleman') || $user->authorise('core.options', 'com_xbarticleman'))
