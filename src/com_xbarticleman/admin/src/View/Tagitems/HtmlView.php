@@ -1,14 +1,14 @@
 <?php
 /*******
  * @package xbArticleManager-j5
- * @filesource admin/src/View/Tag/HtmlView.php
- * @version 0.0.8.0 13th January 2024
+ * @filesource admin/src/View/Tagitems/HtmlView.php
+ * @version 0.0.8.1 15th January 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
  ******/
 
-namespace Crosborne\Component\Xbarticleman\Administrator\View\Tag;
+namespace Crosborne\Component\Xbarticleman\Administrator\View\Tagitems;
 
 defined('_JEXEC') or die;
 
@@ -28,7 +28,7 @@ class HtmlView extends BaseHtmlView {
     
     public function display($tpl = null) {
         
-        $this->item  = $this->get('Item');
+        $this->item  = $this->get('Items');
 
         $this->canDo = ContentHelper::getActions('com_tags', 'tag', $this->item->id);
                 
@@ -66,4 +66,5 @@ class HtmlView extends BaseHtmlView {
         ToolbarHelper::help( '', false,'https://crosborne.uk/xbarticleman/doc?tmpl=component#admin-tag' );       
         
     }
+
 }

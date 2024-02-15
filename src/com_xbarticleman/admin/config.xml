@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- xbArticleMan j5 config file v0.0.1.0 7th January 2024 -->
+<!-- xbArticleMan j5 config file v0.0.8.0 15th February 2024 -->
 <config>
 <!-- GENERAL TAB -->				
 	<fieldset name="general"
@@ -75,6 +75,62 @@
 		</field>
 		
         
+	</fieldset>
+<!-- TAG COMPONENTS TAB -->
+	<fieldset name="rtagcom"
+			label="Tag Components"
+			description="Define extra components using Tags to be listed in Joomla Tag View"
+	>
+	<!-- //com_content
+//            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mb WHERE mb.type_alias='.$db->quote('com_content.article').' AND mb.tag_id = t.id) AS acnt');
+//            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mb WHERE mb.type_alias='.$db->quote('com_content.category').' AND mb.tag_id = t.id) AS acatcnt');
+//com_contact
+//            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mp WHERE mp.type_alias='.$db->quote('com_contact.contact').' AND mp.tag_id = t.id) AS ccnt');
+//            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_contact.category').' AND mr.tag_id = t.id) AS ccatcnt');
+//com_banners
+//            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_banners.category').' AND mr.tag_id = t.id) AS bcatcnt');
+//com newsfeeds
+//            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_newsfeeds.newsfeed').' AND mr.tag_id = t.id) AS ncnt');
+//            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_newsfeeds.category').' AND mr.tag_id = t.id) AS ncatcnt');
+//com weblinks
+//            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_weblinks.weblink').' AND mr.tag_id = t.id) AS wcatcnt');
+//            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_weblinks.category').' AND mr.tag_id = t.id) AS wcatcnt');
+   
+ //           $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS ma WHERE ma.tag_id = t.id) AS allcnt ');
+//other components tags - xb xbr xbbooks, xf xfr xbfilms, xe xbevents, xp xbpeople, xm xmt xmm xbmaps 
+// (xbjournals not yet working, xbaoy not planned for j5) xbculture and xbmaps included pending j5
+//TODO only do these if installed
+//set up these as config subform for component.item, id field assume id for id, title field allow sql if not title, 
+//set this up as array and iterate here to create query
+/****
+//com_xbbooks
+            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbbooks.book').' AND mr.tag_id = t.id) AS xbcnt');
+            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbbooks.review').' AND mr.tag_id = t.id) AS xbrcnt');
+            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbbooks.category').' AND mr.tag_id = t.id) AS xbcatcnt');
+//com_xfilms
+            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbfilms.film').' AND mr.tag_id = t.id) AS xfcnt');
+            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbfilms.review').' AND mr.tag_id = t.id) AS xfrcnt');
+            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbfilms.category').' AND mr.tag_id = t.id) AS xfcatcnt');
+//com_xbevents
+            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbevents.event').' AND mr.tag_id = t.id) AS xecnt');
+            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbevents.review').' AND mr.tag_id = t.id) AS xercnt');
+            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbevents.category').' AND mr.tag_id = t.id) AS xecatcnt');
+//com_xbpeople
+            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbpeople.person').' AND mr.tag_id = t.id) AS xpcnt');
+            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbpeople.group').' AND mr.tag_id = t.id) AS xpgcatcnt');
+            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbpeople.character').' AND mr.tag_id = t.id) AS xpccnt');
+            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbpeople.category').' AND mr.tag_id = t.id) AS xpcatcnt');
+//com_xbmaps
+            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbmaps.map').' AND mr.tag_id = t.id) AS xmcnt');
+            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbmaps.marker').' AND mr.tag_id = t.id) AS xmmcnt');
+            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbmaps.track').' AND mr.tag_id = t.id) AS xmtcnt');
+            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbmaps.category').' AND mr.tag_id = t.id) AS xmcatcnt');
+
+//            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xb.').' AND mr.tag_id = t.id) AS ncnt');
+***/
+//            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS ma WHERE ma.tag_id = t.id) AS allcnt ');
+                       
+	 -->
 	</fieldset>
 <!-- BEER TAB -->
 	<fieldset name="reg"

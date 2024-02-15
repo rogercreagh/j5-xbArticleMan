@@ -69,8 +69,10 @@ if ($saveOrder && !empty($this->items)) {
     	<ul class="inline">
     		<li><i><?php echo Text::_('XBARTMAN_COUNTS_TAGS'); ?>:</i></li>
     		<?php foreach ($this->tagcnts as $key=>$tag) : ?>
-    		    <li><a href="index.php?option=com_xbarticleman&view=arttags&tagid=<?php echo $tag['tagid']; ?>&filter[tagfilt]=<?php echo $tag['tagid']; ?>" 
-    		    	class="xbbadge badge-tag"><?php echo $tag['title'].' ('.$tag['cnt'].')'; ?></a></li>
+    		    <li><a href="index.php?option=com_xbarticleman&view=tagitems&tagid=<?php echo $tag['tagid']; ?>" 
+    		    	class="xbbadge badge-tag"><?php echo $tag['title'].' ('.$tag['cnt'].')'; ?></a>
+    		    	<a href="index.php?option=com_tags&task=tag.edit&id=<?php echo $tag['tagid']; ?>" class="icon-edit xbpl10" target="_blank"></a>
+    		    	</li>
     		<?php endforeach; ?>
     	</ul>
     	<span class="xbnit xb09"><?php echo Text::_('XBARTMAN_CLICK_TAG_ABOVE'); ?></span>
@@ -251,8 +253,7 @@ if ($saveOrder && !empty($this->items)) {
 										<?php echo $this->escape($item->title); ?></a> 
 									<a class="hasTooltip" href="
 									<?php echo Route::_('index.php?option=com_content&task=article.edit&id=' . $item->id);?>
-									" title="<?php echo Text::_('XBARTMAN_FULL_EDIT'); ?>" >										
-										<span class="icon-edit xbpl10"></span></a>
+									" title="<?php echo Text::_('XBARTMAN_FULL_EDIT'); ?>" target="_blank"><span class="icon-edit xbpl10"></span></a>
 								<?php else : ?>
 									<span title="<?php echo Text::sprintf('JFIELD_ALIAS_LABEL', $this->escape($item->alias)); ?>"><?php echo $this->escape($item->title); ?></span>
 								<?php endif; ?>
@@ -293,7 +294,7 @@ if ($saveOrder && !empty($this->items)) {
                                 		<?php 
                                 		ksort($f["children"]);
                                         foreach ($f["children"] as $tg) : ?>                                         
-                                            <a href="index.php?option=com_xbarticleman&view=tag&id=<?php echo $tg->id; ?>" class="xbbadge badge-tag">
+                                            <a href="index.php?option=com_xbarticleman&view=tagitems&id=<?php echo $tg->id; ?>" class="xbbadge badge-tag">
                                             	<?php echo $tg->title; ?></a>   		
                                         <?php endforeach; ?>
                         	    	</span><br />       

@@ -2,11 +2,12 @@
 /*******
  * @package xbArticleManager-j5
  * @filesource admin/tmpl/tag/default.php
- * @version 0.0.8.0 15th February 2024
+ * @version 0.0.8.1 15th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
  ******/
+
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
@@ -26,7 +27,7 @@ $item = $this->item;
 $telink = 'index.php?option=com_tags&task=tag.edit&id=';
 
 ?>
-<form action="index.php?option=com_xbfilms&view=tag" method="post" id="adminForm" name="adminForm">
+<form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=tagitems'); ?>"  method="post" id="adminForm" name="adminForm">
 	<div id="xbcomponent">
 		<div class="container-fluid">
 			<div class="row xbmb20">

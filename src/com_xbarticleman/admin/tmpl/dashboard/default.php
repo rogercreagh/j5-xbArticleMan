@@ -21,7 +21,7 @@ HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('formbehavior.chosen', 'select');
 
 ?>
-<form action="<?php echo Route::_('index.php?option=com_xbarticlemans&view=dashboard'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=dashboard'); ?>" method="post" name="adminForm" id="adminForm">
 
 	<div id="xbcomponent" >
 		<h3><?php echo Text::_('XB_STATUS_SUM'); ?></h3>
