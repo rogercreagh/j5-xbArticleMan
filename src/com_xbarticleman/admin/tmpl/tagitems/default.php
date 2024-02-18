@@ -11,23 +11,23 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Button\PublishedButton;
-use Joomla\CMS\Helper\TagsHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Uri\Uri;
-use Joomla\Registry\Registry;
-use Joomla\CMS\Session\Session;
 use Crosborne\Component\Xbarticleman\Administrator\Helper\XbarticlemanHelper;
 //use Joomla\Utilities\ArrayHelper;
+
+HTMLHelper::_('behavior.multiselect');
+HTMLHelper::_('formbehavior.chosen', 'select');
 
 $item = $this->item;
 $telink = 'index.php?option=com_tags&task=tag.edit&id=';
 
 ?>
+
 <form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=tagitems'); ?>"  method="post" id="adminForm" name="adminForm">
+
+<?php if ()?>
 	<div id="xbcomponent">
 		<div class="container-fluid">
 			<div class="row xbmb20">

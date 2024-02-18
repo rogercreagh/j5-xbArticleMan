@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager-j5
  * @filesource admin/tmpl/artimgs/default.php
- * @version 0.0.7.1 12th February 2024
+ * @version 0.0.8.1 16th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -71,7 +71,7 @@ if ($saveOrder && !empty($this->items)) {
     		<?php foreach ($this->tagcnts as $key=>$tag) : ?>
     		    <li><a href="index.php?option=com_xbarticleman&view=tagitems&tagid=<?php echo $tag['tagid']; ?>" 
     		    	class="xbbadge badge-tag"><?php echo $tag['title'].' ('.$tag['cnt'].')'; ?></a>
-    		    	<a href="index.php?option=com_tags&task=tag.edit&id=<?php echo $tag['tagid']; ?>" class="icon-edit xbpl10" target="_blank"></a>
+    		    	<a href="index.php?option=com_tags&task=tag.edit&tagid=<?php echo $tag['tagid']; ?>" class="icon-edit xbpl10" target="_blank"></a>
     		    	</li>
     		<?php endforeach; ?>
     	</ul>
@@ -294,7 +294,7 @@ if ($saveOrder && !empty($this->items)) {
                                 		<?php 
                                 		ksort($f["children"]);
                                         foreach ($f["children"] as $tg) : ?>                                         
-                                            <a href="index.php?option=com_xbarticleman&view=tagitems&id=<?php echo $tg->id; ?>" class="xbbadge badge-tag">
+                                            <a href="index.php?option=com_xbarticleman&view=tagitems&tagid=<?php echo $tg->id; ?>" class="xbbadge badge-tag">
                                             	<?php echo $tg->title; ?></a>   		
                                         <?php endforeach; ?>
                         	    	</span><br />       

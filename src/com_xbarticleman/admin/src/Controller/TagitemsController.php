@@ -39,11 +39,5 @@ class TagitemsController extends AdminController {
         
         return parent::getModel($name, $prefix, $config);
     }
-    
-    function tagEdit() {
-        $id =  Factory::getApplication()->input->get('id');
-        $this->setRedirect('index.php?option=com_tags&task=tag.edit&id='.$id);
-    }
-    
-    
+        
 }

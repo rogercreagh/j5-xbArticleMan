@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager=j5
  * @filesource admin/src/Model/TagitemsModel.php
- * @version 0.0.8.1 15th February 2024
+ * @version 0.0.8.1 16th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -29,25 +29,23 @@ class TagitemsModel extends ListModel {
         parent::__construct();
     }
     
-    protected function populateState($ordering = 't.title', $direction = 'asc') {
+/*      protected function populateState($ordering = 't.title', $direction = 'asc') {
         
          $app = Factory::getApplication();
         
 //         // Load state from the request.
-         $id = $app->input->getInt('id');
+         $id = $app->input->getInt('tagid');
          $this->setState('tag.id', $id);
          parent::populateState($ordering, $direction);
          
     }
-    
-    public function getItems($id = null) {
-        if (is_null($id)) {
-            $id = $this->getState('tag.id',0);
-        }
-        if (!isset($this->item) || !is_null($id) || ($id > 0)) {
+ */     
+    public function getTagitems() {
+        $app = Factory::getApplication();
+        $id = $app->input->getInt('tagid',0);
+        if ($id > 0) {
 //            $params = ComponentHelper::getParams('com_xbarticleman');
             
-//            $id    = is_null($id) ? $this->getState('tag.id') : $id;
             
             $db = $this->getDbo();
             $query = $db->getQuery(true);
@@ -96,11 +94,13 @@ class TagitemsModel extends ListModel {
                     }
                 }
                 $this->item->taggeditems = $tagtypes;
-                
+                return $this->item;
             }
-            return $this->item;
-        } elseif ($id == 0) { //endif item set
-            Factory::getApplication()->enqueueMessage('You need to select a tag to display it\'s items');
+            $app->enqueueMessage($id.' is not a valid tag id','Warning');
+            return false;
+        } else { //endif item set
+            $app->enqueueMessage('You need to select a tag to display it\'s items','Error');
+            return false;
         }
     } //end getItem()
     
