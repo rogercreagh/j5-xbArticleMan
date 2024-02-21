@@ -1,13 +1,22 @@
 /*******
  * @package xbCommon Files
  * @filesource media/css/xbcommon.css
- * @version 1.0.0.0 28th January 2024
+ * @version 1.0.0.0 19th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
  ******/
 
-/* restore Joomla j5 template changes */
+/* disable Joomla5 Atum template target hinting arrow-out-box using a:before */
+#xbcomponent a[target="_blank"]:before {
+    content:unset;
+}
+/* disable Joomla5 Atum component forced underline on a inside table */
+#xbcomponent table a {
+	text-decoration:none;
+}
+
+/* restore Joomla j5 template styles missing */
 .pull-right {
 	float: right;
 }
@@ -322,6 +331,11 @@ some common combinations are also defined (eg xbnit - normal weight,italic, 5px 
 .xbtc, .xbcredit {text-align:center;}
 .xbtr {text-align:right;}
 
+/* text decoration */
+.xbnotdec {
+	text-decoration: none !important;
+} 
+
 /* font sizes in em */
 .xb15 { font-size:1.5em; }
 .xb12, .xbtitle { font-size:1.2em; }
@@ -359,6 +373,7 @@ some common combinations are also defined (eg xbnit - normal weight,italic, 5px 
 .xbmb20 { margin-bottom:20px; }
 
 /* padding */
+.xbpl5 {padding-left:5px;}
 .xbpl10 {padding-left:10px;}
 .xbpl20 {padding-left:20px;}
 .xbpr5, .xbnit { padding-right:5px; }

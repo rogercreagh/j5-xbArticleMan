@@ -1,22 +1,31 @@
 /*******
  * @package xbAOY Component
- * @filesource media/css/xbaoy.css
- * @version 0.5.1.0 10th October 2023
+ * @filesource media/css/xblinkhint.css
+ * @version 0.0.8.2 19th February 2024
  * @author Roger C-O
- * @copyright Copyright (c) Roger Creagh-Osborne, 2023
+ * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
  ******/
+
+/* disable Joomla5 Atum template target hinting arrow-out-box using a:before */
+#xbcomponent a[target="_blank"]:before {
+    content:unset;
+}
+/* disable Joomla5 Atum component forced underline on a inside table */
+#xbcomponent table a {
+	text-decoration:none;
+}
 
 /* CSS for hinting link destinations. NB domain is hard coded here */
 
 /* internal no target or target self -> no after */
 
-/* internal target not _self -> arrow-out */
-a[href]:not([href^="http"]):not([class="noafter"])[target]:not([target="_self"]):after,
-a[href^="https://{DOMAIN}"]:not([class="noafter"])[target]:not([target="_self"]):after,
-a[href^="https://www.{DOMAIN}"]:not([class="noafter"])[target]:not([target="_self"]):after,
-a[href^="http://{DOMAIN}"]:not([class="noafter"])[target]:not([target="_self"]):after,
-a[href^="http://www.{DOMAIN}"]:not([class="noafter"])[target]:not([target="_self"]):after
+/* internal target not _self -> plain arrow-out */
+a:not(.nohint)[href]:not([href^="http"]):not([class="noafter"])[target]:not([target="_self"]):after,
+a:not(.nohint)[href^="https://{DOMAIN}"]:not([class="noafter"])[target]:not([target="_self"]):after,
+a:not(.nohint)[href^="https://www.{DOMAIN}"]:not([class="noafter"])[target]:not([target="_self"]):after,
+a:not(.nohint)[href^="http://{DOMAIN}"]:not([class="noafter"])[target]:not([target="_self"]):after,
+a:not(.nohint)[href^="http://www.{DOMAIN}"]:not([class="noafter"])[target]:not([target="_self"]):after
 {
 font-family:serif;
 	content: "\2197"; /*"\21B8";*/
@@ -25,23 +34,23 @@ font-family:serif;
     padding-inline-start:5px;
 }
 /* external no target or target _self -> arrow-in */
-a[href^="https"]:not([href^="https://www.{DOMAIN}"]):not([href^="https://{DOMAIN}"]):not([class="noafter"])[target][target="_self"]:after,
-a[href^="https"]:not([href^="https://www.{DOMAIN}"]):not([href^="https://{DOMAIN}"]):not([class="noafter"]):not([target]):after,
-a[href^="http://"]:not([href^="http://www.{DOMAIN}"]):not([href^="http://{DOMAIN}"]):not([class="noafter"])[target][target="_self"]:after,
-a[href^="http://"]:not([href^="http://www.{DOMAIN}"]):not([href^="http://{DOMAIN}"]):not([class="noafter"]):not([target]):after
+a:not(.nohint)[href^="https"]:not([href^="https://www.{DOMAIN}"]):not([href^="https://{DOMAIN}"]):not([class="noafter"])[target][target="_self"]:after,
+a:not(.nohint)[href^="https"]:not([href^="https://www.{DOMAIN}"]):not([href^="https://{DOMAIN}"]):not([class="noafter"]):not([target]):after,
+a:not(.nohint)[href^="http://"]:not([href^="http://www.{DOMAIN}"]):not([href^="http://{DOMAIN}"]):not([class="noafter"])[target][target="_self"]:after,
+a:not(.nohint)[href^="http://"]:not([href^="http://www.{DOMAIN}"]):not([href^="http://{DOMAIN}"]):not([class="noafter"]):not([target]):after
 {
-	font-family: sans-serif;  
-	content:"\2798";
+	font-family: Font Awesome 6 Free;  
+	content:""; /*"\2798";*/
     font-size: 14px;
     font-weight: 900;
     padding-inline-start:5px;
 }
 /* external target not _self ->arrow-out-box */
-a[href^="https"]:not([href^="https://www.{DOMAIN}"]):not([href^="https://{DOMAIN}"]):not([class="noafter"])[target]:not([target="_self"]):after,
-a[href^="http://"]:not([href^="http://www.{DOMAIN}"]):not([href^="http://{DOMAIN}"]):not([class="noafter"])[target]:not([target="_self"]):after
+a:not(.nohint)[href^="https"]:not([href^="https://www.{DOMAIN}"]):not([href^="https://{DOMAIN}"]):not([class="noafter"])[target]:not([target="_self"]):after,
+a:not(.nohint)[href^="http://"]:not([href^="http://www.{DOMAIN}"]):not([href^="http://{DOMAIN}"]):not([class="noafter"])[target]:not([target="_self"]):after
 {
 	font-family: "Font Awesome 6 Free"; 
-	content: "";
+	content: "\f2f5"; /*""; */
     font-size: 14px;
     font-weight: 900;
     padding-inline-start:5px;

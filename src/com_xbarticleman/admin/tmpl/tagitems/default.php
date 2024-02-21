@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager-j5
  * @filesource admin/tmpl/tag/default.php
- * @version 0.0.8.1 15th February 2024
+ * @version 0.0.8.2 21st February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -14,6 +14,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
 use Crosborne\Component\Xbarticleman\Administrator\Helper\XbarticlemanHelper;
 //use Joomla\Utilities\ArrayHelper;
 
@@ -24,10 +25,12 @@ $item = $this->item;
 $telink = 'index.php?option=com_tags&task=tag.edit&id=';
 
 ?>
+<style>
+  #pvModal .modal-body {margin:0 30px;}
+</style>
 
 <form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=tagitems'); ?>"  method="post" id="adminForm" name="adminForm">
 
-<?php if ()?>
 	<div id="xbcomponent">
 		<div class="container-fluid">
 			<div class="row xbmb20">
@@ -73,6 +76,7 @@ $telink = 'index.php?option=com_tags&task=tag.edit&id=';
 			</div>
 			<div class="row xbmb20">
 				<?php $colcnt=0; 
+				
 				foreach ($item->taggeditems as $tagtype) : 
 				    if ($tagtype['cnt']>0) : ?>
 				    	<?php $colcnt ++; ?>
@@ -82,11 +86,28 @@ $telink = 'index.php?option=com_tags&task=tag.edit&id=';
 				    			 <?php echo $tagtype['cnt'].' items tagged with '; ?> 
 				    			 <span class="xbbadge badge-ltblue"><?php echo $item->title; ?></span>
 				    			 <ul>
-				    			 <?php foreach ($tagtype['items'] as $value) : ?>
+				    			 <?php $pvurl = $tagtype['pvurl'];
+				    			 $edurl = $tagtype['edurl'];
+				    			 foreach ($tagtype['items'] as $value) : ?>
 				    			     <li>
 				    			     	<span><?php echo $value->title; ?></span>
-				    			     	<span class="icon-edit xbpl10"></span>
-				    			     	<span class="icon-eye xbpl10"></span>
+				    			     	<?php if ($edurl !='') : ?>
+				    			     		<a href="<?php echo $edurl.$value->bid; ?>" target="xbtab" class="nohint">
+    				    			     		<span class="icon-edit xbpl10"></span>
+				    			     		</a>
+				    			     	<?php endif;
+				    			     	if ($pvurl != '') : ?>
+											<?php $pvlink = "'".($pvurl.$value->bid)."'"; 
+											$pvtitle = "'".($value->title.' - <i>'.Text::_('preview of item only').'</i>')."'"; ?>
+                                			<span  data-bs-toggle="modal" data-bs-target="#pvModal" data-bs-source="" 
+                                				data-bs-itemtitle="Article Preview" 
+                                				title="<?php echo Text::_('XBARTMAN_MODAL_PREVIEW'); ?>" 
+          										onclick="var pv=document.getElementById('pvModal');
+          											pv.querySelector('.modal-body .iframe').setAttribute('src',<?php echo $pvlink; ?>);
+          											pv.querySelector('.modal-title').innerHTML=<?php echo $pvtitle; ?>;" >
+												<span class="icon-eye xbpl10"></span>
+											</span>
+				    			     	<?php endif; ?>
 				    			     </li>
 				    			 <?php endforeach; ?>
 				    			 </ul>
@@ -104,6 +125,20 @@ $telink = 'index.php?option=com_tags&task=tag.edit&id=';
 
 	</div>
 </form>
+			<?php // Load the article preview modal ?>
+			<?php echo HTMLHelper::_(
+				'bootstrap.renderModal',
+				'pvModal',
+				array(
+					'title'  => Text::_('XBARTMAN_ARTICLE_PREVIEW'),
+					'footer' => '',
+				    'height' => '900vh',
+				    'bodyHeight' => '90',
+				    'modalWidth' => '80',
+				    'url' => Uri::root().'index.php?option=com_content&view=article&id='.'x'
+				),
+			); ?>
+
 
 <div class="clearfix"></div>
 <?php echo XbarticlemanHelper::credit('xbArticleMan');?>

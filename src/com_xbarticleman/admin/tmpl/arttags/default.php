@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager-j5
  * @filesource admin/tmpl/artimgs/default.php
- * @version 0.0.8.1 16th February 2024
+ * @version 0.0.8.2 21st February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -70,9 +70,11 @@ if ($saveOrder && !empty($this->items)) {
     		<li><i><?php echo Text::_('XBARTMAN_COUNTS_TAGS'); ?>:</i></li>
     		<?php foreach ($this->tagcnts as $key=>$tag) : ?>
     		    <li><a href="index.php?option=com_xbarticleman&view=tagitems&tagid=<?php echo $tag['tagid']; ?>" 
-    		    	class="xbbadge badge-tag"><?php echo $tag['title'].' ('.$tag['cnt'].')'; ?></a>
-    		    	<a href="index.php?option=com_tags&task=tag.edit&tagid=<?php echo $tag['tagid']; ?>" class="icon-edit xbpl10" target="_blank"></a>
-    		    	</li>
+    		    	class="xbbadge badge-tag"><?php echo $tag['title']; ?>
+    		    	</a><?php echo '('.$tag['cnt'].')'; ?><a href="index.php?option=com_tags&task=tag.edit&id=<?php echo $tag['tagid']; ?>" 
+    		    		class="nohint" target="xbtab"><span class="icon-edit"></span>
+    		    	</a>
+    		    </li>
     		<?php endforeach; ?>
     	</ul>
     	<span class="xbnit xb09"><?php echo Text::_('XBARTMAN_CLICK_TAG_ABOVE'); ?></span>
@@ -228,7 +230,7 @@ if ($saveOrder && !empty($this->items)) {
                                 <input type="text" name="order[]" size="5" value="<?php echo $item->ordering; ?>" class="width-20 text-area-order hidden">
                             <?php endif; ?>             
 							<span class="<?php echo $numclass; ?>"><?php echo $item->ordering;?></span>
-							</td>
+						</td>
 						<td class="article-status">
                                 <?php
                                     $options = [
@@ -251,9 +253,9 @@ if ($saveOrder && !empty($this->items)) {
 									<?php echo Route::_('index.php?option=com_xbarticleman&task=article.edit&id=' . $item->id).'&retview=artimgs';?>
 									" title="<?php echo Text::_('XBARTMAN_QUICK_EDIT_TIP'); ?>">
 										<?php echo $this->escape($item->title); ?></a> 
-									<a class="hasTooltip" href="
+									<a class="hasTooltip nohint" href="
 									<?php echo Route::_('index.php?option=com_content&task=article.edit&id=' . $item->id);?>
-									" title="<?php echo Text::_('XBARTMAN_FULL_EDIT'); ?>" target="_blank"><span class="icon-edit xbpl10"></span></a>
+									" title="<?php echo Text::_('XBARTMAN_FULL_EDIT'); ?>" target="xbtab"><span class="icon-edit xbpl10"></span></a>
 								<?php else : ?>
 									<span title="<?php echo Text::sprintf('JFIELD_ALIAS_LABEL', $this->escape($item->alias)); ?>"><?php echo $this->escape($item->title); ?></span>
 								<?php endif; ?>
@@ -262,8 +264,7 @@ if ($saveOrder && !empty($this->items)) {
                                 <span  data-bs-toggle="modal" data-bs-target="#pvModal" data-bs-source="<?php echo $pvuri; ?>" data-bs-itemtitle="<?php echo $item->title; ?>" 
                                 title="<?php echo Text::_('XBARTMAN_MODAL_PREVIEW'); ?>" 
           							onclick="var pv=document.getElementById('pvModal');pv.querySelector('.modal-body .iframe').setAttribute('src',<?php echo $pvuri; ?>);pv.querySelector('.modal-title').textContent=<?php echo $pvtit; ?>;"
-                                >
-									<span class="icon-eye xbpl10"></span></span>
+                                	><span class="icon-eye xbpl10"></span></span>
 								</p>
 								<span class="xbpl20 xb09"><i><?php echo Text::_('XB_ALIAS'); ?></i>: <?php echo $this->escape($item->alias); ?>
 								</span>

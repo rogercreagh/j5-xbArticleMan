@@ -234,7 +234,7 @@ if ($saveOrder && !empty($this->items)) {
 									<?php echo Route::_('index.php?option=com_xbarticleman&task=article.edit&id=' . $item->id).'&retview=artimgs';?>
 									" title="<?php echo Text::_('XBARTMAN_QUICK_EDIT_TIP'); ?>">
 										<?php echo $this->escape($item->title); ?></a> 
-									<a class="hasTooltip" href="
+									<a class="hasTooltip nohint" href="
 									<?php echo Route::_('index.php?option=com_content&task=article.edit&id=' . $item->id);?>
 									" title="<?php echo Text::_('XBARTMAN_FULL_EDIT'); ?>" >										
 										<span class="icon-edit xbpl10"></span></a>

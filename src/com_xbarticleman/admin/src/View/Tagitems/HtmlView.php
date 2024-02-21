@@ -55,6 +55,9 @@ class HtmlView extends BaseHtmlView {
         ToolbarHelper::title(Text::_('XBARTMAN_ADMIN_TAG_TITLE'), 'tag');
         
         $canDo = ContentHelper::getActions('com_xbarticleman');
+        
+        ToolbarHelper::back('ArtTags View');
+        
         if ($canDo->get('core.admin')) {
             ToolbarHelper::preferences('com_xbarticleman');
         }

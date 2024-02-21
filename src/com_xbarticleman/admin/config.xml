@@ -3,22 +3,44 @@
 <config>
 <!-- GENERAL TAB -->				
 	<fieldset name="general"
-		label="XB_GENERAL"
-		description="XB_GENERAL_DESC"
+		label="XBCONFIG_GENERAL"
+		description="XBCONFIG_GENERAL_DESC"
 	>
+		<field name="extlinknote" type="note"
+			label="XBCONFIG_EXTLINK_NOTE_LABEL"
+			description="XBCONFIG_EXTLINK_NOTE_DESC"
+		/>
+		
+		<field name="extlink_target" type="radio"
+			default="1"
+			label="XBCONFIG_EXTLINK_LABEL"
+			description="XBCONFIG_EXTLINK_DESC"
+ 			class="btn-group btn-group-yesno"
+		>
+			<option value="0" >XBCONFIG_SAME_TAB</option>
+			<option value="1">XBCONFIG_NEW_TAB</option>
+		</field>	
+
+		<field name="linkhintnote" type="note"
+			label="XBCONFIG_HINT_NOTE_LABEL"
+			descrtiption="XBCONFIG_HINT_NOTE_DESC"
+		/>
+		
 		<field name="extlinkhint" type="radio"
-			label="XB_EXTLINKS_LABEL"
-			description="XB_EXTLINKS_DESC"
+			label="XBCONFIG_LINKHINT_LABEL"
+			description="XBCONFIG_LINKHINT_DESC"
  			class="btn-group btn-group-yesno"
  			default="0"
 			>
-			<option value="0">XB_DISABLE</option>
-			<option value="3">XBARTMAN_ADMIN_ONLY</option>
+			<option value="0">XBCONFIG_DISABLE</option>
+			<option value="1">XBCONFIG_SITE_ADMIN</option>
+			<option value="2">XBCONFIG_SITE_ONLY</option>
+			<option value="3">XBCONFIG_ADMIN_ONLY</option>
 		</field>	
 	
    		<field name="beernote" type="note"
-			label="XB_BUY_A_BEER_LABEL"
-			description="XB_BUY_A_BEER_DESC"
+			label="XBCONFIG_BUY_A_BEER_LABEL"
+			description="XBCONFIG_BUY_A_BEER_DESC"
 			class="info"
 		/>	
         
@@ -27,7 +49,15 @@
 			description="XBARTMAN_CONFIG_TAGGROUPNOTE_DESC"
 		/>	
 		
- 		<field name="enable_taggroups" type="radio"
+        
+	</fieldset>
+<!-- TAG COMPONENTS TAB -->
+	<fieldset name="tagopts"
+			label="Tag Settings"
+			description="Tag grouping and other components using Tags to be listed in xbArticleMan TagItems View"
+	>
+	
+	 		<field name="enable_taggroups" type="radio"
 			label="XBARTMAN_CONFIG_TAGGROUP_ENABLE_LABEL"
 			description="XBARTMAN_CONFIG_TAGGROUP_ENABLE_DESC"
 			class="btn-group btn-group-yesno"
@@ -74,13 +104,66 @@
 			<option value="">XBARTMAN_OPT_NOT_USED</option>
 		</field>
 		
-        
-	</fieldset>
-<!-- TAG COMPONENTS TAB -->
-	<fieldset name="rtagcom"
-			label="Tag Components"
-			description="Define extra components using Tags to be listed in Joomla Tag View"
-	>
+		<field name="tagcomnote" type="note"
+			label="Component Tags to list in TagItems View"
+			description="Here you can select which components using Joomla built-in tags will have their items listed in the TagItems view"
+		/>
+		
+		<field name="jcomitems" type="list"
+			label="Joomla Items"
+			description="Select which built-in component tagged items will be listed in the TagItems view."
+			multiple="true"			
+		>
+			<option value="1">Articles</option>
+			<option value="3">Contacts</option>
+			<option value="6">Newsfeeds</option>
+			<option value="2">com_content Categories</option>
+			<option value="4">com_contact Categories</option>
+			<option value="5">com_banners Categories</option>
+			<option value="7">com_newsfeeds Categories</option>
+		</field>
+		
+		<field name="othercomitems" type="subform"
+			label="Other Component Items" 
+			description="Enter the required details for each component you want to see listed"
+			multiple="true"
+			buttons="add,remove"
+			layout="joomla.form.field.subform.repeatable"
+		>
+			<form>
+				<field name="com" type="text"
+					label="Component" hint="eg 'weblinks'"
+					description="Component name wihtout the com_"	
+					required="true"				
+				></field>
+				<field name="item" type="text"
+					label="Item" hint="eg 'weblink'"
+					description="The item type"					
+					required="true"				
+				></field>
+				<field name="table" type="text"
+					label="Table" hint="eg 'weblinks'"
+					description="The table name used to store the items - without the '#__' prefix."					
+					required="true"				
+				></field>
+				<field name="title" type="text"
+					label="Title Column" hint="eg 'name'"
+					description="The column name with the title. To concatenate two columns with a space use '+' eg 'firstname+lastname'"					
+					required="true"				
+				></field>
+				<field name="pv" type="text"
+					label="Preview View Name" hint="eg 'weblink'"
+					description="View name for a preview of the item in a modal window from the eyecon &#128065; - site url, component and item id will be added to make url"					
+				></field>
+				<field name="ed" type="text"
+					label="Edit View &amp; Task" hint="eg '&amp;view=weblink&amp;task=weblink.edit'"
+					description="Fragment of query string to build edit url with correct view and task for the item id. ('&amp;id=' will be appended)"					
+				></field>
+			</form>
+		</field>
+<!--             $tagtypes[] = array('com'=>'content', 'item'=>'article', 'table'=>'content','title'=>'title','pv'=>'introtext','cntname'=>'contentarticlecnt','cnt'=>0);
+ -->		
+	
 	<!-- //com_content
 //            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mb WHERE mb.type_alias='.$db->quote('com_content.article').' AND mb.tag_id = t.id) AS acnt');
 //            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mb WHERE mb.type_alias='.$db->quote('com_content.category').' AND mb.tag_id = t.id) AS acatcnt');
@@ -134,31 +217,31 @@
 	</fieldset>
 <!-- BEER TAB -->
 	<fieldset name="reg"
-			label="XB_REGCRED_LABEL"
-			description="XB_REGCRED_DESC"
+			label="XBCONFIG_REGCRED_LABEL"
+			description="XBCONFIG_REGCRED_DESC"
 	>
   		<field name="beernote" type="note"
-			label="XB_BEER_NOTE"
-			description="XB_BEER_LINK"
+			label="XBCONFIG_BEER_NOTE"
+			description="XBCONFIG_BEER_LINK"
 			class="info"
 		/>	
 		<field name="roger_beer" type="password"
-			label="XB_BEER_FIELD" description="XB_BEER_FIELD_DESC"
+			label="XBCONFIG_BEER_FIELD" description="XBCONFIG_BEER_FIELD_DESC"
 			default=""
 		/>	
 		<field name="beernote2" type="note"
-			label="XB_BEER_PAY_AT_THE_BAR"
-			description="XB_BEER_FORM"			
+			label="XBCONFIG_BEER_PAY_AT_THE_BAR"
+			description="XBCONFIG_BEER_FORM"			
 		/>
 		<field name="penpont" type="hidden"
 			default="$2y$10$DeCwB16giLjgL7HgM1RDSeHROFs7QQef2dBQ9jEKehiTGj05jbonK" 
 			/>		
 		<field name="othercreditsnote" type="note"
-			label="XB_CREDITS_NOTE"
+			label="XBCONFIG_CREDITS_NOTE"
 		/>
 		<field name="devtoolsnote" type="note"
-			label="XB_DEV_TOOLS"
-			description="XB_DEV_TOOLS_DESC"
+			label="XBCONFIG_DEV_TOOLS"
+			description="XBCONFIG_DEV_TOOLS_DESC"
 		/>
 	</fieldset>		
 

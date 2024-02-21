@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager
  * file script.xbarticleman.php
- * @version 0.0.1.0 7th January 2024
+ * @version 0.0.8.2 19th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2023
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -95,11 +95,11 @@ class com_xbarticlemanInstallerScript
 
     function createCssFromTmpl() {
         //load the template file
-        $tmplstring = file_get_contents(JPATH_ROOT.'/media/'.$this->extension.'/css/xbextlinks.tmpl.css');
+        $tmplstring = file_get_contents(JPATH_ROOT.'/media/'.$this->extension.'/css/xblinkhint.tmpl.css');
         $domain = parse_url(Uri::root(), PHP_URL_HOST);
         $tmplstring = str_replace('{DOMAIN}', $domain, $tmplstring);
-        if (file_put_contents(JPATH_ROOT.'/media/'.$this->extension.'/css/xbextlinks.css',$tmplstring) == false) {
-            Factory::getApplication()->enqueueMessage('Failed to create External Links CSS file', 'Error');
+        if (file_put_contents(JPATH_ROOT.'/media/'.$this->extension.'/css/xblinkhint.css',$tmplstring) == false) {
+            Factory::getApplication()->enqueueMessage('Failed to create LinkHint CSS file', 'Error');
             return '';
         }
         return 'CSS External Links file created ok <br />';

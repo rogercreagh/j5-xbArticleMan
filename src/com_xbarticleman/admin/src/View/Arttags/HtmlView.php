@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager-j5
  * @filesource admin/src/View/Arttags/HtmlView.php
- * @version 0.0.7.1 12th February 2024
+ * @version 0.0.8.2 20th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -164,12 +164,6 @@ class HtmlView extends BaseHtmlView {
                 ToolbarHelper::trash('arttags.trash');
             }
             
-            //if ($user->authorise('core.admin', 'com_xbarticleman') || $user->authorise('core.options', 'com_xbarticleman'))
-            if ($canDo->get('core.admin')) {
-                ToolbarHelper::preferences('com_xbarticleman');
-            }
-            
-            ToolbarHelper::help('JHELP_CONTENT_ARTICLE_MANAGER');
         }
         
         //if ($user->authorise('core.admin', 'com_xbarticleman') || $user->authorise('core.options', 'com_xbarticleman'))
