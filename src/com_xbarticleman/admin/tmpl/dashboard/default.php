@@ -21,9 +21,9 @@ HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('formbehavior.chosen', 'select');
 
 ?>
-<form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=dashboard'); ?>" method="post" name="adminForm" id="adminForm">
+<div id="xbcomponent" >
+	<form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=dashboard'); ?>" method="post" name="adminForm" id="adminForm">
 
-	<div id="xbcomponent" >
 		<h3><?php echo Text::_('XB_STATUS_SUM'); ?></h3>
 		<div class="xbwp100">
         	<div class="xbwp60 pull-left xbpr20">
@@ -283,8 +283,14 @@ HTMLHelper::_('formbehavior.chosen', 'select');
 	        			<p><?php echo Text::_('XBARTMAN_CONFIG_SETTINGS'); ?>:
 	        			</p>
 	        			<dl class="xbdlinline">
-	        				<dt><?php echo Text::_('XB_EXTLINKS_LABEL'); ?>: </dt> 
-	        				<dd><?php echo $this->extlinkhint; ?></dd>
+	        				<dt><?php echo Text::_('XBCONFIG_LINKHINT_LABEL'); ?>: </dt> 
+	        					<dd><?php echo $this->extlinkhint; ?></dd>
+	        				<dt><?php echo Text::_('Tag Groups'); ?>: </dt> 
+	        					<dd><?php echo ($this->taggroups == 0) ? 'Not specified' : 'Enabled'; ?></dd>
+	        				<?php if ($this->taggroups == 1) : ?>
+	        					<dt><?php echo Text::_('Groups') ?></dt>
+	        						<dd><?php echo $this->grouplist; ?></dd>
+	        				<?php endif; ?>
 	        			</dl>
         			<?php echo HTMLHelper::_('bootstrap.endSlide'); ?>
     				<?php echo HtmlHelper::_('bootstrap.addSlide', 'slide-dashboard', Text::_('XB_ABOUT'), 'about','xbaccordion'); ?>
@@ -307,11 +313,11 @@ HTMLHelper::_('formbehavior.chosen', 'select');
 			</div>
 			<div class="clearfix"></div>
 		</div>	
-	</div>
-	<input type="hidden" name="task" value="" />
-	<input type="hidden" name="boxchecked" value="0" />
-	<?php echo HTMLHelper::_('form.token'); ?>
-
-</form>
-
-<?php echo XbarticlemanHelper::credit('xbArticleMan');?>
+    	<input type="hidden" name="task" value="" />
+    	<input type="hidden" name="boxchecked" value="0" />
+    	<?php echo HTMLHelper::_('form.token'); ?>
+    
+    </form>
+    
+    <?php echo XbarticlemanHelper::credit('xbArticleMan');?>
+</div>

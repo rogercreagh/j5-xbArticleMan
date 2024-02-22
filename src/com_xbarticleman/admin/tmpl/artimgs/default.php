@@ -60,8 +60,8 @@ if ($saveOrder && !empty($this->items)) {
 }
 
 ?>
-<form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=artimgs'); ?>" method="post" name="adminForm" id="adminForm">
-	<div id="xbcomponent">
+<div id="xbcomponent">
+	<form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=artimgs'); ?>" method="post" name="adminForm" id="adminForm">
 		<h3><?php echo Text::_('XBARTMAN_ARTICLE_IMAGES')?></h3>
 		<h4><?php echo Text::_('XBARTMAN_TOTAL_ARTICLES').' '.$this->totalarticles.'. '.Text::_('XB_LISTING').' '.$this->statearticles.' '.lcfirst(Text::_('XB_ARTICLES')).' '.$this->statefilt; ?></h4>
 		<p> 
@@ -133,7 +133,7 @@ if ($saveOrder && !empty($this->items)) {
 						<th>
 							<?php echo Text::_('XBARTMAN_INTRO_FULL_IMAGES'); ?>
 						</th>
-						<th><span class="xb09">
+						<th><span class="xb09" style="padding:0; text-align:center;">
 							<?php echo HTMLHelper::_('searchtools.sort', 'XBARTMAN_HEADING_DATE_' . strtoupper($orderingColumn), 'a.' . $orderingColumn, $listDirn, $listOrder); ?>
 							<br /><?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
 							</span>
@@ -162,7 +162,7 @@ if ($saveOrder && !empty($this->items)) {
 						<th>
 							<?php echo Text::_('XBARTMAN_INTRO_FULL_IMAGES'); ?>
 						</th>
-						<th><span class="xb09">
+						<th><span class="xb09" style="padding:0; text-align:center;">
 							<?php echo HTMLHelper::_('searchtools.sort', 'XBARTMAN_HEADING_DATE_' . strtoupper($orderingColumn), 'a.' . $orderingColumn, $listDirn, $listOrder); ?>
 							<br /><?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
 							</span>
@@ -407,7 +407,7 @@ if ($saveOrder && !empty($this->items)) {
 							<?php endif; ?>
 							
 						</td>
-						<td class="nowrap small hidden-phone">
+						<td class="small" style="padding:0; text-align:center;">
 							<?php
 							$date = $item->{$orderingColumn};
 							echo $date > 0 ? HTMLHelper::_('date', $date, Text::_('D d M \'y')) : '-';
@@ -455,13 +455,13 @@ if ($saveOrder && !empty($this->items)) {
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="boxchecked" value="0" />
 		<?php echo HTMLHelper::_('form.token'); ?>
-	</div>
-</form>
-<script language="JavaScript" type="text/javascript"
-  src="<?php echo Uri::root(); ?>media/com_xbarticleman/js/closedetails.js" ></script>
-<script language="JavaScript" type="text/javascript"
-  src="<?php echo Uri::root(); ?>media/com_xbarticleman/js/setifsrc.js" ></script>
-
-<div class="clearfix"></div>
-<?php echo XbarticlemanHelper::credit('xbArticleMan');?>
+    </form>
+    <script language="JavaScript" type="text/javascript"
+      src="<?php echo Uri::root(); ?>media/com_xbarticleman/js/closedetails.js" ></script>
+    <script language="JavaScript" type="text/javascript"
+      src="<?php echo Uri::root(); ?>media/com_xbarticleman/js/setifsrc.js" ></script>
+    
+    <div class="clearfix"></div>
+    <?php echo XbarticlemanHelper::credit('xbArticleMan');?>
+</div>
 

@@ -7,7 +7,7 @@
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
  ******/
 
-/* disable Joomla5 Atum template target hinting arrow-out-box using a:before */
+/* disable Joomla5 Atum template target hinting fas fa-arrow-out-box using a:before */
 #xbcomponent a[target="_blank"]:before {
     content:unset;
 }
@@ -16,11 +16,11 @@
 	text-decoration:none;
 }
 
-/* CSS for hinting link destinations. NB domain is hard coded here */
+/* CSS for hinting link destinations. NB domain is hard coded here as {DOMAIN} - replace with current domain to give valid file */
 
 /* internal no target or target self -> no after */
 
-/* internal target not _self -> plain arrow-out */
+/* internal target not _self -> plain arrow-out &#x2197; with font-family serif */
 a:not(.nohint)[href]:not([href^="http"]):not([class="noafter"])[target]:not([target="_self"]):after,
 a:not(.nohint)[href^="https://{DOMAIN}"]:not([class="noafter"])[target]:not([target="_self"]):after,
 a:not(.nohint)[href^="https://www.{DOMAIN}"]:not([class="noafter"])[target]:not([target="_self"]):after,
@@ -33,7 +33,7 @@ font-family:serif;
     font-weight: 900;
     padding-inline-start:5px;
 }
-/* external no target or target _self -> arrow-in */
+/* external no target or target _self -> arrow-in  fas fa right-to-bracket */
 a:not(.nohint)[href^="https"]:not([href^="https://www.{DOMAIN}"]):not([href^="https://{DOMAIN}"]):not([class="noafter"])[target][target="_self"]:after,
 a:not(.nohint)[href^="https"]:not([href^="https://www.{DOMAIN}"]):not([href^="https://{DOMAIN}"]):not([class="noafter"]):not([target]):after,
 a:not(.nohint)[href^="http://"]:not([href^="http://www.{DOMAIN}"]):not([href^="http://{DOMAIN}"]):not([class="noafter"])[target][target="_self"]:after,
@@ -45,7 +45,7 @@ a:not(.nohint)[href^="http://"]:not([href^="http://www.{DOMAIN}"]):not([href^="h
     font-weight: 900;
     padding-inline-start:5px;
 }
-/* external target not _self ->arrow-out-box */
+/* external target not _self ->arrow-out-box fas fa right-from-bracket */
 a:not(.nohint)[href^="https"]:not([href^="https://www.{DOMAIN}"]):not([href^="https://{DOMAIN}"]):not([class="noafter"])[target]:not([target="_self"]):after,
 a:not(.nohint)[href^="http://"]:not([href^="http://www.{DOMAIN}"]):not([href^="http://{DOMAIN}"]):not([class="noafter"])[target]:not([target="_self"]):after
 {

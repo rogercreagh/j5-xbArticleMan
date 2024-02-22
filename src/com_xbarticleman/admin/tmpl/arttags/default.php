@@ -61,8 +61,8 @@ if ($saveOrder && !empty($this->items)) {
 }
 
 ?>
-<form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=arttags'); ?>" method="post" name="adminForm" id="adminForm">
-	<div id="xbcomponent">
+<div id="xbcomponent">
+	<form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=arttags'); ?>" method="post" name="adminForm" id="adminForm">
 		<h3><?php echo Text::_('XBARTMAN_ARTICLES_WITH_TAGS'); ?></h3>
 		<h4><?php echo Text::_('XBARTMAN_TOTAL_ARTICLES').' '.$this->totalarticles.'. '.Text::_('XB_LISTING').' '.$this->statearticles.' '.lcfirst(Text::_('XB_ARTICLES')).' '.$this->statefilt; ?></h4>
 		<p><?php echo Text::_('Found').' '.count($this->tagcnts).' '.Text::_('XBARTMAN_DISTINCT_TAGS').' in '.$this->taggedarticles.' '.lcfirst(Text::_('XB_ARTICLES')); ?></p>
@@ -169,8 +169,7 @@ if ($saveOrder && !empty($this->items)) {
 							<?php echo HTMLHelper::_('searchtools.sort', '', 'a.ordering', $listDirn, $listOrder, null, 'asc', 'JGRID_HEADING_ORDERING', 'icon-menu-2'); ?>
 						</th>
 						<th >
-							<?php echo HTMLHelper::_('searchtools.sort', 'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
-							<span class="xbnorm xb09">(edit) (pv) | alias</span>
+							<?php echo HTMLHelper::_('searchtools.sort', 'JSTATUS', 'a.state', $listDirn, $listOrder); ?>
 						</th>
 						<th >
 							<?php echo HTMLHelper::_('searchtools.sort', 'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
@@ -375,13 +374,13 @@ if ($saveOrder && !empty($this->items)) {
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="boxchecked" value="0" />
 		<?php echo HTMLHelper::_('form.token'); ?>
-	</div>
-</form>
-<script language="JavaScript" type="text/javascript"
-  src="<?php echo Uri::root(); ?>media/com_xbarticleman/js/closedetails.js" ></script>
-<script language="JavaScript" type="text/javascript"
-  src="<?php echo Uri::root(); ?>media/com_xbarticleman/js/setifsrc.js" ></script>
-
-<div class="clearfix"></div>
-<?php echo XbarticlemanHelper::credit('xbArticleMan');?>
+    </form>
+    <script language="JavaScript" type="text/javascript"
+      src="<?php echo Uri::root(); ?>media/com_xbarticleman/js/closedetails.js" ></script>
+    <script language="JavaScript" type="text/javascript"
+      src="<?php echo Uri::root(); ?>media/com_xbarticleman/js/setifsrc.js" ></script>
+    
+    <div class="clearfix"></div>
+    <?php echo XbarticlemanHelper::credit('xbArticleMan');?>
+</div>
 

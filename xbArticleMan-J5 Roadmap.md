@@ -22,6 +22,14 @@
 
 - v5.0.0 - **RELEASE** to CrOsborne.uk and JED
 
+- v5.1.0 - add Site Articles Tags list and Tagged Items list
+
+- v5.2.0 - add Site Article Blog all Categories view
+
+- v5.3.0 - add Site multi-category article list
+
+- 
+
 - 
 
 ##### Other ideas to be scheduled

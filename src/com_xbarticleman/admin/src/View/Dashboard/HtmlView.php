@@ -22,6 +22,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 //use Joomla\CMS\Toolbar\Toolbar;
 //use Joomla\CMS\Toolbar\ToolbarFactoryInterface;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Crosborne\Component\Xbarticleman\Administrator\Helper\XbarticlemanHelper;
 
 class HtmlView extends BaseHtmlView {
     
@@ -45,21 +46,36 @@ class HtmlView extends BaseHtmlView {
         if (count($errors = $this->get('Errors'))) {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
-        
-        $this->savedata = $params->get('savedata',0);
+                
         switch ($params->get('extlinkhint', 0)) {
             case 1:
-                $this->extlinkhint = Text::_('XBARTMAN_SITE_ADMIN');
+                $this->extlinkhint = Text::_('XBCONFIG_SITE_ADMIN');
                 break;
             case 2:
-                $this->extlinkhint = Text::_('XBARTMAN_SITE_ONLY');
+                $this->extlinkhint = Text::_('XBCONFIG_SITE_ONLY');
                 break;
             case 3:
-                $this->extlinkhint = Text::_('XBARTMAN_ADMIN_ONLY');
+                $this->extlinkhint = Text::_('XBCONFIG_ADMIN_ONLY');
                 break;
             default:
-                $this->extlinkhint = Text::_('XB_DISABLE');
+                $this->extlinkhint = Text::_('XBCONFIG_USE_TEMPLATE');
                 break;
+        }
+        $this->taggroups = $params->get('enable_taggroups',0);
+        if ($this->taggroups) {
+            $groups = array();
+            $groups[] = $params->get('taggroup1_parent','');
+            $groups[] = $params->get('taggroup2_parent','');
+            $groups[] = $params->get('taggroup3_parent','');
+            $groups[] = $params->get('taggroup4_parent','');
+            $this->grouplist = '<ul>';
+            foreach ($groups as $grp) {
+                if ($grp != '') {
+                    $tag=XbarticlemanHelper::getTag($grp);
+                    $this->grouplist .= '<li>'.$tag->title.'</li>';
+                }
+            }
+            $this->grouplist .= '</ul>';
         }
         
         $this->addToolbar();

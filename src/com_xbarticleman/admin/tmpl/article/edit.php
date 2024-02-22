@@ -43,6 +43,7 @@ $input = Factory::getApplication()->getInput();
 
 ?>
 
+<div id="xbcomponent">
 <p><i><?php echo lcfirst(Text::_('XB_USE')); ?>: 
 	<a href="<?php echo Route::_('index.php?option=com_content&task=article.edit&id='.(int) $this->item->id); ?>"
     class="xbabtn"><?php echo Text::_('XBARTMAN_CONTENT_ART_EDIT'); ?></a> 
@@ -200,3 +201,4 @@ $input = Factory::getApplication()->getInput();
 
 <div class="clearfix"></div>
 <?php echo XbarticlemanHelper::credit('xbArticleMan');?>
+</div>

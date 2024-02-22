@@ -26,9 +26,8 @@ $telink = 'index.php?option=com_tags&task=tag.edit&id=';
 
 ?>
 
-<form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=tagitems'); ?>"  method="post" id="adminForm" name="adminForm">
-
-	<div id="xbcomponent">
+<div id="xbcomponent">
+	<form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=tagitems'); ?>"  method="post" id="adminForm" name="adminForm">
 		<div class="container-fluid">
 			<div class="row xbmb20">
     			<div class="col-md-3">
@@ -79,9 +78,16 @@ $telink = 'index.php?option=com_tags&task=tag.edit&id=';
 				    	<?php $colcnt ++; ?>
 				    	<div class="col-md-4">
 				    		<div class="xbbox xbboxwht">
+				    			<?php if ($tagtype['cnt']>5) : ?>
+				    				<details>
+				    					<summary>
+				    			<?php endif; ?>
 				    			<p><b><?php echo 'com-'.$tagtype['com'].' '.ucfirst($tagtype['item']); ?> </b>
 				    			 <?php echo $tagtype['cnt'].' items tagged with '; ?> 
 				    			 <span class="xbbadge badge-ltblue"><?php echo $item->title; ?></span>
+				    			<?php if ($tagtype['cnt']>5) : ?>
+				    					</summary>
+				    			<?php endif; ?>
 				    			 <ul>
 				    			 <?php $pvurl = $tagtype['pvurl'];
 				    			 $edurl = $tagtype['edurl'];
@@ -109,6 +115,9 @@ $telink = 'index.php?option=com_tags&task=tag.edit&id=';
 				    			     </li>
 				    			 <?php endforeach; ?>
 				    			 </ul>
+				    			<?php if ($tagtype['cnt']>5) : ?>
+				    				</details>
+				    			<?php endif; ?>
 				    		</div>
 				    		
 				    	</div>
@@ -121,24 +130,24 @@ $telink = 'index.php?option=com_tags&task=tag.edit&id=';
 			</div>
 		</div>
 
-	</div>
-</form>
-			<?php // Load the article preview modal ?>
-			<?php echo HTMLHelper::_(
-				'bootstrap.renderModal',
-				'pvModal',
-				array(
-					'title'  => Text::_('XBARTMAN_ARTICLE_PREVIEW'),
-					'footer' => '',
-				    'height' => '900vh',
-				    'bodyHeight' => '90',
-				    'modalWidth' => '80',
-				    'url' => Uri::root().'index.php?option=com_content&view=article&id='.'x'
-				),
-			); ?>
-
-
-<div class="clearfix"></div>
-<?php echo XbarticlemanHelper::credit('xbArticleMan');?>
+    </form>
+    			<?php // Load the article preview modal ?>
+    			<?php echo HTMLHelper::_(
+    				'bootstrap.renderModal',
+    				'pvModal',
+    				array(
+    					'title'  => Text::_('XBARTMAN_ARTICLE_PREVIEW'),
+    					'footer' => '',
+    				    'height' => '900vh',
+    				    'bodyHeight' => '90',
+    				    'modalWidth' => '80',
+    				    'url' => Uri::root().'index.php?option=com_content&view=article&id='.'x'
+    				),
+    			); ?>
+    
+    
+    <div class="clearfix"></div>
+    <?php echo XbarticlemanHelper::credit('xbArticleMan');?>
+</div>
 
 

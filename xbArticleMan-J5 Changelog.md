@@ -2,6 +2,16 @@
 
 ##### Conversion to J5 Progress this will be cleared at first RC5.0.0
 
+
+
+**v0.0.8.2** 21st February 2024
+
+- TagItems view working
+
+**v0.0.7.1** 13th February 2024
+
+- ArtTags view working
+
 **v0.0.6.3** 11th February 2024
 
 - ArtScodes view working

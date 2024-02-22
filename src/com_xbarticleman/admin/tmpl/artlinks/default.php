@@ -69,8 +69,8 @@ if ($saveOrder && !empty($this->items)) {
 }
 
 ?>
-<form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=artlinks'); ?>" method="post" name="adminForm" id="adminForm">
-	<div id="xbcomponent">
+<div id="xbcomponent">
+	<form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=artlinks'); ?>" method="post" name="adminForm" id="adminForm">
     	<div id="waiter" class="xbbox alert-info" style="display:none;">
           <table style="width:100%">
               <tr>
@@ -175,7 +175,7 @@ if ($saveOrder && !empty($this->items)) {
 						<th>
 							<?php echo Text::_('XBARTMAN_COL_TARGS_TITLE'); ?>
 						</th>
-						<th><span class="xb09">
+						<th style="padding:0; text-align:center;"><span class="xb09">
 							<?php echo HTMLHelper::_('searchtools.sort', 'XBARTMAN_HEADING_DATE_' . strtoupper($orderingColumn), 'a.' . $orderingColumn, $listDirn, $listOrder); ?>
 							<br /><?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
 							</span>
@@ -207,7 +207,7 @@ if ($saveOrder && !empty($this->items)) {
     						<th>
    								<?php echo Text::_('XBARTMAN_COL_TARGS_TITLE'); ?>
     						</th>
-							<th><span class="xb09">
+							<th style="padding:0; text-align:center;"><span class="xb09">
 								<?php echo HTMLHelper::_('searchtools.sort', 'XBARTMAN_HEADING_DATE_' . strtoupper($orderingColumn), 'a.' . $orderingColumn, $listDirn, $listOrder); ?>
 								<br /><?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
 							</span>
@@ -448,7 +448,7 @@ if ($saveOrder && !empty($this->items)) {
 							<?php endif; ?>							
 						
 						</td>
-						<td class="nowrap small hidden-phone">
+						<td class="small" style="padding:0; text-align:center;">
 							<?php
 							$date = $item->{$orderingColumn};
 							echo $date > 0 ? HTMLHelper::_('date', $date, Text::_('D d M \'y')) : '-';
@@ -495,13 +495,13 @@ if ($saveOrder && !empty($this->items)) {
 		<input type="hidden" name="task" id="task" value="" />
 		<input type="hidden" name="boxchecked" value="0" />
 		<?php echo HTMLHelper::_('form.token'); ?>
-	</div>
-</form>
-<script language="JavaScript" type="text/javascript"
-  src="<?php echo Uri::root(); ?>media/com_xbarticleman/js/closedetails.js" ></script>
-<script language="JavaScript" type="text/javascript"
-  src="<?php echo Uri::root(); ?>media/com_xbarticleman/js/setifsrc.js" ></script>
-
-<div class="clearfix"></div>
-<?php echo XbarticlemanHelper::credit('xbArticleMan');?>
+    </form>
+    <script language="JavaScript" type="text/javascript"
+      src="<?php echo Uri::root(); ?>media/com_xbarticleman/js/closedetails.js" ></script>
+    <script language="JavaScript" type="text/javascript"
+      src="<?php echo Uri::root(); ?>media/com_xbarticleman/js/setifsrc.js" ></script>
+    
+    <div class="clearfix"></div>
+    <?php echo XbarticlemanHelper::credit('xbArticleMan');?>
+</div>
 
