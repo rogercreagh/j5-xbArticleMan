@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager-j5
  * @filesource admin/tmpl/artimgs/default.php
- * @version 0.0.5.2 25th January 2024
+ * @version 0.0.9.0 22nd February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -234,18 +234,19 @@ if ($saveOrder && !empty($this->items)) {
 									<?php echo Route::_('index.php?option=com_xbarticleman&task=article.edit&id=' . $item->id).'&retview=artimgs';?>
 									" title="<?php echo Text::_('XBARTMAN_QUICK_EDIT_TIP'); ?>">
 										<?php echo $this->escape($item->title); ?></a> 
-									<a class="hasTooltip nohint" href="
+									<a class="nohint" target="xbedit" href="
 									<?php echo Route::_('index.php?option=com_content&task=article.edit&id=' . $item->id);?>
 									" title="<?php echo Text::_('XBARTMAN_FULL_EDIT'); ?>" >										
 										<span class="icon-edit xbpl10"></span></a>
 								<?php else : ?>
 									<span title="<?php echo Text::sprintf('JFIELD_ALIAS_LABEL', $this->escape($item->alias)); ?>"><?php echo $this->escape($item->title); ?></span>
 								<?php endif; ?>
-								<?php $pvuri = "'".(Uri::root().'index.php?option=com_content&view=article&id='.$item->id)."'"; ?>
+								<?php $pvuri = "'".(Uri::root().'index.php?option=com_content&view=article&tmpl=component&id='.$item->id)."'"; ?>
           						<?php $pvtit = "'".$item->title."'"; ?>
                                 <span  data-bs-toggle="modal" data-bs-target="#pvModal" data-bs-source="<?php echo $pvuri; ?>" data-bs-itemtitle="<?php echo $item->title; ?>" 
                                 title="<?php echo Text::_('XBARTMAN_MODAL_PREVIEW'); ?>" 
-          							onclick="var pv=document.getElementById('pvModal');pv.querySelector('.modal-body .iframe').setAttribute('src',<?php echo $pvuri; ?>);pv.querySelector('.modal-title').textContent=<?php echo $pvtit; ?>;"
+          							onclick="var pv=document.getElementById('pvModal');pv.querySelector('.modal-body .iframe').setAttribute('src',<?php echo $pvuri; ?>);
+          								pv.querySelector('.modal-title').textContent=<?php echo $pvtit; ?>;"
                                 >
 									<span class="icon-eye xbpl10"></span></span>
 								</p>

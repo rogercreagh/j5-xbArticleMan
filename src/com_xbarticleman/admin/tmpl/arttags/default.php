@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager-j5
  * @filesource admin/tmpl/artimgs/default.php
- * @version 0.0.8.2 21st February 2024
+ * @version 0.0.9.0 22nd February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -72,7 +72,7 @@ if ($saveOrder && !empty($this->items)) {
     		    <li><a href="index.php?option=com_xbarticleman&view=tagitems&tagid=<?php echo $tag['tagid']; ?>" 
     		    	class="xbbadge badge-tag"><?php echo $tag['title']; ?>
     		    	</a><?php echo '('.$tag['cnt'].')'; ?><a href="index.php?option=com_tags&task=tag.edit&id=<?php echo $tag['tagid']; ?>" 
-    		    		class="nohint" target="xbtab"><span class="icon-edit"></span>
+    		    		class="nohint" target="xbedit" title="<?php echo Text::_('XBARTMAN_TAG_EDIT'); ?>" ><span class="icon-edit"></span>
     		    	</a>
     		    </li>
     		<?php endforeach; ?>
@@ -255,11 +255,11 @@ if ($saveOrder && !empty($this->items)) {
 										<?php echo $this->escape($item->title); ?></a> 
 									<a class="hasTooltip nohint" href="
 									<?php echo Route::_('index.php?option=com_content&task=article.edit&id=' . $item->id);?>
-									" title="<?php echo Text::_('XBARTMAN_FULL_EDIT'); ?>" target="xbtab"><span class="icon-edit xbpl10"></span></a>
+									" title="<?php echo Text::_('XBARTMAN_FULL_EDIT'); ?>" target="xbedit"><span class="icon-edit xbpl10"></span></a>
 								<?php else : ?>
 									<span title="<?php echo Text::sprintf('JFIELD_ALIAS_LABEL', $this->escape($item->alias)); ?>"><?php echo $this->escape($item->title); ?></span>
 								<?php endif; ?>
-								<?php $pvuri = "'".(Uri::root().'index.php?option=com_content&view=article&id='.$item->id)."'"; ?>
+								<?php $pvuri = "'".(Uri::root().'index.php?option=com_content&view=article&tmpl=component&id='.$item->id)."'"; ?>
           						<?php $pvtit = "'".$item->title."'"; ?>
                                 <span  data-bs-toggle="modal" data-bs-target="#pvModal" data-bs-source="<?php echo $pvuri; ?>" data-bs-itemtitle="<?php echo $item->title; ?>" 
                                 title="<?php echo Text::_('XBARTMAN_MODAL_PREVIEW'); ?>" 

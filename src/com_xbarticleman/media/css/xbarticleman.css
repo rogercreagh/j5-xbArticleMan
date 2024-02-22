@@ -1,9 +1,9 @@
 /*******
  * @package xbArticleManager j5
  * @filesource media/css/xbarticleman.css
- * @version 0.0.6.1 28th January 2024
+ * @version 0.0.9.0 22nd February 2024
  * @author Roger C-O
- * @copyright Copyright (c) Roger Creagh-Osborne, 2023
+ * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
  ******/
 
@@ -34,6 +34,11 @@ table.xbtablelist thead th, table.xbtablelist tfoot th {background-color:#d7d7e7
 	color:#185ba1;
 	cursor:pointer;
 }
+/* preview modal iframe margin */
+#pvModal .modal-body { 
+	margin:10px 30px;
+}
+
 
 /* may also need the bootstrap chosen styles from xbculture.css */
 

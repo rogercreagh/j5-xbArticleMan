@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager-j5
  * @filesource admin/tmpl/tag/default.php
- * @version 0.0.8.2 21st February 2024
+ * @version 0.0.9.0 22nd February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -25,9 +25,6 @@ $item = $this->item;
 $telink = 'index.php?option=com_tags&task=tag.edit&id=';
 
 ?>
-<style>
-  #pvModal .modal-body {margin:0 30px;}
-</style>
 
 <form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=tagitems'); ?>"  method="post" id="adminForm" name="adminForm">
 
@@ -92,7 +89,8 @@ $telink = 'index.php?option=com_tags&task=tag.edit&id=';
 				    			     <li>
 				    			     	<span><?php echo $value->title; ?></span>
 				    			     	<?php if ($edurl !='') : ?>
-				    			     		<a href="<?php echo $edurl.$value->bid; ?>" target="xbtab" class="nohint">
+				    			     		<a href="<?php echo $edurl.$value->bid; ?>" target="xbedit" class="nohint"
+				    			     			title="<?php echo Text::_('XBARTMAN_FULL_EDIT'); ?>" >
     				    			     		<span class="icon-edit xbpl10"></span>
 				    			     		</a>
 				    			     	<?php endif;

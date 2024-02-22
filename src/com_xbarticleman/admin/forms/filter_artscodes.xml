@@ -41,7 +41,7 @@
 			published="0,1,2"
 			default=""
 			>
-			<option value="">XBARMAN_SELECT_CATEGORY</option>
+			<option value="">XBARTMAN_SELECT_CATEGORY</option>
 		</field>
 
 		<field

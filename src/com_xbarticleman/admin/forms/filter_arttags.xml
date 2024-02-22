@@ -39,7 +39,7 @@
 			onchange="this.form.submit();"
 			published="0,1,2"
 			>
-			<option value="">XBARMAN_SELECT_CATEGORY</option>
+			<option value="">XBARTMAN_SELECT_CATEGORY</option>
 		</field>
 
 		<field

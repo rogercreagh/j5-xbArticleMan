@@ -4,7 +4,7 @@
  * @filesource admin/src/tmpl/article/edit.php
  * @version 0.0.4.1 15th January 2024
  * @author Roger C-O
- * @copyright Copyright (c) Roger Creagh-Osborne, 2023
+ * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
  ******/
 
