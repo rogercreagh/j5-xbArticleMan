@@ -44,27 +44,37 @@ $input = Factory::getApplication()->getInput();
 ?>
 
 <div id="xbcomponent">
-<p><i><?php echo lcfirst(Text::_('XB_USE')); ?>: 
+<p><i><?php echo lcfirst(Text::_('XB_USE')); ?>&nbsp;
 	<a href="<?php echo Route::_('index.php?option=com_content&task=article.edit&id='.(int) $this->item->id); ?>"
-    class="xbabtn"><?php echo Text::_('XBARTMAN_CONTENT_ART_EDIT'); ?></a> 
+    	class="xbabtn" target="xbedit">
+    	<?php echo Text::_('XBARTMAN_CONTENT_ART_EDIT'); ?>
+    </a>&nbsp;
     <?php echo Text::_('XBARTMAN_CONTENT_ART_EDIT_NOTE'); ?>. &nbsp;
-	<?php echo Text::_('XBARTMAN_CONTENT_ART_NEW_NOTE'); ?>:&nbsp; 
-	<a href="<?php echo Route::_('index.php?option=com_content&view=article&layout=edit'); ?>" class="xbabtn">
-	<?php echo Text::_('XBARTMAN_CONTENT_ART_NEW'); ?></a>
+	<?php echo Text::_('XBARTMAN_CONTENT_ART_NEW_NOTE'); ?>&nbsp; 
+	<a href="<?php echo Route::_('index.php?option=com_content&view=article&layout=edit'); ?>" 
+		class="xbabtn" target="xbedit">
+		<?php echo Text::_('XBARTMAN_CONTENT_ART_NEW'); ?>
+	</a>
 </i></p>
 <hr />
 <form action="<?php echo Route::_('index.php?option=com_xbarticleman&layout=edit&id='. (int) $this->item->id); ?>"
 	method="post" name="adminForm" id="item-form" class="form-validate" >
-	<?php echo LayoutHelper::render('joomla.edit.title_alias', $this); ?>
+	<div class="row form-vertical">
+		<div class="col-md-10">
+        	<?php echo LayoutHelper::render('joomla.edit.title_alias', $this); ?>
+		</div>
+		<div class="col-md-2">
+			<?php echo $this->form->renderField('id'); ?> 
+		</div>
+	</div>
 	<hr />
-	<p class="xbnote">To edit content including embedded links, images and shortcodes use Full Article edit</p>
     <div class="main-card">
         <?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'general', 'recall' => true, 'breakpoint' => 768]); ?>
 
         <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'general', Text::_('Status, Category, Tags')); ?>
 			<div class="row">
-            	<div class="col-lg-9">				
-           			<?php if ($this->taggroups) : ?>
+       			<?php if ($this->taggroups) : ?>
+            		<div class="col-lg-9">				
  						<?php  $this->form->setFieldAttribute('tags','label',Text::_('XBARTMAN_ALLTAGS'));
  						    $this->form->setFieldAttribute('tags','description',Text::_('XBARTMAN_ALLTAGS_DESC'));	?>	    
            				<h4><?php echo Text::_('Tag Groups'); ?></h4>
@@ -101,37 +111,30 @@ $input = Factory::getApplication()->getInput();
         						} ?>
           					</div>          					
            				</div>
-					<?php else : ?>
-						<p class="xbnote">TagGroups can be defined in the component Options and will appear here</p>
- 					<?php endif; ?>
- 				</div>
-                <div class="col-lg-3">
- 				 				
-        			<div class="control-label">
-        				<?php echo $this->form->getLabel('tags'); ?>
-        			</div>
-        			<div class="controls xbmb20">
-        				<?php echo $this->form->getInput('tags'); ?>
-        			</div>
-    				<div class="control-label">
-    					<?php echo $this->form->getLabel('catid'); ?>
-    				</div>
-    				<div class="controls xbmb20">
-    					<?php echo $this->form->getInput('catid'); ?>
-    				</div>
-    				<div class="control-label">
-    					<?php echo $this->form->getLabel('state'); ?>
-    				</div>
-    				<div class="controls xbmb20">
-    					<?php echo $this->form->getInput('state'); ?>
-    				</div>
-    				<div class="control-label">
-    					<?php echo $this->form->getLabel('note'); ?>
-    				</div>
-    				<div class="controls xbmb20">
-    					<?php echo $this->form->getInput('note'); ?>
-    				</div>
-                </div>
+     				</div>
+                    <div class="col-lg-3">    				 				
+            			<?php echo $this->form->renderField('tags'); ?> 
+            			<?php echo $this->form->renderField('catid'); ?> 
+            			<?php echo $this->form->renderField('state'); ?> 
+            			<?php echo $this->form->renderField('note'); ?> 
+               		</div>
+				<?php else : ?>
+       					<div class="col-lg-3">
+	            			<?php echo $this->form->renderField('tags'); ?> 
+       					</div>
+       					<div class="col-lg-3">
+                			<?php echo $this->form->renderField('catid'); ?> 
+       					</div>
+       					<div class="col-lg-3">
+                			<?php echo $this->form->renderField('state'); ?> 
+       					</div>
+       					<div class="col-lg-3">
+                 			<?php echo $this->form->renderField('note'); ?> 
+      					</div>
+      				</div>
+      				<div>
+						<p class="xbnote">TagGroups can be defined in the component Options and will appear here</p>				
+				<?php endif; ?>
             </div>
         <?php echo HTMLHelper::_('uitab.endTab'); ?>
 
@@ -188,6 +191,15 @@ $input = Factory::getApplication()->getInput();
                     </fieldset>
                 </div>
             </div>
+        <?php echo HTMLHelper::_('uitab.endTab'); ?>
+
+        <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'textedit', Text::_('HTML Content')); ?>
+			<fieldset id="fieldset-content" class="options-form">
+				<legend><?php echo Text::_($this->form->getFieldsets()['content']->label); ?></legend>
+		        <div class="form-vertical">
+        			<?php echo $this->form->renderFieldset('content'); ?> 
+		        </div>
+		    </fieldset>
         <?php echo HTMLHelper::_('uitab.endTab'); ?>
 
         <?php echo HTMLHelper::_('uitab.endTabSet'); ?>

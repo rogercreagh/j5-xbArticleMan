@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager-j5
  * @filesource admin/tmpl/artimgs/default.php
- * @version 0.0.9.0 22nd February 2024
+ * @version 0.0.9.1 25th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -250,7 +250,7 @@ if ($saveOrder && !empty($this->items)) {
                                 >
 									<span class="icon-eye xbpl10"></span></span>
 								</p>
-								<span class="xbpl20 xb09"><i>XB_ALIAS</i>: <?php echo $this->escape($item->alias); ?>
+								<span class="xbpl20 xb09"><i><?php echo Text::_('XB_ALIAS'); ?></i>: <?php echo $this->escape($item->alias); ?>
 								</span>
 								<div>
 									<?php

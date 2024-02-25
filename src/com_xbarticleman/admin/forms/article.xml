@@ -3,6 +3,7 @@
 	<config>
 		<inlinehelp button="show"/>
 	</config>
+<!-- Title, Alias, Id -->	
 	<fieldset addfieldprefix="Crosborne\Component\Xbarticleman\Administrator\Field" type="xbtags" >
 		<field 
 			name="id" 
@@ -13,12 +14,6 @@
 			size="10" 
 			default="0"
 			readonly="true" 
-		/>
-
-		<field 
-			name="asset_id" 
-			type="hidden" 
-			filter="unset" 
 		/>
 
 		<field 
@@ -39,12 +34,15 @@
 			hint="JFIELD_ALIAS_PLACEHOLDER"
 			size="40" 
 		/>
-
+	</fieldset>
+	
+<!-- Status, Category, Tags Tab -->
+	<fieldset name="tags_category" type="xbtags">
 		<field
 			name="note"
 			type="textarea"
 			label="XBARTMAN_FIELD_NOTE_LABEL"
-			description="XBARTMAN_FIELD_NOTE_DESC"
+			description="Optional note displayed in the admin article lists under the title. Not visible on front-end."
 			class="span12"
 			size="40"
 			rows="3"
@@ -72,7 +70,7 @@
 			type="category"
 			extension="com_content"
 			label="JCATEGORY"
-			description="JFIELD_CATEGORY_DESC"
+			description="The category that this item is assigned to. Select one existing category only"
 			required="true"
 			published="1"
 			default=""
@@ -82,7 +80,8 @@
 			name="tags"
 			type="tag"
 			label="Add or Remove Tags"
-			description="JTAG_DESC"
+			description="All Tags assigned to this article. Select existing tags only."
+			hint="Type to select tag."
 			multiple="true"
 			mode="ajax"
 			custom="deny"
@@ -107,65 +106,9 @@
 			parent="com_xbarticleman.taggroup4_parent"
 			multiple="true" mode="nested" custom="deny"  published="1"
 		/>
-
-
-		<field 
-			name="modified" 
-			type="calendar" 
-			label="JGLOBAL_FIELD_MODIFIED_LABEL" 
-			description="XBARTMAN_FIELD_MODIFIED_DESC"
-			class="readonly"
-			translateformat="true"
-			showtime="true"
-			size="22"
-			readonly="true"
-			filter="user_utc" 
-		/>
-
-		<field 
-			name="modified_by" 
-			type="user"
-			label="JGLOBAL_FIELD_MODIFIED_BY_LABEL"
-			class="readonly"
-			readonly="true"
-			filter="unset"
-		/>
-
-		<field 
-			name="checked_out" 
-			type="hidden" 
-			filter="unset" 
-		/>
-
-		<field 
-			name="checked_out_time" 
-			type="hidden" 
-			filter="unset" 
-		/>
-
-
-		<field 
-			name="ordering" 
-			type="text" 
-			label="JFIELD_ORDERING_LABEL"
-			description="JFIELD_ORDERING_DESC" 
-			size="6"
-			default="0" 
-		/>
-
-		<field 
-			name="rules" 
-			type="rules" 
-			label="JFIELD_RULES_LABEL"
-			translate_label="false" 
-			filter="rules"
-			component="com_content" 
-			section="article" 
-			validate="rules"
-		/>
-
 	</fieldset>
-
+	
+<!-- Images Tab -->
 	<fields name="images" label="XBARTMAN_FIELD_IMAGE_OPTIONS">
 		<fieldset name="image-intro" label="XBARTMAN_FIELD_INTRO_LABEL">
 			<field
@@ -239,6 +182,8 @@
 			/>
 		</fieldset>
 	</fields>
+	
+<!-- Links Tab -->
 	<fields name="urls" label="XBARTMAN_FIELD_URLS_OPTIONS">
 		<fieldset name="linka" label="XBARTMAN_FIELD_URLA_LABEL">
 			<field
@@ -335,7 +280,93 @@
 				<option value="3">JBROWSERTARGET_MODAL</option>
 			</field>
 		</fieldset>
+		
 	</fields>
+	
+<!-- Text Content Tab -->	
+		<fieldset name="content" label="XBARTMAN_TEXT_CONTENT" >
+
+			<field
+				name="articletext"
+				type="editor"
+				editor="codemirror|none"
+				label="HTML editor"
+				description="Only Media button plus any 3rd-party plugun buttons are enabled. For wysiwyg editing use the Edit Article button above. Use with extreme care - you can totally mess up the article doing this."
+				hiddenLabel="false"
+				buttons="true"
+				hide="article,readmore,pagebreak,menu,module,contact,fields"
+				filter="raw"
+				asset_id="com_content"
+			/>
+				<!-- filter="\Joomla\CMS\Component\ComponentHelper::filterText" -->
+
+		</fieldset>
+
+<!-- Not displayed -->
+	<fieldset name="hidden" type="xbtags">
+
+		<field 
+			name="asset_id" 
+			type="hidden" 
+			filter="unset" 
+		/>
+
+		<field 
+			name="modified" 
+			type="calendar" 
+			label="JGLOBAL_FIELD_MODIFIED_LABEL" 
+			description="XBARTMAN_FIELD_MODIFIED_DESC"
+			class="readonly"
+			translateformat="true"
+			showtime="true"
+			size="22"
+			readonly="true"
+			filter="user_utc" 
+		/>
+
+		<field 
+			name="modified_by" 
+			type="user"
+			label="JGLOBAL_FIELD_MODIFIED_BY_LABEL"
+			class="readonly"
+			readonly="true"
+			filter="unset"
+		/>
+
+		<field 
+			name="checked_out" 
+			type="hidden" 
+			filter="unset" 
+		/>
+
+		<field 
+			name="checked_out_time" 
+			type="hidden" 
+			filter="unset" 
+		/>
+
+
+		<field 
+			name="ordering" 
+			type="text" 
+			label="JFIELD_ORDERING_LABEL"
+			description="JFIELD_ORDERING_DESC" 
+			size="6"
+			default="0" 
+		/>
+
+		<field 
+			name="rules" 
+			type="rules" 
+			label="JFIELD_RULES_LABEL"
+			translate_label="false" 
+			filter="rules"
+			component="com_content" 
+			section="article" 
+			validate="rules"
+		/>
+
+	</fieldset>
 
 
 </form>
