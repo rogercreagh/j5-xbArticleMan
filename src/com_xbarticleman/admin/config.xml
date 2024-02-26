@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- xbArticleMan j5 config file v0.0.8.0 15th February 2024 -->
+<!-- xbArticleMan j5 config file v0.1.0.0 26th February 2024 -->
 <config>
+	<inlinehelp button="show"/>
 <!-- GENERAL TAB -->				
 	<fieldset name="general"
 		label="XBCONFIG_GENERAL"
@@ -33,173 +34,132 @@
 	</fieldset>
 <!-- TAG COMPONENTS TAB -->
 	<fieldset name="tagopts"
-			label="XBARTMAN_CONFIG_TAG_OPTIONS_LABEL"
-			description="XBARTMAN_CONFIG_TAG_OPTIONS_DESC"
+			label="XBCONFIG_TAG_OPTIONS_LABEL"
+			description="XBCONFIG_TAG_OPTIONS_DESC"
 	>
         <field name="taggrpsnote" type="note"
-			label="XBARTMAN_CONFIG_TAGGROUPNOTE_LABEL"
-			description="XBARTMAN_CONFIG_TAGGROUPNOTE_DESC"
+			label="XBCONFIG_TAGGROUPNOTE_LABEL"
+			description="XBCONFIG_TAGGROUPNOTE_DESC"
 		/>	
-		
+		<field name="taggrpsnote2" type="note"
+			description="XBARTMAN_CONFIG_TAGGROUPNOTE_DESC"
+		/>
 		
 	 	<field name="enable_taggroups" type="radio"
-			label="XBARTMAN_CONFIG_TAGGROUP_ENABLE_LABEL"
-			description="XBARTMAN_CONFIG_TAGGROUP_ENABLE_DESC"
+			label="XBCONFIG_TAGGROUP_ENABLE_LABEL"
+			description=""
 			class="btn-group btn-group-yesno"
 			showon="show_tags:1"
 			default="0"
 		>
 			<option value="0" >JNO</option>
 			<option value="1">JYES</option>
-		</field>	
+		</field>
+		<field name="taggrpsnote3" type="note"
+			description="XBCONFIG_TAGGROUP_DESC"
+			showon="enable_taggroups:1" 
+		/>	
 		<field name="taggroup1_parent" type="tag"
 			mode="nested" published="1"
-			label="XBARTMAN_CONFIG_TAGGROUP1_PARENT" description=""
+			label="XBCONFIG_TAGGROUP1_PARENT" description=""
 			multiple="false"
 			showon="enable_taggroups:1" 
 			default=""
 		>
-			<option value="">XBARTMAN_OPT_NOT_USED</option>
+			<option value="">XBCONFIG_OPT_NOT_USED</option>
 		</field>
 		<field name="taggroup2_parent" type="tag"
 			mode="nested" published="1"
-			label="XBARTMAN_CONFIG_TAGGROUP2_PARENT" description=""
+			label="XBCONFIG_TAGGROUP2_PARENT" description=""
 			multiple="false"
 			showon="enable_taggroups:1[AND]taggroup1_parent!:"
 			default=""
 		>
-			<option value="">XBARTMAN_OPT_NOT_USED</option>
+			<option value="">XBCONFIG_OPT_NOT_USED</option>
 		</field>
 		<field name="taggroup3_parent" type="tag"
 			mode="nested" published="1"
-			label="XBARTMAN_CONFIG_TAGGROUP3_PARENT" description=""
+			label="XBCONFIG_TAGGROUP3_PARENT" description=""
 			multiple="false"
 			showon="enable_taggroups:1[AND]taggroup1_parent!:[AND]taggroup2_parent!:"
 			default=""
 		>
-			<option value="">XBARTMAN_OPT_NOT_USED</option>
+			<option value="">XBCONFIG_OPT_NOT_USED</option>
 		</field>
 		<field name="taggroup4_parent" type="tag"
 			mode="nested" published="1"
-			label="XBARTMAN_CONFIG_TAGGROUP4_PARENT" description=""
+			label="XBCONFIG_TAGGROUP4_PARENT" description=""
 			multiple="false"
 			showon="enable_taggroups:1[AND]taggroup1_parent!:[AND]taggroup2_parent!:[AND]taggroup3_parent!:"
 			default=""
 		>
-			<option value="">XBARTMAN_OPT_NOT_USED</option>
+			<option value="">XBCONFIG_OPT_NOT_USED</option>
 		</field>
 		
 		<field name="tagcomnote" type="note"
-			label="Component Tags to list in TagItems View"
-			description="Here you can select which components using Joomla built-in tags will have their items listed in the TagItems view"
+			label="XBARTMAN_CONFIG_TAGCOMNOTE_LABEL"
+			description="XBARTMAN_CONFIG_TAGCOMNOTE_DESC"
 		/>
 		
 		<field name="jcomitems" type="list"
-			label="Joomla Items"
-			description="Select which built-in component tagged items will be listed in the TagItems view."
+			label="XBARTMAN_CONFIG_JCOM_LABEL"
+			description="XBARTMAN_CONFIG_JCOM_DESC"
 			multiple="true"		
 			default="1"	
 		>
-			<option value="1">Articles</option>
-			<option value="3">Contacts</option>
-			<option value="6">Newsfeeds</option>
-			<option value="2">com_content Categories</option>
-			<option value="4">com_contact Categories</option>
-			<option value="5">com_banners Categories</option>
-			<option value="7">com_newsfeeds Categories</option>
+			<option value="1">XBARTMAN_CONFIG_ARTICLES</option>
+			<option value="3">XBARTMAN_CONFIG_CONTACTS</option>
+			<option value="6">XBARTMAN_CONFIG_NEWSFEEDS</option>
+			<option value="2">XBARTMAN_CONFIG_CONTENT_CATS</option>
+			<option value="4">XBARTMAN_CONFIG_CONTACT_CATS</option>
+			<option value="5">XBARTMAN_CONFIG_BANNERS_CATS</option>
+			<option value="7">XBARTMAN_CONFIG_NEWS_CATS</option>
 		</field>
 		
 		<field name="othercomitems" type="subform"
-			label="Other Component Items" 
-			description="Enter the required details for each component you want to see listed"
+			label="XBARTMAN_CONFIG_OTHERCOM_LABEL" 
+			description="XBARTMAN_CONFIG_OTHERCOM_DESC"
 			multiple="true"
 			buttons="add,remove"
 			layout="joomla.form.field.subform.repeatable"
 		>
 			<form>
 				<field name="com" type="text"
-					label="Component" hint="eg 'weblinks'"
-					description="Component name wihtout the com_"	
+					label="XBARTMAN_CONFIG_COMPONENT_LABEL" 
+					hint="eg 'weblinks'"
+					description="XBARTMAN_CONFIG_COMPONENT_DESC"	
 					required="true"				
 				></field>
 				<field name="item" type="text"
-					label="Item" hint="eg 'weblink'"
-					description="The item type"					
+					label="XBARTMAN_CONFIG_ITEM_LABEL" 
+					hint="eg 'weblink'"
+					description="XBARTMAN_CONFIG_ITEM_DESC"					
 					required="true"				
 				></field>
 				<field name="table" type="text"
-					label="Table" hint="eg 'weblinks'"
-					description="The table name used to store the items - without the '#__' prefix."					
+					label="XBARTMAN_CONFIG_TABLE_LABEL" 
+					hint="eg 'weblinks'"
+					description="XBARTMAN_CONFIG_TABLE_DESC"					
 					required="true"				
 				></field>
 				<field name="title" type="text"
-					label="Title Column" hint="eg 'name'"
-					description="The column name with the title. To concatenate two columns with a space use '+' eg 'firstname+lastname'"					
+					label="XBARTMAN_CONFIG_TITLE_LABEL" 
+					hint="eg 'name'"
+					description="XBARTMAN_CONFIG_TITLE_DESC"					
 					required="true"				
 				></field>
 				<field name="pv" type="text"
-					label="Preview View Name" hint="eg 'weblink'"
-					description="View name for a preview of the item in a modal window from the eyecon &#128065; - site url, component and item id will be added to make url"					
+					label="XBARTMAN_CONFIG_PREVIEW_LABEL" 
+					hint="eg 'weblink'"
+					description="XBARTMAN_CONFIG_PREVIEW_DESC"					
 				></field>
 				<field name="ed" type="text"
-					label="Edit View &amp; Task" hint="eg '&amp;view=weblink&amp;task=weblink.edit'"
-					description="Fragment of query string to build edit url with correct view and task for the item id. ('&amp;id=' will be appended)"					
+					label="XBARTMAN_CONFIG_EDIT_LABEL" 
+					hint="eg '&amp;view=weblink&amp;task=weblink.edit'"
+					description="XBARTMAN_CONFIG_EDIT_DESC"					
 				></field>
 			</form>
 		</field>
-<!--             $tagtypes[] = array('com'=>'content', 'item'=>'article', 'table'=>'content','title'=>'title','pv'=>'introtext','cntname'=>'contentarticlecnt','cnt'=>0);
- -->		
-	
-	<!-- //com_content
-//            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mb WHERE mb.type_alias='.$db->quote('com_content.article').' AND mb.tag_id = t.id) AS acnt');
-//            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mb WHERE mb.type_alias='.$db->quote('com_content.category').' AND mb.tag_id = t.id) AS acatcnt');
-//com_contact
-//            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mp WHERE mp.type_alias='.$db->quote('com_contact.contact').' AND mp.tag_id = t.id) AS ccnt');
-//            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_contact.category').' AND mr.tag_id = t.id) AS ccatcnt');
-//com_banners
-//            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_banners.category').' AND mr.tag_id = t.id) AS bcatcnt');
-//com newsfeeds
-//            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_newsfeeds.newsfeed').' AND mr.tag_id = t.id) AS ncnt');
-//            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_newsfeeds.category').' AND mr.tag_id = t.id) AS ncatcnt');
-//com weblinks
-//            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_weblinks.weblink').' AND mr.tag_id = t.id) AS wcatcnt');
-//            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_weblinks.category').' AND mr.tag_id = t.id) AS wcatcnt');
-   
- //           $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS ma WHERE ma.tag_id = t.id) AS allcnt ');
-//other components tags - xb xbr xbbooks, xf xfr xbfilms, xe xbevents, xp xbpeople, xm xmt xmm xbmaps 
-// (xbjournals not yet working, xbaoy not planned for j5) xbculture and xbmaps included pending j5
-//TODO only do these if installed
-//set up these as config subform for component.item, id field assume id for id, title field allow sql if not title, 
-//set this up as array and iterate here to create query
-/****
-//com_xbbooks
-            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbbooks.book').' AND mr.tag_id = t.id) AS xbcnt');
-            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbbooks.review').' AND mr.tag_id = t.id) AS xbrcnt');
-            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbbooks.category').' AND mr.tag_id = t.id) AS xbcatcnt');
-//com_xfilms
-            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbfilms.film').' AND mr.tag_id = t.id) AS xfcnt');
-            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbfilms.review').' AND mr.tag_id = t.id) AS xfrcnt');
-            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbfilms.category').' AND mr.tag_id = t.id) AS xfcatcnt');
-//com_xbevents
-            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbevents.event').' AND mr.tag_id = t.id) AS xecnt');
-            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbevents.review').' AND mr.tag_id = t.id) AS xercnt');
-            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbevents.category').' AND mr.tag_id = t.id) AS xecatcnt');
-//com_xbpeople
-            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbpeople.person').' AND mr.tag_id = t.id) AS xpcnt');
-            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbpeople.group').' AND mr.tag_id = t.id) AS xpgcatcnt');
-            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbpeople.character').' AND mr.tag_id = t.id) AS xpccnt');
-            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbpeople.category').' AND mr.tag_id = t.id) AS xpcatcnt');
-//com_xbmaps
-            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbmaps.map').' AND mr.tag_id = t.id) AS xmcnt');
-            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbmaps.marker').' AND mr.tag_id = t.id) AS xmmcnt');
-            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbmaps.track').' AND mr.tag_id = t.id) AS xmtcnt');
-            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xbmaps.category').' AND mr.tag_id = t.id) AS xmcatcnt');
-
-//            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS mr WHERE mr.type_alias='.$db->quote('com_xb.').' AND mr.tag_id = t.id) AS ncnt');
-***/
-//            $query->select('(SELECT COUNT(*) FROM #__contentitem_tag_map AS ma WHERE ma.tag_id = t.id) AS allcnt ');
-                       
-	 -->
 	</fieldset>
 <!-- BEER TAB -->
 	<fieldset name="reg"

@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager J5
  * @filesource admin/src/tmpl/article/edit.php
- * @version 0.0.4.1 15th January 2024
+ * @version 0.1.0.0 25th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -22,16 +22,13 @@ use Crosborne\Component\Xbarticleman\Administrator\Helper\XbarticlemanHelper;
 
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = $this->document->getWebAssetManager();
-//$wa->getRegistry()->addExtensionRegistryFile('com_contenthistory');
 $wa->useScript('keepalive')
 ->useScript('form.validate');
-//->useScript('com_contenthistory.admin-history-versions');
 
 $this->configFieldsets  = ['editorConfig'];
 $this->hiddenFieldsets  = ['basic-limited'];
 $fieldsetsInImages = ['image-intro', 'image-full'];
 $fieldsetsInLinks = ['linka', 'linkb', 'linkc'];
-//$this->ignore_fieldsets = array_merge(['jmetadata', 'item_associations'], $fieldsetsInImages, $fieldsetsInLinks);
 $this->useCoreUI = true;
 
 

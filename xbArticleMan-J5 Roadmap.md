@@ -14,7 +14,7 @@
 
 - **DONE** v0.0.8 - Tag view working
 
-- v0.0.9 - consistency between views in link & icon use
+- **DONv0.0.9 - consistency between views in link & icon use
 
 - v0.1.0 - First release candidate - Language & Comments cleaned
 

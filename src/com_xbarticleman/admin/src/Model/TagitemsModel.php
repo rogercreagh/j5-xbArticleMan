@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager=j5
  * @filesource admin/src/Model/TagitemsModel.php
- * @version 0.0.8.2 21st February 2024
+ * @version 0.1.0.0 26th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -113,7 +113,12 @@ class TagitemsModel extends ListModel {
                     $tagtype['cnt'] = $this->item->{$tagtype['cntname']};
                     if ($tagtype['cnt'] > 0) {
                         $query = $db->getQuery(true);
-                        $query->select('b.id AS bid, b.'.$tagtype['title'].' AS title')
+                        $titcol = $tagtype['title'];
+                        if (str_contains($titcol, '+')) {
+                            $titcol = str_replace('+', ' b.', $titcol);
+                            $titcol = 'CONCAT(b.'.$titcol.')';
+                        }
+                        $query->select('b.id AS bid, b.'.$titcol.' AS title')
                             ->from('#__tags AS t');
                         $query->join('LEFT','#__contentitem_tag_map AS m ON m.tag_id = t.id');
                         $query->join('LEFT','#__'.$tagtype['table'].' AS b ON b.id = m.content_item_id');
