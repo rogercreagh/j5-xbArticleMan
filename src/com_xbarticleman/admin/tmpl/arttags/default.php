@@ -70,7 +70,7 @@ if ($saveOrder && !empty($this->items)) {
     		<li><i><?php echo Text::_('XBARTMAN_COUNTS_TAGS'); ?>:</i></li>
     		<?php foreach ($this->tagcnts as $key=>$tag) : ?>
     		    <li><a href="index.php?option=com_xbarticleman&view=tagitems&tagid=<?php echo $tag['tagid']; ?>" 
-    		    	class="xbbadge badge-tag"><?php echo $tag['title']; ?>
+    		    	class="xbbadge badge-tag xbpl10"><?php echo $tag['title']; ?>
     		    	</a><?php echo '('.$tag['cnt'].')'; ?><a href="index.php?option=com_tags&task=tag.edit&id=<?php echo $tag['tagid']; ?>" 
     		    		class="nohint" target="xbedit" title="<?php echo Text::_('XBARTMAN_TAG_EDIT'); ?>" ><span class="icon-edit"></span>
     		    	</a>

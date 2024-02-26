@@ -28,6 +28,17 @@ HTMLHelper::_('formbehavior.chosen', 'select');
 		<div class="xbwp100">
         	<div class="xbwp60 pull-left xbpr20">
 				<div class="xbbox gradgrey">
+					<h4><?php echo $this->statecnts['total'].' '.Text::_('XBARTMAN_ARTICLES_ON_SITE'); ?>
+            			<span class="xbpl20 xbnorm"><?php echo Text::_('XBARTMAN_STATE_CNTS'); ?> : </span>
+            			<span class="icon-check xblabel <?php echo ($this->statecnts['published']==0) ? 'label-grey' : 'label-green';?>"
+            			 title="Published">&nbsp;&nbsp;<?php echo $this->statecnts['published'];?></span>
+            			<span class="icon-times xblabel <?php echo ($this->statecnts['unpublished']==0) ? 'label-grey':'label-orange';?>"
+            			 title="Unpublished">&nbsp;&nbsp;<?php echo $this->statecnts['unpublished'];?></span>
+            			<span class="icon-archive xblabel <?php echo ($this->statecnts['archived']==0) ? 'label-grey' : 'label-blue';?>"
+            			 title="Archived">&nbsp;&nbsp;<?php echo $this->statecnts['archived'];?></span>
+            			<span class="icon-trash xblabel <?php echo ($this->statecnts['trashed']==0) ? 'label-grey' : 'label-red';?>"
+            			 title="Trashed">&nbsp;&nbsp;<?php echo $this->statecnts['trashed'];?></span>
+					</h4>
 					<table class="xbwp100">
             			<colgroup>
             				<col style="width:40%;"><!--  -->

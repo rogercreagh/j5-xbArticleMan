@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/tmpl/artscodes/default.php
- * @version 0.0.9.0 22nd February 2024
+ * @version 0.0.1.0.0 26th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -65,31 +65,20 @@ if ($saveOrder && !empty($this->items)) {
 <div id="xbcomponent">
 	<form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=artscodes'); ?>" method="post" name="adminForm" id="adminForm">
 		<h3><?php echo Text::_('XBARTMAN_ARTICLE_SHORTCODES')?></h3>
-		<h4> <?php echo Text::_('XB_LISTING'); ?> <?php echo count($this->sccnts).' '.Text::_('XBARTMAN_DISTINCT_SHORTCODES').' '.$this->shortcodearticles; ?> 
-			<?php echo Text::_('XBARTMAN_ARTICLES_USING_SHORTCODES').' '.$this->statearticles.' '.$this->statefilt.' '.Text::_('XB_ARTICLES'); ?></h4>
+		<h4>
+			<span class="xbpl20"><?php echo Text::_('XB_FOUND').' '.count($this->sccnts).' '.Text::_('XBARTMAN_DISTINCT_SHORTCODES').' '; ?></span>
+		    <?php echo Text::_('XB_IN').' '.$this->shortcodearticles.' '.lcfirst(Text::_('XB_ARTICLES')); ?>
+		</h4>
     	<ul class="inline">
     		<li><i><?php echo Text::_('XBARTMAN_COUNTS_SCODES'); ?>:</i></li>
     		<?php foreach ($this->sccnts as $key=>$cnt) : ?>
     		    <li><a href="index.php?option=com_xbarticleman&view=artscodes&sc=<?php echo $key; ?>&filter[scfilt]=<?php echo $key; ?>" 
-					 class="xblabel label-yellow"><?php echo $key; ?> (<?php echo $cnt; ?>)</a></li>
+					 class="xbbadge badge-yellow xbpl10"><?php echo $key; ?></a> (<?php echo $cnt; ?>)</li>
     	<?php endforeach; ?>
     	</ul>
        	<span class="xbnit xb09"><?php echo Text::_('XBARTMAN_CLICK_SCODE_ABOVE'); ?>.</span>
-		<h4><?php echo Text::_('XBARTMAN_TOTAL_ARTICLES').' '.$this->totalarticles.'. '.Text::_('XB_LISTING').' '.$this->statearticles.' '.Text::_('XB_ARTICLES').' '.$this->statefilt; ?></h4>
-		<p> 
-    	<?php if (array_key_exists('artlist', $this->activeFilters)) {
-    	    echo Text::_('XBARTMAN_FILTERED_TO_SHOW').' '.$this->pagination->total.' ';
-    	    $prompts = array('articles','articles with shortcodes','articles without shortcodes.');
-    	    if ($this->activeFilters['artlist'] > 0) {
-    	        echo Text::_($prompts[$this->activeFilters['artlist']]);
-    	    } else {
-    	        echo Text::_('XB_ARTICLES');
-    	    }
-    	} else {
-    	    echo Text::_('XBARTMAN_SHOWING_ALL').' '.$this->statearticles.' '.Text::_('XB_ARTICLES');
-    	}
-        ?>
-        </p>
+       	
+		
 		<?php
 		// Search tools bar
 		echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this));
@@ -112,7 +101,7 @@ if ($saveOrder && !empty($this->items)) {
 			
 			</div>
 			<div class="pull-left" style="width:60%">
-          		<p class="xbtr">Auto close details dropdowns <input  type="checkbox" id="autoclose" name="autoclose" value="yes" style="margin:0 5px;" />
+          		<p class="xbtr"><?php echo Text::_('XBARTMAN_AUTOCLOSE_DROPS'); ?> <input  type="checkbox" id="autoclose" name="autoclose" value="yes" style="margin:0 5px;" />
           		</p>
           	</div>
 
@@ -319,15 +308,13 @@ if ($saveOrder && !empty($this->items)) {
                                 		    echo '<span style="display:inline-block;margin-right:10px;"><b>'.$key.'</b>  ('.$cnt.')</span>';
                                 		}?>
     								</summary>
-    							   	<table class="table table-striped xb09 xbbrd0">
-    							   		<thead>
-	    							   		<tr style="font-size:0.9em;">
-    								   			<th ><?php echo Text::_('XB_NAME'); ?></th>
-    								   			<th><?php echo Text::_('XB_PARAMS'); ?></th>
-    								   			<th><?php echo Text::_('XB_CONTENT'); ?></th>
-    								   		</tr>
-    							   		</thead>
+    							   	<table class="table table-striped xb09 xbbrd0 xbcompacttable">
     							   		<tbody>
+	    							   		<tr class="xbbgltgrey xbit" >
+    								   			<td><?php echo Text::_('XB_NAME'); ?></td>
+    								   			<td><?php echo Text::_('XB_PARAMS'); ?></td>
+    								   			<td><?php echo Text::_('XB_CONTENT'); ?></td>
+    								   		</tr>
             								<?php foreach ($item->artscodes as $sc) : ?>
             									<tr>
                 							       	<td><b><?php echo $sc[1]; ?></b></td>

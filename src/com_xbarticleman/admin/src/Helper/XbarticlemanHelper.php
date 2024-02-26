@@ -168,7 +168,7 @@ class XbarticlemanHelper extends ComponentHelper
 	    $cnt=-1;
 	    try {
 	        $cnt = $db->loadResult();
-	    } catch (Exception $e) {
+	    } catch (\Exception $e) {
 	        $dberr = $e->getMessage();
 	        Factory::getApplication()->enqueueMessage($dberr.'<br />Query: '.$query, 'error');
 	    }
@@ -294,6 +294,26 @@ class XbarticlemanHelper extends ComponentHelper
 	    }
 	    return $truncstr.'...';
 	}
+	
+	public static function stateCnts(string $table = '#__content', string $colname = 'state', string $ext='com_content') {
+	    $db = Factory::getDbo();
+	    $query = $db->getQuery(true);
+	    $query->select('DISTINCT a.'.$colname.', a.alias')
+	    ->from($db->quoteName($table).' AS a');
+	    if ($table == '#__categories') {
+	        $query->where('extension = '.$db->quote($ext));
+	    }
+	    $db->setQuery($query);
+	    $col = $db->loadColumn();
+	    $vals = array_count_values($col);
+	    $result['total'] = count($col);
+	    $result['published'] = key_exists('1',$vals) ? $vals['1'] : 0;
+	    $result['unpublished'] = key_exists('0',$vals) ? $vals['0'] : 0;
+	    $result['archived'] = key_exists('2',$vals) ? $vals['2'] : 0;
+	    $result['trashed'] = key_exists('-2',$vals) ? $vals['-2'] : 0;
+	    return $result;
+	}
+	
 	
 	
 	/**

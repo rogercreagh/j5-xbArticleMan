@@ -412,8 +412,9 @@ some common combinations are also defined (eg xbnit - normal weight,italic, 5px 
 	background-color: #f7f78f;
 	color: #444;
 }
+/* bg colours */
+.xbbgltgrey .xbdim {background-color: #ddd; }
 .xbdim {
-	background-color: #ccc;
 	color: #888;
 }
 .xbgold { color:#edc500; }
@@ -439,4 +440,8 @@ some common combinations are also defined (eg xbnit - normal weight,italic, 5px 
 .xbabtn:hover {
 	background-color: #457D54;
 	color: #fff;
+}
+
+#xbcomponent .xbcompacttable td {
+	padding: 4px 10px;	
 }
