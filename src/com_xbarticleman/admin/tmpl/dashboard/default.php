@@ -279,7 +279,7 @@ HTMLHelper::_('formbehavior.chosen', 'select');
 					<?php echo HtmlHelper::_('bootstrap.endSlide'); ?>
 					<?php echo HtmlHelper::_('bootstrap.addSlide', 'slide-dashboard', Text::_('XB_LICENCE'), 'license','xbaccordion'); ?>
 						<p><?php echo Text::_( 'XB_LICENSE_GPL' ); ?>
-							<br><?php echo Text::sprintf('XB_LICENSE_INFO','xbJournals');?>
+							<br><?php echo Text::sprintf('XB_LICENSE_INFO','xbArticleMan');?>
 							<br /><?php echo $this->xmldata['copyright']; ?>
 						</p>		        		
         			<?php echo HTMLHelper::_('bootstrap.endSlide'); ?>

@@ -30,6 +30,8 @@ class HtmlView extends BaseHtmlView {
         
         $params = ComponentHelper::getParams('com_xbarticleman');
         
+        $this->typecnt = count($params->get('jcomitems')) + count((array) $params->get('othercomitems'));
+        
         $this->item  = $this->get('Tagitems');
         if ($this->item === false) {
             $app = Factory::getApplication();

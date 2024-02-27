@@ -29,39 +29,39 @@ $telink = 'index.php?option=com_tags&task=tag.edit&id=';
 <div id="xbcomponent">
 	<form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=tagitems'); ?>"  method="post" id="adminForm" name="adminForm">
 		<div class="container-fluid">
+			<h3><?php echo Text::_('XBARTMAN_TAG_ITEMS')?></h3>
 			<div class="row xbmb20">
-    			<div class="col-md-3">
-    				<?php echo Text::_('Items tagged with')?>
+    			<div class="col-md-4">
+    				<p><?php echo Text::_('Articles using this tag'); ?> <?php echo Text::sprintf('plus %s other item types', $this->typecnt); ?>
+    				</p>
     			</div>
-    			<div class="col-md-5">
+    			<div class="col-md-6">
         			<span class="xb11 xbit xbgrey" style="padding:17px 20px 0 0;">    				 
         				<?php  $path = substr($item->path, 0, strrpos($item->path, '/'));
         					$path = str_replace('/', ' - ', $path);
         					echo 'root - '.$path; ?>
                 	</span>
-    				<a href="<?php echo $telink.$item->id; ?>" class="xbbadge badge-tag">
-                     	<h2 style="margin:0;color:#fff;">
-       						<?php echo $item->title; ?>
-        				</h2>
+                  <span class="xbbadge badge-tag"><span style="font-size:1.5rem;padding:10px 5px;line-height:1.2;">
+                	<?php echo $item->title; ?></span></span>
+
+    				<a href="<?php echo $telink.$item->id; ?>" class="icon-edit xbpl20" target="xbedit">
     				</a>
-    			</div>
-                <div class="col-md-2">
-                    <p><?php echo '<i>'.Text::_('XB_ALIAS').'</i>: '.$item->alias; ?></p>
+                    <span style="padding:17px 0 0 50px;"><i><?php echo Text::_('XB_ALIAS'); ?></i>: <?php echo $item->alias; ?></span>
                 </div>
     			<div class= "col-md-2">
     				<p><?php echo '<i>'.Text::_('JGRID_HEADING_ID').'</i>: '.$item->id; ?></p>
     			</div>
 			</div>
-			<div class="row xbmb20">
+			<div class="row xbmb20 xbmt20">
     			<div class="col-md-5">
 					<i><?php echo Text::_('Admin Note'); ?>:</i><br />
-                 	<div class="xbbox xbboxgrey" style="max-width:400px;">
+                 	<div class="xbbox" style="max-width:400px;background-color:#ddf;">
 						<?php echo ($item->note != '') ? $item->note : '<span class="xbnote">'.Text::_('no admin note').'</span>'; ?>
 					</div>
     			</div>
     			<div class="col-md-7">
     				<i><?php echo Text::_('XB_DESCRIPTION'); ?>:</i>
-                 	<div class="xbbox xbboxgrey" style="max-width:400px;">
+                 	<div class="xbbox" style="max-width:400px;background-color:#dff;">
             			<?php if ($item->description != '') : ?>
                 				<?php echo $item->description; ?>
                 		<?php else: ?>
@@ -70,6 +70,7 @@ $telink = 'index.php?option=com_tags&task=tag.edit&id=';
                 	</div>
     			</div>				
 			</div>
+			<hr />
 			<div class="row xbmb20">
 				<?php $colcnt=0; 
 				
