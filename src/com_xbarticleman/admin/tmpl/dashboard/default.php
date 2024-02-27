@@ -29,48 +29,16 @@ HTMLHelper::_('formbehavior.chosen', 'select');
         	<div class="xbwp60 pull-left xbpr20">
 				<div class="xbbox gradgrey">
 					<h4><?php echo $this->statecnts['total'].' '.Text::_('XBARTMAN_ARTICLES_ON_SITE'); ?>
-            			<span class="xbpl20 xbnorm"><?php echo Text::_('XBARTMAN_STATE_CNTS'); ?> : </span>
-            			<span class="icon-check xblabel <?php echo ($this->statecnts['published']==0) ? 'label-grey' : 'label-green';?>"
-            			 title="Published">&nbsp;&nbsp;<?php echo $this->statecnts['published'];?></span>
-            			<span class="icon-times xblabel <?php echo ($this->statecnts['unpublished']==0) ? 'label-grey':'label-orange';?>"
-            			 title="Unpublished">&nbsp;&nbsp;<?php echo $this->statecnts['unpublished'];?></span>
-            			<span class="icon-archive xblabel <?php echo ($this->statecnts['archived']==0) ? 'label-grey' : 'label-blue';?>"
-            			 title="Archived">&nbsp;&nbsp;<?php echo $this->statecnts['archived'];?></span>
-            			<span class="icon-trash xblabel <?php echo ($this->statecnts['trashed']==0) ? 'label-grey' : 'label-red';?>"
-            			 title="Trashed">&nbsp;&nbsp;<?php echo $this->statecnts['trashed'];?></span>
+            			<span class="xbpl20 xbnit"><?php echo Text::_('XBARTMAN_STATE_CNTS'); ?> : </span>
+            			<span class="xbpl50"></span><span class="icon-check xblabel <?php echo ($this->statecnts['published']==0) ? 'label-grey' : 'label-green';?>"
+            			 title="Published">&nbsp;&nbsp;<?php echo $this->statecnts['published'];?></span></span>
+            			<span class="xbpl50"><span class="icon-times xblabel <?php echo ($this->statecnts['unpublished']==0) ? 'label-grey':'label-orange';?>"
+            			 title="Unpublished">&nbsp;&nbsp;<?php echo $this->statecnts['unpublished'];?></span></span>
+            			<span class="xbpl50"><span class="icon-archive xblabel <?php echo ($this->statecnts['archived']==0) ? 'label-grey' : 'label-blue';?>"
+            			 title="Archived">&nbsp;&nbsp;<?php echo $this->statecnts['archived'];?></span></span>
+            			<span class="xbpl50"><span class="icon-trash xblabel <?php echo ($this->statecnts['trashed']==0) ? 'label-grey' : 'label-red';?>"
+            			 title="Trashed">&nbsp;&nbsp;<?php echo $this->statecnts['trashed'];?></span></span>
 					</h4>
-					<table class="xbwp100">
-            			<colgroup>
-            				<col style="width:40%;"><!--  -->
-            				<col style="width:10%;"><!--  -->
-            				<col style="width:40%;"><!--  -->
-            				<col ><!--  -->
-            			</colgroup>
-            			<thead>
-						<tr>
-							<th colspan="2" style="text-align:left;">
-            					<h4>
-            						<?php echo Text::_('XBARTMAN_ARTICLES_ON_SITE'); ?><span class="xbpl20 xbnit">(<?php echo Text::_('XBARTMAN_INC_ARCH_TRASH'); ?>)</span>
-            					</h4>
-							</th>
-							<th colspan="2" style="text-align:left;">
-								<span class="xbbadge badge-info"><?php echo Text::_('XB_TOTAL').' '. $this->artcnts['total']; ?></span> 
-							</th>
-						</tr>
-						</thead>
-						<tr>
-							<td><?php echo Text::_('XB_PUBLISHED'); ?> </td>
-							<td><span class="xbbadge<?php echo $this->artcnts['published']>0 ?'badge-info' : ''; ?>"><?php echo $this->artcnts['published']; ?></span></td>
-							<td><?php echo Text::_('XB_UNPUBLISHED'); ?> </td><td>
-							<span class="xbbadge<?php echo $this->artcnts['unpublished']>0 ?'badge-ltgrey' : ''; ?>"><?php echo $this->artcnts['unpublished']; ?></span></td>
-						</tr>
-						<tr>
-							<td><?php echo Text::_('XB_ARCHIVED'); ?> </td>
-							<td><span class="xbbadge<?php echo $this->artcnts['archived']>0 ?'badge-black' : ''; ?>"><?php echo $this->artcnts['archived']; ?></span></td>
-							<td><?php echo Text::_('XB_TRASHED'); ?> </td>
-							<td><span class="xbbadge<?php echo $this->artcnts['trashed']>0 ?'badge-red' : ''; ?>"><?php echo $this->artcnts['trashed']; ?></span></td>
-						</tr>
-					</table>
 				</div>
 				<div class="xbbox gradgreen">
 					<table class="xbwp100">
@@ -299,9 +267,11 @@ HTMLHelper::_('formbehavior.chosen', 'select');
 	        				<dt><?php echo Text::_('Tag Groups'); ?>: </dt> 
 	        					<dd><?php echo ($this->taggroups == 0) ? 'Not specified' : 'Enabled'; ?></dd>
 	        				<?php if ($this->taggroups == 1) : ?>
-	        					<dt><?php echo Text::_('Groups') ?></dt>
+	        					<dt class="xbml50"><?php echo Text::_('Groups') ?> <span class="xb05 xbit"><?php echo Text::_('parent tags')?></span></dt>
 	        						<dd><?php echo $this->grouplist; ?></dd>
 	        				<?php endif; ?>
+	        				<dt><?php echo Text::_('XBARTMAN_COMP_TAG_LIST'); ?>: </dt>
+	        					<dd><?php echo $this->comslist; ?></dd>	        				
 	        			</dl>
         			<?php echo HTMLHelper::_('bootstrap.endSlide'); ?>
     				<?php echo HtmlHelper::_('bootstrap.addSlide', 'slide-dashboard', Text::_('XB_ABOUT'), 'about','xbaccordion'); ?>

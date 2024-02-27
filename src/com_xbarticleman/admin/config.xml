@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- xbArticleMan j5 config file v0.1.0.0 26th February 2024 -->
+<!-- xbArticleMan j5 config file v0.1.0.2 27th February 2024 -->
 <config>
 	<inlinehelp button="show"/>
 <!-- GENERAL TAB -->				
@@ -104,16 +104,15 @@
 		<field name="jcomitems" type="list"
 			label="XBARTMAN_CONFIG_JCOM_LABEL"
 			description="XBARTMAN_CONFIG_JCOM_DESC"
-			multiple="true"		
+			multiple="true"	
 			default="1"	
 		>
-			<option value="1">XBARTMAN_CONFIG_ARTICLES</option>
 			<option value="3">XBARTMAN_CONFIG_CONTACTS</option>
 			<option value="6">XBARTMAN_CONFIG_NEWSFEEDS</option>
 			<option value="2">XBARTMAN_CONFIG_CONTENT_CATS</option>
 			<option value="4">XBARTMAN_CONFIG_CONTACT_CATS</option>
-			<option value="5">XBARTMAN_CONFIG_BANNERS_CATS</option>
 			<option value="7">XBARTMAN_CONFIG_NEWS_CATS</option>
+			<option value="5">XBARTMAN_CONFIG_BANNERS_CATS</option>
 		</field>
 		
 		<field name="othercomitems" type="subform"
@@ -144,7 +143,7 @@
 				></field>
 				<field name="title" type="text"
 					label="XBARTMAN_CONFIG_TITLE_LABEL" 
-					hint="eg 'name'"
+					hint="eg 'title'"
 					description="XBARTMAN_CONFIG_TITLE_DESC"					
 					required="true"				
 				></field>

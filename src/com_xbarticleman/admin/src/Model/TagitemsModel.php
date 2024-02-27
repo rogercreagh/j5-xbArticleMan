@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager=j5
  * @filesource admin/src/Model/TagitemsModel.php
- * @version 0.1.0.0 26th February 2024
+ * @version 0.1.0.2 27th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -46,49 +46,46 @@ class TagitemsModel extends ListModel {
         $id = $app->input->getInt('tagid',0);
         if ($id > 0) {
             $params = ComponentHelper::getParams('com_xbarticleman');
-            $jcomitems = $params->get('jcomitems');
+            $jcomitems = $params->get('jcomitems','');
             $othercomitems = $params->get('othercomitems');
- //           $app->enqueueMessage(print_r($jcomitems,true));
-//            $app->enqueueMessage(print_r($othercomitems,true));
             
             $db = $this->getDbo();
             $query = $db->getQuery(true);
             $query->select('t.id AS id, t.path AS path, t.title AS title, t.note AS note, t.description AS description,'.
 				't.alias AS alias, t.published AS published');
-//built-in tag types - article, articlecat, bannercat, cotavts, contactcat, newsfeed, newsfeedcat
+//built-in tag types - articles are always checked, articlecat, bannercat, cotavts, contactcat, newsfeed, newsfeedcat are config options
             $tagtypes = array();
+            $tagtypes[] = array('com'=>'content', 'item'=>'article', 'table'=>'content','title'=>'title',
+                    'pv'=>'article', 'ed'=>'&view=article&task=article.edit','cntname'=>'contentarticlecnt','cnt'=>0);    
+            if (is_array($jcomitems)) {               
+                if (in_array(2, $jcomitems))
+                    $tagtypes[] = array('com'=>'content', 'item'=>'category', 'table'=>'categories', 'title'=>'title',
+                        'pv'=>'', 'ed'=>'&view=categories&task=category.edit&extension=com_content','cntname'=>'contentcategorycnt','cnt'=>0);
+                if (in_array(3, $jcomitems))
+                    $tagtypes[] = array('com'=>'contact', 'item'=>'contact', 'table'=>'contact_details', 'title'=>'name',
+                        'pv'=>'con_position','cntname'=>'contactscontactcnt','cnt'=>0);
+                if (in_array(4, $jcomitems))
+                    $tagtypes[] = array('com'=>'contact', 'item'=>'category', 'table'=>'categories', 'title'=>'title',
+                        'pv'=>'', 'ed'=>'&view=categories&task=category.edit&extension=com_contacts','cntname'=>'contactscategorycnt','cnt'=>0);
+                if (in_array(5, $jcomitems))
+                    $tagtypes[] = array('com'=>'banners', 'item'=>'category', 'table'=>'categories', 'title'=>'title',
+                        'pv'=>'', 'ed'=>'&view=categories&task=category.edit&extension=com_banners','cntname'=>'bannerscategorycnt','cnt'=>0);
+                if (in_array(6, $jcomitems))
+                    $tagtypes[] = array('com'=>'newsfeeds', 'item'=>'newsfeed', 'table'=>'newsfeeds', 'title'=>'name',
+                        'pv'=>'link','cntname'=>'newsfeedsnewsfeedcnt','cnt'=>0);
+                if (in_array(7, $jcomitems))
+                    $tagtypes[] = array('com'=>'newsfeeds', 'item'=>'category', 'table'=>'categories', 'title'=>'title',
+                        'pv'=>'', 'ed'=>'&view=categories&task=category.edit&extension=com_newsfeeds','cnt'=>0);
+            }
             
-            if (in_array(1, $jcomitems)) 
-                $tagtypes[] = array('com'=>'content', 'item'=>'article', 'table'=>'content','title'=>'title',
-                    'pv'=>'article', 'ed'=>'&view=article&task=article.edit','cntname'=>'contentarticlecnt','cnt'=>0);            
-            if (in_array(2, $jcomitems))
-                $tagtypes[] = array('com'=>'content', 'item'=>'category', 'table'=>'categories', 'title'=>'title',
-                    'pv'=>'', 'ed'=>'&view=categories&task=category.edit&extension=com_content','cntname'=>'contentcategorycnt','cnt'=>0);
-            if (in_array(3, $jcomitems))
-                $tagtypes[] = array('com'=>'contacts', 'item'=>'contact', 'table'=>'contact_details', 'title'=>'name',
-                    'pv'=>'con_position','cntname'=>'contactscontactcnt','cnt'=>0);
-            if (in_array(4, $jcomitems))
-                $tagtypes[] = array('com'=>'contacts', 'item'=>'category', 'table'=>'categories', 'title'=>'title',
-                    'pv'=>'', 'ed'=>'&view=categories&task=category.edit&extension=com_contacts','cntname'=>'contactscategorycnt','cnt'=>0);
-            if (in_array(5, $jcomitems))
-                $tagtypes[] = array('com'=>'banners', 'item'=>'category', 'table'=>'categories', 'title'=>'title',
-                    'pv'=>'', 'ed'=>'&view=categories&task=category.edit&extension=com_banners','cntname'=>'bannerscategorycnt','cnt'=>0);
-            if (in_array(6, $jcomitems))
-                $tagtypes[] = array('com'=>'newsfeeds', 'item'=>'newsfeed', 'table'=>'newsfeeds', 'title'=>'name',
-                    'pv'=>'link','cntname'=>'newsfeedsnewsfeedcnt','cnt'=>0);
-            if (in_array(7, $jcomitems))
-                $tagtypes[] = array('com'=>'newsfeeds', 'item'=>'category', 'table'=>'categories', 'title'=>'title',
-                    'pv'=>'', 'ed'=>'&view=categories&task=category.edit&extension=com_newsfeeds','cnt'=>0);
-            
-                if (!empty($othercomitems)) {
-                    foreach ($othercomitems as $comp) {
-                        //check component exists and is enabled
-                        $comparr = (array) $comp;
-                        $comparr['cnt'] = 0;
-                        $comparr['cntname'] = $comparr['com'].$comparr['item'].'cnt';
-                        $tagtypes = array_merge($tagtypes, array($comparr));
-                    }
-                    
+            if (!empty($othercomitems)) {
+                foreach ($othercomitems as $comp) {
+                    //check component exists and is enabled and valid table and extension
+                    $comparr = (array) $comp;
+                    $comparr['cnt'] = 0;
+                    $comparr['cntname'] = $comparr['com'].$comparr['item'].'cnt';
+                    $tagtypes = array_merge($tagtypes, array($comparr));
+                }                   
             }
                 
             $mapname="ma";
@@ -127,7 +124,13 @@ class TagitemsModel extends ListModel {
                         $db->setQuery($query);
                         $tagtype['items'] = $db->loadObjectList();  
                         $tagtype['pvurl'] = ($tagtype['pv'] !='') ? Uri::root().'index.php?option=com_'.$tagtype['com'].'&view='.$tagtype['pv'].'&tmpl=component&id=' : '';
-                        $tagtype['edurl'] = ($tagtype['ed'] !='') ? 'index.php?option=com_'.$tagtype['com'].'&'.$tagtype['ed'].'&id=' : '';
+                        //if item=category then change com to categories for edit
+                        $tagtype['edurl'] = '';
+                        if ($tagtype['ed'] !='') {
+                            $tagtype['edurl'] =  'index.php?option=';
+                            $com = ($tagtype['item'] == 'category') ? 'com_categories' : 'com_'.$tagtype['com'];
+                            $tagtype['edurl'] .= $com.$tagtype['ed'].'&id=';
+                        }
                     }
                 }
                 $this->item->taggeditems = $tagtypes;

@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/src/View/Dashboard/HtmlView.php
- * @version 0.0.1.0 7th January 2024
+ * @version 0.1.0.2 27th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -68,15 +68,30 @@ class HtmlView extends BaseHtmlView {
             $groups[] = $params->get('taggroup2_parent','');
             $groups[] = $params->get('taggroup3_parent','');
             $groups[] = $params->get('taggroup4_parent','');
-            $this->grouplist = '<ul>';
+            $this->grouplist = '<ol class="xbml50">';
             foreach ($groups as $grp) {
                 if ($grp != '') {
                     $tag=XbarticlemanHelper::getTag($grp);
                     $this->grouplist .= '<li>'.$tag->title.'</li>';
                 }
             }
-            $this->grouplist .= '</ul>';
+            $this->grouplist .= '</ol>';
         }
+        $jcomnames = array('','Articles', 'Article Categories', 'Contacts', 'Contact Categories',
+            'Banner Categories', 'Newsfeeds', 'Newsfeed Categories');
+        $jcoms = $params->get('jcomitems',array());
+        $this->comslist = '<ul><li>Articles (com_content)</li>';
+        foreach ($jcoms as $comno) {
+            //check if valid extension, table, column
+            $this->comslist .= '<li>'.$jcomnames[$comno].'</li>';
+        }
+        $othercoms = $params->get('othercomitems', array());
+        foreach ($othercoms as $othercom) {
+            $this->comslist .= '<li>com_'.$othercom->com.'.'.ucfirst($othercom->item).'</li>';
+        }
+        $this->comslist .= '</ul>';
+        
+        $this->statecnts = XbarticlemanHelper::stateCnts();
         
         $this->addToolbar();
         
