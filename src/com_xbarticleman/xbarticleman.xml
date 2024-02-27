@@ -2,7 +2,7 @@
 <extension type="component" method="upgrade">
 	<name>com_xbarticleman</name>
 	<creationDate>27th February 2024</creationDate>
-	<version>0.1.0.2</version>
+	<version>0.1.0.3</version>
 	<author>RogerCO</author>
 	<authorEmail>roger@crosborne.co.uk</authorEmail>
 	<authorUrl>www.crosborne.uk</authorUrl>

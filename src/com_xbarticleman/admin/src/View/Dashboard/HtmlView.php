@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/src/View/Dashboard/HtmlView.php
- * @version 0.1.0.2 27th February 2024
+ * @version 0.1.0.3 27th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -12,7 +12,7 @@ namespace Crosborne\Component\Xbarticleman\Administrator\View\Dashboard;
 
 defined('_JEXEC') or die;
 
-//use Joomla\CMS\Factory;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Installer\Installer;
@@ -27,7 +27,7 @@ use Crosborne\Component\Xbarticleman\Administrator\Helper\XbarticlemanHelper;
 class HtmlView extends BaseHtmlView {
     
     public function display($tpl = null) {
-        
+        $app = Factory::getApplication();
         $params = ComponentHelper::getParams('com_xbarticleman');
         
         $this->artcnts = $this->get('ArticleCnts');
@@ -46,7 +46,7 @@ class HtmlView extends BaseHtmlView {
         if (count($errors = $this->get('Errors'))) {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
-                
+        // external link hining        
         switch ($params->get('extlinkhint', 0)) {
             case 1:
                 $this->extlinkhint = Text::_('XBCONFIG_SITE_ADMIN');
@@ -61,6 +61,7 @@ class HtmlView extends BaseHtmlView {
                 $this->extlinkhint = Text::_('XBCONFIG_USE_TEMPLATE');
                 break;
         }
+        // tag grouping
         $this->taggroups = $params->get('enable_taggroups',0);
         if ($this->taggroups) {
             $groups = array();
@@ -77,6 +78,7 @@ class HtmlView extends BaseHtmlView {
             }
             $this->grouplist .= '</ol>';
         }
+        // tag components items
         $jcomnames = array('','Articles', 'Article Categories', 'Contacts', 'Contact Categories',
             'Banner Categories', 'Newsfeeds', 'Newsfeed Categories');
         $jcoms = $params->get('jcomitems',array());
@@ -86,8 +88,33 @@ class HtmlView extends BaseHtmlView {
             $this->comslist .= '<li>'.$jcomnames[$comno].'</li>';
         }
         $othercoms = $params->get('othercomitems', array());
-        foreach ($othercoms as $othercom) {
-            $this->comslist .= '<li>com_'.$othercom->com.'.'.ucfirst($othercom->item).'</li>';
+        foreach ($othercoms as $comp) {
+            // check component exists and enabled
+            $chk = XbarticlemanHelper::checkComponent('com_'.$comp->com);
+            if (is_null($chk)){
+                $app->enqueueMessage('Component '.ucfirst($comp->com).' '.Text::_('XBARTMAN_NOT_INSTALLED').' '.Text::_('XBARTMAN_CHECK_OPTS'),'Error');
+                $this->comslist .= '<li class="xbred">com_'.$comp->com.' '.strtoupper(Text::_('XBARTMAN_NOT_INSTALLED')).'</li>';
+            } else {
+                if ($chk === 0) {
+                    $app->enqueueMessage('Component '.ucfirst($comp->com).' '.Text::_('XBARTMAN_NOT_ENABLED').' '.Text::_('XBARTMAN_CHECK_OPTS'),'Warning');
+                    $this->comslist .= '<li class="xbgold">com_'.$comp->com.' '.Text::_('XBARTMAN_NOT_ENABLED').'</li>';
+                }
+                $title = $comp->title;
+                if (str_contains($title, '+')) {
+                    //we arre concatenating two or more columns so need to check all of them
+                    $title = explode('+', $title);
+                }
+                $chk = XbarticlemanHelper::checkTableColumn($comp->table, $title);
+                if ($chk === true) {
+                    $this->comslist .= '<li>com_'.$comp->com.'.'.ucfirst($comp->item).'</li>';               
+                } elseif (is_null($chk)) {
+                    $app->enqueueMessage('Column '.$comp->title.' '.Text::_('XBARTMAN_DOESNT_EXIST').' in '.$comp->table.' '.Text::_('XBARTMAN_CHECK_OPTS'),'Error');
+                    $this->comslist .= '<li class="xbred">com_'.$comp->com.' '.Text::_('XBARTMAN_BAD_COLUMN').' '.$comp->title.'</li>';
+                } elseif ($chk === false) {
+                    $app->enqueueMessage('Table '.$comp->table.' '.Text::_('XBARTMAN_DOESNT_EXIST').' '.Text::_('XBARTMAN_CHECK_OPTS'),'Error');
+                    $this->comslist .= '<li class="xbred">com_'.$comp->com.' '.Text::_('XBARTMAN_BAD_TABLE').' '.$comp->table.'</li>';
+                }   
+            }
         }
         $this->comslist .= '</ul>';
         

@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager=j5
  * @filesource admin/src/Model/TagitemsModel.php
- * @version 0.1.0.2 27th February 2024
+ * @version 0.1.0.3 27th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -14,33 +14,13 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\MVC\Model\ListModel;
-use Joomla\CMS\Toolbar\Toolbar;
-use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Layout\FileLayout;
-use DOMDocument;
-use ReflectionClass;
+use Joomla\CMS\MVC\Model\ListModel;
 use Crosborne\Component\Xbarticleman\Administrator\Helper\XbarticlemanHelper;
 use Joomla\CMS\Uri\Uri;
 
 class TagitemsModel extends ListModel {
 
-    public function __construct() {
-        parent::__construct();
-    }
-    
-/*      protected function populateState($ordering = 't.title', $direction = 'asc') {
-        
-         $app = Factory::getApplication();
-        
-//         // Load state from the request.
-         $id = $app->input->getInt('tagid');
-         $this->setState('tag.id', $id);
-         parent::populateState($ordering, $direction);
-         
-    }
- */     
     public function getTagitems() {
         $app = Factory::getApplication();
         $id = $app->input->getInt('tagid',0);
@@ -53,7 +33,7 @@ class TagitemsModel extends ListModel {
             $query = $db->getQuery(true);
             $query->select('t.id AS id, t.path AS path, t.title AS title, t.note AS note, t.description AS description,'.
 				't.alias AS alias, t.published AS published');
-//built-in tag types - articles are always checked, articlecat, bannercat, cotavts, contactcat, newsfeed, newsfeedcat are config options
+            //built-in tag types - articles are always checked; articlecat, bannercat, contacts, contactcat, newsfeed, newsfeedcat are config options
             $tagtypes = array();
             $tagtypes[] = array('com'=>'content', 'item'=>'article', 'table'=>'content','title'=>'title',
                     'pv'=>'article', 'ed'=>'&view=article&task=article.edit','cntname'=>'contentarticlecnt','cnt'=>0);    
@@ -79,15 +59,37 @@ class TagitemsModel extends ListModel {
             }
             
             if (!empty($othercomitems)) {
-                foreach ($othercomitems as $comp) {
-                    //check component exists and is enabled and valid table and extension
-                    $comparr = (array) $comp;
-                    $comparr['cnt'] = 0;
-                    $comparr['cntname'] = $comparr['com'].$comparr['item'].'cnt';
-                    $tagtypes = array_merge($tagtypes, array($comparr));
+                foreach ($othercomitems as $i=>$comp) {
+                    // check component exists and enabled
+                    $chk = XbarticlemanHelper::checkComponent('com_'.$comp->com);
+                    if (is_null($chk)){
+                        $app->enqueueMessage('Component '.ucfirst($comp->com).' '.Text::_('XBARTMAN_NOT_INSTALLED').' '.Text::_('XBARTMAN_CHECK_OPTS'),'Error');
+                    } else {
+                        if ($chk === 0) {
+                            $app->enqueueMessage('Component '.ucfirst($comp->com).' '.Text::_('XBARTMAN_NOT_ENABLED').' '.Text::_('XBARTMAN_CHECK_OPTS'),'Warning');
+                        }
+                        // check valid table and title column names
+                        $title = $comp->title;
+                        if (str_contains($title, '+')) {
+                           //we arre concatenating two or more columns for the title so need to check all of them 
+                           $title = explode('+', $title);
+                        }
+                        $chk = XbarticlemanHelper::checkTableColumn($comp->table, $title);
+                        if ($chk === true) {
+                            // ok add the component to have tagged items listed
+                            $comparr = (array) $comp;
+                            $comparr['cnt'] = 0;
+                            $comparr['cntname'] = $comparr['com'].$comparr['item'].'cnt';
+                            $tagtypes = array_merge($tagtypes, array($comparr));                       
+                        } elseif (is_null($chk)) {
+                            $app->enqueueMessage('Column '.$comp->title.' '.Text::_('XBARTMAN_DOESNT_EXIST').' in '.$comp->table.' '.Text::_('XBARTMAN_CHECK_OPTS'),'Error');
+                        } elseif ($chk === false) {
+                            $app->enqueueMessage('Table '.$comp->table.' '.Text::_('XBARTMAN_DOESNT_EXIST').' '.Text::_('XBARTMAN_CHECK_OPTS'),'Error');
+                        }                    
+                    }
                 }                   
             }
-                
+            // get all the items for the listed components that have the current tag    
             $mapname="ma";
             foreach ($tagtypes as &$tagtype) {
                 $mapname ++;
@@ -96,15 +98,10 @@ class TagitemsModel extends ListModel {
             }            
             $query->from('#__tags AS t');
             $query->where('t.id = '.$id);
-//            $query->join('LEFT','#__contentitem_tag_map AS m ON m.tag_id = t.id');
             
             $db->setQuery($query);
             
             if ($this->item = $db->loadObject()) {
- //               $item = &$this->item;
-//                //calculate how many non specified items the tag applies to to save doing it later
-//                $item->othercnt = $item->allcnt - array_sum($item->bcnt + $item->pcnt + $item->rcnt);
-                //get titles and ids of films, people and reviews with this tag
                 $db    = Factory::getDbo();
                 foreach ($tagtypes as &$tagtype) {
                     $tagtype['cnt'] = $this->item->{$tagtype['cntname']};
@@ -112,15 +109,19 @@ class TagitemsModel extends ListModel {
                         $query = $db->getQuery(true);
                         $titcol = $tagtype['title'];
                         if (str_contains($titcol, '+')) {
-                            $titcol = str_replace('+', ' b.', $titcol);
+                            $titcol = str_replace('+'," ", ', b.', $titcol);
                             $titcol = 'CONCAT(b.'.$titcol.')';
+                            $ordercol = substr($tagtype['title'], 0, strpos($tagtype['title'],'+'));
+                        } else{
+                            $titcol = 'b.'.$titcol;
+                            $ordercol = $tagtype['title'];
                         }
-                        $query->select('b.id AS bid, b.'.$titcol.' AS title')
+                        $query->select('b.id AS bid, '.$titcol.' AS title')
                             ->from('#__tags AS t');
                         $query->join('LEFT','#__contentitem_tag_map AS m ON m.tag_id = t.id');
                         $query->join('LEFT','#__'.$tagtype['table'].' AS b ON b.id = m.content_item_id');
                         $query->where('t.id='.$db->q($this->item->id).' AND m.type_alias='.$db->q('com_'.$tagtype['com'].'.'.$tagtype['item']));
-                        $query->order('b.'.$tagtype['title']);
+                        $query->order('b.'.$ordercol);
                         $db->setQuery($query);
                         $tagtype['items'] = $db->loadObjectList();  
                         $tagtype['pvurl'] = ($tagtype['pv'] !='') ? Uri::root().'index.php?option=com_'.$tagtype['com'].'&view='.$tagtype['pv'].'&tmpl=component&id=' : '';

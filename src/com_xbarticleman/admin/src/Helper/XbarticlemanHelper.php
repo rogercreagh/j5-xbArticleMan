@@ -314,9 +314,66 @@ class XbarticlemanHelper extends ComponentHelper
 	    return $result;
 	}
 	
-	
+	/***
+	 * @name checkComponent()
+	 * @desc test whether a component is installed and enabled.
+	 * NB This sets the seesion variable if component installed to 1 if enabled or 0 if disabled.
+	 * Test sess variable==1 if wanting to use component
+	 * @param  $name - component name as stored in the extensions table (eg com_xbfilms)
+	 * @param $usesess - true if result will also set or clear a session variable with the name of component
+	 * @return boolean|number - true= installed and enabled, 0= installed not enabled, null = not installed
+	 */
+	public static function checkComponent($name, $usesess = true) {
+	    $db = Factory::getDbo();
+	    $db->setQuery('SELECT enabled FROM #__extensions WHERE element = '.$db->quote($name));
+	    $res = $db->loadResult();
+	    if ($usesess) {
+    	   $sname=substr($name,4).'_ok';
+	       $sess= Factory::getApplication()->getSession();
+	        if (is_null($res)) {
+	            $sess->clear($sname);
+	       } else {
+	            $sess->set($sname,$res);
+    	    }
+	    }
+	    return $res;
+	}
 	
 	/**
+	 * @name checkTable()
+	 * @desc checks if a given table exists in Joonla database
+	 * @param string $table
+	 * @return boolean - true if the table exists
+	 */
+	public static function checkTable(string $table) {
+	    $db=Factory::getDbo();
+	    $tablesarr = $db->setQuery('SHOW TABLES')->loadColumn();
+	    $table = $db->getPrefix().$table;
+	    return in_array($table, $tablesarr);
+	}
+	
+    /**
+     * @name checkTableColumn()
+     * @desc tests if a given table and column exist in database
+     * @param string $table - name of the table to check without joomla prefix
+     * @param string|array $column - name of the column(s) to check
+     * @return boolean|NULL - false if table doesn't exist, null if column doesn't exist, if ok then true
+     */
+	public static function checkTableColumn($table, $column) {
+	    $db=Factory::getDbo();
+	    if (self::checkTable($table) != true) return false;
+	    if (!is_array($column)) {
+	        $column = (array) $column;
+	    }
+	    foreach ($column as $col) {
+    	    $db->setQuery('SHOW COLUMNS FROM '.$db->qn('#__'.$table).' LIKE '.$db->q($col));
+    	    $res = $db->loadResult();
+    	    if (is_null($res)) return null;	        
+	    }
+	    return true;
+	}
+	
+/**
 	 * @name credit()
 	 * @desc tests if reg code is installed and returns blank, or credit for site and PayPal button for admin
 	 * @param string $ext - extension name to display, must match 'com_name' and xml filename and crosborne link page when converted to lower case
