@@ -50,6 +50,7 @@ class HtmlView extends BaseHtmlView {
         $this->filterForm    = $this->get('FilterForm');
         $this->activeFilters = $this->get('ActiveFilters');
         $tags = $this->get('Tags');
+        $dtagcnt = $this->get('Dtagcnt');
         
         // Check for errors.
         if (count($errors = $this->get('Errors')))

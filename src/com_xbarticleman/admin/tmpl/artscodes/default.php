@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/tmpl/artscodes/default.php
- * @version 0.0.1.0.0 26th February 2024
+ * @version 0.0.1.0.5 28th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -67,7 +67,7 @@ if ($saveOrder && !empty($this->items)) {
 		<h3><?php echo Text::_('XBARTMAN_ARTICLE_SHORTCODES')?></h3>
 		<h4>
 			<span class="xbpl20"><?php echo Text::_('XB_FOUND').' '.count($this->sccnts).' '.Text::_('XBARTMAN_DISTINCT_SHORTCODES').' '; ?></span>
-		    <?php echo Text::_('XB_IN').' '.$this->shortcodearticles.' '.lcfirst(Text::_('XB_ARTICLES')); ?>
+		    <?php echo Text::_('XB_IN').' '.$this->shortcodearticles.' '.Text::_('XBARTMAN_ARTICLES_FILTERED'); ?>
 		</h4>
     	<ul class="inline">
     		<li><i><?php echo Text::_('XBARTMAN_COUNTS_SCODES'); ?>:</i></li>

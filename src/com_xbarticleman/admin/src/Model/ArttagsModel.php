@@ -13,12 +13,15 @@ namespace Crosborne\Component\Xbarticleman\Administrator\Model;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Helper\TagsHelper;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\Table\Table;
 use Crosborne\Component\Xbarticleman\Administrator\Helper\XbarticlemanHelper;
 
 class ArttagsModel extends ListModel {
+    
+    protected $tagcnt = 0;
     
 	public function __construct($config = array()) {
 	    
@@ -335,6 +338,28 @@ class ArttagsModel extends ListModel {
 		return $query;
 	}
 
+	public function getItems() {
+	    $items  = parent::getItems();
+	    $dtags = array();
+	    if ($items) {
+            $helper = new TagsHelper;
+	        foreach ($items as $item) {
+	            $item->tags = $helper->getItemTags('com_content.article',$item->id);
+	            foreach ($item->tags as $key=>$tag) {
+	                if (key_exists($key,$dtags)) {
+	                    $dtags[$key]['cnt'] ++;
+	                } else {
+	                    $dtags[$key] = array('title'=>$item->title, 'cnt' => 1);
+	                }
+	            }
+	        }
+	        $this->tagcnt = count($dtags);
+	    }
+	    return $items;
+	}
+	
+
+	
 	public function getTags() {
 	    $db    = $this->getDatabase();
 	    $query = $db->getQuery(true);

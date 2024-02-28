@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager-j5
  * @filesource admin/tmpl/artimgs/default.php
- * @version 0.0.9.0 22nd February 2024
+ * @version 0.1.0.5 28th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -64,20 +64,26 @@ if ($saveOrder && !empty($this->items)) {
 <div id="xbcomponent">
 	<form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=arttags'); ?>" method="post" name="adminForm" id="adminForm">
 		<h3><?php echo Text::_('XBARTMAN_ARTICLES_WITH_TAGS'); ?></h3>
-		<h4><?php echo Text::_('XBARTMAN_TOTAL_ARTICLES').' '.$this->totalarticles.'. '.Text::_('XB_LISTING').' '.$this->statearticles.' '.lcfirst(Text::_('XB_ARTICLES')).' '.$this->statefilt; ?></h4>
-		<p><?php echo Text::_('Found').' '.count($this->tagcnts).' '.Text::_('XBARTMAN_DISTINCT_TAGS').' in '.$this->taggedarticles.' '.lcfirst(Text::_('XB_ARTICLES')); ?></p>
+		<h4>
+			<span class="xbpl20"><?php echo Text::_('XB_FOUND').' '.count($this->tagcnts).' '.Text::_('XBARTMAN_DISTINCT_TAGS').' '; ?></span>
+		    <?php echo Text::_('XB_IN').' '.$this->taggedarticles.' '.lcfirst(Text::_('XB_ARTICLES')); ?>
+		</h4>
     	<ul class="inline">
     		<li><i><?php echo Text::_('XBARTMAN_COUNTS_TAGS'); ?>:</i></li>
     		<?php foreach ($this->tagcnts as $key=>$tag) : ?>
-    		    <li><a href="index.php?option=com_xbarticleman&view=tagitems&tagid=<?php echo $tag['tagid']; ?>" 
+    		    <li><a href="index.php?option=com_xbarticleman&view=arttags&filter[tagfilt]=<?php echo $key; ?>"" 
     		    	class="xbbadge badge-tag xbpl10"><?php echo $tag['title']; ?>
-    		    	</a><?php echo '('.$tag['cnt'].')'; ?><a href="index.php?option=com_tags&task=tag.edit&id=<?php echo $tag['tagid']; ?>" 
-    		    		class="nohint" target="xbedit" title="<?php echo Text::_('XBARTMAN_TAG_EDIT'); ?>" ><span class="icon-edit"></span>
+    		    	</a><?php echo '('.$tag['cnt'].')'; ?>
+     		    	<a href="index.php?option=com_xbarticleman&view=tagitems&tagid=<?php echo $key; ?>" 
+    		    		class="nohint" title="<?php echo Text::_('XBARTMAN_TAG_EDIT'); ?>" ><span class="far fa-rectangle-list"></span>
+    		    	</a>   		    	
+    		    	<a href="index.php?option=com_tags&task=tag.edit&id=<?php echo $tag['tagid']; ?>" 
+    		    		class="nohint xbpl20" target="xbedit" title="<?php echo Text::_('XBARTMAN_TAG_EDIT'); ?>" ><span class="icon-edit"></span>
     		    	</a>
     		    </li>
     		<?php endforeach; ?>
     	</ul>
-    	<span class="xbnit xb09"><?php echo Text::_('XBARTMAN_CLICK_TAG_ABOVE'); ?></span>
+    	<p class="xbnit xb09" style="margin: -10px 0 4px 200px;"><?php echo Text::_('XBARTMAN_CLICK_TAG_ABOVE'); ?></p>
     	<p><?php echo Text::_('XB_LISTING').' ';
     	if (array_key_exists('artlist', $this->activeFilters)) {
     	    switch ($this->activeFilters['artlist']) {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <extension type="component" method="upgrade">
 	<name>com_xbarticleman</name>
-	<creationDate>27th February 2024</creationDate>
-	<version>0.1.0.4</version>
+	<creationDate>28th February 2024</creationDate>
+	<version>0.1.0.5</version>
 	<author>RogerCO</author>
 	<authorEmail>roger@crosborne.co.uk</authorEmail>
 	<authorUrl>www.crosborne.uk</authorUrl>
@@ -64,7 +64,7 @@
 
 	<updateservers>
 		<server type="extension" priority="1" name="xbArticleMan Updates">
-			http://www.crosborne.uk/jupdates/update_xbarticleman.xml
+			https://crosborne.uk/jupdates/update_xbarticleman.xml
 		</server>
 	</updateservers>
 
