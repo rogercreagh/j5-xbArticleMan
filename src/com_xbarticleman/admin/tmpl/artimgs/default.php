@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager-j5
  * @filesource admin/tmpl/artimgs/default.php
- * @version 0.0.9.1 25th February 2024
+ * @version 0.1.0.5 28th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -65,20 +65,6 @@ if ($saveOrder && !empty($this->items)) {
 		<h3><?php echo Text::_('XBARTMAN_ARTICLE_IMAGES')?></h3>
 		<h4><?php echo Text::_('XBARTMAN_TOTAL_ARTICLES').' '.$this->totalarticles.'. '.Text::_('XB_LISTING').' '.$this->statearticles.' '.lcfirst(Text::_('XB_ARTICLES')).' '.$this->statefilt; ?></h4>
 		<p> 
-    	<?php if (array_key_exists('artlist', $this->activeFilters)) {
-    	    echo Text::_('XBARTMAN_FILTERED_TO_SHOW').' '.$this->pagination->total.' ';
-    	    $prompts = array('articles','articles with &lt;img&gt; tags.','articles with Intro or Fulltext images.','articles with &lt;img&gt; tags or Intro or Fulltext images.'
-    	        ,'articles with no &lt;img&gt; tags.','articles with no Intro or Fulltext images.','articles with no images (Intro, Fulltext, or &lt;img&gt; tags).');
-    	    if ($this->activeFilters['artlist'] > 0) {
-    	        echo Text::_($prompts[$this->activeFilters['artlist']]);
-    	    } else {
-    	        echo lcfirst(Text::_('XB_ARTICLES'));
-    	    }
-    	} else {
-    	    echo Text::_('XBARTMAN_SHOWING_ALL').' '.$this->statearticles.' '.lcfirst(Text::_('XB_ARTICLES'));
-    	}
-        ?>
-        </p>
 		<?php
 		// Search tools bar
 		echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this));
@@ -99,7 +85,7 @@ if ($saveOrder && !empty($this->items)) {
 		<?php else : ?>
 			<?php $rowcnt = count($this->items); ?>	
 			<div class="pull-left" style="width:60%">
-          		<p class="xbtr">Auto close details dropdowns <input  type="checkbox" id="autoclose" name="autoclose" value="yes" checked="true" style="margin:0 5px;" />
+          		<p class="xbtr xbnote xbmb5">Auto close details dropdowns <input  type="checkbox" id="autoclose" name="autoclose" value="yes" checked="true" style="margin:0 5px;" />
           		</p>
           	</div>
 			<table class="table table-striped table-hover xbtablelist" id="xbarticleList">
@@ -225,7 +211,8 @@ if ($saveOrder && !empty($this->items)) {
                                     ?>
 						</td>
 						<td class="has-context">
-							<div class="pull-left"><p class="xbm0">
+							<div class="pull-left">
+							<p class="xbm0">
 								<?php if ($item->checked_out) : ?>
 									<?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'artimgs.', $canCheckin); ?>
 								<?php endif; ?>
@@ -250,8 +237,9 @@ if ($saveOrder && !empty($this->items)) {
                                 >
 									<span class="icon-eye xbpl10"></span></span>
 								</p>
-								<span class="xbpl20 xb09"><i><?php echo Text::_('XB_ALIAS'); ?></i>: <?php echo $this->escape($item->alias); ?>
-								</span>
+								<p class="xbpl20 xb085 xbmb5"><i><?php echo Text::_('XB_ALIAS'); ?></i>: <?php echo $this->escape($item->alias); ?>
+								<br /><i><?php echo Text::_('XB_NOTE'); ?></i> <b><?php echo $item->note; ?></b>
+								</p>
 								<div>
 									<?php
 									$ParentCatUrl = Route::_('index.php?option=com_categories&task=category.edit&id=' . $item->parent_category_id . '&extension=com_content');

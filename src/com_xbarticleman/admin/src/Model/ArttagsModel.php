@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager-j5
  * @filesource admin/src/Model/ArttagsModel.php
- * @version 0.0.7. 11th February 2024
+ * @version 0.1.0.5 28th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -21,7 +21,8 @@ use Crosborne\Component\Xbarticleman\Administrator\Helper\XbarticlemanHelper;
 
 class ArttagsModel extends ListModel {
     
-    protected $tagcnt = 0;
+    protected $dttags = array();
+    protected $taggeditemcnt = 0;
     
 	public function __construct($config = array()) {
 	    
@@ -49,18 +50,6 @@ class ArttagsModel extends ListModel {
 		parent::__construct($config);
 	}
 
-	/**
-	 * Method to auto-populate the model state.
-	 *
-	 * Note. Calling getState in this method will result in recursion.
-	 *
-	 * @param   string  $ordering   An optional ordering field.
-	 * @param   string  $direction  An optional direction (asc|desc).
-	 *
-	 * @return  void
-	 *
-	 * @since   1.6
-	 */
 	protected function populateState($ordering = 'a.id', $direction = 'asc')
 	{
 		$app = Factory::getApplication();
@@ -113,13 +102,6 @@ class ArttagsModel extends ListModel {
 
 	}
 
-	/**
-	 * Build an SQL query to load the list data.
-	 *
-	 * @return  JDatabaseQuery
-	 *
-	 * @since   1.6
-	 */
 	protected function getListQuery()
 	{
 		// Create a new query object.
@@ -340,25 +322,33 @@ class ArttagsModel extends ListModel {
 
 	public function getItems() {
 	    $items  = parent::getItems();
-	    $dtags = array();
+	    $this->dtags = array();
 	    if ($items) {
             $helper = new TagsHelper;
 	        foreach ($items as $item) {
 	            $item->tags = $helper->getItemTags('com_content.article',$item->id);
-	            foreach ($item->tags as $key=>$tag) {
-	                if (key_exists($key,$dtags)) {
-	                    $dtags[$key]['cnt'] ++;
-	                } else {
-	                    $dtags[$key] = array('title'=>$item->title, 'cnt' => 1);
-	                }
+	            if (!empty($item->tags)) {
+	                $this->taggeditemcnt ++;
+    	            foreach ($item->tags as $key=>$tag) {
+    	                if (key_exists($key,$this->dtags)) {
+    	                    $this->dtags[$key]['cnt'] ++;
+    	                } else {
+    	                    $this->dtags[$key] = array('title'=>$tag->title, 'cnt' => 1);
+    	                }	                
+	               }
 	            }
 	        }
-	        $this->tagcnt = count($dtags);
 	    }
 	    return $items;
 	}
 	
-
+	public function getDtags() {
+	    return $this->dtags;
+	}
+	
+	public function getTaggeditemCnt() {
+	    return $this->taggeditemcnt;
+	}
 	
 	public function getTags() {
 	    $db    = $this->getDatabase();

@@ -67,13 +67,14 @@ if ($saveOrder && !empty($this->items)) {
 		<h3><?php echo Text::_('XBARTMAN_ARTICLE_SHORTCODES')?></h3>
 		<h4>
 			<span class="xbpl20"><?php echo Text::_('XB_FOUND').' '.count($this->sccnts).' '.Text::_('XBARTMAN_DISTINCT_SHORTCODES').' '; ?></span>
-		    <?php echo Text::_('XB_IN').' '.$this->shortcodearticles.' '.Text::_('XBARTMAN_ARTICLES_FILTERED'); ?>
+		    <?php echo Text::_('XB_IN').' '.$this->shortcodearticles.' '.lcfirst(Text::_('XB_ARTICLES')); ?>
 		</h4>
     	<ul class="inline">
     		<li><i><?php echo Text::_('XBARTMAN_COUNTS_SCODES'); ?>:</i></li>
     		<?php foreach ($this->sccnts as $key=>$cnt) : ?>
     		    <li><a href="index.php?option=com_xbarticleman&view=artscodes&sc=<?php echo $key; ?>&filter[scfilt]=<?php echo $key; ?>" 
-					 class="xbbadge badge-yellow xbpl10"><?php echo $key; ?></a> (<?php echo $cnt; ?>)</li>
+					 class="xbbadge badge-yellow xbpl10"><?php echo $key; ?>
+    		    	</a><span class="xbbadge badge-yellow xb085" style="padding:2px 6px 4px;"><?php echo $cnt; ?></span>
     	<?php endforeach; ?>
     	</ul>
        	<span class="xbnit xb09"><?php echo Text::_('XBARTMAN_CLICK_SCODE_ABOVE'); ?>.</span>
@@ -101,7 +102,7 @@ if ($saveOrder && !empty($this->items)) {
 			
 			</div>
 			<div class="pull-left" style="width:60%">
-          		<p class="xbtr"><?php echo Text::_('XBARTMAN_AUTOCLOSE_DROPS'); ?> <input  type="checkbox" id="autoclose" name="autoclose" value="yes" style="margin:0 5px;" />
+          		<p class="xbtr xbnote xbmb5"><?php echo Text::_('XBARTMAN_AUTOCLOSE_DROPS'); ?> <input  type="checkbox" id="autoclose" name="autoclose" value="yes" style="margin:0 5px;" />
           		</p>
           	</div>
 
@@ -224,7 +225,8 @@ if ($saveOrder && !empty($this->items)) {
                                     ?>
 						</td>
 						<td class="has-context">
-							<div class="pull-left"><p style="margin-bottom:4px;">
+							<div class="pull-left">
+								<p class="xbmb0">
 								<?php if ($item->checked_out) : ?>
 									<?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'articles.', $canCheckin); ?>
 								<?php endif; ?>
@@ -238,20 +240,22 @@ if ($saveOrder && !empty($this->items)) {
 									" title="<?php echo Text::_('XBARTMAN_FULL_EDIT'); ?>">										
 										<span class="icon-edit xbpl10"></span></a>
 								<?php else : ?>
-									<span title="<?php echo Text::sprintf('JFIELD_ALIAS_LABEL', $this->escape($item->alias)); ?>"><?php echo $this->escape($item->title); ?></span>
+									<span title="<?php echo Text::sprintf('JFIELD_ALIAS_LABEL', $this->escape($item->alias)); ?>">
+										<?php echo $this->escape($item->title); ?></span>
 								<?php endif; ?>
 								<?php $pvuri = "'".(Uri::root().'index.php?option=com_content&view=article&tmpl=component&id='.$item->id)."'"; ?>
           						<?php $pvtit = "'".$item->title."'"; ?>
-                                <span  data-bs-toggle="modal" data-bs-target="#pvModal" data-bs-source="<?php echo $pvuri; ?>" data-bs-itemtitle="<?php echo $item->title; ?>" 
-                                title="<?php echo Text::_('XBARTMAN_MODAL_PREVIEW'); ?>" 
+                                <span  data-bs-toggle="modal" data-bs-target="#pvModal" data-bs-source="<?php echo $pvuri; ?>" 
+                                	data-bs-itemtitle="<?php echo $item->title; ?>" title="<?php echo Text::_('XBARTMAN_MODAL_PREVIEW'); ?>" 
           							onclick="var pv=document.getElementById('pvModal');
           								pv.querySelector('.modal-body .iframe').setAttribute('src',<?php echo $pvuri; ?>);
           								pv.querySelector('.modal-title').textContent=<?php echo $pvtit; ?>;"
                                 >
 									<span class="icon-eye xbpl10"></span></span>
 								</p>
-								<span class="xbpl20 xb09"><i><?php echo Text::_('XB_ALIAS'); ?></i>: <?php echo $this->escape($item->alias); ?>
-								</span>
+								<p class="xbpl20 xb085 xbmb5"><i><?php echo Text::_('XB_ALIAS'); ?></i>: <?php echo $this->escape($item->alias); ?>
+								<br /><i><?php echo Text::_('XB_NOTE'); ?></i> <b><?php echo $item->note; ?></b>
+								</p>
 								<div>
 									<?php
 									$ParentCatUrl = Route::_('index.php?option=com_categories&task=category.edit&id=' . $item->parent_category_id . '&extension=com_content');
@@ -264,14 +268,14 @@ if ($saveOrder && !empty($this->items)) {
 											     echo $bits[$i].' &#187; ';
 										     }
 									endif; ?>
-									<span style="padding-left:15px;">
+									<p class="xb085 xbpl20 xbmb5"><i><?php echo Text::_('XB_CATEGORY'); ?> </i>
 									<?php if ($canEditCat || $canEditOwnCat) : ?>
 										<a class="hasTooltip xblabel label-cat xb085" href="<?php echo $CurrentCatUrl; ?> " title="<?php echo $EditCatTxt; ?>">
 											<?php echo $this->escape($item->category_title); ?></a>
 									<?php else : ?>
 										<span class="xblabel label-cat xb085"><?php echo $this->escape($item->category_title); ?></span>
 									<?php endif; ?>
-									</span>
+									</p>
 								</div>
 							</div>
 						</td>

@@ -41,8 +41,8 @@
 		<field
 			name="note"
 			type="textarea"
-			label="XBARTMAN_FIELD_NOTE_LABEL"
-			description="XBARTMAN_FIELD_NOTE_DESC"
+			label="XB_ADMIN_NOTE"
+			description="XB_FIELD_ADMIN_NOTE_DESC"
 			class="span12"
 			size="40"
 			rows="3"

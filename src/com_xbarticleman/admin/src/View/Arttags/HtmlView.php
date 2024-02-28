@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager-j5
  * @filesource admin/src/View/Arttags/HtmlView.php
- * @version 0.0.8.2 20th February 2024
+ * @version 0.1.0.5 28th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -49,8 +49,9 @@ class HtmlView extends BaseHtmlView {
         $this->state         = $this->get('State');
         $this->filterForm    = $this->get('FilterForm');
         $this->activeFilters = $this->get('ActiveFilters');
-        $tags = $this->get('Tags');
-        $dtagcnt = $this->get('Dtagcnt');
+//        $tags = $this->get('Tags');
+        $this->dtags = $this->get('Dtags');
+        $this->taggeditemcnt = $this->get('Taggeditemcnt');
         
         // Check for errors.
         if (count($errors = $this->get('Errors')))
@@ -58,33 +59,33 @@ class HtmlView extends BaseHtmlView {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
         
-        $this->taggedarticles=count(array_count_values(array_column($tags, 'artid')));
+//        $this->taggedarticles=count(array_count_values(array_column($tags, 'artid')));
         
         //because we want id, title and cnt we'll have to iterate the tags array rather than using array_count etc
-        $this->tagcnts = array();
-        foreach ($tags as $k=>$t) {
-            if (!key_exists($t->tagid, $this->tagcnts)) {
-                $this->tagcnts[$t->tagid] =array( 'tagid'=>$t->tagid,'title'=>$t->title,'cnt'=> 0 );
-            }
-            $this->tagcnts[$t->tagid]['cnt'] ++;
-        }
+//         $this->tagcnts = array();
+//         foreach ($tags as $k=>$t) {
+//             if (!key_exists($t->tagid, $this->tagcnts)) {
+//                 $this->tagcnts[$t->tagid] =array( 'tagid'=>$t->tagid,'title'=>$t->title,'cnt'=> 0 );
+//             }
+//             $this->tagcnts[$t->tagid]['cnt'] ++;
+//         }
         
-        $where = 'state IN (1,0)';
-        $this->statefilt = 'published and unpublished';
-        if (array_key_exists('published', $this->activeFilters)) {
-            $published = $this->activeFilters['published'];
-            if (is_numeric($published)) {
-                $where = 'state = ' . (int) $published;
-                $this->statefilt = array('trashed','','unpublished','published','archived')[$published+2];
-            } else {
-                $this->statefilt = 'all';
-                $where = '';
-            }
-        } else {
-            $this->statefilt = 'published and unpublished';
-        }
-        $this->statearticles = XbarticlemanHelper::getItemCnt('#__content', $where);
-        $this->totalarticles = XbarticlemanHelper::getItemCnt('#__content', '');
+//         $where = 'state IN (1,0)';
+//         $this->statefilt = 'published and unpublished';
+//         if (array_key_exists('published', $this->activeFilters)) {
+//             $published = $this->activeFilters['published'];
+//             if (is_numeric($published)) {
+//                 $where = 'state = ' . (int) $published;
+//                 $this->statefilt = array('trashed','','unpublished','published','archived')[$published+2];
+//             } else {
+//                 $this->statefilt = 'all';
+//                 $where = '';
+//             }
+//         } else {
+//             $this->statefilt = 'published and unpublished';
+//         }
+//         $this->statearticles = XbarticlemanHelper::getItemCnt('#__content', $where);
+//         $this->totalarticles = XbarticlemanHelper::getItemCnt('#__content', '');
         
         $this->addToolbar();
         

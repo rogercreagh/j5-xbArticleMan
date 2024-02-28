@@ -65,19 +65,19 @@ if ($saveOrder && !empty($this->items)) {
 	<form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=arttags'); ?>" method="post" name="adminForm" id="adminForm">
 		<h3><?php echo Text::_('XBARTMAN_ARTICLES_WITH_TAGS'); ?></h3>
 		<h4>
-			<span class="xbpl20"><?php echo Text::_('XB_FOUND').' '.count($this->tagcnts).' '.Text::_('XBARTMAN_DISTINCT_TAGS').' '; ?></span>
-		    <?php echo Text::_('XB_IN').' '.$this->taggedarticles.' '.lcfirst(Text::_('XB_ARTICLES')); ?>
+			<span class="xbpl20"><?php echo Text::_('XB_FOUND').' '.count($this->dtags).' '.Text::_('XBARTMAN_DISTINCT_TAGS').' '; ?></span>
+		    <?php echo Text::_('XB_IN').' '.$this->taggeditemcnt.' '.lcfirst(Text::_('XB_ARTICLES')); ?>
 		</h4>
     	<ul class="inline">
     		<li><i><?php echo Text::_('XBARTMAN_COUNTS_TAGS'); ?>:</i></li>
-    		<?php foreach ($this->tagcnts as $key=>$tag) : ?>
+    		<?php foreach ($this->dtags as $key=>$tag) : ?>
     		    <li><a href="index.php?option=com_xbarticleman&view=arttags&filter[tagfilt]=<?php echo $key; ?>"" 
     		    	class="xbbadge badge-tag xbpl10"><?php echo $tag['title']; ?>
-    		    	</a><?php echo '('.$tag['cnt'].')'; ?>
+    		    	</a><span class="xbbadge badge-ltblue xb085" style="padding:2px 6px 4px;"><?php echo $tag['cnt']; ?></span>
      		    	<a href="index.php?option=com_xbarticleman&view=tagitems&tagid=<?php echo $key; ?>" 
     		    		class="nohint" title="<?php echo Text::_('XBARTMAN_TAG_EDIT'); ?>" ><span class="far fa-rectangle-list"></span>
     		    	</a>   		    	
-    		    	<a href="index.php?option=com_tags&task=tag.edit&id=<?php echo $tag['tagid']; ?>" 
+    		    	<a href="index.php?option=com_tags&task=tag.edit&id=<?php echo $key; ?>" 
     		    		class="nohint xbpl20" target="xbedit" title="<?php echo Text::_('XBARTMAN_TAG_EDIT'); ?>" ><span class="icon-edit"></span>
     		    	</a>
     		    </li>
@@ -123,7 +123,7 @@ if ($saveOrder && !empty($this->items)) {
     		</p>
 			<?php $rowcnt = count($this->items); ?>	
 			<div class="pull-left" style="width:60%">
-          		<p class="xbtr">Auto close details dropdowns<input  type="checkbox" id="autoclose" name="autoclose" value="yes" checked="true" style="margin:0 5px;" />
+          		<p class="xbtr xbnote xbmb5">Auto close details dropdowns<input  type="checkbox" id="autoclose" name="autoclose" value="yes" checked="true" style="margin:0 5px;" />
           		</p>
           	</div>
 			
@@ -209,8 +209,8 @@ if ($saveOrder && !empty($this->items)) {
 					$canEditOwnCat = $user->authorise('core.edit.own',   'com_xbarticleman.category.' . $item->catid) && $item->category_uid == $userId;
 					$canEditParCat    = $user->authorise('core.edit',       'com_xbarticleman.category.' . $item->parent_category_id);
 					$canEditOwnParCat = $user->authorise('core.edit.own',   'com_xbarticleman.category.' . $item->parent_category_id) && $item->parent_category_uid == $userId;
-					$helper = new TagsHelper;
-					$itemtags = $helper->getItemTags('com_content.article',$item->id);
+//					$helper = new TagsHelper;
+//					$itemtags = $helper->getItemTags('com_content.article',$item->id);
 					?>
 					<tr class="row<?php echo $i % 2; ?>" sortable-group-id="<?php echo $item->catid; ?>">
 						<td>
@@ -249,7 +249,8 @@ if ($saveOrder && !empty($this->items)) {
                                     ?>
 						</td>
 						<td class="has-context">
-							<div class="pull-left"><p class="xbm0">
+							<div class="pull-left">
+								<p class="xbm0">
 								<?php if ($item->checked_out) : ?>
 									<?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'artimgs.', $canCheckin); ?>
 								<?php endif; ?>
@@ -262,24 +263,46 @@ if ($saveOrder && !empty($this->items)) {
 									<?php echo Route::_('index.php?option=com_content&task=article.edit&id=' . $item->id);?>
 									" title="<?php echo Text::_('XBARTMAN_FULL_EDIT'); ?>" target="xbedit"><span class="icon-edit xbpl10"></span></a>
 								<?php else : ?>
-									<span title="<?php echo Text::sprintf('JFIELD_ALIAS_LABEL', $this->escape($item->alias)); ?>"><?php echo $this->escape($item->title); ?></span>
+									<span title="<?php echo Text::sprintf('JFIELD_ALIAS_LABEL', $this->escape($item->alias)); ?>">
+										<?php echo $this->escape($item->title); ?></span>
 								<?php endif; ?>
 								<?php $pvuri = "'".(Uri::root().'index.php?option=com_content&view=article&tmpl=component&id='.$item->id)."'"; ?>
           						<?php $pvtit = "'".$item->title."'"; ?>
-                                <span  data-bs-toggle="modal" data-bs-target="#pvModal" data-bs-source="<?php echo $pvuri; ?>" data-bs-itemtitle="<?php echo $item->title; ?>" 
-                                title="<?php echo Text::_('XBARTMAN_MODAL_PREVIEW'); ?>" 
+                                <span  data-bs-toggle="modal" data-bs-target="#pvModal" data-bs-source="<?php echo $pvuri; ?>" 
+                                	data-bs-itemtitle="<?php echo $item->title; ?>" title="<?php echo Text::_('XBARTMAN_MODAL_PREVIEW'); ?>" 
           							onclick="var pv=document.getElementById('pvModal');pv.querySelector('.modal-body .iframe').setAttribute('src',<?php echo $pvuri; ?>);pv.querySelector('.modal-title').textContent=<?php echo $pvtit; ?>;"
                                 	><span class="icon-eye xbpl10"></span></span>
 								</p>
-								<span class="xbpl20 xb09"><i><?php echo Text::_('XB_ALIAS'); ?></i>: <?php echo $this->escape($item->alias); ?>
-								</span>
+								<p class="xbpl20 xb085 xbmb5"><i><?php echo Text::_('XB_ALIAS'); ?></i>: <?php echo $this->escape($item->alias); ?>
+								<br /><i><?php echo Text::_('XB_NOTE'); ?></i> <b><?php echo $item->note; ?></b>
+								</p>
+								<div>
+									<?php
+									$CurrentCatUrl = Route::_('index.php?option=com_categories&task=category.edit&id=' . $item->catid . '&extension=com_content');
+									$EditCatTxt = Text::_('JACTION_EDIT') . ' ' . Text::_('JCATEGORY');
+
+									if ($item->category_level != '1') :
+										     $bits = explode('/', $item->category_path);
+										     for ($i=0; $i<$item->category_level-1; $i++) {
+											     echo $bits[$i].' &#187; ';
+										     }
+									endif; ?>
+									<p class="xb085 xbpl20 xbmb5"><i><?php echo Text::_('XB_CATEGORY'); ?> </i>
+									<?php if ($canEditCat || $canEditOwnCat) : ?>
+										<a class="hasTooltip xblabel label-cat xb085" href="<?php echo $CurrentCatUrl; ?> " title="<?php echo $EditCatTxt; ?>">
+											<?php echo $this->escape($item->category_title); ?></a>
+									<?php else : ?>
+										<span class="xblabel label-cat xb085"><?php echo $this->escape($item->category_title); ?></span>
+									<?php endif; ?>
+									</p>
+								</div>
 							</div>
 						</td>
 						<td>
                         	<div class="tags small">
                         	<?php  
                                 $founders = []; 
-                                foreach ($itemtags as  $tag) :
+                                foreach ($item->tags as  $tag) :
                                     $founder = explode('/',$tag->path)[0];
                                     if (!array_key_exists($founder, $founders)) {
                                         $founders[$founder] = array('founder'=>$founder,'children'=>[]);
@@ -290,7 +313,7 @@ if ($saveOrder && !empty($this->items)) {
                                 if (count($founders) > 2) : ?>
                                     <details>
                                     	<summary>
-                                    		<?php echo count($itemtags).' '.Text::_('tags assigned in').' '.count($founders).' '.Text::_('groups'); ?>
+                                    		<?php echo count($item->tags).' '.Text::_('tags assigned in').' '.count($founders).' '.Text::_('branches'); ?>
                                     	</summary>
                                 <?php endif; ?>    	
                                 

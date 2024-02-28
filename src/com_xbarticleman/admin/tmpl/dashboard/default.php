@@ -63,7 +63,7 @@ HTMLHelper::_('formbehavior.chosen', 'select');
 						<tr>
 							<td><?php echo Text::_('XBARTMAN_ARTICLES_UNCAT'); ?></td>
 							<td><span class="xbbadge<?php echo $this->artcnts['uncat']>0 ?'badge-ltgrey' : ''; ?>"><?php echo $this->artcnts['uncat']; ?></span></td>
-							<td><?php echo Text::_('XBARTMAN_ARTICLES_MISS_CAT'); ?> (<span class="xbred"><?php echo lcfirst(Text::_('error')); ?></span>)</td>
+							<td><?php echo Text::_('XBARTMAN_ARTICLES_MISS_CAT'); ?></td>
 							<td><span class="xbbadge<?php echo $this->artcnts['nocat']>0 ?'badge-red' : ''; ?>"><?php echo $this->artcnts['nocat']; ?></span></td>
 						</tr>
 					</table>
