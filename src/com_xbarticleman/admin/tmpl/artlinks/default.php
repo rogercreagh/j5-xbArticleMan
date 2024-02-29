@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/tmpl/artlinks/default.php
- * @version 0.1.0.5 28th February 2024
+ * @version 0.1.0.6 29th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -80,7 +80,41 @@ if ($saveOrder && !empty($this->items)) {
           </table>
     	</div>
 		<h3><?php echo Text::_('XBARTMAN_ARTICLE_LINKS')?></h3>
-		<h4><?php echo Text::_('XBARTMAN_TOTAL_ARTICLES').' '.$this->totalarticles.'. '.Text::_('XB_LISTING').' '.$this->statearticles.' '.lcfirst(Text::_('XB_ARTICLES')).' '.$this->statefilt; ?></h4>
+		
+		<h4 class="xbpl20">
+			<?php echo Text::_('XB_FOUND').' '.$this->linkcnts['emblinkcnt'].' '.Text::_('XBARTMAN_EMBEDED_LINKS').' '; ?>
+		    <?php echo Text::_('XB_IN').' '.$this->linkcnts['embarts'].' '.lcfirst(Text::_('XB_ARTICLES')); ?>
+			<?php echo Text::_('XB_AND').' '.$this->linkcnts['rellinkcnt'].' '.Text::_('XBARTMAN_RELATED_LINKS').' '; ?>
+		    <?php echo Text::_('XB_IN').' '.$this->linkcnts['relarts'].' '.lcfirst(Text::_('XB_ARTICLES')); ?>
+		</h4>
+		
+		<?php if (!empty($this->items)) : ?>
+			<p><span class="xbbadge badge-<?php echo ($this->extchkdone == 1) ? 'blue' : 'warning' ; ?>">
+    				<?php echo $this->linkcnts['extlinkcnt']; ?>
+    			</span>
+    			<?php echo lcfirst(Text::_('XBARTMAN_EXT_LINKS_FOUND')); ?> 
+    			<?php if ($this->linkcnts['extlinkcnt'] > 0 ) : ?>
+    				<?php if ($this->extchkdone == 1) {
+    				    echo Text::_('XBARTMAN_AND_CHECKED');
+    				} else {
+    				    echo Text::_('XBARTMAN_TO_BE_CHECKED'); 
+    				} ?>
+    		        <input type="hidden" name="checkext" id="checkext" value="0" /> 
+    		        <span class="xbpl20"> </span>
+        			<input type="button" class="xbabtn" value="<?php echo ($this->extchkdone == 1) ? Text::_('XBARTMAN_RECHECK') : Text::_('XBARTMAN_CHECK_NOW'); ?>" 
+        				onClick="if (pleaseWait('waiter')){ this.form.submit()};" /> 
+                    <span class="xbnote xbpl20"><?php echo Text::_('XBARTMAN_LINK_CHECK_NOTE'); ?></span>
+    			<?php endif; ?>
+    			<br /><span class="xbbadge badge-blue"><?php echo $this->linkcnts['intlinkcnt']; ?></span>
+    			&nbsp;<?php echo lcfirst(Text::_('XBARTMAN_LOCAL_CHECKED')); ?>.  
+    			<span class="xbbadge badge-cyan"><?php echo $this->linkcnts['inpagelinkcnt']; ?></span>
+    			&nbsp;<?php echo lcfirst(Text::_('XBARTMAN_IN_PAGE_FOUND')); ?>.  
+    			<span class="xbbadge badge-ltblue"><?php echo $this->linkcnts['otherlinkcnt']; ?></span>
+    			&nbsp;<?php echo lcfirst(Text::_('XBARTMAN_OTHER_LINKS_FOUND')); ?>.  
+    			<span class="xbbadge badge-ltgrey"><?php echo $this->linkcnts['anchorcnt']; ?></span>
+    			&nbsp;<?php echo lcfirst(Text::_('XBARTMAN_PAGE_ANCHS_FOUND')); ?>.  
+			</p>		
+		<?php endif;?>
 		<?php
 		// Search tools bar
 		echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this));
@@ -99,27 +133,6 @@ if ($saveOrder && !empty($this->items)) {
 				<?php echo Text::_('JGLOBAL_NO_MATCHING_RESULTS'); ?>
 			</div>
 		<?php else : ?>
-			<div>
-				<p>
-				<?php echo $this->linkcnts['extlinkcnt'].' '.lcfirst(Text::_('external links found')); ?> 
-				<?php if ($this->linkcnts['extlinkcnt'] > 0 ) : ?>
-    				<?php if ($this->extchkdone == 1) {
-    				    echo Text::_('and checked');
-    				} else {
-    				    echo Text::_('to be checked.'); 
-    				} ?>
-    		        <input type="hidden" name="checkext" id="checkext" value="0" /> 
-    		        <span style="padding-left:20px;"> </span>
-        			<input type="button" class="xbabtn" value="Check Now" onClick="if (pleaseWait('waiter')){ this.form.submit()};" /> 
-                    <span class="alert-info xbpl20"><i><?php echo Text::_('XBARTMAN_LINK_CHECK_NOTE'); ?></i></span>
-				<?php endif; ?>
-				<br />
-				<?php echo $this->linkcnts['intlinkcnt'].' '.lcfirst(Text::_('local links found')); ?>.  
-				<?php echo $this->linkcnts['otherlinkcnt'].' '.lcfirst(Text::_('other links found')); ?>.  
-				<?php echo $this->linkcnts['anchorcnt'].' '.lcfirst(Text::_('page anchors found')); ?>.  
-				</p>
-			</div>		
-			
 			<div class="pull-left" style="width:60%">
           		<p class="xbtr xbnote xbmb5">Auto close details dropdowns <input  type="checkbox" id="autoclose" name="autoclose" value="yes" style="margin:0 5px;" />
           		</p>
@@ -203,7 +216,6 @@ if ($saveOrder && !empty($this->items)) {
 				<tbody>
 				<?php foreach ($this->items as $i => $item) :
 					$item->max_ordering = 0;
-					$ordering   = ($listOrder == 'a.ordering');
 					$canCreate  = $user->authorise('core.create',     'com_xbarticleman.category.' . $item->catid);
 					$canEdit    = $user->authorise('core.edit',       'com_xbarticleman.article.' . $item->id);
 					$canCheckin = $user->authorise('core.manage',     'com_checkin') || $item->checked_out == $userId || $item->checked_out == 0;
@@ -337,100 +349,45 @@ if ($saveOrder && !empty($this->items)) {
 						</td>
 						<td>
 							<?php if (count($item->emblinks['local']) >0) : ?>
-								<?php if (count($item->emblinks['local']) >1) : ?>
-									<details>
-										<summary>
-								<?php endif; ?>
-								<b><?php echo Text::_('This Site Links'); ?></b>
-								<?php if (count($item->emblinks['local']) >1) : ?>
-									 (<?php echo count($item->emblinks['local']); ?> )
-										</summary>
-								<?php endif; ?>
+								<?php echo Text::_('XBARTMAN_THIS_SITE_LINKS'); ?>
 								<?php foreach ($item->emblinks['local'] as $link) : ?>
 									<?php $this->emblink = $link; 
                                         echo $this->loadTemplate('emb_links'); ?>
 								<?php endforeach; ?>
-								<?php if (count($item->emblinks['local']) >1) : ?>
-									</details>
-								<?php endif; ?>
 							<?php endif; ?>
 							
 							<?php if (count($item->emblinks['external']) >0) : ?>
-								<?php if (count($item->emblinks['external']) >1) : ?>
-									<details>
-										<summary>
-								<?php endif; ?>
-								<b><?php echo Text::_('External Links'); ?></b>
-								<?php if (count($item->emblinks['external']) >1) : ?>
-									(<?php echo count($item->emblinks['external']); ?>)
-										</summary>
-								<?php endif; ?>
+								<?php echo Text::_('XBARTMAN_EXTERNAL_LINKS'); ?>
 								<?php foreach ($item->emblinks['external'] as $link) : ?>
 									<?php $this->emblink = $link; 
                                         echo $this->loadTemplate('emb_links'); ?>
 								<?php endforeach; ?>
-								<?php if (count($item->emblinks['external']) >1) : ?>
-									</details>
-								<?php endif; ?>
 							<?php endif; ?>							
 						</td>
 						<td>
 							<?php if (count($item->emblinks['other']) >0) : ?>
-								<?php if (count($item->emblinks['other']) >1) : ?>
-									<details>
-										<summary>
-								<?php endif; ?>
-								<b><?php echo Text::_('non http links'); ?></b>
-								<?php if (count($item->emblinks['other']) >1) : ?>
-									(<?php echo count($item->emblinks['other']); ?>)
-										</summary>
-								<?php endif; ?>
+								<?php echo Text::_('XBARTMAN_NON_HTTP_LINKS'); ?>
 								<?php foreach ($item->emblinks['other'] as $link) : ?>
 									<?php $this->emblink = $link; 
                                         echo $this->loadTemplate('emb_links'); ?>
 								<?php endforeach; ?>
-								<?php if (count($item->emblinks['other']) >1) : ?>
-									</details>
-								<?php endif; ?>
 							<?php endif; ?>
 														
 							<?php if (count($item->emblinks['inpage']) >0) : ?>
-								<?php if (count($item->emblinks['inpage']) >1) : ?>
-									<details>
-										<summary>
-								<?php endif; ?>
-								<b><?php echo Text::_('In-page links'); ?></b>
-								<?php if (count($item->emblinks['inpage']) >1) : ?>
-									(<?php echo count($item->emblinks['inpage']); ?>)
-									</summary>
-								<?php endif; ?>
+								<?php echo Text::_('XBARTMAN_IN_PAGE_LINKS'); ?>
 								<?php foreach ($item->emblinks['inpage'] as $link) : ?>
 									<?php $this->emblink = $link; 
 									   echo $this->loadTemplate('emb_links'); ?>
 								<?php endforeach; ?>
-								<?php if (count($item->emblinks['inpage']) >1) : ?>
-									</details>
-								<?php endif; ?>
 							<?php endif; ?>		
 												
 							<?php if (count($item->emblinks['anchor']) >0) : ?>
-								<?php if (count($item->emblinks['anchor']) >1) : ?>
-									<details style="overflow-wrap: anywhere;">
-										<summary>
-								<?php endif; ?>
-								<b><?php echo Text::_('Anchors'); ?></b>
-								<?php if (count($item->emblinks['anchor']) >1) : ?>
-									(<?php echo count($item->emblinks['anchor']); ?>)
-									</summary>
-								<?php endif; ?>
+								<?php echo Text::_('XBARTMAN_PAGE_ANCHORS'); ?>
 								<p class="xb09 xbml10">
 								<?php foreach ($item->emblinks['anchor'] as $link) : ?>
 									<i><?php echo Text::_('ID'); ?></i>: <?php echo $link->id; ?><br />
 								<?php endforeach; ?>
 								</p>
-								<?php if (count($item->emblinks['anchor']) >1) : ?>
-									</details>
-								<?php endif; ?>
 							<?php endif; ?>							
 						
 						</td>

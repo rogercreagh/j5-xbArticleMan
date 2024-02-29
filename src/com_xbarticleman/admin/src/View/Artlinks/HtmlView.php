@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/src/View/Artlinks/HtmlView.php
- * @version 0.0.5.2 25th January 2024
+ * @version 0.1.0.6 29th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -51,28 +51,29 @@ class HtmlView extends BaseHtmlView {
         $this->extchkdone      = $this->state->get('xbarticleman.checkext','x');
         $this->linkcnts = $this->get('Linkcnts');
         
+        
         // Check for errors.
         if (count($errors = $this->get('Errors')))
         {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
         
-        $where = 'state IN (1,0)';
-        $this->statefilt = 'published and unpublished';
-        if (array_key_exists('published', $this->activeFilters)) {
-            $published = $this->activeFilters['published'];
-            if (is_numeric($published)) {
-                $where = 'state = ' . (int) $published;
-                $this->statefilt = array('trashed','','unpublished','published','archived')[$published+2];
-            } else {
-                $this->statefilt = 'all';
-                $where = '';
-            }
-        } else {
-            $this->statefilt = 'published and unpublished';
-        }
-        $this->statearticles = XbarticlemanHelper::getItemCnt('#__content', $where);
-        $this->totalarticles = XbarticlemanHelper::getItemCnt('#__content', '');
+//         $where = 'state IN (1,0)';
+//         $this->statefilt = 'published and unpublished';
+//         if (array_key_exists('published', $this->activeFilters)) {
+//             $published = $this->activeFilters['published'];
+//             if (is_numeric($published)) {
+//                 $where = 'state = ' . (int) $published;
+//                 $this->statefilt = array('trashed','','unpublished','published','archived')[$published+2];
+//             } else {
+//                 $this->statefilt = 'all';
+//                 $where = '';
+//             }
+//         } else {
+//             $this->statefilt = 'published and unpublished';
+//         }
+//         $this->statearticles = XbarticlemanHelper::getItemCnt('#__content', $where);
+//         $this->totalarticles = XbarticlemanHelper::getItemCnt('#__content', '');
         
         $this->addToolbar();
         

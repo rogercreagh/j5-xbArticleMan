@@ -1,14 +1,17 @@
 /*******
  * @package xbArticleManager j5
  * @filesource media/css/xbarticleman.css
- * @version 0.0.9.0 22nd February 2024
+ * @version 0.1.0.6 29th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
  ******/
 
 /* Joomla system overrides/improvements */ 
-
+#xbcomponent table details {
+	margin:0;
+	overflow-wrap: anywhere;
+}
 table.xbtablelist thead {
 	border-top: solid 1px #88a  !important;
     border-left: solid 1px #88a;

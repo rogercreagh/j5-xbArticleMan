@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager
  * @filesource admin/src/Model/ArtscodesModel.php
- * @version 0.0.6.0 27th January 2024
+ * @version 0.1.0.6 29th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -162,6 +162,10 @@ class ArtscodesModel extends ListModel {
 							parent.created_user_id AS parent_category_uid, parent.level AS parent_category_level')
 							->join('LEFT', '#__categories AS parent ON parent.id = c.parent_id');
 							
+		// Join over the users for the author.
+		$query->select('ua.name AS author_name')
+		->join('LEFT', '#__users AS ua ON ua.id = a.created_by');
+		
 		// Filter by access level.
 		$access = $this->getState('filter.access');
 		
@@ -219,15 +223,31 @@ class ArtscodesModel extends ListModel {
 		// Filter by search in title.
 		$search = $this->getState('filter.search');
 		
-		if (!empty($search)) {
-		    if (stripos($search, 'id:') === 0) {
+		if (!empty($search))
+		{
+		    if (stripos($search, 'id:') === 0)
+		    {
 		        $query->where('a.id = ' . (int) substr($search, 3));
-		    } elseif (stripos($search, 'content:') === 0) {
+		    }
+		    elseif (stripos($search, 'author:') === 0)
+		    {
+		        $search = $db->quote('%' . $db->escape(substr($search, 7), true) . '%');
+		        $query->where('(ua.name LIKE ' . $search . ' OR ua.username LIKE ' . $search . ')');
+		    }
+		    elseif (stripos($search, 'content:') === 0)
+		    {
 		        $search = $db->quote('%' . $db->escape(substr($search, 8), true) . '%');
 		        $query->where('(a.introtext LIKE ' . $search . ' OR a.fulltext LIKE ' . $search . ')');
-		    } else {
+		    }
+		    elseif (stripos($search, 'note:') === 0)
+		    {
+		        $search = $db->quote('%' . $db->escape(substr($search, 8), true) . '%');
+		        $query->where('(a.note LIKE ' . $search . ')');
+		    }
+		    else
+		    {
 		        $search = $db->quote('%' . str_replace(' ', '%', $db->escape(trim($search), true) . '%'));
-		        $query->where('(a.title LIKE ' . $search . ' OR a.alias LIKE ' . $search . ' OR a.note LIKE ' . $search . ')');
+		        $query->where('(a.title LIKE ' . $search . ' OR a.alias LIKE ' . $search . ')');
 		    }
 		}
 		

@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager-j5
  * @filesource admin/src/Model/ArtlinksModel.php
- * @version 0.0.5.1 24th January 2024
+ * @version 0.1.0.6 29th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -27,6 +27,10 @@ class ArtlinksModel extends ListModel {
     protected $intlinkcnt = 0;
     protected $otherlinkcnt = 0;
     protected $anchorcnt = 0;
+    protected $embarts = 0;
+    protected $relarts = 0;
+    protected $rellnkcnt = 0;
+    protected $emblnkcnt = 0;
     
     public function __construct($config = array()) {
         
@@ -257,10 +261,15 @@ class ArtlinksModel extends ListModel {
 		        $search = $db->quote('%' . $db->escape(substr($search, 8), true) . '%');
 		        $query->where('(a.introtext LIKE ' . $search . ' OR a.fulltext LIKE ' . $search . ')');
 		    }
+		    elseif (stripos($search, 'note:') === 0)
+		    {
+		        $search = $db->quote('%' . $db->escape(substr($search, 8), true) . '%');
+		        $query->where('(a.note LIKE ' . $search . ')');
+		    }
 		    else
 		    {
 		        $search = $db->quote('%' . str_replace(' ', '%', $db->escape(trim($search), true) . '%'));
-		        $query->where('(a.title LIKE ' . $search . ' OR a.alias LIKE ' . $search . ' OR a.note LIKE ' . $search . ')');
+		        $query->where('(a.title LIKE ' . $search . ' OR a.alias LIKE ' . $search . ')');
 		    }
 		}
 		
@@ -280,8 +289,13 @@ class ArtlinksModel extends ListModel {
     public function getItems() {
         $this->extlinkcnt = 0;
         $this->intlinkcnt = 0;
+        $this->inpagelinkcnt = 0;
         $this->otherlinkcnt = 0;
         $this->anchorcnt = 0;
+        $this->embarts = 0;
+        $this->relarts = 0;
+        $this->rellinkcnt = 0;
+        $this->emblinkcnt = 0;
         $items  = parent::getItems();
         if ($items) {
             
@@ -296,14 +310,15 @@ class ArtlinksModel extends ListModel {
                 $dom = new DOMDocument;
                 $dom->loadHTML($item->arttext,LIBXML_NOERROR);
                 $atags = $dom->getElementsByTagName('a');
-//                $atags = XbarticlemanHelper::getDocAnchors($item->arttext);
+                if ($atags->length > 0) $this->embarts ++;
                 foreach ($atags as $atag) {
                     $item->emblinks = $this->parseEmbLink($atag, $item->emblinks);
+                    $this->emblinkcnt ++;
                 }
                                 
                 $item->rellinks = array();
                 $urls = json_decode($item->urls);
-                if ($urls->urla) {
+                if ($urls->urla) {                    
                     $item->rellinks[] = $this->parseRelLink('A', $urls->urla, $urls->urlatext, $urls->targeta);
                 }
                 if ($urls->urlb) {
@@ -312,7 +327,8 @@ class ArtlinksModel extends ListModel {
                 if ($urls->urlc) {
                     $item->rellinks[] = $this->parseRelLink('C', $urls->urlc, $urls->urlctext, $urls->targeta);
                 }
-                
+                if (count($item->rellinks) > 0) $this->relarts ++;
+                $this->rellinkcnt += count($item->rellinks);
             }
         }
         return $items;
@@ -369,7 +385,7 @@ class ArtlinksModel extends ListModel {
                     } else {
                         if (isset($linkdata->hash)) { // its an inpage link, we can't set pvurl here as we don't know the item->id
                             $linkdata->type = 'inpage';
-                            $this->intlinkcnt ++;
+                            $this->inpagelinkcnt ++;
                         } else { // else very odd - no scheme host path or hash - just a query!!! do nothing
                             $linkdata->type = 'other';
                             $this->otherlinkcnt ++;
@@ -531,9 +547,12 @@ class ArtlinksModel extends ListModel {
     }
     
     public function getLinkcnts() {
-        return array('extlinkcnt' => $this->extlinkcnt, 'intlinkcnt' => $this->intlinkcnt, 'otherlinkcnt' => $this->otherlinkcnt, 'anchorcnt' => $this->anchorcnt);
+        return array('extlinkcnt' => $this->extlinkcnt, 'intlinkcnt' => $this->intlinkcnt, 'otherlinkcnt' => $this->otherlinkcnt, 
+            'inpagelinkcnt' => $this->inpagelinkcnt, 'anchorcnt' => $this->anchorcnt, 'embarts' => $this->embarts, 
+            'relarts' => $this->relarts, 'rellinkcnt' => $this->rellinkcnt, 'emblinkcnt' => $this->emblinkcnt);
     }
-    
+
+/**
     public function getAuthors()
     {
         // Create a new query object.
@@ -553,6 +572,7 @@ class ArtlinksModel extends ListModel {
         // Return the result
         return $db->loadObjectList();
     }
+ */
        
 }
  

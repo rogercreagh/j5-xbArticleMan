@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/tmpl/artlinks/default_emb_links.php
- * @version 0.0.5.1 24th January 2024
+ * @version 0.1.0.6 29th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -38,10 +38,12 @@ $link = $this->emblink;
         		</span>
 			<?php endif; ?>
     	</summary>    	
-    	<div class="xb09">						    	
-    		<i>Host</i>: <?php // echo $link->scheme.$link->host; ?>
-    			<?php echo ($link->type == 'local') ? '(local)' : $link->scheme.$link->host; ?><br />
-    		<i>Path</i>: <?php echo $link->path; ?><br/>
+    	<div class="xb09">	
+    		<?php if ($link->type != 'inpage') : ?>					    	
+        		<i>Host</i>: <?php // echo $link->scheme.$link->host; ?>
+        			<?php echo ($link->type == 'local') ? '(local)' : $link->scheme.$link->host; ?><br />
+        		<i>Path</i>: <?php echo $link->path; ?><br/>
+        	<?php endif; ?>
     		<?php if ($link->query != '') : ?> <i>Query</i>: <?php echo $link->query.'<br/>'; endif; ?>
     		<?php if ($link->hash != '') : ?> <i>hash</i>: <?php echo $link->hash.'<br/>'; endif; ?>
     		<?php if ($link->scheme != 'mailto') : ?> <i>Target</i>: <?php echo $link->target.'<br/>'; endif; ?>
