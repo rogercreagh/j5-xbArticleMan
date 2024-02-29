@@ -1,8 +1,12 @@
 #### xbArticleMan Changelog
 
-##### Conversion to J5 Progress this will be cleared at first RC5.0.0
+##### Conversion to J5 Progress this will be cleared at first Release v5.0.0
 
 
+
+**v0.0.9.1** 25th February 2024
+
+- Article Edit improvements
 
 **v0.0.8.2** 21st February 2024
 

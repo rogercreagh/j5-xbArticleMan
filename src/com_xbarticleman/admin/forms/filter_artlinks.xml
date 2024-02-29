@@ -12,7 +12,6 @@
 		<field name="artlist" type="list"
 			label="XBARTMAN_FILTER_ARTICLES_LABEL"
 			description="XBARTMAN_FILTER_ARTICLES_DESC"
-			default="0"
 			onchange="this.form.submit();"
 		>
 			<option value="0">XBARTMAN_ALL_ARTICLES</option>
@@ -43,7 +42,6 @@
 			extension="com_content"
 			onchange="this.form.submit();"
 			published="0,1,2"
-            default=""
 		>
 			<option value="">XBARTMAN_SELECT_CATEGORY</option>
 		</field>
@@ -73,7 +71,7 @@
 			label="COM_CONTENT_LIST_FULL_ORDERING"
 			description="COM_CONTENT_LIST_FULL_ORDERING_DESC"
 			onchange="this.form.submit();"
-			default="a.id DESC"
+			default="a.title ASC"
 			>
 			<option value="">JGLOBAL_SORT_BY</option>
 			<option value="a.ordering ASC">JGRID_HEADING_ORDERING_ASC</option>

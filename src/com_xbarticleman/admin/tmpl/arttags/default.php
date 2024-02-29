@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager-j5
  * @filesource admin/tmpl/artimgs/default.php
- * @version 0.1.0.5 28th February 2024
+ * @version 0.1.0.6 29thth February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -78,30 +78,12 @@ if ($saveOrder && !empty($this->items)) {
     		    		class="nohint" title="<?php echo Text::_('XBARTMAN_TAG_EDIT'); ?>" ><span class="far fa-rectangle-list"></span>
     		    	</a>   		    	
     		    	<a href="index.php?option=com_tags&task=tag.edit&id=<?php echo $key; ?>" 
-    		    		class="nohint xbpl20" target="xbedit" title="<?php echo Text::_('XBARTMAN_TAG_EDIT'); ?>" ><span class="icon-edit"></span>
+    		    		class="nohint" target="xbedit" title="<?php echo Text::_('XBARTMAN_TAG_EDIT'); ?>" ><span class="icon-edit"></span>
     		    	</a>
     		    </li>
     		<?php endforeach; ?>
     	</ul>
     	<p class="xbnit xb09" style="margin: -10px 0 4px 200px;"><?php echo Text::_('XBARTMAN_CLICK_TAG_ABOVE'); ?></p>
-    	<p><?php echo Text::_('XB_LISTING').' ';
-    	if (array_key_exists('artlist', $this->activeFilters)) {
-    	    switch ($this->activeFilters['artlist']) {
-    	    case 2:
-    	        echo $this->pagination->total.' '.Text::_('XBARTMAN_ARTICLES_WITHOUT_TAGS');
-    	       break;
-    	    case 1:
-    	       echo $this->pagination->total.' '.Text::_('XBARTMAN_TAGGED_ARTS');
-    	       break;
-    	    default:
-    	       echo Text::_('XBARTMAN_ALL_ARTICLES');
-    	       break;
-    	   }  	    
-    	} else {
-    	    echo $this->pagination->total.' '.Text::_('XBARTMAN_TAGGED_ARTS');
-    	} ?>
-    	<br /><span class="xbit xb09"><?php echo Text::_('XBARTMAN_ADD_FILTERS_BELOW'); ?></span>
-
 		<?php // Search tools bar
 		  echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this));
 		?>
@@ -118,10 +100,12 @@ if ($saveOrder && !empty($this->items)) {
 				<?php echo Text::_('JGLOBAL_NO_MATCHING_RESULTS'); ?>
 			</div>
 		<?php else : ?>
-    		<p>              
-                <?php echo 'Sorted by '.$listOrder.' '.$listDirn ; ?>
-    		</p>
 			<?php $rowcnt = count($this->items); ?>	
+			<div class="pull-left">
+        		<p class="xbmb5">              
+                    <?php echo 'Sorted by '.$listOrder.' '.$listDirn ; ?>
+        		</p>
+			</div>
 			<div class="pull-left" style="width:60%">
           		<p class="xbtr xbnote xbmb5">Auto close details dropdowns<input  type="checkbox" id="autoclose" name="autoclose" value="yes" checked="true" style="margin:0 5px;" />
           		</p>

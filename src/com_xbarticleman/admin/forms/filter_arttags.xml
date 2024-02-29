@@ -12,7 +12,6 @@
 		<field name="artlist" type="list"
 			label="List type"
 			description="What items to include in list before filtering"
-			default="0"
 			onchange="this.form.submit();"
 		>
 			<option value="0">All Articles</option>
@@ -68,7 +67,6 @@
 		/>
 		<field name="taglogic"
 			type="radio"
-			default="0"
 			label="Multi-tag logic"
 			description="How to combine multiple tags"
   			class="btn-group btn-small radiotop"
@@ -91,7 +89,7 @@
 			label="COM_CONTENT_LIST_FULL_ORDERING"
 			description="COM_CONTENT_LIST_FULL_ORDERING_DESC"
 			onchange="this.form.submit();"
-			default="a.id ASC"
+			default="a.title ASC"
 			>
 			<option value="">JGLOBAL_SORT_BY</option>
 			<option value="a.ordering ASC">JGRID_HEADING_ORDERING_ASC</option>

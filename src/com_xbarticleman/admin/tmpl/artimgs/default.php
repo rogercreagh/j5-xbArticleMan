@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager-j5
  * @filesource admin/tmpl/artimgs/default.php
- * @version 0.1.0.5 28th February 2024
+ * @version 0.1.0.8 29th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -62,8 +62,46 @@ if ($saveOrder && !empty($this->items)) {
 ?>
 <div id="xbcomponent">
 	<form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=artimgs'); ?>" method="post" name="adminForm" id="adminForm">
+    	<div id="waiter" class="xbbox alert-info" style="display:none;">
+          <table style="width:100%">
+              <tr>
+                  <td style="width:200px;"><img src="/media/com_xbarticleman/images/waiting.gif" style="height:100px" /> </td>
+                  <td style="vertical-align:middle;"><b><?php echo Text::_('XB_WAITING_REPLY'); ?></b> </td>
+              </tr>
+          </table>
+    	</div>
 		<h3><?php echo Text::_('XBARTMAN_ARTICLE_IMAGES')?></h3>
-		<h4><?php echo Text::_('XBARTMAN_TOTAL_ARTICLES').' '.$this->totalarticles.'. '.Text::_('XB_LISTING').' '.$this->statearticles.' '.lcfirst(Text::_('XB_ARTICLES')).' '.$this->statefilt; ?></h4>
+
+		<h4 class="xbpl20">
+			<?php echo Text::_('XB_FOUND').' '.$this->imgcnts['embimgcnt'].' '.Text::_('XBARTMAN_EMBEDED_IMGS').' '; ?>
+		    <?php echo Text::_('XB_IN').' '.$this->imgcnts['embarts'].' '.lcfirst(Text::_('XB_ARTICLES')); ?>
+			<?php echo Text::_('XB_AND').' '.$this->imgcnts['relimgcnt'].' '.Text::_('XBARTMAN_RELATED_IMGS').' '; ?>
+		    <?php echo Text::_('XB_IN').' '.$this->imgcnts['relarts'].' '.lcfirst(Text::_('XB_ARTICLES')); ?>
+		</h4>
+		
+		<?php if (!empty($this->items)) : ?>
+			<p><span class="xbbadge badge-<?php echo ($this->extchkdone == 1) ? 'blue' : 'warning' ; ?>">
+    				<?php echo $this->imgcnts['extimgcnt']; ?>
+    			</span>
+    			<?php echo lcfirst(Text::_('XBARTMAN_EXT_LINKS_FOUND')); ?> 
+    			<?php if ($this->imgcnts['extimgcnt'] > 0 ) : ?>
+    				<?php if ($this->extchkdone == 1) {
+    				    echo Text::_('XBARTMAN_AND_CHECKED');
+    				} else {
+    				    echo Text::_('XBARTMAN_TO_BE_CHECKED'); 
+    				} ?>
+    		        <input type="hidden" name="checkext" id="checkext" value="0" /> 
+    		        <span class="xbpl20"> </span>
+        			<input type="button" class="xbabtn" value="<?php echo ($this->extchkdone == 1) ? Text::_('XBARTMAN_RECHECK') : Text::_('XBARTMAN_CHECK_NOW'); ?>" 
+        				onClick="if (pleaseWait('waiter')){ this.form.submit()};" /> 
+                    <span class="xbnote xbpl20"><?php echo Text::_('XBARTMAN_LINK_CHECK_NOTE'); ?></span>
+    			<?php endif; ?>
+    			<br /><span class="xbbadge badge-blue"><?php echo $this->imgcnts['intimgcnt']; ?></span>
+    			&nbsp;<?php echo lcfirst(Text::_('XBARTMAN_LOCAL_CHECKED')); ?>.  
+			</p>		
+			
+		<?php endif;?>
+
 		<p> 
 		<?php
 		// Search tools bar

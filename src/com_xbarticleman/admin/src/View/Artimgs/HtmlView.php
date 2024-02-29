@@ -48,30 +48,15 @@ class HtmlView extends BaseHtmlView {
         $this->state         = $this->get('State');
         $this->filterForm    = $this->get('FilterForm');
         $this->activeFilters = $this->get('ActiveFilters');
+        $this->extchkdone      = $this->state->get('xbarticleman.checkextimg','x');
+        $this->imgcnts = $this->get('Imgcnts');
         
         // Check for errors.
         if (count($errors = $this->get('Errors')))
         {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
-        
-        $where = 'state IN (1,0)';
-        $this->statefilt = 'published and unpublished';
-        if (array_key_exists('published', $this->activeFilters)) {
-            $published = $this->activeFilters['published'];
-            if (is_numeric($published)) {
-                $where = 'state = ' . (int) $published;
-                $this->statefilt = array('trashed','','unpublished','published','archived')[$published+2];
-            } else {
-                $this->statefilt = 'all';
-                $where = '';
-            }
-        } else {
-            $this->statefilt = 'published and unpublished';
-        }
-        $this->statearticles = XbarticlemanHelper::getItemCnt('#__content', $where);
-        $this->totalarticles = XbarticlemanHelper::getItemCnt('#__content', '');
-        
+                
         $this->addToolbar();
         
         return parent::display($tpl);

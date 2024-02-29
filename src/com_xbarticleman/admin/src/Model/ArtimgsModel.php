@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager
  * @filesource admin/src/Model/ArtimgsModel.php
- * @version 0.1.0.6 29th February 2024
+ * @version 0.1.0.8 29th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -20,6 +20,13 @@ use Joomla\CMS\Table\Table;
 use Crosborne\Component\Xbarticleman\Administrator\Helper\XbarticlemanHelper;
 
 class ArtimgsModel extends ListModel {
+
+    protected $extimgcnt = 0;
+    protected $intimgcnt = 0;
+    protected $embarts = 0;
+    protected $relarts = 0;
+    protected $relimgcnt = 0;
+    protected $embimgcnt = 0;
     
     public function __construct($config = array())
     {
@@ -314,10 +321,19 @@ class ArtimgsModel extends ListModel {
             foreach ($items as $item) {
                 //first do the img tags in the text
                 $imgtags = XbarticlemanHelper::getDocImgs($item->arttext);
+                if (count($imgtags > 0)) $this->embarts ++;
                 $item->imgtags = array();
                 foreach ($imgtags as $img) {
+                    $this->embimgcnt ++;
                     $thisimg = array();
                     $imguri = $img->getAttribute('src');
+                    $thisimg['type'] = (XbarticlemanHelper::isLocalLink($url)) ? 'local' : 'external';
+                    if ($thisimg['type' == 'local']) {
+                        $this->intimgcnt ++;
+                    } else {
+                        $this->extimgcnt ++;
+                    }
+                    
                     $uri_info = parse_url($imguri);
                     if (key_exists('host', $uri_info)) {
                         $thisimg['host'] = $uri_info['scheme'].'://'.$uri_info['host'];
@@ -355,7 +371,8 @@ class ArtimgsModel extends ListModel {
                     $thisimg['title'] = $img->getAttribute('title');
                     $item->imgtags[] = $thisimg;
                 }
-                //now the article intro image
+                
+                //now the article intro/full image
                 $intfull = json_decode($item->images);
                 $item->introimg = array();
                 if ($intfull->image_intro != '') {
@@ -367,6 +384,8 @@ class ArtimgsModel extends ListModel {
                     $imguri = $intfull->image_fulltext;
                     $item->fullimg = $this->parseFieldImg($imguri);
                 }
+                if (($intfull->image_intro != '') || ($intfull->image_fulltext != ''))
+                    $this->relarts ++;                    
             }
         }
         return $items;
@@ -375,7 +394,7 @@ class ArtimgsModel extends ListModel {
     
     private function parseFieldImg($imguri, $introfull = 'full') {
         $details=array('host'=>'', 'uri'=>'', 'filename'=>'', 'path'=>'', 'alttext'=>'', 
-            'caption'=>'', 'nativesize'=>'', 'ht'=>0, 'wd'=>0, 'mime'=>'');
+            'caption'=>'', 'nativesize'=>'', 'ht'=>0, 'wd'=>0, 'mime'=>'', 'type' => '');
  
         $uri_info = parse_url($imguri);
         if (!key_exists('host', $uri_info)) {
@@ -411,40 +430,21 @@ class ArtimgsModel extends ListModel {
                 $details['mime'] = $attr['mime'];
             }
         }
-        
-        
-//         $uri_info = parse_url($imguri);
-//         if (!key_exists('hostname', $uri_info)) {
-//             $uri_info = parse_url(Uri::root().$imguri);
-//             //                       $item->introimg['host'] = '';
-//         }
-//         $details['host'] = $uri_info['hostname'];
-//         $uri = $uri_info['scheme'].'://'.$uri_info['hostname'].$uri_info['path'];
-//         $details['uri'] = $uri;
-//         $pathinfo = pathinfo($uri);
-//         $details['filename']= $pathinfo['basename'];
-//         $details['path']= $pathinfo['dirname'];
-//         if ($introfull=='intro') {
-//             $details['alttext']= $intfull->image_intro_alt;
-//             $details['caption']= $intfull->image_intro_caption;
-//         } else {
-//             $details['alttext']= $intfull->image_fulltext_alt;
-//             $details['caption']= $intfull->image_fulltext_caption;
-//         }
-//         $details['nativesize'] ='??';
-//         $details['mime'] ='??';
-//         if (XbarticlemanHelper::check_url($uri)) {
-//             $attr = getimagesize($uri);
-//             if ($attr !== false) {
-//                 $details['ht'] = $attr[1];
-//                 $details['wd'] = $attr[0];
-//                 $details['nativesize'] = $attr[0].' x '.$attr[1].'px';
-//                 $details['mime'] = $attr['mime'];
-//             }
-//         }        
+        $details['type'] = (XbarticlemanHelper::isLocalLink($url)) ? 'local' : 'external';
+        if ($details['type' == 'local']) {
+            $this->intimgcnt ++;
+        } else {
+            $this->extimgcnt ++;
+        }
         return $details;
     }
+
+    public function getImgcnts() {
+        return array('extimgcnt' => $this->extimgcnt, 'intimgcnt' => $this->intimgcnt, 'embarts' => $this->embarts,
+            'relarts' => $this->relarts, 'relimgcnt' => $this->relimgcnt, 'embimgcnt' => $this->embimgcnt);
+    }
     
+/**    
     public function getAuthors()
     {
         // Create a new query object.
@@ -464,5 +464,5 @@ class ArtimgsModel extends ListModel {
         // Return the result
         return $db->loadObjectList();
     }
-    
+**/    
 }
