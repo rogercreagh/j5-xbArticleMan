@@ -66,7 +66,7 @@ if ($saveOrder && !empty($this->items)) {
 	<form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=artscodes'); ?>" method="post" name="adminForm" id="adminForm">
 		<h3><?php echo Text::_('XBARTMAN_ARTICLE_SHORTCODES')?></h3>
 		<h4>
-			<span class="xbpl20"><?php echo Text::_('XB_FOUND').' '.count($this->sccnts).' '.Text::_('XBARTMAN_DISTINCT_SHORTCODES').' '; ?></span>
+			<span class="xbpl20"><?php echo Text::_('XBARTMAN_FOUND_ON_PAGE').' '.count($this->sccnts).' '.Text::_('XBARTMAN_DISTINCT_SHORTCODES').' '; ?></span>
 		    <?php echo Text::_('XB_IN').' '.$this->shortcodearticles.' '.lcfirst(Text::_('XB_ARTICLES')); ?>
 		</h4>
     	<ul class="inline">
@@ -77,7 +77,7 @@ if ($saveOrder && !empty($this->items)) {
     		    	</a><span class="xbbadge badge-yellow xb085" style="padding:2px 6px 4px;"><?php echo $cnt; ?></span>
     	<?php endforeach; ?>
     	</ul>
-       	<span class="xbnit xb09"><?php echo Text::_('XBARTMAN_CLICK_SCODE_ABOVE'); ?>.</span>
+       	<p class="xbnit xb09" style="margin: -10px 0 4px 200px;"><?php echo Text::_('XBARTMAN_CLICK_SCODE_ABOVE'); ?>.</p>
        	
 		
 		<?php

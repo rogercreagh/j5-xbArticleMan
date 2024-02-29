@@ -62,44 +62,25 @@ if ($saveOrder && !empty($this->items)) {
 ?>
 <div id="xbcomponent">
 	<form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=artimgs'); ?>" method="post" name="adminForm" id="adminForm">
-    	<div id="waiter" class="xbbox alert-info" style="display:none;">
-          <table style="width:100%">
-              <tr>
-                  <td style="width:200px;"><img src="/media/com_xbarticleman/images/waiting.gif" style="height:100px" /> </td>
-                  <td style="vertical-align:middle;"><b><?php echo Text::_('XB_WAITING_REPLY'); ?></b> </td>
-              </tr>
-          </table>
-    	</div>
 		<h3><?php echo Text::_('XBARTMAN_ARTICLE_IMAGES')?></h3>
 
 		<h4 class="xbpl20">
-			<?php echo Text::_('XB_FOUND').' '.$this->imgcnts['embimgcnt'].' '.Text::_('XBARTMAN_EMBEDED_IMGS').' '; ?>
+			<?php echo Text::_('XBARTMAN_FOUND_ON_PAGE').' '.$this->imgcnts['embimgcnt'].' '.lcfirst(Text::_('XBARTMAN_EMBEDED_IMGS')).' '; ?>
 		    <?php echo Text::_('XB_IN').' '.$this->imgcnts['embarts'].' '.lcfirst(Text::_('XB_ARTICLES')); ?>
 			<?php echo Text::_('XB_AND').' '.$this->imgcnts['relimgcnt'].' '.Text::_('XBARTMAN_RELATED_IMGS').' '; ?>
 		    <?php echo Text::_('XB_IN').' '.$this->imgcnts['relarts'].' '.lcfirst(Text::_('XB_ARTICLES')); ?>
 		</h4>
 		
 		<?php if (!empty($this->items)) : ?>
-			<p><span class="xbbadge badge-<?php echo ($this->extchkdone == 1) ? 'blue' : 'warning' ; ?>">
-    				<?php echo $this->imgcnts['extimgcnt']; ?>
-    			</span>
-    			<?php echo lcfirst(Text::_('XBARTMAN_EXT_LINKS_FOUND')); ?> 
-    			<?php if ($this->imgcnts['extimgcnt'] > 0 ) : ?>
-    				<?php if ($this->extchkdone == 1) {
-    				    echo Text::_('XBARTMAN_AND_CHECKED');
-    				} else {
-    				    echo Text::_('XBARTMAN_TO_BE_CHECKED'); 
-    				} ?>
-    		        <input type="hidden" name="checkext" id="checkext" value="0" /> 
-    		        <span class="xbpl20"> </span>
-        			<input type="button" class="xbabtn" value="<?php echo ($this->extchkdone == 1) ? Text::_('XBARTMAN_RECHECK') : Text::_('XBARTMAN_CHECK_NOW'); ?>" 
-        				onClick="if (pleaseWait('waiter')){ this.form.submit()};" /> 
-                    <span class="xbnote xbpl20"><?php echo Text::_('XBARTMAN_LINK_CHECK_NOTE'); ?></span>
+			<p class="xbpl50"><span class="xbbadge badge-cyan'; ?>"><?php echo $this->imgcnts['extimgcnt']; ?></span>&nbsp;
+    			<?php echo lcfirst(Text::_('XBARTMAN_EXT_IMGS_FOUND')); ?><span class="xbpl20">&nbsp;</span> 
+    			<span class="xbbadge badge-ltgreen"><?php echo $this->imgcnts['intimgcnt']; ?></span>&nbsp;
+    			<?php echo lcfirst(Text::_('XBARTMAN_LOCAL_IMGS_FOUND')); ?>.<span class="xbpl20">&nbsp;</span> 
+    			<?php if ($this->imgcnts['badimgcnt'] > 0 ) : ?>
+    				<span class="xbbadge badge-red"><?php echo $this->imgcnts['badimgcnt']; ?></span>&nbsp;
+    				<span class="xbred"><?php echo Text::_('XBARTMAN_BAD_URLS_FOUND'); ?></span>  					
     			<?php endif; ?>
-    			<br /><span class="xbbadge badge-blue"><?php echo $this->imgcnts['intimgcnt']; ?></span>
-    			&nbsp;<?php echo lcfirst(Text::_('XBARTMAN_LOCAL_CHECKED')); ?>.  
-			</p>		
-			
+			</p>					
 		<?php endif;?>
 
 		<p> 
@@ -198,15 +179,15 @@ if ($saveOrder && !empty($this->items)) {
 				<?php foreach ($this->items as $i => $item) :
 					$item->max_ordering = 0;
 					$ordering   = ($listOrder == 'a.ordering');
-					$canCreate  = $user->authorise('core.create',     'com_xbarticleman.category.' . $item->catid);
-					$canEdit    = $user->authorise('core.edit',       'com_xbarticleman.article.' . $item->id);
-					$canCheckin = $user->authorise('core.manage',     'com_checkin') || $item->checked_out == $userId || $item->checked_out == 0;
-					$canEditOwn = $user->authorise('core.edit.own',   'com_xbarticleman.article.' . $item->id) && $item->created_by == $userId;
+					$canCreate  = $user->authorise('core.create', 'com_xbarticleman.category.' . $item->catid);
+					$canEdit    = $user->authorise('core.edit', 'com_xbarticleman.article.' . $item->id);
+					$canCheckin = $user->authorise('core.manage', 'com_checkin') || $item->checked_out == $userId || $item->checked_out == 0;
+					$canEditOwn = $user->authorise('core.edit.own', 'com_xbarticleman.article.' . $item->id) && $item->created_by == $userId;
 					$canChange  = $user->authorise('core.edit.state', 'com_xbarticleman.article.' . $item->id) && $canCheckin;
-					$canEditCat    = $user->authorise('core.edit',       'com_xbarticleman.category.' . $item->catid);
-					$canEditOwnCat = $user->authorise('core.edit.own',   'com_xbarticleman.category.' . $item->catid) && $item->category_uid == $userId;
-					$canEditParCat    = $user->authorise('core.edit',       'com_xbarticleman.category.' . $item->parent_category_id);
-					$canEditOwnParCat = $user->authorise('core.edit.own',   'com_xbarticleman.category.' . $item->parent_category_id) && $item->parent_category_uid == $userId;
+					$canEditCat    = $user->authorise('core.edit', 'com_xbarticleman.category.' . $item->catid);
+					$canEditOwnCat = $user->authorise('core.edit.own', 'com_xbarticleman.category.' . $item->catid) && $item->category_uid == $userId;
+					$canEditParCat    = $user->authorise('core.edit', 'com_xbarticleman.category.' . $item->parent_category_id);
+					$canEditOwnParCat = $user->authorise('core.edit.own', 'com_xbarticleman.category.' . $item->parent_category_id) && $item->parent_category_uid == $userId;
 
 					$imgs = XbarticlemanHelper::getDocImgs($item->arttext);
 					$intfull = json_decode($item->images);
@@ -302,7 +283,7 @@ if ($saveOrder && !empty($this->items)) {
 							</div>
 						</td>
 						<td>
-							<b><?php echo count($item->imgtags); ?></b> images found<br />
+							<b><?php echo count($item->imgtags); ?></b> <?php echo Text::_('XBARTMAN_IMAGES_FOUND'); ?><br />
 							<?php foreach ($item->imgtags as $a) : ?>
     							<details>
     								<summary>
@@ -315,37 +296,37 @@ if ($saveOrder && !empty($this->items)) {
     									<?php endif; ?>
     								</summary>
 									<ul class="xb09">
-										<li><i>Host:</i>
-											<?php echo ($a['host']=='') ? 'local' : $a['host']; ?>
+										<li><i><?php echo Text::_('XB_HOST'); ?>:</i>
+											<?php echo ($a['host']=='') ? 'localhost' : $a['host']; ?>
 										</li>
-										<li><i>Path:</i>
+										<li><i><?php echo Text::_('XB_PATH'); ?>:</i>
 											<?php echo $a['path'];?>
 										</li>
-										<li><i>Dimensions - native:</i>
+										<li><i><?php echo Text::_('XBARTMAN_DIMS_NATIVE'); ?>:</i>
 											<?php echo $a['nativesize'];
-											echo ($a['specsize'] != '') ? '<br /> <i>img spec:</i> '.$a['specsize'] : ''; 
+											echo ($a['specsize'] != '') ? '<br /> <i>- '.Text::_('XBARTMAN_SPEC_SIZE').':</i> '.$a['specsize'] : ''; 
 											?>
 										</li>
-										<li><i>Mime type:</i>
+										<li><i><?php echo Text::_('XBARTMAN_MIME_TYPE'); ?>:</i>
 											<?php echo $a['mime'];?>
 										</li>
 										<?php if ($a['alttext'] != '') : ?>
-    										<li><i>Alt.text:</i>
+    										<li><i><?php echo Text::_('XBARTMAN_ALT_TEXT'); ?>:</i>
     											<?php echo $a['alttext'];?>
     										</li>   						
 										<?php endif; ?>				
 										<?php if ($a['title'] != '') : ?>
-    										<li><i>Title</i>
+    										<li><i><?php echo Text::_('XB_TITLE'); ?></i>
     											<?php echo $a['title'];?>
     										</li>   						
 										<?php endif; ?>				
 										<?php if ($a['class'] != '') : ?>
-    										<li><i>Class:</i>
+    										<li><i><?php echo Text::_('XB_CLASS'); ?>:</i>
     											<?php echo $a['class'];?>
     										</li>
 										<?php endif; ?>
 										<?php if ($a['style'] != '') : ?>
-    										<li><i>Style:</i>
+    										<li><i><?php echo Text::_('XB_STYLE'); ?>:</i>
     											<?php echo $a['style'];?>
     										</li>   						
 										<?php endif; ?>				
@@ -357,7 +338,7 @@ if ($saveOrder && !empty($this->items)) {
 							<?php $a = $item->introimg;
 							if (key_exists('uri',$a) ) : ?>
 								<details>
-									<summary><i>Intro</i> 
+									<summary><i><?php echo Text::_('XB_INTRO'); ?></i>:&nbsp; 
 										<?php if ($a['nativesize']=='??') : ?>
         									<span style="color:red;"><?php echo $a['filename']; ?></span>
     									<?php else : ?>
@@ -367,26 +348,26 @@ if ($saveOrder && !empty($this->items)) {
     									<?php endif; ?>
 									</summary>
 									<ul>
-										<li><i>Host:</i>
+										<li><i><?php echo Text::_('XB_HOST'); ?>:</i>
 											<?php echo ($a['scheme']=='') ? '' : $a['scheme']; ?>
-											<?php echo ($a['host']=='') ? 'local' : $a['host']; ?>
+											<?php echo ($a['host']=='') ? 'localhost' : $a['host']; ?>
 										</li>
-										<li><i>Path:</i>
+										<li><i><?php echo Text::_('XB_PATH'); ?>:</i>
 											<?php echo $a['path'];?>
 										</li>
-										<li><i>Dimensions</i>
+										<li><i><?php echo Text::_('XB_DIMENSIONS'); ?></i>
 											<?php echo $a['nativesize']; ?>
 										</li>
-										<li><i>Type:</i> <?php echo $a['type'];?><br />
+										<li><i><?php echo Text::_('XB_TYPE'); ?>:</i> <?php echo $a['type'];?><br />
 											<?php echo $a['mime'];?>
 										</li>
 										<?php if ($a['alttext'] != '') : ?>
-    										<li><i>Alt.text:</i>
+    										<li><i><?php echo Text::_('XBARTMAN_ALT_TEXT'); ?>:</i>
     											<?php echo $a['alttext'];?>
     										</li>   						
 										<?php endif; ?>				
 										<?php if ($a['caption'] != '') : ?>
-    										<li><i>Caption:</i>
+    										<li><i><?php echo Text::_('XB_CAPTION'); ?>:</i>
     											<?php echo $a['caption'];?>
     										</li>   						
 										<?php endif; ?>				
@@ -396,7 +377,7 @@ if ($saveOrder && !empty($this->items)) {
 							<?php $a = $item->fullimg;
 							if (key_exists('uri',$a) ) : ?>
 								<details>
-									<summary><i>Full</i>
+									<summary><i><?php echo Text::_('XB_FULL'); ?></i>:&nbsp;
 										<?php if ($a['nativesize']=='??') : ?>
         									<span style="color:red;"><?php echo $a['filename']; ?></span>
     									<?php else : ?>
@@ -406,25 +387,25 @@ if ($saveOrder && !empty($this->items)) {
     									<?php endif; ?>
 									</summary>
 									<ul>
-										<li><i>Host:</i>
-											<?php echo ($a['host']=='') ? 'local' : $a['host']; ?>
+										<li><i><?php echo Text::_('XB_HOST'); ?>:</i>
+											<?php echo ($a['host']=='') ? 'localhost' : $a['host']; ?>
 										</li>
-										<li><i>Path:</i>
+										<li><i><?php echo Text::_('XB_PATH'); ?>:</i>
 											<?php echo $a['path'];?>
 										</li>
-										<li><i>Dimensions:</i>
+										<li><i><?php echo Text::_('XB_DIMENSIONS'); ?>:</i>
 											<?php echo $a['nativesize']; ?>
 										</li>
-										<li><i>Type:</i> <?php echo $a['type'];?><br />
+										<li><i><?php echo Text::_('XB_TYPE'); ?>:</i> <?php echo $a['type'];?><br />
 											<?php echo $a['mime'];?>
 										</li>
 										<?php if ($a['alttext'] != '') : ?>
-    										<li><i>Alt.text:</i>
+    										<li><i><?php echo Text::_('XBARTMAN_ALT_TEXT'); ?>:</i>
     											<?php echo $a['alttext'];?>
     										</li>   						
 										<?php endif; ?>				
 										<?php if ($a['caption'] != '') : ?>
-    										<li><i>Caption:</i>
+    										<li><i><?php echo Text::_('XB_CAPTION'); ?>:</i>
     											<?php echo $a['caption'];?>
     										</li>   						
 										<?php endif; ?>				

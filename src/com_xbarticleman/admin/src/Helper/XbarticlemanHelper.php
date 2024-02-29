@@ -101,7 +101,6 @@ class XbarticlemanHelper extends ComponentHelper
 	}
 	
 	public static function isLocalLink($link) {
-	    $ret=false;
 	    $arrLink = parse_url($link);
 	    if (isset($arrLink["host"])) {
 	        if (stristr($arrLink["host"],parse_url(Uri::root(),PHP_URL_HOST))) {

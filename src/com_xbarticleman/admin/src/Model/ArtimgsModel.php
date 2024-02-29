@@ -27,6 +27,7 @@ class ArtimgsModel extends ListModel {
     protected $relarts = 0;
     protected $relimgcnt = 0;
     protected $embimgcnt = 0;
+    protected $badimgcnt = 0;
     
     public function __construct($config = array())
     {
@@ -321,14 +322,14 @@ class ArtimgsModel extends ListModel {
             foreach ($items as $item) {
                 //first do the img tags in the text
                 $imgtags = XbarticlemanHelper::getDocImgs($item->arttext);
-                if (count($imgtags > 0)) $this->embarts ++;
+                if (!empty($imgtags)) $this->embarts ++;
                 $item->imgtags = array();
                 foreach ($imgtags as $img) {
                     $this->embimgcnt ++;
                     $thisimg = array();
                     $imguri = $img->getAttribute('src');
-                    $thisimg['type'] = (XbarticlemanHelper::isLocalLink($url)) ? 'local' : 'external';
-                    if ($thisimg['type' == 'local']) {
+                    $thisimg['source'] = (XbarticlemanHelper::isLocalLink($imguri)) ? 'local' : 'external';
+                    if ($thisimg['source'] == 'local') {
                         $this->intimgcnt ++;
                     } else {
                         $this->extimgcnt ++;
@@ -364,7 +365,7 @@ class ArtimgsModel extends ListModel {
                             $thisimg['mime'] = $attr['mime'];
                         }
                     }
-                    
+                    if ($thisimg['nativesize'] == '??') $this->badimgcnt ++;
                     $thisimg['class'] = $img->getAttribute('class');
                     $thisimg['style'] = $img->getAttribute('style');
                     $thisimg['alttext'] = $img->getAttribute('alt');
@@ -378,11 +379,13 @@ class ArtimgsModel extends ListModel {
                 if ($intfull->image_intro != '') {
                     $imguri = $intfull->image_intro;
                     $item->introimg = $this->parseFieldImg($imguri,'intro');
+                    $this->relimgcnt ++;
                 }
                 $item->fullimg = array();
                 if ($intfull->image_fulltext != '') {
                     $imguri = $intfull->image_fulltext;
                     $item->fullimg = $this->parseFieldImg($imguri);
+                    $this->relimgcnt ++;
                 }
                 if (($intfull->image_intro != '') || ($intfull->image_fulltext != ''))
                     $this->relarts ++;                    
@@ -430,8 +433,8 @@ class ArtimgsModel extends ListModel {
                 $details['mime'] = $attr['mime'];
             }
         }
-        $details['type'] = (XbarticlemanHelper::isLocalLink($url)) ? 'local' : 'external';
-        if ($details['type' == 'local']) {
+        $details['source'] = (XbarticlemanHelper::isLocalLink($uri)) ? 'local' : 'external';
+        if ($details['source'] == 'local') {
             $this->intimgcnt ++;
         } else {
             $this->extimgcnt ++;
@@ -441,7 +444,7 @@ class ArtimgsModel extends ListModel {
 
     public function getImgcnts() {
         return array('extimgcnt' => $this->extimgcnt, 'intimgcnt' => $this->intimgcnt, 'embarts' => $this->embarts,
-            'relarts' => $this->relarts, 'relimgcnt' => $this->relimgcnt, 'embimgcnt' => $this->embimgcnt);
+            'relarts' => $this->relarts, 'relimgcnt' => $this->relimgcnt, 'embimgcnt' => $this->embimgcnt, 'badimgcnt' => $this->badimgcnt);
     }
     
 /**    

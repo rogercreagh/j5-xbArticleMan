@@ -65,7 +65,7 @@ if ($saveOrder && !empty($this->items)) {
 	<form action="<?php echo Route::_('index.php?option=com_xbarticleman&view=arttags'); ?>" method="post" name="adminForm" id="adminForm">
 		<h3><?php echo Text::_('XBARTMAN_ARTICLES_WITH_TAGS'); ?></h3>
 		<h4>
-			<span class="xbpl20"><?php echo Text::_('XB_FOUND').' '.count($this->dtags).' '.Text::_('XBARTMAN_DISTINCT_TAGS').' '; ?></span>
+			<span class="xbpl20"><?php echo Text::_('XBARTMAN_FOUND_ON_PAGE').' '.count($this->dtags).' '.Text::_('XBARTMAN_DISTINCT_TAGS').' '; ?></span>
 		    <?php echo Text::_('XB_IN').' '.$this->taggeditemcnt.' '.lcfirst(Text::_('XB_ARTICLES')); ?>
 		</h4>
     	<ul class="inline">

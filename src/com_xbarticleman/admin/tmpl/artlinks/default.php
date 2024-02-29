@@ -82,14 +82,14 @@ if ($saveOrder && !empty($this->items)) {
 		<h3><?php echo Text::_('XBARTMAN_ARTICLE_LINKS')?></h3>
 		
 		<h4 class="xbpl20">
-			<?php echo Text::_('XB_FOUND').' '.$this->linkcnts['emblinkcnt'].' '.Text::_('XBARTMAN_EMBEDED_LINKS').' '; ?>
+			<?php echo Text::_('XBARTMAN_FOUND_ON_PAGE').' '.$this->linkcnts['emblinkcnt'].' '.Text::_('XBARTMAN_EMBEDED_LINKS').' '; ?>
 		    <?php echo Text::_('XB_IN').' '.$this->linkcnts['embarts'].' '.lcfirst(Text::_('XB_ARTICLES')); ?>
 			<?php echo Text::_('XB_AND').' '.$this->linkcnts['rellinkcnt'].' '.Text::_('XBARTMAN_RELATED_LINKS').' '; ?>
 		    <?php echo Text::_('XB_IN').' '.$this->linkcnts['relarts'].' '.lcfirst(Text::_('XB_ARTICLES')); ?>
 		</h4>
 		
 		<?php if (!empty($this->items)) : ?>
-			<p><span class="xbbadge badge-<?php echo ($this->extchkdone == 1) ? 'blue' : 'warning' ; ?>">
+			<p class="xbpl50"><span class="xbbadge badge-<?php echo ($this->extchkdone == 1) ? 'green' : 'warning' ; ?>">
     				<?php echo $this->linkcnts['extlinkcnt']; ?>
     			</span>
     			<?php echo lcfirst(Text::_('XBARTMAN_EXT_LINKS_FOUND')); ?> 
