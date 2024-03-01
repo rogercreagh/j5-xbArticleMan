@@ -294,7 +294,7 @@ class XbarticlemanHelper extends ComponentHelper
 	    return $truncstr.'...';
 	}
 	
-	public static function stateCnts(string $table = '#__content', string $colname = 'state', string $ext='com_content') {
+	public static function statusCnts(string $table = '#__content', string $colname = 'state', string $ext='com_content') {
 	    $db = Factory::getDbo();
 	    $query = $db->getQuery(true);
 	    $query->select('DISTINCT a.'.$colname.', a.alias')

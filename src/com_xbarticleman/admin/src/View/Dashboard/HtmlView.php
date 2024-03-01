@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/src/View/Dashboard/HtmlView.php
- * @version 0.1.0.3 27th February 2024
+ * @version 0.1.0.9 1st March 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -36,17 +36,20 @@ class HtmlView extends BaseHtmlView {
         $this->emblinkcnts = $this->get('EmbLinkCnts');
         $this->rellinkcnts = $this->get('RelLinkCnts');
         $this->scodecnts = $this->get('ScodeCnts');
+        $this->cats = $this->get('Cats');
         
         $this->xmldata = Installer::parseXMLInstallFile(JPATH_COMPONENT_ADMINISTRATOR . '/xbarticleman.xml');
         $this->client = $this->get('Client');
         
         $this->state = $this->get('State');
+        $this->catcnt = count($this->cats);
         
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {
             throw new GenericDataException(implode("\n", $errors), 500);
-        }
-        // external link hining        
+        }       
+        
+        // external link hining parameter       
         switch ($params->get('extlinkhint', 0)) {
             case 1:
                 $this->extlinkhint = Text::_('XBCONFIG_SITE_ADMIN');
@@ -61,7 +64,7 @@ class HtmlView extends BaseHtmlView {
                 $this->extlinkhint = Text::_('XBCONFIG_USE_TEMPLATE');
                 break;
         }
-        // tag grouping
+        // tag grouping parameters
         $this->taggroups = $params->get('enable_taggroups',0);
         if ($this->taggroups) {
             $groups = array();
@@ -117,9 +120,7 @@ class HtmlView extends BaseHtmlView {
             }
         }
         $this->comslist .= '</ul>';
-        
-        $this->statecnts = XbarticlemanHelper::stateCnts();
-        
+                
         $this->addToolbar();
         
         return parent::display($tpl);

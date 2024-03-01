@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager
  * @filesource admin/src/Model/DashboardModel.php
- * @version 0.0.1.0 7th January 2024
+ * @version 0.1.0.9 1st March 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -32,6 +32,11 @@ class DashboardModel extends ListModel {
         parent::__construct();
     }
     
+    /**
+     * @name getClient()
+     * @desc gets info about the client browser 
+     * @return assoc array of client info
+     */
     public function getClient() {
         $result = array();
         $client = Factory::getApplication()->client;
@@ -46,34 +51,46 @@ class DashboardModel extends ListModel {
     
     /**
      * @name getArticleCnts
-     * @desc gets count of all articles and states
-     * @return array()
+     * @desc gets count of all articles and states and count of articles with tags, in-content imgs, links, and shortcodes
+     * @return assoc array 0f count values
      */
     public function getArticleCnts() {
         $artcnts = array('total'=>0, 'published'=>0, 'unpublished'=>0, 'archived'=>0, 'trashed'=>0,
-            'catcnt'=>0, 'uncat'=>0, 'nocat'=>0, 'tagged'=>0, 'embimaged'=>0, 'emblinked'=>0, 'scoded'=>0);
+            'catcnt'=>0, 'tagged'=>0, 'embimaged'=>0, 'emblinked'=>0, 'scoded'=>0, 'featured'=>0, 'live'=>0, 'scheduled'=>0
+        );
         //get states
-        $artcnts = array_merge($artcnts,$this->stateCnts());
-        //get categories
+        $artcnts = array_merge($artcnts,XbarticlemanHelper::statusCnts());
         $db = Factory::getDbo();
         $query = $db->getQuery(true);
-        $query->select('COUNT(a.id) AS catcnt')->from('#__categories AS a')->where('a.extension = '.$db->q('com_content'));
-        $query->order('title ASC');
-        $db->setQuery($query);
-        $artcnts['catcnt'] = $db->loadResult();
-        $query->clear();
-        $query->select('COUNT(a.id) AS catcnt')
-        ->from('#__content AS a')
-        ->join('LEFT','#__categories AS c ON a.catid = c.id')
-        ->where('c.extension = '.$db->q('com_content').' AND c.alias = '.$db->q('uncategorised'));
-        $db->setQuery($query);
-        $artcnts['uncat'] = $db->loadResult();
-        $query->clear();
-        $query->select('COUNT(a.id) AS catcnt from #__content AS a')
-        ->where(' a.catid = 0 ');
-        $db->setQuery($query);
-        $artcnts['nocat'] = $db->loadResult();
         
+        // get featured and live
+        
+        $query->clear();
+        $query->select('*')->from('#__content_frontpage AS a');
+        $query->leftJoin('#__content as b','b.id = a.content_id');
+        $query->leftJoin('j5_categories as c on c.id = b.catid');
+        // both article & category must be published
+        $query->where('b.state = 1 AND c.published = 1');
+        $db->setQuery($query);
+        $homepage = $db->loadObjectList();
+        $artcnts['featured'] = count($homepage);
+        // check start and end featured if set
+        foreach ($homepage as $art) {
+            if (is_null($art->featured_up)) {
+                if (is_null($art->featured_down)) {
+                    $artcnts['live'] ++;
+                } elseif (time() < strtotime($art->featured_down)) {
+                    $artcnts['live'] ++;
+                } 
+            } elseif (time() > strtotime($art->featured_up)) {
+                if (is_null($art->featured_down)) {
+                    $artcnts['live'] ++;
+                } elseif ((time() < strtotime($art->featured_down))) {
+                    $artcnts['live'] ++;
+                }
+            }
+        }
+                
         //get tagged - articles with tags
         $query->clear();
         $query->select('COUNT(DISTINCT(a.content_item_id)) AS artstagged')
@@ -108,15 +125,7 @@ class DashboardModel extends ListModel {
         $db->setQuery($query);
         $res = $db->loadResult();
         if ($res>0) $artcnts['emblinked'] = $res;
-        
-        //         $query->clear();
-        //         $query->select('COUNT(DISTINCT(a.id)) AS rellinked')
-        //             ->from('#__content AS a')
-        //             ->where('a.urls REGEXP '.$db->q('\"url[a-c]\":[^,]+?\"'));
-        //         $db->setQuery($query);
-        //         $res = $db->loadResult();
-        //         if ($res>0) $artcnts['rellinked'] = $res;
-        
+                
         //get scode cnts - articles with scodes
         $query->clear();
         $query->select('COUNT(DISTINCT(a.id)) AS embimged')
@@ -127,6 +136,26 @@ class DashboardModel extends ListModel {
         if ($res>0) $artcnts['scoded'] = $res;
         
         return $artcnts;
+    }
+
+    /**
+     * @name getCats()
+     * @return array of arrays of category titles, states
+     */
+    public function getCats() {
+        $db = Factory::getDbo();
+        $query = $db->getQuery(true);
+        $query->select('a.id, a.title, a.published AS state')->from('#__categories AS a')->where('a.extension = '.$db->q('com_content'));
+        $query->order('title ASC');
+        $db->setQuery($query);
+        $cats = $db->loadAssocList('id');
+        foreach ($cats as $key => $cat) {
+            $query->clear();
+            $query->select('COUNT(a.id) AS artcnt')->from('#__content AS a')->where('a.catid = '.$db->q($key));
+            $db->setQuery($query);
+            $cats[$key]['artcnt'] = $db->loadResult();
+        }
+        return $cats;        
     }
     
     public function getTagCnts() {
@@ -204,10 +233,6 @@ class DashboardModel extends ListModel {
         return $rellinkcnts;
     }
     
-    /**
-     * @name getShortcodes
-     * @desc returns a count of distinct shortcodes used
-     */
     public function getScodeCnts() {
         $scodes = array();
         $sccnts = array('totscodes'=>0, 'uniquescs'=>0);
@@ -220,6 +245,7 @@ class DashboardModel extends ListModel {
         return $sccnts;
     }
     
+
     private function getArticlesText() {
         $db = Factory::getDbo();
         $query = $db->getQuery(true);
@@ -230,24 +256,8 @@ class DashboardModel extends ListModel {
         return $res;
     }
     
-    private function stateCnts() {
-        $db = Factory::getDbo();
-        $query = $db->getQuery(true);
-        $query->select($db->qn('state'))
-        ->from($db->quoteName('#__content'));
-        $db->setQuery($query);
-        $col = $db->loadColumn();
-        $vals = array_count_values($col);
-        $result['total'] = count($col);
-        $result['published'] = key_exists('1',$vals) ? $vals['1'] : 0;
-        $result['unpublished'] = key_exists('0',$vals) ? $vals['0'] : 0;
-        $result['archived'] = key_exists('2',$vals) ? $vals['2'] : 0;
-        $result['trashed'] = key_exists('-2',$vals) ? $vals['-2'] : 0;
-        return $result;
-    }
-    
     private function getDocLinkCnts($html) {
-        //container for different types of links
+        //return array for different types of links
         //pageLinks are links to anchor tags within the doc
         //pageTargs are the anchor target tags in the doc
         //localLinks are links to pages on this site (may be sef or raw, complete or relative)
@@ -276,6 +286,7 @@ class DashboardModel extends ListModel {
                     $arrHref = parse_url($href);
                     if ($arrHref === false) {
                         $linkcnts['malformed'] ++;
+                        // NB malformed is that the uri is badly formed, it doesn't check if the link is valid
                     } else {
                         if ((isset($arrHref["scheme"])) && (!stristr($arrHref["scheme"],'http'))) {
                             // scheme is not http or https so it is some other type of link
@@ -293,7 +304,5 @@ class DashboardModel extends ListModel {
         }
         return $linkcnts;
     }
-    
-
-    
+     
 }

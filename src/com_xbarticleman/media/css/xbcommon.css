@@ -260,6 +260,9 @@ a.xbbadge:focus {
 .badge-yellow, .label-yellow {
 	background-color: #f7f78f !important; 
 }
+.badge-gold, .label-gold {
+	background-color: #FFB514;
+}
 .badge-orange, .label-orange {
 	background-color: #e66100 !important;
 }
@@ -347,7 +350,7 @@ some common combinations are also defined (eg xbnit - normal weight,italic, 5px 
 .xb08, .xbcredit { font-size:0.8em; }
 
 /* font weights and styles */
-.xbnorm, .xbnit { font-weight: normal; }
+.xbnorm, .xbnit, .xbnote { font-weight: normal; }
 .xbbold, .xbtitle { font-weight: bold; }
 .xbit, .xbnit, .xbcredit, .xbnote { font-style:italic; }
 .xbfw300, .xbsubtitle {font-weight:300;}
