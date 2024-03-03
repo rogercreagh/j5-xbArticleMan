@@ -11,8 +11,9 @@
 - **DONE** v0.0.7 - ArtTags view working
 - **DONE** v0.0.8 - Tag view working
 - **DONE** v0.0.9 - consistency between views in link & icon use
-- v0.1.0 - First release candidate - Language & Comments cleaned, bugs fixed
-- v0.2.0 - Second release candidate - CrOsborne.uk help pages, update, & support
+- **DONE** v0.1.0 - First release candidate - bugs fixed
+- v0.2.0 - Second release candidate - passes JED checker
+- v0.3.0 - CrOsborne.uk help pages, update, & support
 - v5.0.0 - **RELEASE** to CrOsborne.uk and JED
 - v5.1.0 - add Site Article Blog all Categories view with menu cat filter
 - v5.2.0 - add Site multi-category article list with menu cat filter

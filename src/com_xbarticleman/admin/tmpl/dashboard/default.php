@@ -182,7 +182,7 @@ HTMLHelper::_('formbehavior.chosen', 'select');
                                         <span><?php echo Text::_('XBARTMAN_IN_CONTENT'); ?></span>
         								<span class="xblabel <?php echo $this->artcnts['emblinked']>0 ?'label-drkcyan' : ''; ?> xb085">
         									<?php echo Text::_('XB_TOTAL').' '. $this->artcnts['emblinked']; ?></span> 
-                                        <span class="xbpl20 "><?php echo Text::_('XBARTMAN_RELATED_LINKS'); ?></span>
+                                        <span class="xbpl20 "><?php echo strtolower(Text::_('XBARTMAN_RELATED_LINKS')); ?></span>
         								<span class="xblabel <?php echo $this->rellinkcnts['artrellinks']>0 ?'label-mag' : ''; ?> xb085">
         									<?php echo Text::_('XB_TOTAL').' '. $this->rellinkcnts['artrellinks']; ?></span> 
                                		</h4>							
@@ -229,7 +229,7 @@ HTMLHelper::_('formbehavior.chosen', 'select');
     								<?php echo $this->emblinkcnts['others']; ?>
     							</span></td>
     							<td><?php echo Text::_('XBARTMAN_MALFORMED_LINKS'); ?>
-    								<br /><div style="margin:-5px 0 0 15px;"><?php Text::_('valid uri may still have invalid destination'); ?>
+    								<br /><div style="margin:-5px 0 0 15px;"><?php Text::_('XBARTMAN_MALFORMED_LINKS_INFO'); ?>
     								</div>
     							</td>
     							<td><span class="xbbadge <?php echo $this->emblinkcnts['malformed']>0 ?'badge-pink' : ''; ?>">
@@ -294,10 +294,10 @@ HTMLHelper::_('formbehavior.chosen', 'select');
 	        			<dl class="xbdlinline">
 	        				<dt><?php echo Text::_('XBCONFIG_LINKHINT_LABEL'); ?>: </dt> 
 	        					<dd><?php echo $this->extlinkhint; ?></dd>
-	        				<dt><?php echo Text::_('Tag Groups'); ?>: </dt> 
+	        				<dt><?php echo Text::_('XBARTMAN_TAG_GROUPS'); ?>: </dt> 
 	        					<dd><?php echo ($this->taggroups == 0) ? 'Not specified' : 'Enabled'; ?></dd>
 	        				<?php if ($this->taggroups == 1) : ?>
-	        					<dt class="xbml50"><?php echo Text::_('Groups') ?> <span class="xb05 xbit"><?php echo Text::_('parent tags')?></span></dt>
+	        					<dt class="xbml50"><?php echo Text::_('XB_GROUPS') ?> <span class="xb05 xbit"><?php echo Text::_('XBARTMAN_PARENT_TAGS')?></span></dt>
 	        						<dd><?php echo $this->grouplist; ?></dd>
 	        				<?php endif; ?>
 	        				<dt><?php echo Text::_('XBARTMAN_COMP_TAG_LIST'); ?>: </dt>

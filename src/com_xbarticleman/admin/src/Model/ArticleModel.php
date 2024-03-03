@@ -606,35 +606,6 @@ class ArticleModel extends AdminModel {
             $data['urls'] = (string) $registry;
         }
         
-//         // Alter the title for save as copy
-//         if ($input->get('task') == 'save2copy') {
-//             $origTable = $this->getTable();
-            
-//             if ($app->isClient('site')) {
-//                 $origTable->load($input->getInt('a_id'));
-                
-//                 if ($origTable->title === $data['title']) {
-//                     /**
-//                      * If title of article is not changed, set alias to original article alias so that Joomla! will generate
-//                      * new Title and Alias for the copied article
-//                      */
-//                     $data['alias'] = $origTable->alias;
-//                 } else {
-//                     $data['alias'] = '';
-//                 }
-//             } else {
-//                 $origTable->load($input->getInt('id'));
-//             }
-            
-//             if ($data['title'] == $origTable->title) {
-//                 list($title, $alias) = $this->generateNewTitle($data['catid'], $data['alias'], $data['title']);
-//                 $data['title']       = $title;
-//                 $data['alias']       = $alias;
-//             } elseif ($data['alias'] == $origTable->alias) {
-//                 $data['alias'] = '';
-//             }
-//         }
-        
         // Automatic handling of alias for empty fields
         if (\in_array($input->get('task'), ['apply', 'save', 'save2new']) && (!isset($data['id']) || (int) $data['id'] == 0)) {
             if ($data['alias'] == null) {
@@ -647,7 +618,7 @@ class ArticleModel extends AdminModel {
                 $table = $this->getTable();
                 
                 if ($table->load(['alias' => $data['alias'], 'catid' => $data['catid']])) {
-                    $msg = Text::_('COM_CONTENT_SAVE_WARNING');
+                    $msg = Text::_('XB_SAVE_WARNING');
                 }
                 
                 list($title, $alias) = $this->generateNewTitle($data['catid'], $data['alias'], $data['title']);
@@ -719,37 +690,6 @@ class ArticleModel extends AdminModel {
             // Add a prefix for categories created on the fly.
             $form->setFieldAttribute('catid', 'customPrefix', '#new#');
         }
-        
-//         // Association content items
-//         if (Associations::isEnabled()) {
-//             $languages = LanguageHelper::getContentLanguages(false, false, null, 'ordering', 'asc');
-            
-//             if (\count($languages) > 1) {
-//                 $addform = new \SimpleXMLElement('<form />');
-//                 $fields  = $addform->addChild('fields');
-//                 $fields->addAttribute('name', 'associations');
-//                 $fieldset = $fields->addChild('fieldset');
-//                 $fieldset->addAttribute('name', 'item_associations');
-                
-//                 foreach ($languages as $language) {
-//                     $field = $fieldset->addChild('field');
-//                     $field->addAttribute('name', $language->lang_code);
-//                     $field->addAttribute('type', 'modal_article');
-//                     $field->addAttribute('language', $language->lang_code);
-//                     $field->addAttribute('label', $language->title);
-//                     $field->addAttribute('translate_label', 'false');
-//                     $field->addAttribute('select', 'true');
-//                     $field->addAttribute('new', 'true');
-//                     $field->addAttribute('edit', 'true');
-//                     $field->addAttribute('clear', 'true');
-//                     $field->addAttribute('propagate', 'true');
-//                 }
-                
-//                 $form->load($addform, false);
-//             }
-//         }
-        
-//         $this->workflowPreprocessForm($form, $data);
         
         parent::preprocessForm($form, $data, $group);
     }

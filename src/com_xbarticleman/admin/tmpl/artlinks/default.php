@@ -84,7 +84,7 @@ if ($saveOrder && !empty($this->items)) {
 		<h4 class="xbpl20">
 			<?php echo Text::_('XBARTMAN_FOUND_ON_PAGE').' '.$this->linkcnts['emblinkcnt'].' '.Text::_('XBARTMAN_EMBEDED_LINKS').' '; ?>
 		    <?php echo Text::_('XB_IN').' '.$this->linkcnts['embarts'].' '.lcfirst(Text::_('XB_ARTICLES')); ?>
-			<?php echo Text::_('XB_AND').' '.$this->linkcnts['rellinkcnt'].' '.Text::_('XBARTMAN_RELATED_LINKS').' '; ?>
+			<?php echo Text::_('XB_AND').' '.$this->linkcnts['rellinkcnt'].' '.strtolower(Text::_('XBARTMAN_RELATED_LINKS')).' '; ?>
 		    <?php echo Text::_('XB_IN').' '.$this->linkcnts['relarts'].' '.lcfirst(Text::_('XB_ARTICLES')); ?>
 		</h4>
 		
@@ -385,7 +385,7 @@ if ($saveOrder && !empty($this->items)) {
 								<?php echo Text::_('XBARTMAN_PAGE_ANCHORS'); ?>
 								<p class="xb09 xbml10">
 								<?php foreach ($item->emblinks['anchor'] as $link) : ?>
-									<i><?php echo Text::_('ID'); ?></i>: <?php echo $link->id; ?><br />
+									<i>ID</i>: <?php echo $link->id; ?><br />
 								<?php endforeach; ?>
 								</p>
 							<?php endif; ?>							

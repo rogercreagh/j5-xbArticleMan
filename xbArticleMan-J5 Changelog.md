@@ -4,6 +4,10 @@
 
 
 
+**v0.1.0.9** 1st March 2024
+
+- First tidy and consistency check
+
 **v0.0.9.1** 25th February 2024
 
 - Article Edit improvements

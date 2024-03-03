@@ -68,15 +68,15 @@ $input = Factory::getApplication()->getInput();
     <div class="main-card">
         <?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'general', 'recall' => true, 'breakpoint' => 768]); ?>
 
-        <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'general', Text::_('Status, Category, Tags')); ?>
+        <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'general', Text::_('XBARTMAN_STATUS_CAT_TAGS')); ?>
 			<div class="row">
        			<?php if ($this->taggroups) : ?>
             		<div class="col-lg-9">				
- 						<?php  $this->form->setFieldAttribute('tags','label',Text::_('XBARTMAN_ALLTAGS'));
- 						    $this->form->setFieldAttribute('tags','description',Text::_('XBARTMAN_ALLTAGS_DESC'));	?>	    
-           				<h4><?php echo Text::_('Tag Groups'); ?></h4>
+ 						<?php  $this->form->setFieldAttribute('tags','label',Text::_('XBARTMAN_ALL_TAGS'));
+ 						    $this->form->setFieldAttribute('tags','description',Text::_('XBARTMAN_ALL_TAGS_DESC'));	?>	    
+           				<h4><?php echo Text::_('XB_TAG_GROUPS'); ?></h4>
            				<?php if (count($this->taggroupinfo) < 4 ) : ?>
-           					<p class="xbnote">Additional TagGroups can be defined in the component Options</p>
+           					<p class="xbnote"><?php echo Text::_('XBARTMAN_ADD_TAG_GROUPS_IN_OPTS'); ?></p>
            				<?php endif; ?>
            				<div class="row">
            					<div class="col-lg-3">
@@ -130,12 +130,12 @@ $input = Factory::getApplication()->getInput();
       					</div>
       				</div>
       				<div>
-						<p class="xbnote">TagGroups can be defined in the component Options and will appear here</p>				
+						<p class="xbnote"><?php echo Text::_('XBARTMAN_TAG_GROUPS_OPTS_HERE'); ?></p>				
 				<?php endif; ?>
             </div>
         <?php echo HTMLHelper::_('uitab.endTab'); ?>
 
-        <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'images', Text::_('Intro &amp; Full Article Images')); ?>
+        <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'images', Text::_('XBARTMAN_INTRO_FULL_IMAGES')); ?>
             <div class="row">
                 <div class="col-12 col-lg-6">
                 <?php $fieldset = $fieldsetsInImages[0]; ?>
@@ -158,7 +158,7 @@ $input = Factory::getApplication()->getInput();
 			</div>
         <?php echo HTMLHelper::_('uitab.endTab'); ?>
 
-        <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'links', Text::_('Related Links')); ?>
+        <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'links', Text::_('XBARTMAN_RELATED_LINKS')); ?>
         	<div class="row">
         	    <div class="col-12 col-lg-4">
                 <?php $fieldset = $fieldsetsInLinks[0]; ?>
@@ -190,7 +190,7 @@ $input = Factory::getApplication()->getInput();
             </div>
         <?php echo HTMLHelper::_('uitab.endTab'); ?>
 
-        <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'textedit', Text::_('HTML Content')); ?>
+        <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'textedit', Text::_('XBARTMAN_HTML_CONTENT')); ?>
 			<fieldset id="fieldset-content" class="options-form">
 				<legend><?php echo Text::_($this->form->getFieldsets()['content']->label); ?></legend>
 		        <div class="form-vertical">

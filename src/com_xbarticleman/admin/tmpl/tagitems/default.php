@@ -32,7 +32,7 @@ $telink = 'index.php?option=com_tags&task=tag.edit&id=';
 			<h3><?php echo Text::_('XBARTMAN_TAG_ITEMS')?></h3>
 			<div class="row xbmb20">
     			<div class="col-md-4">
-    				<p><?php echo Text::_('Articles using this tag'); ?> <?php echo Text::sprintf('plus %s other item types', $this->typecnt); ?>
+    				<p><?php echo Text::_('XBARTMAN_ARTICLES_USING_TAG'); ?> <?php echo Text::sprintf('XBARTMAN_OTHER_ITEM_TYPES', $this->typecnt); ?>
     				</p>
     			</div>
     			<div class="col-md-6">
@@ -54,9 +54,9 @@ $telink = 'index.php?option=com_tags&task=tag.edit&id=';
 			</div>
 			<div class="row xbmb20 xbmt20">
     			<div class="col-md-5">
-					<i><?php echo Text::_('Admin Note'); ?>:</i><br />
+					<i><?php echo Text::_('XB_ADMIN_NOTE'); ?>:</i><br />
                  	<div class="xbbox" style="max-width:400px;background-color:#ddf;">
-						<?php echo ($item->note != '') ? $item->note : '<span class="xbnote">'.Text::_('no admin note').'</span>'; ?>
+						<?php echo ($item->note != '') ? $item->note : '<span class="xbnote">'.Text::_('XB_NO_ADMIN_NOTE').'</span>'; ?>
 					</div>
     			</div>
     			<div class="col-md-7">
@@ -103,7 +103,7 @@ $telink = 'index.php?option=com_tags&task=tag.edit&id=';
 				    			     	<?php endif;
 				    			     	if ($pvurl != '') : ?>
 											<?php $pvlink = "'".($pvurl.$value->bid)."'"; 
-											$pvtitle = "'".($value->title.' - <i>'.Text::_('preview of item only').'</i>')."'"; ?>
+											$pvtitle = "'".($value->title.' - <i>'.Text::_('XBARTMAN_PREVIEW_ITEM_ONLY').'</i>')."'"; ?>
                                 			<span  data-bs-toggle="modal" data-bs-target="#pvModal" data-bs-source="" 
                                 				data-bs-itemtitle="Article Preview" 
                                 				title="<?php echo Text::_('XBARTMAN_MODAL_PREVIEW'); ?>" 

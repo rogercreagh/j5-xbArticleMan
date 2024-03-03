@@ -346,7 +346,7 @@ class ArtlinksModel extends ListModel {
         $linkdata->text = $atag->textContent;
         $linkdata->id = $atag->getAttribute('id');
         $linkdata->target = $atag->getAttribute('target');
-        if ($linkdata->target == '') $linkdata->target = Text::_('current');
+        if ($linkdata->target == '') $linkdata->target = lcfirst(Text::_('XB_CURRENT'));
         $linkdata->rel = $atag->getAttribute('rel');
         $linkdata->class = $atag->getAttribute('class');
         $linkdata->style = $atag->getAttribute('style');
@@ -397,24 +397,6 @@ class ArtlinksModel extends ListModel {
                 $linkdata->type = (XbarticlemanHelper::isLocalLink($href)) ? 'local' : 'external';
             }
             
-            
-            
-            
-            
-//             if (substr($href,0,1)=='#') {
-//                 $linkdata->type = 'inpage';
-//             } elseif ((isset($linkdata->scheme)) && (!str_starts_with(strtolower($linkdata->scheme),'http'))) {
-//                     // scheme is not http or https so it is some other type of link
-//                 $linkdata->type = 'other' ;
-//             } else {
-//                 if (isset($linkdata->scheme)) $linkdata->scheme .= '://';
-//                 if (XbarticlemanHelper::isLocalLink($href)) {
-//                     $linkdata->type = 'local' ;
-//                 } else {
-//                     $linkdata->type = 'external' ;
-//                 }
-//             }
- 
         }
         switch ($linkdata->type) {
             case 'local':
@@ -448,7 +430,7 @@ class ArtlinksModel extends ListModel {
         $linkdata->label = 'Link '.$idx;
         $linkdata->url = $url;
         $linkdata->colour = '#444';
-        $linkdata->text = ($text != '') ? $text : Text::_('No text, url will display');
+        $linkdata->text = ($text != '') ? $text : Text::_('XBARTMAN_NO_TEXT_SO_URL');
         $linkdata->target = ($target !='') ? $targets[$target] : '(use global)';
         $urlinfo = parse_url($url);
         if (key_exists('scheme',$urlinfo)) $linkdata->scheme = $urlinfo['scheme'];

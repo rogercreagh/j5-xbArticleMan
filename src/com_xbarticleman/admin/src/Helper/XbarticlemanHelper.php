@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * file admin/src/Helper/XbarticlemanHelper.php
- * @version 0.0.6.0 27th January 2024
+ * @version 0.2.0.1 2nd March 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -20,6 +20,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Filter\OutputFilter;
 use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
 use DOMDocument;
@@ -29,8 +30,8 @@ class XbarticlemanHelper extends ComponentHelper
 	public static $extension = 'com_xbarticleman';
 
 	public static function getActions($categoryid = 0) {
-	    $user 	=Factory::getUser();
-	    $result = new JObject;
+	    $user 	=Factory::getApplication()->getIdentity();
+	    $result = new \stdClass();
 	    if (empty($categoryid)) {
 	        $assetName = 'com_xbarticleman';
 	        $level = 'component';
@@ -46,61 +47,25 @@ class XbarticlemanHelper extends ComponentHelper
 	}
 	
     /**
-     * getDocAnchors - NO LONGER USED. See Artlinks Model
-     * @param string $html - html doc text to parse and find anchors 
-     * @return array[] - array or arrays of DomNodes for <a ..> tags in doc
+     * @name check_url()
+     * @desc gets headers for url and returns true if status 300,301,302 returned
+     * @param string $url
+     * @return boolean
      */	
-//     public static function getDocAnchors($html) {	    
-//         //container for different types of links
-//         //pageLinks are links to anchor tags within the doc
-//         //pageTargs are the anchor target tags in the doc
-//         //localLinks are links to pages on this site (may be sef or raw, complete or relative)
-//         //extLinks are links to other websites
-//         //others are 'mailto: and other services
-// 	    $atags = array("pageLinks"=>array(),
-// 	        "pageTargs"=>array(),
-// 	        "localLinks"=>array(),
-// 	        "extLinks"=>array(),
-// 	        "others"=>array()
-// 	    );
-	    
-// 	    $dom = new DOMDocument;
-// 	    $dom->loadHTML($html,LIBXML_NOERROR);
-// 	    $as = $dom->getElementsByTagName('a');
-// 	    return $as;
-// 	    foreach ($as as $atag) {
-// 	        $text = $atag->textContent;
-// 	        $href = $atag->getAttribute('href');
-// 	        if (!$href) //no href specified so must be target
-// 	        {
-// 	            array_push($atags["pageTargs"], $atag);
-// 	        } else {
-// 	            if (substr($href,0,1)=='#') { //the href starts with # so target is on same page
-// 	                array_push($atags["pageLinks"], $atag);
-// 	            } else {
-// 	                if ((isset($arrHref["scheme"])) && (!stristr($arrHref["scheme"],'http'))) {
-// 	                    // scheme is not http or https so it is some other type of link
-// 	                    array_push($atags["others"], $atag);
-// 	                } else {
-// 	                    if (self::isLocalLink($href)) {
-// 	                        array_push($atags["localLinks"], $atag);
-// 	                    } else {
-// 	                        array_push($atags["extLinks"], $atag);
-// 	                    }
-// 	                }
-// 	            }
-// 	        }
-// 	    }
-// 	    return $atags;
-// 	}
-	
-	public static function check_url($url) {
+	public static function check_url(string $url) {
 	    $headers = @get_headers( $url);
 	    $headers = (is_array($headers)) ? implode( "\n ", $headers) : $headers;	    
 	    return (bool)preg_match('#^HTTP/.*\s+[(200|301|302)]+\s#i', $headers);
 	}
 	
-	public static function isLocalLink($link) {
+	/**
+	 * @name isLocalLink()
+	 * @desc returns true if url points to current host or if not it has a path set 
+	 * NB does not check the path is valid
+	 * @param string $link
+	 * @return boolean
+	 */
+	public static function isLocalLink(string $link) {
 	    $arrLink = parse_url($link);
 	    if (isset($arrLink["host"])) {
 	        if (stristr($arrLink["host"],parse_url(Uri::root(),PHP_URL_HOST))) {
@@ -110,6 +75,7 @@ class XbarticlemanHelper extends ComponentHelper
 	        return false;
 	    }  //no host so assume it is local
 	    if (isset($arrLink["path"])) {
+	        // TODO check if path is valid on server (could be folder or file)
 	        return true;	    
 	    }
 	    return false; //we have no host or path WTF; its not local!
@@ -127,7 +93,14 @@ class XbarticlemanHelper extends ComponentHelper
 	    return $aimgs;
 	}
 		
-	public static function getDocShortcodes($articleText) {
+	/**
+	 * @name getDocShortcodes()
+	 * @desc looks for elements in article text enclosed by curly braces
+	 * NB could return fasle positives
+	 * @param string $articleText
+	 * @return array - contains array with matches to the grep text
+	 */
+	public static function getDocShortcodes(string $articleText) {
 	    //strip out any highlighting tags
 	    //strip out xbshowref if present leaving enclosed content
 	    $articleText=preg_replace('!<span class="xbshowref".*?>(.*?)</span>!', '${1}', $articleText);
@@ -153,10 +126,11 @@ class XbarticlemanHelper extends ComponentHelper
 	/**
 	 * @name getItemCnt
 	 * @desc returns the number of items in a table
-	 * @param string $table
+	 * @param string $table - table name, should include '#__' prefix
+	 * @param string filter - optional where string to be used in query
 	 * @return integer
 	 */
-	public static function getItemCnt($table, $filter = '') {
+	public static function getItemCnt(string $table, $filter = '') {
 	    $db = Factory::getDbo();
 	    $query = $db->getQuery(true);
 	    $query->select('COUNT(*)')->from($db->quoteName($table));

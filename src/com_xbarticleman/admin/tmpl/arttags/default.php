@@ -137,7 +137,7 @@ if ($saveOrder && !empty($this->items)) {
 							<span class="xbnorm xbo9">(edit) (v) |</span>  alias <span class="xbnorm xb09"> | </span>
 						</th>
 						<th>
-							<span class="xbnit xb09">(<?php echo Text::_('parents');?>)</span> - <?php echo Text::_('XB_TAGS'); ?>
+							<span class="xbnit xb09">(<?php echo lcfirst(Text::_('XB_PARENTS')); ?>)</span> - <?php echo Text::_('XB_TAGS'); ?>
 						</th>
 						<th >
 							<?php echo HTMLHelper::_('searchtools.sort', 'XB_CATEGORY', 'category_title', $listDirn, $listOrder); ?>							
@@ -167,7 +167,7 @@ if ($saveOrder && !empty($this->items)) {
 							<?php echo HTMLHelper::_('searchtools.sort', 'Category', 'category_title', $listDirn, $listOrder); ?>							
 						</th>
 						<th>
-							<span class="xbnit xb09">(<?php echo Text::_('group');?>)</span> - <?php echo Text::_('XB_TAGS'); ?>
+							<span class="xbnit xb09">(<?php echo lcfirst(Text::_('XB_GROUP')); ?>)</span> - <?php echo Text::_('XB_TAGS'); ?>
 						</th>
 						<th >
 							<?php echo HTMLHelper::_('searchtools.sort', 'XB_CATEGORY', 'category_title', $listDirn, $listOrder); ?>							
@@ -297,7 +297,7 @@ if ($saveOrder && !empty($this->items)) {
                                 if (count($founders) > 2) : ?>
                                     <details>
                                     	<summary>
-                                    		<?php echo count($item->tags).' '.Text::_('tags assigned in').' '.count($founders).' '.Text::_('branches'); ?>
+                                    		<?php echo count($item->tags).' '.Text::sprintf('XBARTMAN_TAGS_ASSIGNED_IN',count($founders)); ?>
                                     	</summary>
                                 <?php endif; ?>    	
                                 

@@ -290,12 +290,11 @@ if ($saveOrder && !empty($this->items)) {
 							$sch = array('{','}');
 							$repl = array('<span style="background-color:#F7F78F;">{','}</span>');  
 							$sctext = str_replace($sch, $repl, $sctext); //highlight everything between curly braces (proba shortcodes)
-							$sctitle = '<b>'.$item->title.'</b> - <i>'.Text::_('text content with {shortcodes} highlighted').'</i>';
+							$sctitle = '<b>'.$item->title.'</b> - <i>'.Text::_('XBARTMAN_TEXT_CONTENT_WITH_SHORTCODES').'</i>';
 							$sctitle = str_replace($sch, $repl, $sctitle);
-// '<b><?php echo $item->title; </b> text content with shortcodes highlighted';
                             ?>
                             <span  data-bs-toggle="modal" data-bs-target="#txtModal" data-bs-source="hello text" data-bs-itemtitle="hello title" 
-                                title="<?php echo Text::_('Content with { shortcodes } highlighted'); ?>" 
+                                title="title placeholder" 
           						onclick="var pv=document.getElementById('txtModal');
           							var modtitle = '<?php echo  htmlspecialchars(trim(json_encode($sctitle),'"'));?>';
 									var modcontent = <?php echo htmlspecialchars(json_encode(utf8_encode($sctext)));?>;

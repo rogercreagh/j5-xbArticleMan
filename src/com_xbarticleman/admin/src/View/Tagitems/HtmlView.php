@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager-j5
  * @filesource admin/src/View/Tagitems/HtmlView.php
- * @version 0.0.8.1 18th January 2024
+ * @version 0.2.0.1 2nd March 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -30,7 +30,7 @@ class HtmlView extends BaseHtmlView {
         
         $params = ComponentHelper::getParams('com_xbarticleman');
         
-        $this->typecnt = count($params->get('jcomitems')) + count((array) $params->get('othercomitems'));
+        $this->typecnt = count((array) $params->get('jcomitems')) + count((array) $params->get('othercomitems'));
         
         $this->item  = $this->get('Tagitems');
         if ($this->item === false) {

@@ -11,12 +11,12 @@
 
 		<field name="artlist" type="list"
 			label="List type"
-			description="What items to include in list before filtering"
+			description="Which items to include in list"
 			onchange="this.form.submit();"
 		>
-			<option value="0">All Articles</option>
-			<option value="1">Articles with tags</option>
-			<option value="2">Articles without tags</option>				
+			<option value="0">XBARTMAN_ALL_ARTICLES</option>
+			<option value="1">XBARTMAN_ARTICLES_WITH_TAGS</option>
+			<option value="2">XBARTMAN_ARTICLES_WITHOUT_TAGS</option>				
 		</field>
 		<field
 			name="published"
@@ -72,9 +72,9 @@
   			class="btn-group btn-small radiotop"
 			showon="artlist!:2"
 		>
-			<option value="1" onchange="this.form.submit();">All</option>
-			<option value="0" onchange="this.form.submit();">Any</option>
-			<option value="2" onchange="this.form.submit();">Exclude</option>
+			<option value="1" onchange="this.form.submit();">XB_ALL</option>
+			<option value="0" onchange="this.form.submit();">XB_ANY</option>
+			<option value="2" onchange="this.form.submit();">XB_NONE</option>
 		</field>	
 		
 		

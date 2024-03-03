@@ -136,7 +136,7 @@ if ($saveOrder && !empty($this->items)) {
 							<?php echo Text::_('XBARTMAN_INART_IMAGES'); ?>
 						</th>
 						<th>
-							<?php echo Text::_('XBARTMAN_INTRO_FULL_IMAGES'); ?>
+							<?php echo Text::_('XBARTMAN_FEATURED_IMAGES'); ?>
 						</th>
 						<th><span class="xb09" style="padding:0; text-align:center;">
 							<?php echo HTMLHelper::_('searchtools.sort', 'XBARTMAN_HEADING_DATE_' . strtoupper($orderingColumn), 'a.' . $orderingColumn, $listDirn, $listOrder); ?>
@@ -165,7 +165,7 @@ if ($saveOrder && !empty($this->items)) {
 							<?php echo Text::_('XBARTMAN_INART_IMAGES'); ?>
 						</th>
 						<th>
-							<?php echo Text::_('XBARTMAN_INTRO_FULL_IMAGES'); ?>
+							<?php echo Text::_('XBARTMAN_FEATURED_IMAGES'); ?>
 						</th>
 						<th><span class="xb09" style="padding:0; text-align:center;">
 							<?php echo HTMLHelper::_('searchtools.sort', 'XBARTMAN_HEADING_DATE_' . strtoupper($orderingColumn), 'a.' . $orderingColumn, $listDirn, $listOrder); ?>

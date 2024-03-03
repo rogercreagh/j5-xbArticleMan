@@ -25,11 +25,11 @@ extract($displayData);
 
 ?>
 <label id="batch-choose-action-lbl" for="batch-category-id">
-    <?php echo Text::_('Select new Category for item'); ?>
+    <?php echo Text::_('XB_SELECT_NEW_CAT'); ?>
 </label>
 <div id="batch-choose-action" class="control-group">
     <select name="batch[category_id]" class="form-select" id="batch-category-id">
-        <option value=""><?php echo Text::_('No change'); ?></option>
+        <option value=""><?php echo Text::_('XB_NO_CHANGE'); ?></option>
         <?php if (isset($addRoot) && $addRoot) : ?>
             <?php echo HTMLHelper::_('select.options', HTMLHelper::_('category.categories', $extension)); ?>
         <?php else : ?>
