@@ -3,23 +3,73 @@
 	<changelog>
 		<element>com_xbarticleman</element>
 		<type>component</type>
-		<version>0.2.0.1</version>
+		<version>0.2.0.2</version>
 		<security>
 		</security>
 		<fix>
 		</fix>
 		<addition>
-			<item><![CDATA[<h3>First Release Candidate</h3>v0.2.0.1 Updated 3rd March 2024]]></item>
+			<item><![CDATA[<h3>First Release Candidate</h3>v0.2.0.2 Updated 6th March 2024]]></item>
 			<item>JED check ok</item>
 		</addition>
 		<change>
-			<item>Minor display layout tweaks</item>
+			<item></item>
 		</change>
 		<remove>
 			<item>Commented out code removed</item>
 		</remove>
 		<language>
 			<item>en-GB complete</item>
+		</language>
+		<note>
+			<item>This release not yet available on JED</item>
+		</note>
+	</changelog>	
+	<changelog>
+		<element>com_xbarticleman</element>
+		<type>component</type>
+		<version>0.2.0.0</version>
+		<security>
+		</security>
+		<fix>
+		</fix>
+		<addition>
+			<item><![CDATA[<h3>Beta</h3>v0.2.0.0 Updated 5th March 2024]]></item>
+			<item>Update site & changelog working</item>
+		</addition>
+		<change>
+			<item>Minor display layout tweaks</item>
+		</change>
+		<remove>
+			<item></item>
+		</remove>
+		<language>
+			<item></item>
+		</language>
+		<note>
+			<item>This release not yet available on JED</item>
+		</note>
+	</changelog>	
+	<changelog>
+		<element>com_xbarticleman</element>
+		<type>component</type>
+		<version>0.1.0.9</version>
+		<security>
+		</security>
+		<fix>
+		</fix>
+		<addition>
+			<item><![CDATA[<h3>Alpha</h3>v0.1.0.9Updated 3rd March 2024]]></item>
+			<item>Update site & changelog working</item>
+		</addition>
+		<change>
+			<item>Dashboard Layout Improved</item>
+		</change>
+		<remove>
+			<item></item>
+		</remove>
+		<language>
+			<item></item>
 		</language>
 		<note>
 			<item>This release not yet available on JED</item>
