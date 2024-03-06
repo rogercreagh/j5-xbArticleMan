@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <extension type="component" method="upgrade">
 	<name>com_xbarticleman</name>
-	<creationDate>3rd March 2024</creationDate>
-	<version>0.2.0.1</version>
+	<creationDate>6th March 2024</creationDate>
+	<version>0.2.0.2</version>
 	<author>RogerCO</author>
 	<authorEmail>roger@crosborne.co.uk</authorEmail>
 	<authorUrl>www.crosborne.uk</authorUrl>
@@ -61,6 +61,8 @@
 		</submenu>
 		
 	</administration>
+
+    <changelogurl>https://raw.githubusercontent.com/rogercreagh/j5-xbArticleMan/main/changelog_xbarticleman-j5.xml</changelogurl>
 
 	<updateservers>
 		<server type="extension" priority="1" name="xbArticleMan Updates">
