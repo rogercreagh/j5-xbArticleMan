@@ -75,10 +75,6 @@ class ArtlinksModel extends ListModel {
         $level = $this->getUserStateFromRequest($this->context . '.filter.level', 'filter_level');
         $this->setState('filter.level', $level);
         
-//         $checkint = $app->input->get('checkint');
-//         if (!$checkint==1) {
-//             $checkint=0;
-//         }
         $checkext = $app->input->get('checkext');
         if (!$checkext==1) {
             $checkext=0;
@@ -478,53 +474,6 @@ class ArtlinksModel extends ListModel {
                 $this->intlinkcnt ++;                
             }
         }
-        
-            
-//             if (!key_exists('host',$urlinfo)) { // we've no host so we need to make a valid complete url with local server 
-//                 if (!key_exists('path',$urlinfo)) { //it must be an inpage link to #something
-//                     $linkdata->type = 'inpage';
-//                 } else {
-//                     $linkdata->pvurl = Uri::root().ltrim($url,'/');
-//                     $linkdata->type = 'local';                    
-//                 }
-//             } else { //weve got both scheme and host
-//                 if ((isset($linkdata->scheme)) && (str_starts_with(strtolower($linkdata->scheme),'http'))) {
-//                     // its an http or https scheme so valid link to test
-//                     $linkdata->scheme .= '://'; //make http scheme ok to concat with host for url
-//                     $linkdata->pvurl = $url;
-//                     $linkdata->type = 'external';
-//                 } else { // scheme is not http or https so it is some other type of link link mailto
-//                     $linkdata->type = 'other' ;
-//                 }
-//                 $linkdata->pvurl = $url;
-//             }
-//         } else { //scheme is set
-//             if (key_exists('host', $urlinfo)) { //need to check if it is local
-//                 $linkdata->type = (XbarticlemanHelper::isLocalLink($url)) ? 'local' : 'external';
-//                 $linkdata->pvurl = $url;
-//             }
-            
-//             if ($urlinfo['scheme'] == 'mailto') {
-//                 $linkdata->text .= '&nbsp;<span class="icon-mail"></span>';
-//             } else {
-//                 if (key_exists('host', $urlinfo)) $urlinfo['scheme'] .= '://';
-//             }
-//         }
-//         $linkdata->islocal = XbarticlemanHelper::isLocalLink($url);
-//         if ($linkdata->islocal) {
-//             if ($urlinfo['host'] == '')  //use router here
-//             $linkdata->colour = (XbarticlemanHelper::check_url($url)) ? 'green' : 'red';
-//         } else {
-//             $this->extlinkcnt +=1;
-//             $linkdata->colour = '';
-//             if ($this->getState('xbarticleman.checkext',0) == 1) $linkdata->colour = (XbarticlemanHelper::check_url($url)) ? 'green' : 'red';
-//         }
-//         $linkdata->scheme_host = (key_exists('scheme',$urlinfo)) ? $urlinfo['scheme'] : '';
-//         $linkdata->scheme_host .= (key_exists('host',$urlinfo)) ? $urlinfo['host'] : '';
-        //$pathinfo = pathinfo($url);
-//        if ($text == '') {
-//            $linkdata->text = $url; //TODO relace this with abbreviated version poss using ellipsis function to show only N chars
-//        }
         return $linkdata;
     }
     
@@ -534,27 +483,5 @@ class ArtlinksModel extends ListModel {
             'relarts' => $this->relarts, 'rellinkcnt' => $this->rellinkcnt, 'emblinkcnt' => $this->emblinkcnt);
     }
 
-/**
-    public function getAuthors()
-    {
-        // Create a new query object.
-        $db    = $this->getDatabase();
-        $query = $db->getQuery(true);
-        
-        // Construct the query
-        $query->select('u.id AS value, u.name AS text')
-        ->from('#__users AS u')
-        ->join('INNER', '#__content AS c ON c.created_by = u.id')
-        ->group('u.id, u.name')
-        ->order('u.name');
-        
-        // Setup the query
-        $db->setQuery($query);
-        
-        // Return the result
-        return $db->loadObjectList();
-    }
- */
-       
 }
  

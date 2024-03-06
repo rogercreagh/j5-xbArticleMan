@@ -50,11 +50,6 @@
 			<menu link="option=com_xbarticleman&amp;view=arttags" >
 				xbartman_iconmenu_arttags
 			</menu>
-			<!-- 
-			<menu link="option=com_xbarticleman&amp;view=tagitems" >
-				xbartman_iconmenu_tagitems
-			</menu>
-			 -->
 			<menu link="option=com_config&amp;view=component&amp;component=com_xbarticleman" >
 				xbartman_iconmenu_options				
 			</menu>
@@ -62,11 +57,11 @@
 		
 	</administration>
 
-    <changelogurl>https://raw.githubusercontent.com/rogercreagh/j5-xbArticleMan/main/changelog_xbarticleman-j5.xml</changelogurl>
+    	<changelogurl>https://raw.githubusercontent.com/rogercreagh/j5-xbArticleMan/main/changelog_xbarticleman-j5.xml</changelogurl>
 
 	<updateservers>
 		<server type="extension" priority="1" name="xbArticleMan Updates">
-			https://crosborne.uk/jupdates/update_xbarticleman.xml
+			https://raw.githubusercontent.com/rogercreagh/j5-xbArticleMan/main/update_xbarticleman.xml
 		</server>
 	</updateservers>
 
