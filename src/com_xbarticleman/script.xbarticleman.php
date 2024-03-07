@@ -13,12 +13,13 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Version;
 use Joomla\CMS\Installer\Installer;
+use Joomla\CMS\Installer\InstallerScript;
 use Joomla\Filesystem\Path;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Uri\Uri;
 
-class com_xbarticlemanInstallerScript 
+class com_xbarticlemanInstallerScript extends InstallerScript
 {
     protected $jminver = '4.0';
     protected $jmaxver = '6.0';
@@ -62,13 +63,13 @@ class com_xbarticlemanInstallerScript
     
     function postflight($type, $parent) {
         $componentXML = Installer::parseXMLInstallFile(Path::clean(JPATH_ADMINISTRATOR . '/components/com_xbarticleman/xbarticleman.xml'));
+        $app = Factory::getApplication();
         if ($type == 'update') {
             echo '<p>The <b>'.$this->extname.'</b> component has been updated from '.$this->oldver.' '.$this->olddate;
             echo ' to <b>'.$componentXML['version'].'</b> '.$componentXML['creationDate'] . '</p>';
             echo '<p>For details see <a href="http://crosborne.co.uk/'.$this->extslug.'/changelog" target="_blank">www.crosborne.co.uk/'.$this->extslug.'/changelog</a></p>';           
         }
         if (($type=='install') || ($type=='discover_install')) {
-             $app = Factory::getApplication();
              $message = '<b>'.$this->extname.' '.$componentXML['version'].' '.$componentXML['creationDate'].'</b><br />';
              $message .= $this->createCssFromTmpl();
             

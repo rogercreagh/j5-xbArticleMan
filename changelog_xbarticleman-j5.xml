@@ -27,14 +27,38 @@
 	<changelog>
 		<element>com_xbarticleman</element>
 		<type>component</type>
+		<version>0.2.0.1</version>
+		<security>
+		</security>
+		<fix>
+		</fix>
+		<addition>
+			<item><![CDATA[<h3>Beta2</h3>v0.2.0.0 Updated 5th March 2024]]></item>
+			<item>Changelog working</item>
+		</addition>
+		<change>
+		</change>
+		<remove>
+			<item></item>
+		</remove>
+		<language>
+			<item></item>
+		</language>
+		<note>
+			<item>This release not yet available on JED</item>
+		</note>
+	</changelog>	
+	<changelog>
+		<element>com_xbarticleman</element>
+		<type>component</type>
 		<version>0.2.0.0</version>
 		<security>
 		</security>
 		<fix>
 		</fix>
 		<addition>
-			<item><![CDATA[<h3>Beta</h3>v0.2.0.0 Updated 5th March 2024]]></item>
-			<item>Update site &amp; changelog working</item>
+			<item><![CDATA[<h3>Beta</h3>v0.2.0.0 Updated 4th March 2024]]></item>
+			<item>Update site working</item>
 		</addition>
 		<change>
 			<item>Minor display layout tweaks</item>
@@ -59,7 +83,6 @@
 		</fix>
 		<addition>
 			<item><![CDATA[<h3>Alpha</h3>v0.1.0.9Updated 3rd March 2024]]></item>
-			<item>Update site &amp; changelog working</item>
 		</addition>
 		<change>
 			<item>Dashboard Layout Improved</item>
