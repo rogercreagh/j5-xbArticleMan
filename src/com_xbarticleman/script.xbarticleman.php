@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager
  * file script.xbarticleman.php
- * @version 0.0.8.2 19th February 2024
+ * @version 0.2.0.3 7th February 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -23,7 +23,7 @@ class com_xbarticlemanInstallerScript extends InstallerScript
 {
     protected $jminver = '4.0';
     protected $jmaxver = '6.0';
-    protected $extension = 'com_xbarticleman';
+    protected $extension = 'com_xbarticleman-j5';
     protected $extname = 'xbArticleMan';
     protected $extslug = 'xbarticleman';
     protected $ver = 'v1.2.3.4';
@@ -62,15 +62,15 @@ class com_xbarticlemanInstallerScript extends InstallerScript
     }
     
     function postflight($type, $parent) {
-        $componentXML = Installer::parseXMLInstallFile(Path::clean(JPATH_ADMINISTRATOR . '/components/com_xbarticleman/xbarticleman.xml'));
+ //       $componentXML = Installer::parseXMLInstallFile(Path::clean(JPATH_ADMINISTRATOR . '/components/com_xbarticleman/xbarticleman.xml'));
         $app = Factory::getApplication();
         if ($type == 'update') {
             echo '<p>The <b>'.$this->extname.'</b> component has been updated from '.$this->oldver.' '.$this->olddate;
-            echo ' to <b>'.$componentXML['version'].'</b> '.$componentXML['creationDate'] . '</p>';
-            echo '<p>For details see <a href="http://crosborne.co.uk/'.$this->extslug.'/changelog" target="_blank">www.crosborne.co.uk/'.$this->extslug.'/changelog</a></p>';           
+ //           echo ' to <b>'.$componentXML['version'].'</b> '.$componentXML['creationDate'] . '';
+            echo '</p><p>For details see <a href="http://crosborne.co.uk/'.$this->extslug.'/changelog" target="_blank">www.crosborne.co.uk/'.$this->extslug.'/changelog</a></p>';           
         }
         if (($type=='install') || ($type=='discover_install')) {
-             $message = '<b>'.$this->extname.' '.$componentXML['version'].' '.$componentXML['creationDate'].'</b><br />';
+//             $message = '<b>'.$this->extname.' '.$componentXML['version'].' '.$componentXML['creationDate'].'</b><br />';
              $message .= $this->createCssFromTmpl();
             
              $app->enqueueMessage($message);
@@ -78,7 +78,7 @@ class com_xbarticlemanInstallerScript extends InstallerScript
             echo '<div style="padding: 7px; margin: 0 0 8px; list-style: none; -webkit-border-radius: 4px; -moz-border-radius: 4px;
 		border-radius: 4px; background-image: linear-gradient(#ffffff,#efefef); border: solid 1px #ccc;">';
             echo '<h3>'.$this->extname.' Component installed</h3>';
-            echo '<p>version '.$componentXML['version'].' '.$componentXML['creationDate'].'<br />';
+//            echo '<p>version '.$componentXML['version'].' '.$componentXML['creationDate'].'<br />';
             echo '<p>For help and information see <a href="https://crosborne.co.uk/'.$this->extslug.'/doc" target="_blank">
 	            www.crosborne.co.uk/'.$this->extslug.'/doc</a> or use Help button in '.$this->extname.' Dashboard</p>';
             echo '<h4>Next steps</h4>';

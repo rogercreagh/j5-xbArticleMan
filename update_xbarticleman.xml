@@ -14,7 +14,7 @@
         <tags>
           <tag>rc</tag>
         </tags>
-        <sha256>943fc436290878341f6f25e5d9e4891c531212d8619934db8b8cf05fd9b59742</sha256>
+        <sha256>baa6d7a53749d377acec34b30eb23ad1270da4351832ad25a02ccf4c1c15dc3d</sha256>
     	<changelogurl>https://raw.githubusercontent.com/rogercreagh/j5-xbArticleMan/main/changelog_xbarticleman-j5.xml</changelogurl>
 		<maintainer>Roger C-O</maintainer>
 		<maintainerurl>https://crosborne.uk/xbarticleman</maintainerurl>
