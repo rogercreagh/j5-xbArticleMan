@@ -1,6 +1,6 @@
 <changelogs>
 	<changelog>
-		<element>xbarticleman</element>
+		<element>com_xbarticleman</element>
 		<type>component</type>
 		<version>0.2.0.2</version>
 		<security>
@@ -25,7 +25,7 @@
 		</note>
 	</changelog>	
 	<changelog>
-		<element>xbarticleman</element>
+		<element>com_xbarticleman</element>
 		<type>component</type>
 		<version>0.2.0.0</version>
 		<security>
@@ -50,7 +50,7 @@
 		</note>
 	</changelog>	
 	<changelog>
-		<element>xbarticleman</element>
+		<element>com_xbarticleman</element>
 		<type>component</type>
 		<version>0.1.0.9</version>
 		<security>
