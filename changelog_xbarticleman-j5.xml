@@ -35,7 +35,7 @@
 		</fix>
 		<addition>
 			<item><![CDATA[<h3>Beta</h3>v0.2.0.0 Updated 5th March 2024]]></item>
-			<item>Update site & changelog working</item>
+			<item>Update site &amp; changelog working</item>
 		</addition>
 		<change>
 			<item>Minor display layout tweaks</item>
