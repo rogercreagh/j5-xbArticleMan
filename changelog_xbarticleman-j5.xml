@@ -59,7 +59,7 @@
 		</fix>
 		<addition>
 			<item><![CDATA[<h3>Alpha</h3>v0.1.0.9Updated 3rd March 2024]]></item>
-			<item>Update site & changelog working</item>
+			<item>Update site &amp; changelog working</item>
 		</addition>
 		<change>
 			<item>Dashboard Layout Improved</item>
