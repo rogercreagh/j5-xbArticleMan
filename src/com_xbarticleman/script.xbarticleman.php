@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager
  * file script.xbarticleman.php
- * @version 0.2.0.3 7th February 2024
+ * @version 0.2.0.3 8th March 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -11,19 +11,17 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Version;
 use Joomla\CMS\Installer\Installer;
+use Joomla\CMS\Version;
 use Joomla\CMS\Installer\InstallerScript;
 use Joomla\Filesystem\Path;
-use Joomla\CMS\Table\Table;
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Uri\Uri;
 
-class com_xbarticlemanInstallerScript extends InstallerScript
+class Com_xbarticlemanInstallerScript extends InstallerScript
 {
     protected $jminver = '4.0';
     protected $jmaxver = '6.0';
-    protected $extension = 'com_xbarticleman-j5';
+    protected $extension = 'com_xbarticleman';
     protected $extname = 'xbArticleMan';
     protected $extslug = 'xbarticleman';
     protected $ver = 'v1.2.3.4';
@@ -37,61 +35,51 @@ class com_xbarticlemanInstallerScript extends InstallerScript
         if ((version_compare($jverthis, $this->jminver,'lt')) || (version_compare($jverthis, $this->jmaxver, 'ge'))) {
             throw new RuntimeException($this->extname.' requires Joomla version greater than '.$this->jminver. ' and less than '.$this->jmaxver.'. You have '.$jverthis);
         }
-        $message='';
+        // if we are updating then get the old version and date from component xml before it gets overwritten.
         if ($type=='update') {
             $componentXML = Installer::parseXMLInstallFile(Path::clean(JPATH_ADMINISTRATOR . '/components/'.$this->extension.'/'.$this->extslug.'.xml'));
             $this->oldver = $componentXML['version'];
             $this->olddate = $componentXML['creationDate'];
+//            Factory::getApplication()->enqueueMessage('Updating '.$this->extname.' from '.$this->oldver.' '.$this->olddate.' to '.$parent->getManifest()->version);
         }
-        if ($message!='') { Factory::getApplication()->enqueueMessage($message,'');}
     }
     
     function install($parent) {
     }
     
     function uninstall($parent) {
-       $app = Factory::getApplication();
-        
-       $componentXML = Installer::parseXMLInstallFile(Path::clean(JPATH_ADMINISTRATOR . '/components/'.$this->extension.'/'.$this->extslug.'.xml'));
-       $message = 'Uninstalling '.$this->extname.' component v.'.$componentXML['version'].' '.$componentXML['creationDate'];
-//        are we also clearing data?
-       $app->enqueueMessage($message,'Info');
+       $message = 'Uninstalling '.$this->extname.' component v.'.$parent->getManifest()->version.' '.$parent->getManifest()->creationDate;
+       Factory::getApplication()->enqueueMessage($message,'Info');
     }
     
     function update($parent) {
     }
     
     function postflight($type, $parent) {
- //       $componentXML = Installer::parseXMLInstallFile(Path::clean(JPATH_ADMINISTRATOR . '/components/com_xbarticleman/xbarticleman.xml'));
         $app = Factory::getApplication();
-        if ($type == 'update') {
-            echo '<p>The <b>'.$this->extname.'</b> component has been updated from '.$this->oldver.' '.$this->olddate;
- //           echo ' to <b>'.$componentXML['version'].'</b> '.$componentXML['creationDate'] . '';
-            echo '</p><p>For details see <a href="http://crosborne.co.uk/'.$this->extslug.'/changelog" target="_blank">www.crosborne.co.uk/'.$this->extslug.'/changelog</a></p>';           
+        $manifest = $parent->getManifest();
+        $ext_mess = '<div style="position: relative; margin: 15px 15px 15px -15px; padding: 1rem; border:solid 1px #444; border-radius: 6px;">';
+       if ($type == 'update') {
+            //set message so that at least something is displayed if com_installed update bug not fixed
+            $app->enqueueMessage('Updated '.$this->extname.' component from '.$this->oldver.' to v'.$parent->getManifest()->version.' Please see <a href="index.php?option=com_xbarticleman">Dashboard</a> for more info.');
+            
+            $ext_mess .= '<p><b>'.$this->extname.'</b> component has been updated from '.$this->oldver.' of '.$this->olddate;
+            $ext_mess .= ' to v<b>'.$manifest->version.'</b> dated '.$manifest->creationDate.'</p>';
         }
         if (($type=='install') || ($type=='discover_install')) {
-//             $message = '<b>'.$this->extname.' '.$componentXML['version'].' '.$componentXML['creationDate'].'</b><br />';
-             $message .= $this->createCssFromTmpl();
+            $ext_mess .= '<h3>'.$this->extname.' component installed</h3>';
+            $ext_mess .= '<p>version '.$manifest->version.' dated '.$manifest->creationDate.'</p>';
+            $ext_mess .= '<p><b>Important</b> Before starting review &amp; set the component options&nbsp;&nbsp;';
+            $ext_mess .=  '<a href="index.php?option=com_config&view=component&component='.$this->extension.'" class="btn btn-small btn-info">'.$this->extname.' Options</a>';
             
-             $app->enqueueMessage($message);
-            
-            echo '<div style="padding: 7px; margin: 0 0 8px; list-style: none; -webkit-border-radius: 4px; -moz-border-radius: 4px;
-		border-radius: 4px; background-image: linear-gradient(#ffffff,#efefef); border: solid 1px #ccc;">';
-            echo '<h3>'.$this->extname.' Component installed</h3>';
-//            echo '<p>version '.$componentXML['version'].' '.$componentXML['creationDate'].'<br />';
-            echo '<p>For help and information see <a href="https://crosborne.co.uk/'.$this->extslug.'/doc" target="_blank">
-	            www.crosborne.co.uk/'.$this->extslug.'/doc</a> or use Help button in '.$this->extname.' Dashboard</p>';
-            echo '<h4>Next steps</h4>';
-            echo '<p><b>Important</b> Before starting review &amp; set the component options&nbsp;&nbsp;';
-            echo '<a href="index.php?option=com_config&view=component&component='.$this->extension.'" class="btn btn-small btn-info">'.$this->extname.' Options</a>';
-//            echo '<br /><i>After saving the options you will exit to the Dashboard for an overview</i>';
-            echo '</p>';
-//            echo '<p><b>Dashboard</b> <i>The Dashboard view provides an overview of the component status</i>&nbsp;&nbsp;:';
-//            echo '<a href="index.php?option=com_xbaoy&view=dashboard">xbAOY Dashboard</a> (<i>but save the options first!</i>)';
-//            echo '</p>';
-            echo '</div>';
+            $app->enqueueMessage($this->createCssFromTmpl());
             
         }
+        $ext_mess .= '<p>For help and information see <a href="https://crosborne.co.uk/'.$this->extslug.'/doc" target="_blank">www.crosborne.co.uk/'.$this->extslug.'/doc</a> ';
+        $ext_mess .= 'or use Help button in <a href="index.php?option='.$this->extension.'" class="btn btn-small btn-info">'.$this->extname.' Dashboard</a></p>';
+        $ext_mess .= '</div>';
+        echo $ext_mess;
+        return true;
     }
 
     function createCssFromTmpl() {
