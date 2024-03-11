@@ -18,10 +18,10 @@
         "uri": "com_xbarticleman/xbcommon.css"
       },     
       {
-        "name": "xbextlink.styles",
-        "description": "xb external link hinting css",
+        "name": "xblinkhinting.styles",
+        "description": "xb link hinting css",
         "type": "style",
-        "uri": "com_xbarticleman/xbextlinks.css"
+        "uri": "com_xbarticleman/xblinkhinting.css"
       }      
     ]
 }

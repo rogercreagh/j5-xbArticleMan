@@ -84,13 +84,14 @@ class Com_xbarticlemanInstallerScript extends InstallerScript
 
     function createCssFromTmpl() {
         //load the template file
-        $tmplstring = file_get_contents(JPATH_ROOT.'/media/'.$this->extension.'/css/xblinkhint.tmpl.css');
+        $tmplstring = file_get_contents(JPATH_ROOT.'/media/'.$this->extension.'/css/xblinkhinting.tmpl.css');
         $domain = parse_url(Uri::root(), PHP_URL_HOST);
         $tmplstring = str_replace('{DOMAIN}', $domain, $tmplstring);
-        if (file_put_contents(JPATH_ROOT.'/media/'.$this->extension.'/css/xblinkhint.css',$tmplstring) == false) {
-            Factory::getApplication()->enqueueMessage('Failed to create LinkHint CSS file', 'Error');
+        if (file_put_contents(JPATH_ROOT.'/media/'.$this->extension.'/css/xblinkhinting.css',$tmplstring) == false) {
+            Factory::getApplication()->enqueueMessage('Failed to create domain specific xbLinkHint.CSS file', 'Error');
             return '';
         }
+        // also create hidden demo section in dashboard
         return 'CSS External Links file created ok <br />';
     }
 

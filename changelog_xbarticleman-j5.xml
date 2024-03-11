@@ -2,6 +2,31 @@
 	<changelog>
 		<element>com_xbarticleman</element>
 		<type>component</type>
+		<version>0.2.0.3</version>
+		<security>
+		</security>
+		<fix>
+		</fix>
+		<addition>
+			<item><![CDATA[<h3>First Release Candidate</h3>v0.2.0.3 Updated 11th March 2024]]></item>
+			<item>Link Hinting CSS changes</item>
+		</addition>
+		<change>
+			<item></item>
+		</change>
+		<remove>
+			<item></item>
+		</remove>
+		<language>
+			<item></item>
+		</language>
+		<note>
+			<item>This release not yet available on JED</item>
+		</note>
+	</changelog>	
+	<changelog>
+		<element>com_xbarticleman</element>
+		<type>component</type>
 		<version>0.2.0.2</version>
 		<security>
 		</security>

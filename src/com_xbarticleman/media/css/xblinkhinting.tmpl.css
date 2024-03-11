@@ -1,0 +1,179 @@
+/*******
+ * @package xbLinkHinting CSS
+ * @filesource media/css/xblinkhinting.css
+ * @version 1.0.0.0 10th March 2024
+ * @author Roger C-O
+ * @copyright Copyright (c) Roger Creagh-Osborne, 2024
+ * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
+ ******/
+
+/****
+ * CSS to provide an arrow icon at the end of link text to indicate whether destination is internal (same site) or external
+ * and whether target is same window/tab or a new one.
+ * The icon used depends whether the destination is external or internal and the target
+ * 1. Internal links using same window/tab : no icon
+ * 2. Internal links using new window/tab : plain arrow icon pointing up-right
+ * 3. External links using same window tab : arrow pointing right into a box
+ * 4. External links using a new window/tab : arrow pointing right out from a box
+ * 
+ * Icons can be disabled for a specific link by including the class "nohint" in the link tag
+ * 
+ * for an xbComponent link hinting can be disabled, or enabled just for the specific component in its config options
+ * To add link hinting site-wide copy the CSS below into a user.css file for the admin and/or site templates in use as required.
+ * 
+ * NB domain is hard coded here as {DOMAIN} - replace with current domain to give valid file
+ * This replacement should happen automatically if this file is installed with an xbComponent 
+ * 
+ * for each type of link css selectors are specified for both 'http:' and 'https:' and also both with and without the 'www.'
+ * at the start of the domain name. Delete any unwanted combinations below as you wish
+ ****/
+ 
+ /* If your template already provides some different link hinting you might want to disable it using something like this:
+ 
+a[target="_blank"]:before {
+    content:unset !important;
+}
+
+/* disable Joomla5 Atum template forced underline on a inside table for xbcomponents */
+#xbcomponent table a {
+	text-decoration:none;
+}
+
+ 
+
+/* internal no target or target self -> no after */
+
+/* internal target not _self -> plain arrow-out &#x2197; \2197 with font-family serif */
+a:not(.nohint)[href]:not([href^="http"]):not([class="noafter"])[target]:not([target="_self"]):after,
+a:not(.nohint)[href^="https://{DOMAIN}"]:not([class="noafter"])[target]:not([target="_self"]):after,
+a:not(.nohint)[href^="https://www.{DOMAIN}"]:not([class="noafter"])[target]:not([target="_self"]):after,
+a:not(.nohint)[href^="http://{DOMAIN}"]:not([class="noafter"])[target]:not([target="_self"]):after,
+a:not(.nohint)[href^="http://www.{DOMAIN}"]:not([class="noafter"])[target]:not([target="_self"]):after
+{
+font-family:serif;
+	content: "\2197"; 
+    font-size: 14px;
+    font-weight: 900;
+    padding-inline-start:5px;
+}
+/* external no target or target _self -> arrow-in  fas fa right-to-bracket \f2f6 */
+a:not(.nohint)[href^="https"]:not([href^="https://www.{DOMAIN}"]):not([href^="https://{DOMAIN}"]):not([class="noafter"])[target][target="_self"]:after,
+a:not(.nohint)[href^="https"]:not([href^="https://www.{DOMAIN}"]):not([href^="https://{DOMAIN}"]):not([class="noafter"]):not([target]):after,
+a:not(.nohint)[href^="http://"]:not([href^="http://www.{DOMAIN}"]):not([href^="http://{DOMAIN}"]):not([class="noafter"])[target][target="_self"]:after,
+a:not(.nohint)[href^="http://"]:not([href^="http://www.{DOMAIN}"]):not([href^="http://{DOMAIN}"]):not([class="noafter"]):not([target]):after
+{
+	font-family: "Font Awesome 6 Free";  
+	content: "\f2f6";
+    font-size: 14px;
+    font-weight: 900;
+    padding-inline-start:5px;
+}
+/* external target not _self ->arrow-out-box fas fa right-from-bracket \f2f5 */
+a:not(.nohint)[href^="https"]:not([href^="https://www.{DOMAIN}"]):not([href^="https://{DOMAIN}"]):not([class="noafter"])[target]:not([target="_self"]):after,
+a:not(.nohint)[href^="http://"]:not([href^="http://www.{DOMAIN}"]):not([href^="http://{DOMAIN}"]):not([class="noafter"])[target]:not([target="_self"]):after
+{
+	font-family: "Font Awesome 6 Free"; 
+	content: "\f2f5";
+    font-size: 14px;
+    font-weight: 900;
+    padding-inline-start:5px;
+}
+
+/*** tests - copy this into a page to check that it is working correctly 
+ * within Joomla if there is no scheme specified then the router will generally prepend Uri::root() schemm and host
+ * so some test below will generate unexpected urls
+ 
+  <p>Internal Links</p>
+  <br>without scheme or host (path only)
+  <ol>
+	  <li>int no target <a href="index.php">index.php</a> no icon</li>
+	  <li>int self <a href="index.php" target="_self">index.php</a> no icon </li>
+	  <li>int blank <a href="index.php" target="_blank">index.php</a> plain arrow</li>
+	  <li>int mytab <a href="index.php" target="mytab">index.php</a>plain arrow</li>
+  </ol>
+  <br />with scheme & host
+  <ol>
+	  <li>int no targ <a href="https://{DOMAIN}">https://{DOMAIN}</a> no icon </li>
+	  <li>int self <a href="https://{DOMAIN}" target="_self">https://{DOMAIN}</a> no icon </li>
+	  <li>int blank <a href="https://{DOMAIN}" target="_blank">https://{DOMAIN}</a> plain arrow</li>
+	  <li>int mytab <a href="https://{DOMAIN}" target="mytab">https://{DOMAIN}</a> plain arrow</li>
+	  <li>int no targ <a href="http://{DOMAIN}">http://{DOMAIN}</a> no icon </li>
+	  <li>int self <a href="http://{DOMAIN}" target="_self">http://{DOMAIN}</a> no icon </li>
+	  <li>int blank <a href="http://{DOMAIN}" target="_blank">http://{DOMAIN}</a> plain arrow</li>
+	  <li>int mytab <a href="http://{DOMAIN}" target="mytab">http://{DOMAIN}</a> plain arrow</li>
+	  <li>int no targ <a href="https://www.{DOMAIN}">https://www.{DOMAIN}</a> no icon </li>
+	  <li>int self <a href="https://www.{DOMAIN}" target="_self">https://www.{DOMAIN}</a> no icon </li>
+	  <li>int blank <a href="https://www.{DOMAIN}" target="_blank">https://www.{DOMAIN}</a> plain arrow</li>
+	  <li>int mytab <a href="https://www.{DOMAIN}" target="mytab">https://www.{DOMAIN}</a> plain arrow</li>
+	  <li>int no targ <a href="http://www.{DOMAIN}">http://www.{DOMAIN}</a> no icon </li>
+	  <li>int self <a href="http://www.{DOMAIN}" target="_self">http://www.{DOMAIN}</a> no icon </li>
+	  <li>int blank <a href="http://www.{DOMAIN}" target="_blank">http://www.{DOMAIN}</a> plain arrow</li>
+	  <li>int mytab <a href="http://www.{DOMAIN}" target="mytab">http://www.{DOMAIN}</a> plain arrow</li>
+  </ol>
+  <br />with host only - Joomla router will prepend Uri::root() and treat host as path 
+  <ol>
+	  <li>int no targ <a href="{DOMAIN}">{DOMAIN}</a> no icon </li>
+	  <li>int self <a href="{DOMAIN}" target="_self">{DOMAIN}</a> no icon </li>
+	  <li>int blank <a href="{DOMAIN}" target="_blank">{DOMAIN}</a> plain arrow</li>
+	  <li>int mytab <a href="{DOMAIN}" target="mytab">{DOMAIN}</a> plain arrow</li>
+	  <li>int no targ <a href="www.{DOMAIN}">www.{DOMAIN}</a> no icon </li>
+	  <li>int self <a href="www.{DOMAIN}" target="_self">www.{DOMAIN}</a> no icon </li>
+	  <li>int blank <a href="www.{DOMAIN}" target="_blank">www.{DOMAIN}</a> plain arrow</li>
+	  <li>int mytab <a href="www.{DOMAIN}" target="mytab">www.{DOMAIN}</a> plain arrow</li>
+  </ol>
+  <br />with host and path (no scheme)
+  <ol>
+	  <li>int no targ <a href="{DOMAIN}">{DOMAIN}/garden/path.php </a> no icon </li>
+	  <li>int self <a href="{DOMAIN}" target="_self">{DOMAIN}/garden/path.php</a> no icon </li>
+	  <li>int blank <a href="{DOMAIN}" target="_blank">{DOMAIN}/garden/path.php</a> plain arrow</li>
+	  <li>int mytab <a href="{DOMAIN}" target="mytab">{DOMAIN}/garden/path.php</a> plain arrow</li>
+	  <li>int no targ <a href="www.{DOMAIN}">www.{DOMAIN}/garden/path.php </a> no icon </li>
+	  <li>int self <a href="www.{DOMAIN}" target="_self">www.{DOMAIN}/garden/path.php</a> no icon </li>
+	  <li>int blank <a href="www.{DOMAIN}" target="_blank">www.{DOMAIN}/garden/path.php</a> plain arrow</li>
+	  <li>int mytab <a href="www.{DOMAIN}" target="mytab">www.{DOMAIN}/garden/path.php</a> plain arrow</li>
+  </ol>
+  <p>External Links</p>
+  <br />with scheme and host
+  <ol>
+	  <li>int no targ <a href="https://crosborne.uk">http://crosborne.uk</a> arrow in</li>
+	  <li>int self <a href="https://crosborne.uk" target="_self">https://crosborne.uk</a> arrow in</li>
+	  <li>int blank <a href="https://crosborne.uk" target="_blank">https://crosborne.uk</a> arrow out</li>
+	  <li>int mytab <a href="https://crosborne.uk" target="mytab">https://crosborne.uk</a> arrow out</li>
+	  <li>int no targ <a href="http://crosborne.uk">http://crosborne.uk</a> arrow in</li>
+	  <li>int self <a href="http://crosborne.uk" target="_self">http://crosborne.uk</a> arrow in</li>
+	  <li>int blank <a href="http://crosborne.uk" target="_blank">http://crosborne.uk</a> arrow out</li>
+	  <li>int mytab <a href="http://crosborne.uk" target="mytab">http://crosborne.uk</a> arrow out</li>
+	  <li>int no targ <a href="https://www.crosborne.uk">http://www.crosborne.uk</a> arrow in</li>
+	  <li>int self <a href="https://www.crosborne.uk" target="_self">https://www.crosborne.uk</a> arrow in</li>
+	  <li>int blank <a href="https://www.crosborne.uk" target="_blank">https://www.crosborne.uk</a> arrow out</li>
+	  <li>int mytab <a href="https://www.crosborne.uk" target="mytab">https://www.crosborne.uk</a> arrow out</li>
+	  <li>int no targ <a href="http://www.crosborne.uk">http://www.crosborne.uk</a> arrow in</li>
+	  <li>int self <a href="http://www.crosborne.uk" target="_self">http://www.crosborne.uk</a> arrow in</li>
+	  <li>int blank <a href="http://www.crosborne.uk" target="_blank">http://www.crosborne.uk</a> arrow out</li>
+	  <li>int mytab <a href="http://www.crosborne.uk" target="mytab">http://www.crosborne.uk</a> arrow out</li>
+  </ol>
+  <br />with host only - Joomla will prepend Uri::root()
+  <ol>
+	  <li>int no targ <a href="crosborne.uk">crosborne.uk</a> arrow in</li>
+	  <li>int self <a href="crosborne.uk" target="_self">crosborne.uk</a> arrow in</li>
+	  <li>int blank <a href="crosborne.uk" target="_blank">crosborne.uk</a> arrow out</li>
+	  <li>int mytab <a href="crosborne.uk" target="mytab">crosborne.uk</a> arrow out</li>
+	  <li>int no targ <a href="www.crosborne.uk">www.crosborne.uk</a arrow in></li>
+	  <li>int self <a href="www.crosborne.uk" target="_self">www.crosborne.uk</a> arrow in</li>
+	  <li>int blank <a href="www.crosborne.uk" target="_blank">www.crosborne.uk</a> arrow out</li>
+	  <li>int mytab <a href="www.crosborne.uk" target="mytab">www.crosborne.uk</a> arrow out</li>
+  </ol>
+  <br />with host and path (no scheme) - Joomla will prepend Uri::root()
+  <ol>
+	  <li>int no targ <a href="crosborne.uk">crosborne.uk/garden/path.php </a> arrow in</li>
+	  <li>int self <a href="crosborne.uk" target="_self">crosborne.uk/garden/path.php</a> arrow in</li>
+	  <li>int blank <a href="crosborne.uk" target="_blank">crosborne.uk/garden/path.php</a> arrow out</li>
+	  <li>int mytab <a href="crosborne.uk" target="mytab">crosborne.uk/garden/path.php</a> arrow out</li>
+	  <li>int no targ <a href="www.crosborne.uk">www.crosborne.uk/garden/path.php </a> arrow in</li>
+	  <li>int self <a href="www.crosborne.uk" target="_self">www.crosborne.uk/garden/path.php</a> arrow in</li>
+	  <li>int blank <a href="www.crosborne.uk" target="_blank">www.crosborne.uk/garden/path.php</a> arrow out</li>
+	  <li>int mytab <a href="www.crosborne.uk" target="mytab">www.crosborne.uk/garden/path.php</a> arrow out</li>
+  </ol>
+
+
+***/

@@ -38,7 +38,7 @@ BootableExtensionInterface, RouterServiceInterface
         $wa->useStyle('xbcommon.styles');
         //load the hinting styles as per params
         if (($params->get('extlinkhint',0) == 1) || ($params->get('extlinkhint') == 3)) {
-            $wa->useStyle('xbextlink.styles');
+            $wa->useStyle('xblinkhinting.styles');
         }
         // alternative method to load file
 //       $wa->registerAndUseStyle('xbarticlemanCore', 'com_xbarticleman/xbarticleman.css');
