@@ -2,20 +2,22 @@
 	<changelog>
 		<element>com_xbarticleman</element>
 		<type>component</type>
-		<version>0.2.0.3</version>
+		<version>0.2.1.0</version>
 		<security>
 		</security>
 		<fix>
 		</fix>
 		<addition>
-			<item><![CDATA[<h3>First Release Candidate</h3>v0.2.0.3 Updated 11th March 2024]]></item>
-			<item>Link Hinting CSS changes</item>
+			<item><![CDATA[<h3>Second Release Candidate</h3>v0.2.1.0 Updated 11th March 2024]]></item>
+			<item>Link Hinting CSS removed</item>
+			<item>install in template user.css as required</item>
+			<item><![CDATA[see <a href="https://blog.crosborne.uk/link-hinting-update" target="_blank">blog post</a> ]]></item>
 		</addition>
 		<change>
 			<item></item>
 		</change>
 		<remove>
-			<item></item>
+			<item>media/css/linkhinting.tmpl.css</item>
 		</remove>
 		<language>
 			<item></item>
@@ -27,23 +29,24 @@
 	<changelog>
 		<element>com_xbarticleman</element>
 		<type>component</type>
-		<version>0.2.0.2</version>
+		<version>0.2.0.3</version>
 		<security>
 		</security>
 		<fix>
 		</fix>
 		<addition>
-			<item><![CDATA[<h3>First Release Candidate</h3>v0.2.0.2 Updated 6th March 2024]]></item>
+			<item><![CDATA[<h3>First Release Candidate</h3>v0.2.0.3 Updated 11th March 2024]]></item>
 			<item>JED check ok</item>
 		</addition>
 		<change>
+			<item>Link Hinting CSS changes</item>
 			<item></item>
 		</change>
 		<remove>
-			<item>Commented out code removed</item>
+			<item></item>
 		</remove>
 		<language>
-			<item>en-GB complete</item>
+			<item></item>
 		</language>
 		<note>
 			<item>This release not yet available on JED</item>

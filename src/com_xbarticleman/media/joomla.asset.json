@@ -16,12 +16,6 @@
         "description": "xb common component css",
         "type": "style",
         "uri": "com_xbarticleman/xbcommon.css"
-      },     
-      {
-        "name": "xblinkhinting.styles",
-        "description": "xb link hinting css",
-        "type": "style",
-        "uri": "com_xbarticleman/xblinkhinting.css"
       }      
     ]
 }

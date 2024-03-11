@@ -6,7 +6,7 @@
 		<element>com_xbarticleman</element>
 		<type>component</type>
 		<client>administrator</client>
-		<version>0.2.0.3</version>
+		<version>0.2.1.0</version>
 		<infourl>https://crosborne.uk/xbarticleman-j5</infourl>
 		<downloads>
 			<downloadurl type="full" format="zip">https://crosborne.uk/downloads?download=27</downloadurl>
@@ -14,7 +14,7 @@
         <tags>
           <tag>rc</tag>
         </tags>
-        <sha256>1a2e1bcf4147002e023c2c72a9da17d86d408bbbe816fbd24dd41c2379eade67</sha256>
+        <sha256>74bd91b91f23e6619e631eee16633d9018288e2a87a7a5558caf5e7f1a99bbd1</sha256>
     	<changelogurl>https://raw.githubusercontent.com/rogercreagh/j5-xbArticleMan/main/changelog_xbarticleman-j5.xml</changelogurl>
 		<maintainer>Roger C-O</maintainer>
 		<maintainerurl>https://crosborne.uk/xbarticleman</maintainerurl>

@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/tmpl/dashboard/default.php
- * @version 0.1.0.9 1st March 2024
+ * @version 0.2.1.0 11th March 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -292,8 +292,6 @@ HTMLHelper::_('formbehavior.chosen', 'select');
 	        			<p><?php echo Text::_('XBARTMAN_CONFIG_SETTINGS'); ?>:
 	        			</p>
 	        			<dl class="xbdlinline">
-	        				<dt><?php echo Text::_('XBCONFIG_LINKHINT_LABEL'); ?>: </dt> 
-	        					<dd><?php echo $this->extlinkhint; ?></dd>
 	        				<dt><?php echo Text::_('XBARTMAN_TAG_GROUPS'); ?>: </dt> 
 	        					<dd><?php echo ($this->taggroups == 0) ? 'Not specified' : 'Enabled'; ?></dd>
 	        				<?php if ($this->taggroups == 1) : ?>
@@ -329,6 +327,6 @@ HTMLHelper::_('formbehavior.chosen', 'select');
     	<?php echo HTMLHelper::_('form.token'); ?>
     
     </form>
-    
+    <p>&nbsp;</p>
     <?php echo XbarticlemanHelper::credit('xbArticleMan');?>
 </div>

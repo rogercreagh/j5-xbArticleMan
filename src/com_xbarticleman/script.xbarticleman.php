@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager
  * file script.xbarticleman.php
- * @version 0.2.0.3 8th March 2024
+ * @version 0.2.1.0 11th March 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -72,27 +72,12 @@ class Com_xbarticlemanInstallerScript extends InstallerScript
             $ext_mess .= '<p><b>Important</b> Before starting review &amp; set the component options&nbsp;&nbsp;';
             $ext_mess .=  '<a href="index.php?option=com_config&view=component&component='.$this->extension.'" class="btn btn-small btn-info">'.$this->extname.' Options</a>';
             
-            $app->enqueueMessage($this->createCssFromTmpl());
-            
         }
         $ext_mess .= '<p>For help and information see <a href="https://crosborne.co.uk/'.$this->extslug.'/doc" target="_blank">www.crosborne.co.uk/'.$this->extslug.'/doc</a> ';
         $ext_mess .= 'or use Help button in <a href="index.php?option='.$this->extension.'" class="btn btn-small btn-info">'.$this->extname.' Dashboard</a></p>';
         $ext_mess .= '</div>';
         echo $ext_mess;
         return true;
-    }
-
-    function createCssFromTmpl() {
-        //load the template file
-        $tmplstring = file_get_contents(JPATH_ROOT.'/media/'.$this->extension.'/css/xblinkhinting.tmpl.css');
-        $domain = parse_url(Uri::root(), PHP_URL_HOST);
-        $tmplstring = str_replace('{DOMAIN}', $domain, $tmplstring);
-        if (file_put_contents(JPATH_ROOT.'/media/'.$this->extension.'/css/xblinkhinting.css',$tmplstring) == false) {
-            Factory::getApplication()->enqueueMessage('Failed to create domain specific xbLinkHint.CSS file', 'Error');
-            return '';
-        }
-        // also create hidden demo section in dashboard
-        return 'CSS External Links file created ok <br />';
     }
 
 }

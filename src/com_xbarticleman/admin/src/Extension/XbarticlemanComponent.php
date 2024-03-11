@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * file admin/src/Extension/XbarticlemanComponent.php
- * @version 0.0.2.0 9th January 2024
+ * @version 0.2.1.0 11th March 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -36,10 +36,6 @@ BootableExtensionInterface, RouterServiceInterface
         $wa->getRegistry()->addExtensionRegistryFile('com_xbarticleman');
         $wa->useStyle('xbarticleman.styles');
         $wa->useStyle('xbcommon.styles');
-        //load the hinting styles as per params
-        if (($params->get('extlinkhint',0) == 1) || ($params->get('extlinkhint') == 3)) {
-            $wa->useStyle('xblinkhinting.styles');
-        }
         // alternative method to load file
 //       $wa->registerAndUseStyle('xbarticlemanCore', 'com_xbarticleman/xbarticleman.css');
 // oldschool method to load file - deprecated

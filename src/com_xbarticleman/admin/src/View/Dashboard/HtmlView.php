@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/src/View/Dashboard/HtmlView.php
- * @version 0.1.0.9 1st March 2024
+ * @version 0.2.1.0 11th March 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -49,21 +49,6 @@ class HtmlView extends BaseHtmlView {
             throw new GenericDataException(implode("\n", $errors), 500);
         }       
         
-        // external link hining parameter       
-        switch ($params->get('extlinkhint', 0)) {
-            case 1:
-                $this->extlinkhint = Text::_('XBCONFIG_SITE_ADMIN');
-                break;
-            case 2:
-                $this->extlinkhint = Text::_('XBCONFIG_SITE_ONLY');
-                break;
-            case 3:
-                $this->extlinkhint = Text::_('XBCONFIG_ADMIN_ONLY');
-                break;
-            default:
-                $this->extlinkhint = Text::_('XBCONFIG_USE_TEMPLATE');
-                break;
-        }
         // tag grouping parameters
         $this->taggroups = $params->get('enable_taggroups',0);
         if ($this->taggroups) {
