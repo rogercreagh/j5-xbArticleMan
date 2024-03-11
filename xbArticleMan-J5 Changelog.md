@@ -4,6 +4,13 @@
 
 
 
+**v0.2.1.0** 11th March 2024
+
+- passing JED check
+- language tidied
+- link hinting removed
+- update and changelog xml on github
+
 **v0.1.0.9** 1st March 2024
 
 - First tidy and consistency check

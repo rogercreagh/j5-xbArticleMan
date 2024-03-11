@@ -7,6 +7,12 @@
 		label="XBCONFIG_GENERAL"
 		description="XBCONFIG_GENERAL_DESC"
 	>
+   		<field name="infonote" type="note"
+			label="XBCONFIG_INFONOTE_LABEL"
+			description="XBCONFIG_INFONOTE_DESC"
+			class="info"
+		/>	
+        
    		<field name="beernote" type="note"
 			label="XBCONFIG_BUY_A_BEER_LABEL"
 			description="XBCONFIG_BUY_A_BEER_DESC"

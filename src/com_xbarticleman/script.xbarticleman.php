@@ -71,13 +71,27 @@ class Com_xbarticlemanInstallerScript extends InstallerScript
             $ext_mess .= '<p>version '.$manifest->version.' dated '.$manifest->creationDate.'</p>';
             $ext_mess .= '<p><b>Important</b> Before starting review &amp; set the component options&nbsp;&nbsp;';
             $ext_mess .=  '<a href="index.php?option=com_config&view=component&component='.$this->extension.'" class="btn btn-small btn-info">'.$this->extname.' Options</a>';
+            $res = $this->createCssFromTmpl();
             
         }
-        $ext_mess .= '<p>For help and information see <a href="https://crosborne.co.uk/'.$this->extslug.'/doc" target="_blank">www.crosborne.co.uk/'.$this->extslug.'/doc</a> ';
-        $ext_mess .= 'or use Help button in <a href="index.php?option='.$this->extension.'" class="btn btn-small btn-info">'.$this->extname.' Dashboard</a></p>';
-        $ext_mess .= '</div>';
-        echo $ext_mess;
+        if (($type=='install') || ($type=='discover_install') || ($type == 'update')) {
+            $ext_mess .= '<p>For help and information see <a href="https://crosborne.co.uk/'.$this->extslug.'/doc" target="_blank">www.crosborne.co.uk/'.$this->extslug.'/doc</a> ';
+            $ext_mess .= 'or use Help button in <a href="index.php?option='.$this->extension.'" class="btn btn-small btn-info">'.$this->extname.' Dashboard</a></p>';
+            $ext_mess .= '</div>';
+            echo $ext_mess;
+        }
         return true;
     }
-
+    
+    function createCssFromTmpl() {
+        //replace {DOMAIN} with current site's host
+        $tmplstring = file_get_contents(JPATH_ROOT.'/media/'.$this->extension.'/css/xblinkhinting.css');
+        $domain = parse_url(Uri::root(), PHP_URL_HOST);
+        $tmplstring = str_replace('{DOMAIN}', $domain, $tmplstring);
+        if (file_put_contents(JPATH_ROOT.'/media/'.$this->extension.'/css/xblinkhinting.css',$tmplstring) == false) {
+            return "ERROR Failed to create domain specific xbLinkHint.CSS file";
+        }
+        return; 'CSS External Links file created ok <br />';
+    }
+    
 }
