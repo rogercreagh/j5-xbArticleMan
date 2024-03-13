@@ -3,7 +3,7 @@
 		<element>com_xbarticleman</element>
 		<type>component</type>
 		<version>0.2.2.0</version>
-		<date>13th March 2024</date>
+		<date>14th March 2024</date>
 		<title>Third Release Candidate</title>
 		<security>
 		</security>
@@ -35,7 +35,7 @@
 		<fix>
 		</fix>
 		<addition>
-			<title><![CDATA[<h3>Second Release Candidate</h3>v0.2.1.0 Updated 11th March 2024]]></title>
+			<item><![CDATA[<h3>Second Release Candidate</h3>v0.2.1.0 Updated 11th March 2024]]></item>
 			<item>Link Hinting CSS removed</item>
 			<item>install in template user.css as required</item>
 			<item><![CDATA[see <a href="https://blog.crosborne.uk/link-hinting-update" target="_blank">blog post</a> ]]></item>
