@@ -12,9 +12,15 @@
 			<item>Full Changelog display in Dashboard</item>
 		</addition>
 		<change>
+			<item>change1 item 1</item>
+			<item>change1 item 2</item>
 		</change>
 		<remove>
+			<item>remove item</item>
 		</remove>
+		<change>
+			<item>change2 item 1</item>
+		</change>
 		<language>
 		</language>
 		<note>
@@ -105,20 +111,16 @@
 		</addition>
 		<change>
 			<item>Minor display layout tweaks</item>
-		</change>
-		<remove>remove without item</remove>
-		<change>
 			<item>Another change out of order</item>
 			<item>with two items</item>
+			<item>and a third change element</item>
 		</change>
+		<remove>r</remove>
 		<language>
 		</language>
 		<note>
 			<item>This release not yet available on JED</item>
 		</note>
-		<change>
-			<item>and a third change element</item>
-			</change>
 	</changelog>	
 	<changelog>
 		<element>com_xbarticleman</element>
