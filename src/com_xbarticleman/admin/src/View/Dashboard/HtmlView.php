@@ -17,6 +17,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 //use Joomla\CMS\Toolbar\Toolbar;
@@ -37,7 +38,10 @@ class HtmlView extends BaseHtmlView {
         $this->rellinkcnts = $this->get('RelLinkCnts');
         $this->scodecnts = $this->get('ScodeCnts');
         $this->cats = $this->get('Cats');
-        $this->changelog = $this->get('Changelog');
+        
+        
+        $changelog = $this->get('Changelog');
+//        Factory::getApplication()->enqueueMessage('<pre>'.print_r($changelog,true).'</pre>');
         
         $this->xmldata = Installer::parseXMLInstallFile(JPATH_COMPONENT_ADMINISTRATOR . '/xbarticleman.xml');
         $this->client = $this->get('Client');
@@ -48,7 +52,99 @@ class HtmlView extends BaseHtmlView {
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {
             throw new GenericDataException(implode("\n", $errors), 500);
-        }       
+        }    
+        
+        // format the changelog
+        /*********************************
+         // format the changelog
+         $this->changelog = '<div><h4>xbArticleMan '.Text::_('XB_CHANGELOG').'</h4>';
+         foreach ($changelog['changelog'] as $log) {
+         $this->changelog .= '<b>Version '.$log['version'].'</b>';
+         //          $this->changelog .= '<hr />';
+         array_walk(
+         $log,
+         function ($items, $changeType) {
+         // If there are no items, continue
+         if (empty($items)) {
+         return;
+         }
+         
+         switch ($changeType) {
+         case 'security':
+         $class = 'bg-danger';
+         break;
+         case 'fix':
+         $class = 'bg-dark';
+         break;
+         case 'language':
+         $class = 'bg-primary';
+         break;
+         case 'addition':
+         $class = 'bg-success';
+         break;
+         case 'change':
+         $class = 'bg-warning text-dark';
+         break;
+         case 'remove':
+         $class = 'bg-secondary';
+         break;
+         default:
+         case 'note':
+         $class = 'bg-info';
+         break;
+         }
+         if (is_array($items)) {
+         
+         
+         $this->changelog .=  '<div class="changelog">';
+         $this->changelog .=  '<div class="changelog__item">';
+         $this->changelog .=  '<div class="changelog__tag">';
+         $this->changelog .=  '<span class="badge ';
+         $this->changelog .=  $class. '">'. Text::_( $changeType) .'</span>';
+         $this->changelog .=  '</div>';
+         $this->changelog .=  '<div class="changelog__list">';
+         $this->changelog .=  '<ul>';
+         $this->changelog .=  '<li>'. print_r($items,true).'</li>'; //implode('</li><li>', $items) .'</li>';
+         $this->changelog .=  '</ul>';
+         $this->changelog .=  '</div>';
+         $this->changelog .=  '</div>';
+         $this->changelog .=  '</div>';
+         }
+         }
+         );
+         
+         }
+         ********************************/
+        
+        $this->changelog = '<div><h4>xbArticleMan '.Text::_('XB_CHANGELOG').'</h4>';
+        foreach ($changelog['changelog'] as $log) {
+            Factory::getApplication()->enqueueMessage('<pre>'.print_r($log,true).'</pre>');
+            
+            $this->changelog .= '<b>Version '.$log['version'].'</b>';
+            $entries = [
+                'security' => [],
+                'fix'      => [],
+                'addition' => [],
+                'change'   => [],
+                'remove'   => [],
+                'language' => [],
+                'note'     => [],
+            ];
+            
+            foreach (array_keys($entries) as $name) {
+                if (key_exists($name,$log)) {
+                    $entries[$name] = $log[$name];
+                }
+            }
+            
+            $layout = new FileLayout('joomla.installer.changelog');
+            $this->changelog .= $layout->render($entries);
+            $this->changelog .= '<br />';
+        }
+        $this->changelog .= '</div>';
+        Factory::getApplication()->enqueueMessage($this->changelog);
+        
+        
         
         // tag grouping parameters
         $this->taggroups = $params->get('enable_taggroups',0);

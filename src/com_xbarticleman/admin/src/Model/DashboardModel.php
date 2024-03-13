@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager
  * @filesource admin/src/Model/DashboardModel.php
- * @version 0.1.0.9 1st March 2024
+ * @version 0.2.2.0 13th March 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -249,17 +249,17 @@ class DashboardModel extends ListModel {
     
     public function getChangelog() {
  //       $changelog = new Changelog();
-        $db    = $this->getDatabase();
+         $db    = $this->getDatabase();
         $query = $db->getQuery(true);
         $query->select($db->qn('changelogurl'))->from('#__extensions')->where($db->qn('name').' = '.$db->q('com_xbarticleman'));
         $db->setQuery($query);
         $url = $db->loadResult();
         //        $changelog->setVersion($source === 'manage' ? $extension->version : $extension->updateVersion);
-        $xml = (array) simplexml_load_file($url, null , LIBXML_NOCDATA);
-//        $json = json_encode($xml);
-//        $array = json_decode($json,TRUE);
-        Factory::getApplication()->enqueueMessage('<pre>'.print_r($xml,true).'</pre>');
-        return $xml;
+        $xml = simplexml_load_file($url, null , LIBXML_NOCDATA);
+        $json = json_encode($xml);
+        $array = json_decode($json,TRUE);
+        return $array;
+
     }
 
     private function getArticlesText() {
