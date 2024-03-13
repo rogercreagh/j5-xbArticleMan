@@ -37,6 +37,7 @@ class HtmlView extends BaseHtmlView {
         $this->rellinkcnts = $this->get('RelLinkCnts');
         $this->scodecnts = $this->get('ScodeCnts');
         $this->cats = $this->get('Cats');
+        $this->changelog = $this->get('Changelog');
         
         $this->xmldata = Installer::parseXMLInstallFile(JPATH_COMPONENT_ADMINISTRATOR . '/xbarticleman.xml');
         $this->client = $this->get('Client');

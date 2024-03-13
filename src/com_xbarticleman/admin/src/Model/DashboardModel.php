@@ -13,6 +13,7 @@ namespace Crosborne\Component\Xbarticleman\Administrator\Model;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Changelog\Changelog;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Toolbar\Toolbar;
@@ -22,6 +23,7 @@ use Joomla\CMS\Layout\FileLayout;
 use DOMDocument;
 use ReflectionClass;
 use Crosborne\Component\Xbarticleman\Administrator\Helper\XbarticlemanHelper;
+use CBOR\OtherObject\TrueObject;
 
 class DashboardModel extends ListModel {
     
@@ -245,6 +247,20 @@ class DashboardModel extends ListModel {
         return $sccnts;
     }
     
+    public function getChangelog() {
+ //       $changelog = new Changelog();
+        $db    = $this->getDatabase();
+        $query = $db->getQuery(true);
+        $query->select($db->qn('changelogurl'))->from('#__extensions')->where($db->qn('name').' = '.$db->q('com_xbarticleman'));
+        $db->setQuery($query);
+        $url = $db->loadResult();
+        //        $changelog->setVersion($source === 'manage' ? $extension->version : $extension->updateVersion);
+        $xml = (array) simplexml_load_file($url, null , LIBXML_NOCDATA);
+//        $json = json_encode($xml);
+//        $array = json_decode($json,TRUE);
+        Factory::getApplication()->enqueueMessage('<pre>'.print_r($xml,true).'</pre>');
+        return $xml;
+    }
 
     private function getArticlesText() {
         $db = Factory::getDbo();
