@@ -12,13 +12,10 @@
 			<item>Full Changelog display in Dashboard</item>
 		</addition>
 		<change>
-			<item></item>
 		</change>
 		<remove>
-			<item></item>
 		</remove>
 		<language>
-			<item></item>
 		</language>
 		<note>
 			<item>This release not yet available on JED</item>
@@ -39,13 +36,10 @@
 			<item><![CDATA[see <a href="https://blog.crosborne.uk/link-hinting-update" target="_blank">blog post</a> ]]></item>
 		</addition>
 		<change>
-			<item></item>
 		</change>
 		<remove>
-			<item>media/css/linkhinting.tmpl.css</item>
 		</remove>
 		<language>
-			<item></item>
 		</language>
 		<note>
 			<item>This release not yet available on JED</item>
@@ -65,13 +59,10 @@
 		</addition>
 		<change>
 			<item>Link Hinting CSS changes</item>
-			<item></item>
 		</change>
 		<remove>
-			<item></item>
 		</remove>
 		<language>
-			<item></item>
 		</language>
 		<note>
 			<item>This release not yet available on JED</item>
@@ -92,10 +83,8 @@
 		<change>
 		</change>
 		<remove>
-			<item></item>
 		</remove>
 		<language>
-			<item></item>
 		</language>
 		<note>
 			<item>This release not yet available on JED</item>
@@ -117,10 +106,8 @@
 			<item>Minor display layout tweaks</item>
 		</change>
 		<remove>
-			<item></item>
 		</remove>
 		<language>
-			<item></item>
 		</language>
 		<note>
 			<item>This release not yet available on JED</item>
@@ -141,10 +128,8 @@
 			<item>Dashboard Layout Improved</item>
 		</change>
 		<remove>
-			<item></item>
 		</remove>
 		<language>
-			<item></item>
 		</language>
 		<note>
 			<item>This release not yet available on JED</item>
