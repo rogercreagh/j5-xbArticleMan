@@ -94,6 +94,7 @@
 		<element>com_xbarticleman</element>
 		<type>component</type>
 		<version>0.2.0.0</version>
+		<date>13th March 2024</date>
 		<security>
 		</security>
 		<fix>
@@ -105,13 +106,19 @@
 		<change>
 			<item>Minor display layout tweaks</item>
 		</change>
-		<remove>
-		</remove>
+		<remove>remove without item</remove>
+		<change>
+			<item>Another change out of order</item>
+			<item>with two items</item>
+		</change>
 		<language>
 		</language>
 		<note>
 			<item>This release not yet available on JED</item>
 		</note>
+		<change>
+			<item>and a third change element</item>
+			</change>
 	</changelog>	
 	<changelog>
 		<element>com_xbarticleman</element>
@@ -122,7 +129,7 @@
 		<fix>
 		</fix>
 		<addition>
-			<item><![CDATA[<h3>Alpha</h3>v0.1.0.9Updated 3rd March 2024]]></item>
+			<item><![CDATA[<h3>Alpha</h3>v0.1.0.9 Updated 3rd March 2024]]></item>
 		</addition>
 		<change>
 			<item>Dashboard Layout Improved</item>
