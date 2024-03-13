@@ -15,12 +15,12 @@
 			<item>change1 item 1</item>
 			<item>change1 item 2</item>
 		</change>
-		<remove>
-			<item>remove item</item>
-		</remove>
 		<change>
 			<item>change2 item 1</item>
 		</change>
+		<remove>
+			<item>remove item</item>
+		</remove>
 		<language>
 		</language>
 		<note>
