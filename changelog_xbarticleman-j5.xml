@@ -6,8 +6,10 @@
 		<date>14th March 2024</date>
 		<title>Third Release Candidate</title>
 		<security>
+			<item>security item</item>
 		</security>
 		<fix>
+			<item>fix item</item>
 		</fix>
 		<addition>
 			<item><![CDATA[<h3>Third Release Candidate</h3>v0.2.2.0 Updated 13th March 2024]]></item>
@@ -21,6 +23,7 @@
 			<item>remove item</item>
 		</remove>
 		<language>
+			<item>language item</item>
 		</language>
 		<note>
 			<item>This release not yet available on JED</item>
