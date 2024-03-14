@@ -2,7 +2,11 @@
 
 ##### Conversion to J5 Progress this will be cleared at first Release v5.0.0
 
+v0.2.2.0 14th March 2024
 
+- Changelog display in Dashboard
+- Update notification in Dashboard
+- Layout bugs fixed in Dashboard
 
 **v0.2.1.0** 11th March 2024
 

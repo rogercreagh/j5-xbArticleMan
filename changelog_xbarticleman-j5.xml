@@ -8,6 +8,7 @@
 		<addition>
 			<item><![CDATA[<h3>Third Release Candidate</h3>v0.2.2.0 Updated 13th March 2024]]></item>
 			<item>Full Changelog display in Dashboard</item>
+			<item>Update version check in Dashboard</item> 
 		</addition>
 		<remove>
 		</remove>
@@ -20,6 +21,8 @@
 		<security>
 		</security>
 		<fix>
+			<item>Dashboard article counts box layout errors corrected</item>
+			<item>Dashboard category counts box layout errors corrected</item>
 		</fix>
 		<note>
 			<item>This release not yet available on JED</item>
@@ -37,27 +40,6 @@
 			<item>install in template user.css as required</item>
 			<item><![CDATA[see <a href="https://blog.crosborne.uk/link-hinting-update" target="_blank">blog post</a> ]]></item>
 		</addition>
-		<security>
-			<item>Security 1</item>
-		</security>
-		<fix>
-			<item>Fix 1</item>
-			<item>Fix 2</item>
-		</fix>
-		<change>
-			<item>Change 1</item>
-		</change>
-		<remove>
-			<item>Remove 1</item>
-			<item>Remove 2</item>
-		</remove>
-		<other>
-			<item>Other 1</item>
-			<item>Other 2</item>
-		</other>
-		<language>
-			<item>Language 1</item>
-		</language>
 		<note>
 			<item>This release not yet available on JED</item>
 		</note>
@@ -97,11 +79,26 @@
 			<item><![CDATA[<h3>Beta2</h3>v0.2.0.0 Updated 5th March 2024]]></item>
 			<item>Changelog working</item>
 		</addition>
+		<security>
+			<item>Security 1</item>
+		</security>
+		<fix>
+			<item>Fix 1</item>
+			<item>Fix 2</item>
+		</fix>
 		<change>
+			<item>Change 1</item>
 		</change>
 		<remove>
+			<item>Remove 1</item>
+			<item>Remove 2</item>
 		</remove>
+		<other>
+			<item>Other 1</item>
+			<item>Other 2</item>
+		</other>
 		<language>
+			<item>Language 1</item>
 		</language>
 		<note>
 			<item>This release not yet available on JED</item>
@@ -111,7 +108,7 @@
 		<element>com_xbarticleman</element>
 		<type>component</type>
 		<version>0.2.0.0</version>
-		<date>13th March 2024</date>
+		<date>9th March 2024</date>
 		<security>
 		</security>
 		<fix>
