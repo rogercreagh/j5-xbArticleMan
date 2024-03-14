@@ -9,13 +9,16 @@
 			<item><![CDATA[<h3>Third Release Candidate</h3>v0.2.2.0 Updated 13th March 2024]]></item>
 			<item>Full Changelog display in Dashboard</item>
 		</addition>
+		<remove>
+			<item>remove item</item>
+		</remove>
 		<change>
 			<item>change1 item 1</item>
 			<item>change1 item 2</item>
 		</change>
-		<remove>
-			<item>remove item</item>
-		</remove>
+		<other>
+			<item>another item</item>
+		</other>
 		<language>
 			<item>language item</item>
 		</language>
