@@ -419,15 +419,17 @@ some common combinations are also defined (eg xbnit - normal weight,italic, 5px 
 }
 /* bg colours */
 .xbbgltgrey .xbdim {background-color: #ddd; }
-.xbdim {
-	color: #888;
-}
+.xbbgltgreen {background-color: #dfd; }
+.xbbgltred {background-color: #faa; }
+
+/* fg colours */
 .xbgold { color:#edc500; }
 .xbred { color:#c00000; }
 .xbblue, .xbinfo, .xbhelp { color: #22d;}
 .xbbook, .xbgreen { color: #008040;}
 .xbdarkgrey { color: #555;}
-.xbgrey, .xbnote {color:#888;}
+.xbgrey, .xbnote, .xbdim {color:#888;}
+
 .xbaoycol {color: #e56b8e !important;}
 
 /* buttons */

@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/src/View/Dashboard/HtmlView.php
- * @version 0.2.1.0 11th March 2024
+ * @version 0.2.2.0 14th March 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -17,13 +17,13 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-//use Joomla\CMS\Toolbar\Toolbar;
-//use Joomla\CMS\Toolbar\ToolbarFactoryInterface;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Crosborne\Component\Xbarticleman\Administrator\Helper\XbarticlemanHelper;
+//use Joomla\CMS\Layout\FileLayout;
+//use Joomla\CMS\Toolbar\Toolbar;
+//use Joomla\CMS\Toolbar\ToolbarFactoryInterface;
 
 class HtmlView extends BaseHtmlView {
     
@@ -39,9 +39,7 @@ class HtmlView extends BaseHtmlView {
         $this->scodecnts = $this->get('ScodeCnts');
         $this->cats = $this->get('Cats');
         
-        
         $changelog = $this->get('Changelog');
-//        Factory::getApplication()->enqueueMessage('<pre>'.print_r($changelog,true).'</pre>');
         
         $this->xmldata = Installer::parseXMLInstallFile(JPATH_COMPONENT_ADMINISTRATOR . '/xbarticleman.xml');
         $this->client = $this->get('Client');
@@ -53,98 +51,36 @@ class HtmlView extends BaseHtmlView {
         if (count($errors = $this->get('Errors'))) {
             throw new GenericDataException(implode("\n", $errors), 500);
         }    
-        
-        // format the changelog
-        /*********************************
+        $this->updateable = false;
          // format the changelog
-         $this->changelog = '<div><h4>xbArticleMan '.Text::_('XB_CHANGELOG').'</h4>';
+         $this->changelog = '<div style="margin:10px 0;">';
          foreach ($changelog['changelog'] as $log) {
-         $this->changelog .= '<b>Version '.$log['version'].'</b>';
-         //          $this->changelog .= '<hr />';
-         array_walk(
-         $log,
-         function ($items, $changeType) {
-         // If there are no items, continue
-         if (empty($items)) {
-         return;
+             $this->titleok = false;
+             $this->changelog .= '<div class="xbmt10 ';
+             $iscurrent = (version_compare($log['version'], $this->xmldata['version']));
+             $this->changelog .= ($iscurrent === 0) ? 'xbbgltgreen' : '';
+             if ($iscurrent === 1) {
+                $this->changelog .=  'xbbgltred';
+                $this->updatable = true;
+             }
+             $this->changelog .= ' " style="padding:5px 20px;">';
+             $this->changelog .= '<b>Version '.$log['version'].'</b> ';
+             if (key_exists('date',$log)) $this->changelog .= '&nbsp;&nbsp;<i>Updated</i>:&nbsp;'.$log['date'];
+             if (key_exists('title',$log)) {
+                 $this->changelog .= '<h3>'.$log['title'].'</h3>';
+                 $this->titleok = true;
+             }
+             $this->changelog .= '</div>';
+             $this->colours = array('security'=>'bg-danger', 'fix'=>'bg-dark','language'=>'bg-primary','addition'=>'bg-success',
+                'change'=>'bg-warning text-dark','remove'=>'bg-secondary','note'=>'bg-info'
+             );
+             foreach ($log as $key=>$items) {
+                 if (is_array($items)) {
+                     $this->changelog .= $this->itemstr($items, $key);
+                 }
+             }
          }
-         
-         switch ($changeType) {
-         case 'security':
-         $class = 'bg-danger';
-         break;
-         case 'fix':
-         $class = 'bg-dark';
-         break;
-         case 'language':
-         $class = 'bg-primary';
-         break;
-         case 'addition':
-         $class = 'bg-success';
-         break;
-         case 'change':
-         $class = 'bg-warning text-dark';
-         break;
-         case 'remove':
-         $class = 'bg-secondary';
-         break;
-         default:
-         case 'note':
-         $class = 'bg-info';
-         break;
-         }
-         if (is_array($items)) {
-         
-         
-         $this->changelog .=  '<div class="changelog">';
-         $this->changelog .=  '<div class="changelog__item">';
-         $this->changelog .=  '<div class="changelog__tag">';
-         $this->changelog .=  '<span class="badge ';
-         $this->changelog .=  $class. '">'. Text::_( $changeType) .'</span>';
-         $this->changelog .=  '</div>';
-         $this->changelog .=  '<div class="changelog__list">';
-         $this->changelog .=  '<ul>';
-         $this->changelog .=  '<li>'. print_r($items,true).'</li>'; //implode('</li><li>', $items) .'</li>';
-         $this->changelog .=  '</ul>';
-         $this->changelog .=  '</div>';
-         $this->changelog .=  '</div>';
-         $this->changelog .=  '</div>';
-         }
-         }
-         );
-         
-         }
-         ********************************/
-        
-        $this->changelog = '<div><h4>xbArticleMan '.Text::_('XB_CHANGELOG').'</h4>';
-        foreach ($changelog['changelog'] as $log) {
-            Factory::getApplication()->enqueueMessage('<pre>'.print_r($log,true).'</pre>');
-            
-            $this->changelog .= '<b>Version '.$log['version'].'</b>';
-            $entries = [
-                'security' => [],
-                'fix'      => [],
-                'addition' => [],
-                'change'   => [],
-                'remove'   => [],
-                'language' => [],
-                'note'     => [],
-            ];
-            
-            foreach (array_keys($entries) as $name) {
-                if (key_exists($name,$log)) {
-                    $entries[$name] = $log[$name];
-                }
-            }
-            
-            $layout = new FileLayout('joomla.installer.changelog');
-            $this->changelog .= $layout->render($entries);
-            $this->changelog .= '<br />';
-        }
-        $this->changelog .= '</div>';
-        Factory::getApplication()->enqueueMessage($this->changelog);
-        
-        
+         $this->changelog .= '</div>';
         
         // tag grouping parameters
         $this->taggroups = $params->get('enable_taggroups',0);
@@ -206,6 +142,32 @@ class HtmlView extends BaseHtmlView {
         $this->addToolbar();
         
         return parent::display($tpl);
+    }
+    
+    private function itemstr($items, $tag) {
+        if (empty($items)) return '';
+        $ans =  '<div class="changelog"><div class="changelog__item"><div class="changelog__tag">';
+        $ans .=  '<span class="badge ';
+        if (key_exists($tag, $this->colours)) {
+            $ans .=  $this->colours[$tag];
+            $ans .=  '">'. Text::_('XB_CHANGELOG_'.$tag) .'</span>';
+        } else {
+            $ans .= 'badge-ltblue">'.$tag.'</span>';
+        }
+        $ans .=  '</div>';
+        $ans .=  '<div class="changelog__list"><ul>';
+        if (is_array($items['item'])) {
+            foreach ($items['item'] as $item) {
+                if ((!$this->titleok) || !(str_starts_with($item, '<h3>'))) {
+                    $ans .= '<li>'.$item.'</li>';
+                }
+            }
+        } else {
+            $ans .= $items['item'];
+        }
+        $ans .=  '</li></ul>';
+        $ans .=  '</div></div></div>';
+        return $ans;
     }
     
     protected function addToolbar()

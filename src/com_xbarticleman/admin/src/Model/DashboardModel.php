@@ -248,18 +248,15 @@ class DashboardModel extends ListModel {
     }
     
     public function getChangelog() {
- //       $changelog = new Changelog();
          $db    = $this->getDatabase();
         $query = $db->getQuery(true);
         $query->select($db->qn('changelogurl'))->from('#__extensions')->where($db->qn('name').' = '.$db->q('com_xbarticleman'));
         $db->setQuery($query);
         $url = $db->loadResult();
-        //        $changelog->setVersion($source === 'manage' ? $extension->version : $extension->updateVersion);
         $xml = simplexml_load_file($url, null , LIBXML_NOCDATA);
         $json = json_encode($xml);
         $array = json_decode($json,TRUE);
         return $array;
-
     }
 
     private function getArticlesText() {

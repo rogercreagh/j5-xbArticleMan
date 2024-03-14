@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/tmpl/dashboard/default.php
- * @version 0.2.1.0 11th March 2024
+ * @version 0.2.2.0 14th March 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -29,9 +29,9 @@ HTMLHelper::_('formbehavior.chosen', 'select');
         	<div class="xbwp60 pull-left xbpr20">
 				<div class="xbbox gradgrey">
 					<h4 class="xbmb20><span class="xbbadge badge-success" style="font-size:1rem;"><?php echo $this->artcnts['total']; ?></span> 
-						<?php Text::_('XBARTMAN_ARTICLES_ON_SITE'); ?>
-            			<span class="xbpl20 xbnit"><?php echo Text::_('XBARTMAN_STATE_CNTS'); ?> : </span>
-            			<span class="xbpl50"></span><span class="icon-check xblabel <?php echo ($this->artcnts['published']==0) ? 'label-grey' : 'label-green';?>"
+						<?php echo Text::_('XBARTMAN_ARTICLES_ON_SITE'); ?>
+            			<span class="xbpl50 xbnit"><?php echo Text::_('XBARTMAN_STATE_CNTS'); ?> : </span>
+            			<span class="xbpl20"></span><span class="icon-check xblabel <?php echo ($this->artcnts['published']==0) ? 'label-grey' : 'label-green';?>"
             			 title="Published">&nbsp;&nbsp;<?php echo $this->artcnts['published'];?></span></span>
             			<span class="xbpl50"><span class="icon-times xblabel <?php echo ($this->artcnts['unpublished']==0) ? 'label-grey':'label-orange';?>"
             			 title="Unpublished">&nbsp;&nbsp;<?php echo $this->artcnts['unpublished'];?></span></span>
@@ -64,7 +64,7 @@ HTMLHelper::_('formbehavior.chosen', 'select');
 						<tr>
 							<td >
             					<h4>
-            						<?php echo Text::_('XB_CATEGORIES'); ?><span class="xbpl20 xbnit">(<?php echo Text::_('XBARTMAN_CONTENT_CATEGORIES'); ?>)</span>
+            						<?php echo Text::_('XB_CATEGORIES'); ?>
             					</h4>
             				</td>
 							<td>
@@ -283,8 +283,17 @@ HTMLHelper::_('formbehavior.chosen', 'select');
     						<br /><?php echo Text::_('XB_VERSION').': <b>'.$this->xmldata['version'].'</b> '.
     							$this->xmldata['creationDate'];?>
                       	</p>
+                      	<div class="pull-left">
+                      		<a href="#changelogModal" class="changelogModal btn btn-success"  data-bs-toggle="modal">
+								<?php echo Text::_('XB_CHANGELOG');?></a>
+						</div>
+						<?php if ($this->updatable) { 
+						    echo '<div class="pull-right"><a href="http://j5.localhost/administrator/index.php?option=com_installer&view=update"
+                                class="btn btn-warning">'.Text::_('XB_UPDATE_AVAILABLE').'</a></div>'; 
+						} ?>
+                        <div class="clearfix"></div>
                         <hr />
-                      	<p><b><?php echo Text::_( 'XB_CLIENT'); ?></b>
+                      	<p><b><?php echo Text::_( 'XB_YOUR_CLIENT'); ?></b>
     						<br/><?php echo Text::_( 'XB_PLATFORM' ).' '.$this->client['platform'].'<br/>'.Text::_( 'XB_BROWSER').' '.$this->client['browser']; ?>
                      	</p>
     				<?php echo HtmlHelper::_('bootstrap.endSlide'); ?>
@@ -330,3 +339,15 @@ HTMLHelper::_('formbehavior.chosen', 'select');
     <p>&nbsp;</p>
     <?php echo XbarticlemanHelper::credit('xbArticleMan');?>
 </div>
+    <?php
+    echo HTMLHelper::_(
+        'bootstrap.renderModal',
+        'changelogModal',
+        [
+            'title' => Text::_('xbArticleMan-j5 Full Changelog')
+        ],
+        '<div style="margin:10px 30px;">'.$this->changelog.'</div>'
+    );
+    ?>
+                      	
+
