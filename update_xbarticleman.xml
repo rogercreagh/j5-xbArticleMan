@@ -19,7 +19,7 @@
 		<maintainer>Roger C-O</maintainer>
 		<maintainerurl>https://crosborne.uk/xbarticleman</maintainerurl>
 		<targetplatform name="joomla" version="5.*"/>	
-		<php_minimum>8.2</php_minimum>
+		<php_minimum>8.1</php_minimum>
 	</update>
 	<update>
 		<name>xbArticleMan-J5</name>
