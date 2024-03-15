@@ -6,6 +6,27 @@
 		<element>com_xbarticleman</element>
 		<type>component</type>
 		<client>administrator</client>
+		<version>0.3.0.0</version>
+		<infourl>https://crosborne.uk/xbarticleman-j5</infourl>
+		<downloads>
+			<downloadurl type="full" format="zip">https://crosborne.uk/downloads?download=27</downloadurl>
+		</downloads>
+        <tags>
+          <tag>rc</tag>
+        </tags>
+        <sha256>24172d8c23391823bdbaa0bd6d312787f4b200e9c11f2ec47aeca603219437d6</sha256>
+    	<changelogurl>https://raw.githubusercontent.com/rogercreagh/j5-xbArticleMan/main/changelog_xbarticleman-j5.xml</changelogurl>
+		<maintainer>Roger C-O</maintainer>
+		<maintainerurl>https://crosborne.uk/xbarticleman</maintainerurl>
+		<targetplatform name="joomla" version="5.*"/>	
+		<php_minimum>8.2</php_minimum>
+	</update>
+	<update>
+		<name>xbArticleMan-J5</name>
+		<description>Managment facilities for com_conent articles</description>
+		<element>com_xbarticleman</element>
+		<type>component</type>
+		<client>administrator</client>
 		<version>0.2.2.0</version>
 		<infourl>https://crosborne.uk/xbarticleman-j5</infourl>
 		<downloads>
