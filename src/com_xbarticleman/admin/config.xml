@@ -167,9 +167,6 @@
 			label="XBCONFIG_BEER_PAY_AT_THE_BAR"
 			description="XBCONFIG_BEER_FORM"			
 		/>
-		<field name="penpont" type="hidden"
-			default="$2y$10$DeCwB16giLjgL7HgM1RDSeHROFs7QQef2dBQ9jEKehiTGj05jbonK" 
-			/>		
 		<field name="othercreditsnote" type="note"
 			label="XBCONFIG_CREDITS_NOTE"
 			description="XBARTMAN_CREDITS_NOTE"

@@ -66,25 +66,7 @@ class HtmlView extends BaseHtmlView {
                 }
             }
         }
-        
-        
-//         $where = 'state IN (1,0)';
-//         $this->statefilt = 'published and unpublished';
-//         if (array_key_exists('published', $this->activeFilters)) {
-//             $published = $this->activeFilters['published'];
-//             if (is_numeric($published)) {
-//                 $where = 'state = ' . (int) $published;
-//                 $this->statefilt = array('trashed','','unpublished','published','archived')[$published+2];
-//             } else {
-//                 $this->statefilt = 'all';
-//                 $where = '';
-//             }
-//         } else {
-//             $this->statefilt = 'published and unpublished';
-//         }
-//         $this->statearticles = XbarticlemanHelper::getItemCnt('#__content', $where);
-//         $this->totalarticles = XbarticlemanHelper::getItemCnt('#__content', '');
-        
+                
         $this->addToolbar();
         
         return parent::display($tpl);
@@ -178,7 +160,7 @@ class HtmlView extends BaseHtmlView {
                 ToolbarHelper::preferences('com_xbarticleman');
             }
             
-            ToolbarHelper::help('JHELP_CONTENT_ARTICLE_MANAGER');
+            $toolbar->help('Articles:Images',false,'https://crosborne.uk/xbarticleman-j5/doc#artscodes');
             
     }
     

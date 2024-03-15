@@ -2,6 +2,34 @@
 	<changelog>
 		<element>com_xbarticleman</element>
 		<type>component</type>
+		<version>0.3.0.0</version>
+		<date>15th March 2024</date>
+		<title>Fourth Release Candidate</title>
+		<addition>
+			<item><![CDATA[<h3>Fourth Release Candidate</h3>v0.3.0.0 Updated 15th March 2024]]></item>
+			<item>Final pre-release checks</item>
+			<item>Registration code working</item>
+		</addition>
+		<remove>
+		</remove>
+		<change>
+		</change>
+		<other>
+		</other>
+		<language>
+		</language>
+		<security>
+		</security>
+		<fix>
+			<item>Help links working</item>
+		</fix>
+		<note>
+			<item>This release not yet available on JED</item>
+		</note>
+	</changelog>	
+	<changelog>
+		<element>com_xbarticleman</element>
+		<type>component</type>
 		<version>0.2.2.0</version>
 		<date>14th March 2024</date>
 		<title>Third Release Candidate</title>

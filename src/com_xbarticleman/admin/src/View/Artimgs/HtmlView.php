@@ -143,7 +143,7 @@ class HtmlView extends BaseHtmlView {
             ToolbarHelper::preferences('com_xbarticleman');
         }
         
-        ToolbarHelper::help('JHELP_CONTENT_ARTICLE_MANAGER');
+        $toolbar->help('Articles:Images',false,'https://crosborne.uk/xbarticleman-j5/doc#artimgs');
         
     }
         

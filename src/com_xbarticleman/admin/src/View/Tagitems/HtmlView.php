@@ -54,6 +54,7 @@ class HtmlView extends BaseHtmlView {
     
     protected function addToolbar() {
 
+        $toolbar = Toolbar::getInstance('toolbar');
         ToolbarHelper::title(Text::_('XBARTMAN_ADMIN_TAG_TITLE'), 'tag');
         
         $canDo = ContentHelper::getActions('com_xbarticleman');
@@ -64,7 +65,7 @@ class HtmlView extends BaseHtmlView {
             ToolbarHelper::preferences('com_xbarticleman');
         }
         
-        ToolbarHelper::help( '', false,'https://crosborne.uk/xbarticleman/doc?tmpl=component#admin-tag' );       
+        $toolbar->help('Articles:Images',false,'https://crosborne.uk/xbarticleman-j5/doc#artimgs');
         
     }
 

@@ -19,10 +19,10 @@ use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Crosborne\Component\Xbarticleman\Administrator\Helper\XbarticlemanHelper;
 //use Joomla\CMS\Layout\FileLayout;
-//use Joomla\CMS\Toolbar\Toolbar;
 //use Joomla\CMS\Toolbar\ToolbarFactoryInterface;
 
 class HtmlView extends BaseHtmlView {
@@ -173,7 +173,7 @@ class HtmlView extends BaseHtmlView {
     protected function addToolbar()
     {
         // Get the toolbar object instance
-       // $toolbar = Toolbar::getInstance('toolbar');        
+        $toolbar = Toolbar::getInstance('toolbar');        
         //$toolbar = Factory::getContainer()->get(ToolbarFactoryInterface::class)->createToolbar($name);
         
         ToolbarHelper::title(Text::_('XBARTMAN_ADMIN_DASHBOARD_TITLE'), 'fas fa-info-circle');
@@ -183,7 +183,8 @@ class HtmlView extends BaseHtmlView {
             //$toolbar->preferences('com_xbarticleman');
             ToolbarHelper::preferences('com_xbarticleman');
         }
-        ToolbarHelper::help( '', false,'https://crosborne.uk/xbarticleman/doc?tmpl=component#admin-artimgs' );
+        
+        $toolbar->help('Articles:Images',false,'https://crosborne.uk/xbarticleman-j5/doc#dashboard');
         
     }
         

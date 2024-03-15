@@ -372,11 +372,12 @@ class XbarticlemanHelper extends ComponentHelper
 	}
 	
 	public static function penPont() {
-	    $params = ComponentHelper::getParams('com_xbaoy');
+	    $params = ComponentHelper::getParams('com_xbarticleman');
 	    $beer = trim($params->get('roger_beer'));
+	    if ($beer == '') return false;
 	    //Factory::getApplication()->enqueueMessage(password_hash($beer));
-	    $hashbeer = $params->get('penpont');
-	    if (password_verify($beer,$hashbeer)) { return true; }
+	    //$hashbeer = $params->get('penpont');
+	    if (password_verify($beer,'$2y$10$l8jx1ia8RJ3Kie2AyVgBlOBgm9sVL9dQsV8eBy8g5JOE30lw1HzhG')) { return true; }
 	    return false;
 	}
 	
