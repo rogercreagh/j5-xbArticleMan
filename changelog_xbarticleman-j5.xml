@@ -3,10 +3,10 @@
 		<element>com_xbarticleman</element>
 		<type>component</type>
 		<version>0.3.0.1</version>
-		<date>15th March 2024</date>
+		<date>16th March 2024</date>
 		<title>Fourth Release Candidate</title>
 		<addition>
-			<item><![CDATA[<h3>Fourth Release Candidate</h3>v0.3.0.0 Updated 15th March 2024]]></item>
+			<item><![CDATA[<h3>Fourth Release Candidate</h3>v0.3.0.1 Updated 16th March 2024]]></item>
 			<item>Final pre-release checks</item>
 			<item>Registration code working</item>
 		</addition>
