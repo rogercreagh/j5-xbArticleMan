@@ -2,7 +2,7 @@
 	<changelog>
 		<element>com_xbarticleman</element>
 		<type>component</type>
-		<version>0.3.0.0</version>
+		<version>0.3.0.1</version>
 		<date>15th March 2024</date>
 		<title>Fourth Release Candidate</title>
 		<addition>
@@ -21,7 +21,7 @@
 		<security>
 		</security>
 		<fix>
-			<item>Help links working</item>
+			<item>Help links now working</item>
 		</fix>
 		<note>
 			<item>This release not yet available on JED</item>

@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager-j5
  * @filesource admin/tmpl/artimgs/default.php
- * @version 0.1.0.6 29thth February 2024
+ * @version 0.3.0.1 16th March 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -71,11 +71,11 @@ if ($saveOrder && !empty($this->items)) {
     	<ul class="inline">
     		<li><i><?php echo Text::_('XBARTMAN_COUNTS_TAGS'); ?>:</i></li>
     		<?php foreach ($this->dtags as $key=>$tag) : ?>
-    		    <li><a href="index.php?option=com_xbarticleman&view=arttags&filter[tagfilt]=<?php echo $key; ?>"" 
+    		    <li><a href="index.php?option=com_xbarticleman&view=tagitems&tagid=<?php echo $key; ?>"" 
     		    	class="xbbadge badge-tag xbpl10"><?php echo $tag['title']; ?>
     		    	</a><span class="xbbadge badge-ltblue xb085" style="padding:2px 6px 4px;"><?php echo $tag['cnt']; ?></span>
-     		    	<a href="index.php?option=com_xbarticleman&view=tagitems&tagid=<?php echo $key; ?>" 
-    		    		class="nohint" title="<?php echo Text::_('XBARTMAN_TAG_EDIT'); ?>" ><span class="far fa-rectangle-list"></span>
+     		    	<a href="index.php?option=com_xbarticleman&view=arttags&filter[tagfilt]=<?php echo $key; ?>&tagid=<?php echo $key; ?>" 
+    		    		class="nohint" title="<?php echo Text::_('XBARTMAN_TAG_FILTER'); ?>" ><span class="fas fa-filter"></span>
     		    	</a>   		    	
     		    	<a href="index.php?option=com_tags&task=tag.edit&id=<?php echo $key; ?>" 
     		    		class="nohint" target="xbedit" title="<?php echo Text::_('XBARTMAN_TAG_EDIT'); ?>" ><span class="icon-edit"></span>

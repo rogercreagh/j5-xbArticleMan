@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager-j5
  * @filesource admin/tmpl/tag/default.php
- * @version 0.0.9.0 22nd February 2024
+ * @version 0.3.0.1 16th March 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -44,7 +44,7 @@ $telink = 'index.php?option=com_tags&task=tag.edit&id=';
                   <span class="xbbadge badge-tag"><span style="font-size:1.5rem;padding:10px 5px;line-height:1.2;">
                 	<?php echo $item->title; ?></span></span>
 
-    				<a href="<?php echo $telink.$item->id; ?>" class="icon-edit xbpl20" target="xbedit">
+    				<a href="<?php echo $telink.$item->id; ?>" class="icon-edit xbpl20 nohint" target="xbedit">
     				</a>
                     <span style="padding:17px 0 0 50px;"><i><?php echo Text::_('XB_ALIAS'); ?></i>: <?php echo $item->alias; ?></span>
                 </div>

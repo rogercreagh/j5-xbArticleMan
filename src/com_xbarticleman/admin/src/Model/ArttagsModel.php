@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager-j5
  * @filesource admin/src/Model/ArttagsModel.php
- * @version 0.1.0.6 29th February 2024
+ * @version 0.3.0.1 16th March 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -74,9 +74,14 @@ class ArttagsModel extends ListModel {
 		$access     = $this->getUserStateFromRequest($this->context . '.filter.access', 'filter_access');
 		$authorId   = $this->getUserStateFromRequest($this->context . '.filter.author_id', 'filter_author_id');
 		$categoryId = $this->getUserStateFromRequest($this->context . '.filter.category_id', 'filter_category_id');
-		$tagfilt        = $this->getUserStateFromRequest($this->context . '.filter.tagfilt', 'filter_tagfilt', '');
-		$taglogic        = $this->getUserStateFromRequest($this->context . '.filter.taglogic', 'filter_taglogic', '');
-		$artlist        = $this->getUserStateFromRequest($this->context . '.filter.artlist', 'filter_artlist', '0');
+
+		$tagfilt = $app->getUserStateFromRequest('tagid', 'tagid','');
+		if ($tagfilt == '') {
+		    $tagfilt = $this->getUserStateFromRequest($this->context . '.filter.tagfilt', 'filter_tagfilt', '');
+		    $taglogic = $this->getUserStateFromRequest($this->context . '.filter.taglogic', 'filter_taglogic', '1');    
+		}
+
+		$artlist = $this->getUserStateFromRequest($this->context . '.filter.artlist', 'filter_artlist', '0');
 		
 		if ($formSubmited)
 		{
@@ -344,10 +349,10 @@ class ArttagsModel extends ListModel {
 	            if (!empty($item->tags)) {
 	                $this->taggeditemcnt ++;
     	            foreach ($item->tags as $key=>$tag) {
-    	                if (key_exists($key,$this->dtags)) {
-    	                    $this->dtags[$key]['cnt'] ++;
+    	                if (key_exists($tag->id,$this->dtags)) {
+    	                    $this->dtags[$tag->id]['cnt'] ++;
     	                } else {
-    	                    $this->dtags[$key] = array('title'=>$tag->title, 'cnt' => 1);
+    	                    $this->dtags[$tag->id] = array('title'=>$tag->title, 'cnt' => 1);
     	                }	                
 	               }
 	            }
