@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/src/View/Dashboard/HtmlView.php
- * @version 0.2.2.0 14th March 2024
+ * @version 0.3.0.1 17th March 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -84,20 +84,23 @@ class HtmlView extends BaseHtmlView {
         
         // tag grouping parameters
         $this->taggroups = $params->get('enable_taggroups',0);
+        $this->taggrpcnt = 0;
         if ($this->taggroups) {
             $groups = array();
             $groups[] = $params->get('taggroup1_parent','');
             $groups[] = $params->get('taggroup2_parent','');
             $groups[] = $params->get('taggroup3_parent','');
             $groups[] = $params->get('taggroup4_parent','');
-            $this->grouplist = '<ol class="xbml50">';
+            $this->grouplist = '';
+            $this->badgelist = '';
             foreach ($groups as $grp) {
                 if ($grp != '') {
+                    $this->taggrpcnt ++;
                     $tag=XbarticlemanHelper::getTag($grp);
                     $this->grouplist .= '<li>'.$tag->title.'</li>';
+                    $this->badgelist .= '<li><span class="xbbadge badge-tag">'.$tag->title.'</span></li>';
                 }
             }
-            $this->grouplist .= '</ol>';
         }
         // tag components items
         $jcomnames = array('','Articles', 'Article Categories', 'Contacts', 'Contact Categories',

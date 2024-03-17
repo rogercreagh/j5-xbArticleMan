@@ -71,6 +71,7 @@
 			description="How to combine multiple tags"
   			class="btn-group btn-small radiotop"
 			showon="artlist!:2"
+			default="0"
 		>
 			<option value="1" onchange="this.form.submit();">XB_ALL</option>
 			<option value="0" onchange="this.form.submit();">XB_ANY</option>

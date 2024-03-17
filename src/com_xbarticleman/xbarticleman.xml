@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <extension type="component" method="upgrade">
 	<name>com_xbarticleman</name>
-	<creationDate>16th March 2024</creationDate>
+	<creationDate>17th March 2024</creationDate>
 	<version>0.3.0.1</version>
 	<author>RogerCO</author>
 	<authorEmail>roger@crosborne.co.uk</authorEmail>

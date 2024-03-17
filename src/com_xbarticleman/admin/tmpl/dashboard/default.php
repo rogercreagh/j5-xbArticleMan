@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/tmpl/dashboard/default.php
- * @version 0.2.2.0 14th March 2024
+ * @version 0.3.0.1 17th March 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -124,6 +124,15 @@ HTMLHelper::_('formbehavior.chosen', 'select');
 							<td><?php echo Text::_('XBARTMAN_ARTICLES_WITH_TAGS'); ?></td>
 							<td><span class="xbbadge <?php echo $this->artcnts['tagged']>0 ?'badge-cyan' : ''; ?>"><?php echo $this->artcnts['tagged']; ?></span></td>
 						</tr>
+						<tr>
+							<td colspan="2"><?php echo ($this->taggroups) ?  Text::sprintf('XB_CNT_TAG_GROUPS', $this->taggrpcnt) : Text::_('XB_NO_TAG_GROUPS'); ?></td>
+						</tr><tr>
+							<td colspan="2">
+								<ul class="inline">
+    								<?php echo $this->badgelist; ?>
+								</ul>
+							<td>
+						</tr>							
 					</table>
 				</div>
 
@@ -302,10 +311,11 @@ HTMLHelper::_('formbehavior.chosen', 'select');
 	        			</p>
 	        			<dl class="xbdlinline">
 	        				<dt><?php echo Text::_('XBARTMAN_TAG_GROUPS'); ?>: </dt> 
-	        					<dd><?php echo ($this->taggroups == 0) ? 'Not specified' : 'Enabled'; ?></dd>
+	        					<dd><?php echo ($this->taggroups == 0) ? Text::_('XB_NO_TAG_GROUPS') : Text::_('XB_ENABLED'); ?></dd>
 	        				<?php if ($this->taggroups == 1) : ?>
-	        					<dt class="xbml50"><?php echo Text::_('XB_GROUPS') ?> <span class="xb05 xbit"><?php echo Text::_('XBARTMAN_PARENT_TAGS')?></span></dt>
-	        						<dd><?php echo $this->grouplist; ?></dd>
+	        					<dt class="xbml50"><?php echo Text::_('XB_GROUPS') ?> <span class="xb05 xbit">
+	        					<?php echo Text::sprintf('XB_CNT_TAG_GROUPS', $this->taggrpcnt); ?></span></dt>
+	        						<dd><ol class="xbml50"><?php echo $this->grouplist; ?></ol></dd>
 	        				<?php endif; ?>
 	        				<dt><?php echo Text::_('XBARTMAN_COMP_TAG_LIST'); ?>: </dt>
 	        					<dd><?php echo $this->comslist; ?></dd>	        				
@@ -344,7 +354,7 @@ HTMLHelper::_('formbehavior.chosen', 'select');
         'bootstrap.renderModal',
         'changelogModal',
         [
-            'title' => Text::_('xbArticleMan-j5 Full Changelog')
+            'title' => Text::_('XBARTMAN_FULL_CHANGELOG')
         ],
         '<div style="margin:10px 30px;">'.$this->changelog.'</div>'
     );
