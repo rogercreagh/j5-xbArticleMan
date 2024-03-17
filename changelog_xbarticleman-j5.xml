@@ -2,13 +2,11 @@
 	<changelog>
 		<element>com_xbarticleman</element>
 		<type>component</type>
-		<version>0.3.0.1</version>
+		<version>5.0.0.0</version>
 		<date>17th March 2024</date>
-		<title>Fourth Release Candidate</title>
+		<title>First Public Release</title>
 		<addition>
-			<item><![CDATA[<h3>Fourth Release Candidate</h3>v0.3.0.1 Updated 17th March 2024]]></item>
-			<item>Final pre-release checks</item>
-			<item>Registration code working</item>
+			<item><![CDATA[<h3>First Public Release v5.0.0.0</h3> Updated 17th March 2024]]></item>
 		</addition>
 		<remove>
 		</remove>
@@ -21,163 +19,9 @@
 		<security>
 		</security>
 		<fix>
-			<item>Help links now working</item>
 		</fix>
 		<note>
-			<item>This release not yet available on JED</item>
-		</note>
-	</changelog>	
-	<changelog>
-		<element>com_xbarticleman</element>
-		<type>component</type>
-		<version>0.2.2.0</version>
-		<date>14th March 2024</date>
-		<title>Third Release Candidate</title>
-		<addition>
-			<item><![CDATA[<h3>Third Release Candidate</h3>v0.2.2.0 Updated 13th March 2024]]></item>
-			<item>Full Changelog display in Dashboard</item>
-			<item>Update version check in Dashboard</item> 
-		</addition>
-		<remove>
-		</remove>
-		<change>
-		</change>
-		<other>
-		</other>
-		<language>
-		</language>
-		<security>
-		</security>
-		<fix>
-			<item>Dashboard article counts box layout errors corrected</item>
-			<item>Dashboard category counts box layout errors corrected</item>
-		</fix>
-		<note>
-			<item>This release not yet available on JED</item>
-		</note>
-	</changelog>	
-	<changelog>
-		<element>com_xbarticleman</element>
-		<type>component</type>
-		<version>0.2.1.0</version>
-		<date>11th March 2024</date>
-		<title>Second Release Candidate</title>
-		<addition>
-			<item><![CDATA[<h3>Second Release Candidate</h3>v0.2.1.0 Updated 11th March 2024]]></item>
-			<item>Link Hinting CSS removed</item>
-			<item>install in template user.css as required</item>
-			<item><![CDATA[see <a href="https://blog.crosborne.uk/link-hinting-update" target="_blank">blog post</a> ]]></item>
-		</addition>
-		<note>
-			<item>This release not yet available on JED</item>
-		</note>
-	</changelog>	
-	<changelog>
-		<element>com_xbarticleman</element>
-		<type>component</type>
-		<version>0.2.0.3</version>
-		<security>
-		</security>
-		<fix>
-		</fix>
-		<addition>
-			<item><![CDATA[<h3>First Release Candidate</h3>v0.2.0.3 Updated 11th March 2024]]></item>
-			<item>JED check ok</item>
-		</addition>
-		<change>
-			<item>Link Hinting CSS changes</item>
-		</change>
-		<remove>
-		</remove>
-		<language>
-		</language>
-		<note>
-			<item>This release not yet available on JED</item>
-		</note>
-	</changelog>	
-	<changelog>
-		<element>com_xbarticleman</element>
-		<type>component</type>
-		<version>0.2.0.1</version>
-		<security>
-		</security>
-		<fix>
-		</fix>
-		<addition>
-			<item><![CDATA[<h3>Beta2</h3>v0.2.0.0 Updated 5th March 2024]]></item>
-			<item>Changelog working</item>
-		</addition>
-		<security>
-			<item>Security 1</item>
-		</security>
-		<fix>
-			<item>Fix 1</item>
-			<item>Fix 2</item>
-		</fix>
-		<change>
-			<item>Change 1</item>
-		</change>
-		<remove>
-			<item>Remove 1</item>
-			<item>Remove 2</item>
-		</remove>
-		<other>
-			<item>Other 1</item>
-			<item>Other 2</item>
-		</other>
-		<language>
-			<item>Language 1</item>
-		</language>
-		<note>
-			<item>This release not yet available on JED</item>
-		</note>
-	</changelog>	
-	<changelog>
-		<element>com_xbarticleman</element>
-		<type>component</type>
-		<version>0.2.0.0</version>
-		<date>9th March 2024</date>
-		<security>
-		</security>
-		<fix>
-		</fix>
-		<addition>
-			<item><![CDATA[<h3>Beta</h3>v0.2.0.0 Updated 4th March 2024]]></item>
-			<item>Update site working</item>
-		</addition>
-		<change>
-			<item>Minor display layout tweaks</item>
-			<item>Another change out of order</item>
-			<item>with two items</item>
-			<item>and a third change element</item>
-		</change>
-		<remove>r</remove>
-		<language>
-		</language>
-		<note>
-			<item>This release not yet available on JED</item>
-		</note>
-	</changelog>	
-	<changelog>
-		<element>com_xbarticleman</element>
-		<type>component</type>
-		<version>0.1.0.9</version>
-		<security>
-		</security>
-		<fix>
-		</fix>
-		<addition>
-			<item><![CDATA[<h3>Alpha</h3>v0.1.0.9 Updated 3rd March 2024]]></item>
-		</addition>
-		<change>
-			<item>Dashboard Layout Improved</item>
-		</change>
-		<remove>
-		</remove>
-		<language>
-		</language>
-		<note>
-			<item>This release not yet available on JED</item>
+			<item>Submitted to JED</item>
 		</note>
 	</changelog>	
 </changelogs>
