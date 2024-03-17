@@ -73,10 +73,10 @@ if ($saveOrder && !empty($this->items)) {
     		<?php foreach ($this->dtags as $key=>$tag) : ?>
     		    <li><a href="index.php?option=com_xbarticleman&view=tagitems&tagid=<?php echo $key; ?>"" 
     		    	class="xbbadge badge-tag xbpl10"><?php echo $tag['title']; ?>
-    		    	</a><span class="xbbadge badge-ltblue xb085" style="padding:2px 6px 4px;"><?php echo $tag['cnt']; ?></span>
+    		    	</a>
      		    	<a href="index.php?option=com_xbarticleman&view=arttags&filter[tagfilt]=<?php echo $key; ?>&tagid=<?php echo $key; ?>" 
     		    		class="nohint" title="<?php echo Text::_('XBARTMAN_TAG_FILTER'); ?>" ><span class="fas fa-filter"></span>
-    		    	</a>   		    	
+    		    	</a><span class="xbbadge badge-ltblue xb085" style="padding:2px 6px 4px;"><?php echo $tag['cnt']; ?></span>   		    	
     		    	<a href="index.php?option=com_tags&task=tag.edit&id=<?php echo $key; ?>" 
     		    		class="nohint" target="xbedit" title="<?php echo Text::_('XBARTMAN_TAG_EDIT'); ?>" ><span class="icon-edit"></span>
     		    	</a>
