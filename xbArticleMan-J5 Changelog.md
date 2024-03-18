@@ -2,11 +2,9 @@
 
 ##### Conversion to J5 Progress this will be cleared at first Release v5.0.0
 
-v0.2.2.0 14th March 2024
+**v5.0.0.0** 17th March 2024 **FIRST PUBLIC RELEASE**
 
-- Changelog display in Dashboard
-- Update notification in Dashboard
-- Layout bugs fixed in Dashboard
+- Available on [JED](https://extensions.joomla.org/extension/xbarticleman/) 
 
 **v0.2.1.0** 11th March 2024
 

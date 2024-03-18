@@ -22,7 +22,7 @@
 		<fix>
 		</fix>
 		<note>
-			<item>Submitted to JED</item>
+			<item><![CDATA[Listed on <a href="https://extensions.joomla.org/extension/xbarticleman/" target="_blank">JED</a>]]></item>
 			<item><![CDATA[Raise bugs and feature requests on <a href="https://github.com/rogercreagh/j5-xbArticleMan/issues" target="_blank">GitHub</a>]]></item>
 		</note>
 	</changelog>	
