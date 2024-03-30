@@ -54,11 +54,11 @@ class HtmlView extends BaseHtmlView {
         $this->updateable = false;
          // format the changelog
          $this->changelog = '<div style="margin:10px 0;">';
-         if (array_key_exists('changelog',$changelog)) {
+         if (!array_key_exists('changelog',$changelog)) {
              //we have only one entry, need to demote it a level
-             $changelog = array('changelog' => $changelog);
+             $changelog = array($changelog);
          }
-         foreach ($changelog['changelog'] as $log) {
+         foreach ($changelog['changelog'] as $i=>$log) {
              $this->titleok = false;
              $this->changelog .= '<div class="xbmt10 ';
              $iscurrent = (version_compare($log['version'], $this->xmldata['version']));
