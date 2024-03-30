@@ -2,6 +2,34 @@
 	<changelog>
 		<element>com_xbarticleman</element>
 		<type>component</type>
+		<version>5.0.0.1</version>
+		<date>30th March 2024</date>
+		<title>First Public Release</title>
+		<addition>
+			<item><![CDATA[<h3>BugFix Release v5.0.0.1</h3> Updated 30th March 2024]]></item>
+		</addition>
+		<remove>
+		</remove>
+		<change>
+		</change>
+		<other>
+		</other>
+		<language>
+			<item>en-GB only</item>
+		</language>
+		<security>
+		</security>
+		<fix>
+			<item>FIXED: error in Dashboard if only one entry in the changelog.</item>
+		</fix>
+		<note>
+			<item><![CDATA[Listed on <a href="https://extensions.joomla.org/extension/xbarticleman/" target="_blank">JED</a>]]></item>
+			<item><![CDATA[Raise bugs and feature requests on <a href="https://github.com/rogercreagh/j5-xbArticleMan/issues" target="_blank">GitHub</a>]]></item>
+		</note>
+	</changelog>	
+	<changelog>
+		<element>com_xbarticleman</element>
+		<type>component</type>
 		<version>5.0.0.0</version>
 		<date>17th March 2024</date>
 		<title>First Public Release</title>

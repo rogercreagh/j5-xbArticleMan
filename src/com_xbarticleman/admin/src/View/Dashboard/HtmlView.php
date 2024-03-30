@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/src/View/Dashboard/HtmlView.php
- * @version 0.3.0.1 17th March 2024
+ * @version 5.0.0.1 30th March 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -54,6 +54,10 @@ class HtmlView extends BaseHtmlView {
         $this->updateable = false;
          // format the changelog
          $this->changelog = '<div style="margin:10px 0;">';
+         if (array_key_exists('changelog',$changelog)) {
+             //we have only one entry, need to demote it a level
+             $changelog = array('changelog' => $changelog);
+         }
          foreach ($changelog['changelog'] as $log) {
              $this->titleok = false;
              $this->changelog .= '<div class="xbmt10 ';
@@ -80,6 +84,7 @@ class HtmlView extends BaseHtmlView {
                  }
              }
          }
+         
          $this->changelog .= '</div>';
         
         // tag grouping parameters
