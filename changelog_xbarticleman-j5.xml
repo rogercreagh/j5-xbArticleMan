@@ -3,8 +3,8 @@
 		<element>com_xbarticleman</element>
 		<type>component</type>
 		<version>5.0.0.1</version>
-		<date>30th March 2024</date>
-		<title>First Public Release</title>
+		<date>31st March 2024</date>
+		<title>BugFix Release</title>
 		<addition>
 			<item><![CDATA[<h3>BugFix Release v5.0.0.1</h3> Updated 30th March 2024]]></item>
 		</addition>
@@ -20,7 +20,7 @@
 		<security>
 		</security>
 		<fix>
-			<item>FIXED: error in Dashboard if only one entry in the changelog.</item>
+			<item>FIXED: errors in Dashboard if only one entry in the changelog or changelog not available.</item>
 		</fix>
 		<note>
 			<item><![CDATA[Listed on <a href="https://extensions.joomla.org/extension/xbarticleman/" target="_blank">JED</a>]]></item>

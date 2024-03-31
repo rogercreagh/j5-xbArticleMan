@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager j5
  * @filesource admin/src/View/Dashboard/HtmlView.php
- * @version 5.0.0.1 30th March 2024
+ * @version 5.0.0.2 31st March 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -54,33 +54,37 @@ class HtmlView extends BaseHtmlView {
         $this->updateable = false;
          // format the changelog
          $this->changelog = '<div style="margin:10px 0;">';
-         if (!array_key_exists('changelog',$changelog)) {
-             //we have only one entry, need to demote it a level
-             $changelog = array($changelog);
-         }
-         foreach ($changelog['changelog'] as $i=>$log) {
-             $this->titleok = false;
-             $this->changelog .= '<div class="xbmt10 ';
-             $iscurrent = (version_compare($log['version'], $this->xmldata['version']));
-             $this->changelog .= ($iscurrent === 0) ? 'xbbgltgreen' : '';
-             if ($iscurrent === 1) {
-                $this->changelog .=  'xbbgltred';
-                $this->updatable = true;
+         if ((!is_array($changelog)) || (!$changelog)) {
+             $this->changelog .= Text::_('XB_CHANGELOG_NOT_FOUND');
+         } else {
+             if (array_key_exists('element',$changelog['changelog'])) {
+                 //we have only one entry, need to demote it a level
+                 $changelog = array('changelog'=>array($changelog['changelog']));
              }
-             $this->changelog .= ' " style="padding:5px 20px;">';
-             $this->changelog .= '<b>Version '.$log['version'].'</b> ';
-             if (key_exists('date',$log)) $this->changelog .= '&nbsp;&nbsp;<i>Updated</i>:&nbsp;'.$log['date'];
-             if (key_exists('title',$log)) {
-                 $this->changelog .= '<h3>'.$log['title'].'</h3>';
-                 $this->titleok = true;
-             }
-             $this->changelog .= '</div>';
-             $this->colours = array('security'=>'bg-danger', 'fix'=>'bg-dark','language'=>'bg-primary','addition'=>'bg-success',
-                'change'=>'bg-warning text-dark','remove'=>'bg-secondary','note'=>'bg-info'
-             );
-             foreach ($log as $key=>$items) {
-                 if (is_array($items)) {
-                     $this->changelog .= $this->itemstr($items, $key);
+             foreach ($changelog['changelog'] as $i=>$log) {
+                 $this->titleok = false;
+                 $this->changelog .= '<div class="xbmt10 ';
+                 $iscurrent = (version_compare($log['version'], $this->xmldata['version']));
+                 $this->changelog .= ($iscurrent === 0) ? 'xbbgltgreen' : '';
+                 if ($iscurrent === 1) {
+                    $this->changelog .=  'xbbgltred';
+                    $this->updatable = true;
+                 }
+                 $this->changelog .= ' " style="padding:5px 20px;">';
+                 $this->changelog .= '<b>Version '.$log['version'].'</b> ';
+                 if (key_exists('date',$log)) $this->changelog .= '&nbsp;&nbsp;<i>Updated</i>:&nbsp;'.$log['date'];
+                 if (key_exists('title',$log)) {
+                     $this->changelog .= '<h3>'.$log['title'].'</h3>';
+                     $this->titleok = true;
+                 }
+                 $this->changelog .= '</div>';
+                 $this->colours = array('security'=>'bg-danger', 'fix'=>'bg-dark','language'=>'bg-primary','addition'=>'bg-success',
+                    'change'=>'bg-warning text-dark','remove'=>'bg-secondary','note'=>'bg-info'
+                 );
+                 foreach ($log as $key=>$items) {
+                     if (is_array($items)) {
+                         $this->changelog .= $this->itemstr($items, $key);
+                     }
                  }
              }
          }
