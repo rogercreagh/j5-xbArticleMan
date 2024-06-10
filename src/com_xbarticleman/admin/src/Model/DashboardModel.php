@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager
  * @filesource admin/src/Model/DashboardModel.php
- * @version 0.2.2.0 13th March 2024
+ * @version 0.2.2.1 10th June 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -70,7 +70,7 @@ class DashboardModel extends ListModel {
         $query->clear();
         $query->select('*')->from('#__content_frontpage AS a');
         $query->leftJoin('#__content as b','b.id = a.content_id');
-        $query->leftJoin('j5_categories as c on c.id = b.catid');
+        $query->leftJoin('#__categories as c on c.id = b.catid');
         // both article & category must be published
         $query->where('b.state = 1 AND c.published = 1');
         $db->setQuery($query);

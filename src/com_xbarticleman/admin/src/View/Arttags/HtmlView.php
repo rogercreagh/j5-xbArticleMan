@@ -95,7 +95,7 @@ class HtmlView extends BaseHtmlView {
             ->listCheck(true);
             
             $childBar = $dropdown->getChildToolbar();
-                        
+                       
             if ($canDo->get('core.edit.state')) {
                 $childBar->publish('articles.publish')->listCheck(true);
                 

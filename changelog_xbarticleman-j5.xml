@@ -2,6 +2,36 @@
 	<changelog>
 		<element>com_xbarticleman</element>
 		<type>component</type>
+		<version>5.0.0.2</version>
+		<date>10th June 2024</date>
+		<title>BugFix Release</title>
+		<addition>
+			<item><![CDATA[<h3>BugFix Release v5.0.0.2</h3> Updated 31st March 2024]]></item>
+		</addition>
+		<remove>
+			<item>Unused functions in Helper</item>
+		</remove>
+		<change>
+		</change>
+		<other>
+		</other>
+		<language>
+			<item>en-GB only</item>
+		</language>
+		<security>
+		</security>
+		<fix>
+			<item>FIXED: dB prefix error in Dashboard</item>
+			<item>FIXED: minor typo in ArtTags view</item>
+		</fix>
+		<note>
+			<item><![CDATA[Listed on <a href="https://extensions.joomla.org/extension/xbarticleman/" target="_blank">JED</a>]]></item>
+			<item><![CDATA[Raise bugs and feature requests on <a href="https://github.com/rogercreagh/j5-xbArticleMan/issues" target="_blank">GitHub</a>]]></item>
+		</note>
+	</changelog>	
+	<changelog>
+		<element>com_xbarticleman</element>
+		<type>component</type>
 		<version>5.0.0.1</version>
 		<date>31st March 2024</date>
 		<title>BugFix Release</title>

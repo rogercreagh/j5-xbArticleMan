@@ -397,41 +397,5 @@ class XbarticlemanHelper extends ComponentHelper
 	    return $db->loadObject();
 	}
 	
-	public static function tagFilterQuery($query, $tagfilt, $taglogic) {
-	    
-	    if (!empty($tagfilt)) {
-	        $tagfilt = ArrayHelper::toInteger($tagfilt);
-	        $subquery = '(SELECT tmap.tag_id AS tlist FROM #__contentitem_tag_map AS tmap
-                WHERE tmap.type_alias = '.$db->quote('com_content.article').'
-                AND tmap.content_item_id = a.id)';
-	        switch ($taglogic) {
-	            case 1: //all
-	                for ($i = 0; $i < count($tagfilt); $i++) {
-	                    $query->where($tagfilt[$i].' IN '.$subquery);
-	                }
-	                break;
-	            case 2: //none
-	                for ($i = 0; $i < count($tagfilt); $i++) {
-	                    $query->where($tagfilt[$i].' NOT IN '.$subquery);
-	                }
-	                break;
-	            default: //any
-	                if (count($tagfilt)==1) {
-	                    $query->where($tagfilt[0].' IN '.$subquery);
-	                } else {
-	                    $tagIds = implode(',', $tagfilt);
-	                    if ($tagIds) {
-	                        $subQueryAny = '(SELECT DISTINCT content_item_id FROM #__contentitem_tag_map
-                                WHERE tag_id IN ('.$tagIds.') AND type_alias = '.$db->quote('com_content.article').')';
-	                        $query->innerJoin('(' . (string) $subQueryAny . ') AS tagmap ON tagmap.content_item_id = a.id');
-	                    }
-	                }	                
-	                break;
-	        }
-	        
-	    return $query;
-	   }
-
-	}
 }
 
