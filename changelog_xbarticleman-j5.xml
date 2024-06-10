@@ -6,7 +6,7 @@
 		<date>10th June 2024</date>
 		<title>BugFix Release</title>
 		<addition>
-			<item><![CDATA[<h3>BugFix Release v5.0.0.2</h3> Updated 31st March 2024]]></item>
+			<item><![CDATA[<h3>BugFix Release v5.0.0.2</h3> Updated 10th June 2024]]></item>
 		</addition>
 		<remove>
 			<item>Unused functions in Helper</item>
