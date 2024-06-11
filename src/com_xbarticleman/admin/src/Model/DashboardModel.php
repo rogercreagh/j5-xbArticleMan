@@ -132,7 +132,7 @@ class DashboardModel extends ListModel {
         $query->clear();
         $query->select('COUNT(DISTINCT(a.id)) AS embimged')
         ->from('#__content AS a')
-        ->where('CONCAT(a.introtext," ",a.fulltext)'.' REGEXP '.$db->q('{[[:alpha:]].+?}'));
+        ->where('CONCAT(a.introtext," ",a.fulltext)'.' REGEXP '.$db->q('\{[[:alpha:]].+?\}'));
         $db->setQuery($query);
         $res = $db->loadResult();
         if ($res>0) $artcnts['scoded'] = $res;
@@ -229,7 +229,7 @@ class DashboardModel extends ListModel {
         $res = $db->loadObjectList();
         if ($rellinkcnts) $rellinkcnts['artrellinks'] = count($res);
         foreach ($res as $value) {
-            $cnt = preg_match_all('|\"url[a-c]\":[^,]+?\"|',$value->urls);
+            $cnt = preg_match_all('/\"url[a-c]\":[^,]+?\"/',$value->urls);
             $rellinkcnts['totrellinks'] += $cnt;
         }
         return $rellinkcnts;

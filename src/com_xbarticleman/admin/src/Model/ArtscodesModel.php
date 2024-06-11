@@ -124,9 +124,9 @@ class ArtscodesModel extends ListModel {
         // list all articles or only ones with/without shortcodes
         $artlist = $this->getState('filter.artlist');
         if ($artlist == 1) { //with
-            $query->where('CONCAT(a.introtext," ",a.fulltext)'.' REGEXP '.$db->q('{[[:alpha:]].+?}'));
+            $query->where('CONCAT(a.introtext," ",a.fulltext)'.' REGEXP '.$db->q('\{[[:alpha:]].+?\}'));
         } elseif ($artlist == 2) { //without
-            $query->where('CONCAT(a.introtext," ",a.fulltext)'.' NOT REGEXP '.$db->q('{[[:alpha:]].+?}'));
+            $query->where('CONCAT(a.introtext," ",a.fulltext)'.' NOT REGEXP '.$db->q('\{[[:alpha:]].+?\}'));
         }
         //filter by shortcode
         if ($artlist < 2) {

@@ -162,7 +162,7 @@ class ArtlinksModel extends ListModel {
                 break;
             case 6: //no images
                 $query->where('NOT CONCAT(a.introtext," ",a.fulltext)'.' REGEXP '.$db->q('<a ').' AND NOT '
-                    .'a.urls REGEXP '.$db->q('/\"url[a-c]\":[^,]+?\"'));
+                    .'a.urls REGEXP '.$db->q('/\"url[a-c]\":[^,]+?\"')); //TODO check / in rexep ok
                 break;
                 
             default: //all arrticles
