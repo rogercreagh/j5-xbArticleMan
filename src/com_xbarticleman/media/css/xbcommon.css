@@ -1,12 +1,18 @@
 /*******
  * @package xbCommon Files
  * @filesource media/css/xbcommon.css
- * @version 1.0.0.0 19th February 2024
+ * @version xbArticleMan-j5 5.0.0.3 11th June 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
  ******/
 
+/* Joomla system overrides/improvements */ 
+
+/* reduce Atum bottom margin on details */
+.xbcomponent details {
+	margin: 0 0 0.5rem 0;
+}
 /* disable Joomla5 Atum template target hinting arrow-out-box using a:before */
 #xbcomponent a[target="_blank"]:before {
     content:unset;
@@ -14,6 +20,11 @@
 /* disable Joomla5 Atum component forced underline on a inside table */
 #xbcomponent table a {
 	text-decoration:none;
+}
+
+/* fix for annoying change in Atum template which destroys white text in labels and badges */
+#xbcomponent a.xblabel, #xbcomponent a.xbbadge {
+	color: #fff; 
 }
 
 /* restore Joomla j5 template styles missing */
@@ -30,19 +41,26 @@
 	display: block;
 }
 
-/* Joomla system overrides/improvements */ 
-
 /* set width to 100% for controls in subform) */
 .subform-repeatable-group .controls .chzn-container.chzn-container-single {
   width: 100% !important;
 }
 
-/*adjust default margins round labels for tags and cats */
-.xblabel, .xbbadge { margin:2px;}
-.xbtags ul.inline > li {
-	margin:0;
+/* inline list */
+ul.inline {
+    margin-left: 0;
+    padding: 0;
+    list-style: none;
+}
+ul.inline > li {
+	margin: 0;
+	display: inline-block;
 }
 
+/*adjust default margins round labels for tags and cats */
+.xblabel, .xbbadge { 
+	margin:2px;
+}
 /*adjust spacing between tag labels in tag layout */
 #content .well .module-title.nav-header {
     padding-left: 4px;
@@ -349,6 +367,16 @@ some common combinations are also defined (eg xbnit - normal weight,italic, 5px 
 .xb085 { font-size:0.85em; }
 .xb08, .xbcredit { font-size:0.8em; }
 
+/* font sizes in rem */
+.xbr15 { font-size:1.5rem; }
+.xbr12, .xbtitle { font-size:1.2rem; }
+.xbr11, .xbsubtitle { font-size:1.1rem; }
+.xbr10 { font-size:1.0rem; }
+.xbr095 { font-size:0.95rem; }
+.xbr09, .xbnote { font-size:0.9rem; }
+.xbr085 { font-size:0.85rem; }
+.xbr08, .xbcredit { font-size:0.8rem; }
+
 /* font weights and styles */
 .xbnorm, .xbnit, .xbnote { font-weight: normal; }
 .xbbold, .xbtitle { font-weight: bold; }
@@ -367,6 +395,7 @@ some common combinations are also defined (eg xbnit - normal weight,italic, 5px 
 .xbmr20 { margin-right:20px; }
 
 .xbmt2 { margin-top:2px; }
+.xbmt5 { margin-top:5px; }
 .xbmt10 { margin-top:10px; }
 .xbmt20 { margin-top:20px; }
 
@@ -452,3 +481,41 @@ some common combinations are also defined (eg xbnit - normal weight,italic, 5px 
 #xbcomponent .xbcompacttable td {
 	padding: 4px 10px;	
 }
+
+/* definition list with term and definition on same line (NB overflow will not be indented */
+dl.xbdl dt{
+  /*display: inline-block;*/
+	float: left;
+    clear: left; 
+	font-weight:normal;
+	font-style:italic;
+	min-width: 100px;
+	text-align:right;
+}
+dl.xbdl dt:after{
+	content:' : ';
+}
+dl.xbdl dd:before {
+  margin-left:10px;
+  content:'';
+}
+dl.xbdl dd {
+	padding: 0 0 0.5em 0;
+	margin:0;
+}
+
+/** table freeze header row. wrap table in <div class="table-scroll and <table class="table-freeze **/
+.table-scroll {
+	max-height:80vh;
+	overflow:auto;
+	width:100%;
+}
+.table-freeze {
+	text-align: left;
+	position: relative;
+}
+.table-freeze th {
+	position: sticky;
+	top: 0;
+}
+

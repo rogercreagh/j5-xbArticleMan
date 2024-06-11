@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager-j5
  * @filesource admin/tmpl/artimgs/default.php
- * @version 0.3.0.1 16th March 2024
+ * @version 5.0.0.3 11th June 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -260,26 +260,6 @@ if ($saveOrder && !empty($this->items)) {
 								<p class="xbpl20 xb085 xbmb5"><i><?php echo Text::_('XB_ALIAS'); ?></i>: <?php echo $this->escape($item->alias); ?>
 								<br /><i><?php echo Text::_('XB_NOTE'); ?></i> <b><?php echo $item->note; ?></b>
 								</p>
-								<div>
-									<?php
-									$CurrentCatUrl = Route::_('index.php?option=com_categories&task=category.edit&id=' . $item->catid . '&extension=com_content');
-									$EditCatTxt = Text::_('JACTION_EDIT') . ' ' . Text::_('JCATEGORY');
-
-									if ($item->category_level != '1') :
-										     $bits = explode('/', $item->category_path);
-										     for ($i=0; $i<$item->category_level-1; $i++) {
-											     echo $bits[$i].' &#187; ';
-										     }
-									endif; ?>
-									<p class="xb085 xbpl20 xbmb5"><i><?php echo Text::_('XB_CATEGORY'); ?> </i>
-									<?php if ($canEditCat || $canEditOwnCat) : ?>
-										<a class="hasTooltip xblabel label-cat xb085" href="<?php echo $CurrentCatUrl; ?> " title="<?php echo $EditCatTxt; ?>">
-											<?php echo $this->escape($item->category_title); ?></a>
-									<?php else : ?>
-										<span class="xblabel label-cat xb085"><?php echo $this->escape($item->category_title); ?></span>
-									<?php endif; ?>
-									</p>
-								</div>
 							</div>
 						</td>
 						<td>
@@ -332,10 +312,10 @@ if ($saveOrder && !empty($this->items)) {
 								endif; ?>
 								<span style="padding-left:15px;">
 								<?php if ($canEditCat || $canEditOwnCat) : ?>
-									<a class="hasTooltip xbbadge badge-cat xb085" href="<?php echo $CurrentCatUrl; ?> " title="<?php echo $EditCatTxt; ?>">
+									<a class="hasTooltip xblabel label-cat xb085" href="<?php echo $CurrentCatUrl; ?> " title="<?php echo $EditCatTxt; ?>">
 										<?php echo $this->escape($item->category_title); ?></a>
 								<?php else : ?>
-									<span class="xbbadge badge-cat xb085"><?php echo $this->escape($item->category_title); ?></span>
+									<span class="xblabel label-cat xb085"><?php echo $this->escape($item->category_title); ?></span>
 								<?php endif; ?>
 								</span>
 							</div>

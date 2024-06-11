@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager
  * @filesource admin/src/Model/ArtscodesModel.php
- * @version 0.1.0.6 29th February 2024
+ * @version 5.0.0.3 11th June 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -124,9 +124,9 @@ class ArtscodesModel extends ListModel {
         // list all articles or only ones with/without shortcodes
         $artlist = $this->getState('filter.artlist');
         if ($artlist == 1) { //with
-            $query->where('CONCAT(a.introtext," ",a.fulltext)'.' REGEXP '.$db->q('\{[[:alpha:]].+?\}'));
+            $query->where('CONCAT(a.introtext," ",a.fulltext)'.' REGEXP '.$db->q('\\{[[:alpha:]].+?\\}'));
         } elseif ($artlist == 2) { //without
-            $query->where('CONCAT(a.introtext," ",a.fulltext)'.' NOT REGEXP '.$db->q('\{[[:alpha:]].+?\}'));
+            $query->where('CONCAT(a.introtext," ",a.fulltext)'.' NOT REGEXP '.$db->q('\\{[[:alpha:]].+?\\}'));
         }
         //filter by shortcode
         if ($artlist < 2) {

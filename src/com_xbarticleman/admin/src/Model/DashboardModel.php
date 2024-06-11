@@ -2,7 +2,7 @@
 /*******
  * @package xbArticleManager
  * @filesource admin/src/Model/DashboardModel.php
- * @version 0.2.2.1 10th June 2024
+ * @version 5.0.0.3 11th June 2024
  * @author Roger C-O
  * @copyright Copyright (c) Roger Creagh-Osborne, 2024
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html 
@@ -132,7 +132,7 @@ class DashboardModel extends ListModel {
         $query->clear();
         $query->select('COUNT(DISTINCT(a.id)) AS embimged')
         ->from('#__content AS a')
-        ->where('CONCAT(a.introtext," ",a.fulltext)'.' REGEXP '.$db->q('\{[[:alpha:]].+?\}'));
+        ->where('CONCAT(a.introtext," ",a.fulltext)'.' REGEXP '.$db->q('\\{[[:alpha:]].+?\\}'));
         $db->setQuery($query);
         $res = $db->loadResult();
         if ($res>0) $artcnts['scoded'] = $res;

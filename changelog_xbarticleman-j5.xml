@@ -2,6 +2,37 @@
 	<changelog>
 		<element>com_xbarticleman</element>
 		<type>component</type>
+		<version>5.0.0.3</version>
+		<date>11th June 2024</date>
+		<title>BugFix Release</title>
+		<addition>
+			<item><![CDATA[<h3>BugFix Release v5.0.0.3</h3> Updated 13th June 2024]]></item>
+		</addition>
+		<remove>
+			<item>Duplication of Category in ArtTags view Title column</item>
+		</remove>
+		<change>
+			<item>minor additions to xbcommon.css styles</item>
+		</change>
+		<other>
+		</other>
+		<language>
+			<item>en-GB only</item>
+		</language>
+		<security>
+		</security>
+		<fix>
+			<item>FIXED: <![CDATA[Bug affecting REGEXP if using MySQL v8.0 (and probably later v8.x)<br /><i>MariaDb v10+ not affected</i>]]></item>
+			<item>FIXED: reverse changes in 5.1 Atum template affecting labels &amp; badges in tables</item>
+		</fix>
+		<note>
+			<item><![CDATA[Listed on <a href="https://extensions.joomla.org/extension/xbarticleman/" target="_blank">JED</a>]]></item>
+			<item><![CDATA[Raise bugs and feature requests on <a href="https://github.com/rogercreagh/j5-xbArticleMan/issues" target="_blank">GitHub</a>]]></item>
+		</note>
+	</changelog>	
+	<changelog>
+		<element>com_xbarticleman</element>
+		<type>component</type>
 		<version>5.0.0.2</version>
 		<date>10th June 2024</date>
 		<title>BugFix Release</title>
