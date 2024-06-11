@@ -6,7 +6,7 @@
 		<date>11th June 2024</date>
 		<title>BugFix Release</title>
 		<addition>
-			<item><![CDATA[<h3>BugFix Release v5.0.0.3</h3> Updated 13th June 2024]]></item>
+			<item><![CDATA[<h3>BugFix Release v5.0.0.3</h3> Updated 11th June 2024]]></item>
 		</addition>
 		<remove>
 			<item>Duplication of Category in ArtTags view Title column</item>
