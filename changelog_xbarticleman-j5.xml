@@ -22,8 +22,8 @@
 		<security>
 		</security>
 		<fix>
-			<item>FIXED: <![CDATA[Bug affecting REGEXP if using MySQL v8.0 (and probably later v8.x)<br /><i>MariaDb v10+ not affected</i>]]></item>
-			<item>FIXED: reverse changes in 5.1 Atum template affecting labels &amp; badges in tables</item>
+			<item><![CDATA[FIXED: Bug affecting REGEXP if using MySQL v8.0 (and probably later v8.x)<br /><i>MariaDb v10+ not affected</i>]]></item>
+			<item>FIXED: reverse changes in 5.1 Atum template affecting labels & badges in tables</item>
 		</fix>
 		<note>
 			<item><![CDATA[Listed on <a href="https://extensions.joomla.org/extension/xbarticleman/" target="_blank">JED</a>]]></item>
