@@ -14,7 +14,7 @@
         <tags>
           <tag>stable</tag>
         </tags>
-        <sha256>0645288eebb2a7a182c7cc8236c88ef80c21522ae15e38215c7c533e7b100f6a</sha256>
+        <sha256>8d60d2723f0273c1b515d1329cd23af2b719a1914d026ead9084c9100df81331</sha256>
     	<changelogurl>https://raw.githubusercontent.com/rogercreagh/j5-xbArticleMan/main/changelog_xbarticleman-j5.xml</changelogurl>
 		<maintainer>Roger C-O</maintainer>
 		<maintainerurl>https://crosborne.uk/xbarticleman</maintainerurl>

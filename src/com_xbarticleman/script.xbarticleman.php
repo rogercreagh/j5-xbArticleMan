@@ -70,13 +70,13 @@ class Com_xbarticlemanInstallerScript extends InstallerScript
             $ext_mess .= '<h3>'.$this->extname.' component installed</h3>';
             $ext_mess .= '<p>version '.$manifest->version.' dated '.$manifest->creationDate.'</p>';
             $ext_mess .= '<p><b>Important</b> Before starting review &amp; set the component options&nbsp;&nbsp;';
-            $ext_mess .=  '<a href="index.php?option=com_config&view=component&component='.$this->extension.'" class="btn btn-small btn-info">'.$this->extname.' Options</a>';
+            $ext_mess .=  '<a href="index.php?option=com_config&view=component&component='.$this->extension.'" class="btn btn-small btn-info" style="color:#fff;">'.$this->extname.' Options</a>';
             $res = $this->createCssFromTmpl();
             
         }
         if (($type=='install') || ($type=='discover_install') || ($type == 'update')) {
             $ext_mess .= '<p>For help and information see <a href="https://crosborne.co.uk/'.$this->extslug.'/doc" target="_blank">www.crosborne.co.uk/'.$this->extslug.'/doc</a> ';
-            $ext_mess .= 'or use Help button in <a href="index.php?option='.$this->extension.'" class="btn btn-small btn-info">'.$this->extname.' Dashboard</a></p>';
+            $ext_mess .= 'or use Help button in <a href="index.php?option='.$this->extension.'" class="btn btn-small btn-info" style="color:#fff;">'.$this->extname.' Dashboard</a></p>';
             $ext_mess .= '</div>';
             echo $ext_mess;
         }
